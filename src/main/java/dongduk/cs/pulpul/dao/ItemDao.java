@@ -32,7 +32,7 @@ public interface ItemDao {
 	boolean changeSalesQuantity(Goods goods);
 	
 	// 주문 상태에 따라 남은 상품 수량 변경
-	boolean changeRemainQuantityByOrderStatus(int orderId, int quantity);
+	boolean changeRemainQuantityByOrderStatus(int orderId, int orderStatus, int quantity);
 	
 	// 상품에 대한 주문 내역 존재여부 확인
 	boolean isExistOrder(String itemId);
