@@ -25,11 +25,17 @@ public interface BorrowDao {
 	// 회원 id로 알림 목록 조회
 	List<Alert> findAlertByMember(String memberId);
 	
+	// 읽지 않은 알림 개수 조회 - 추가
+	int findAlertCountByIsRead(String memberId);
+	
 	// 알림 생성
 	boolean createAlert(Alert alert);
 	
 	// 알림 삭제
 	boolean deleteAlert(Alert alert);
+	
+	// 알림 읽음여부 변경 - 추가
+	 boolean changeIsRead(String memberId);
 	
 	// 회원 id로 대여 목록 조회
 	List<Borrow> findBorrowByMember(String memberId);

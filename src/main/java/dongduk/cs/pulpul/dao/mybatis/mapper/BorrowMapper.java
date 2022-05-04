@@ -20,9 +20,13 @@ public interface BorrowMapper {
 	
 	List<Alert> selectAlertByMemberId(String memberId);
 	
+	int selectAlertCountByIsRead(String memberId); // 추가
+	
 	int insertAlert(Alert alert);
 	
 	int deleteAlert(Alert alert);
+	
+	int updateIsRead(String memberId); // 추가
 	
 	List<Borrow> selectBorrowByMemberId(String memberId);
 	
