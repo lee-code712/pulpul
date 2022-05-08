@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class BorrowController {
 	/*
-	 * 공유물품 대여 신청  
+	 * 공유물품 대여 신청 
 	 */	
 	@RequestMapping("/member/shareThings/borrow")
 	public void borrow(){
