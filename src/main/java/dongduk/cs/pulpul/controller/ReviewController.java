@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ReviewController {
 
 	/*
-	 * 리뷰 작성
+	 * 리뷰 작성 
 	 */
 	@RequestMapping("/review")
 	public String upload() {

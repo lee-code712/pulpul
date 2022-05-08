@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class OrderController {
 
 	/*
-	 * 식물 구매
+	 * 식물 구매 
 	 */
 	@GetMapping("/order/purchase")
 	public String purchaseForm() {

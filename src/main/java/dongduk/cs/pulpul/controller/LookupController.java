@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LookupController {
 
 	/*
-	 * 식물 검색
+	 * 식물 검색 
 	 */
 	@RequestMapping("/lookup/goodsList")
 	public String goodsList(){

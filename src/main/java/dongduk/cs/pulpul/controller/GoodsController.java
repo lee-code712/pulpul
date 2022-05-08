@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class GoodsController {
 	/*
-	 * 판매 식물 목록 조회
+	 * 판매 식물 목록 조회 
 	 */
 	@RequestMapping("/market/goods/list")
 	public String goodsList(){

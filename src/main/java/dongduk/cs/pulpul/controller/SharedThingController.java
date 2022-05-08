@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SharedThingController {
 
 	/*
-	 * 공유물품 등록
+	 * 공유물품 등록 
 	 */
 	@RequestMapping("/market/shareThings/upload")
 	public String uploadForm() {

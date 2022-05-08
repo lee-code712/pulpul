@@ -8,7 +8,7 @@ public class CartController {
 
 	/*
 	 * 장바구니 상품 추가
-	 * 조회 - 상세정보 장바구니
+	 * 조회 - 상세정보 장바구니 
 	 */
 	@RequestMapping("/cart/addItem")
 	public String addCartItem() {

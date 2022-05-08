@@ -8,7 +8,7 @@ public class MarketController {
 
 	/*
 	 * 마켓 등록
-	 */
+	 */ 
 	@RequestMapping("/market/create")
 	public void create() {
 		/*
