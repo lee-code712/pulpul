@@ -1,7 +1,9 @@
 package dongduk.cs.pulpul.service;
 
+import dongduk.cs.pulpul.domain.Market;
+
 public interface MarketService {
-	/*
+	
 	// 마켓 id로 마켓 조회
 	Market getMarket(int marketId);
 	
@@ -13,5 +15,5 @@ public interface MarketService {
 	
 	// 마켓 정보 수정
 	boolean changeMarketInfo(Market market);
-	*/
+	
 }

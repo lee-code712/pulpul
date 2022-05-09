@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import dongduk.cs.pulpul.domain.Alert;
+import dongduk.cs.pulpul.domain.Borrow;
+
 public interface BorrowMapper {
-	/*
+
 	List<Borrow> selectBorrowReservationByMemberId(String memberId);
 	
 	int insertBorrowReservation(Borrow borrow);
@@ -40,5 +43,5 @@ public interface BorrowMapper {
 			@Param("borrowStatus") int borrowStatus);
 	
 	int updateReturnDate(Borrow borrow);
-	*/
+
 }

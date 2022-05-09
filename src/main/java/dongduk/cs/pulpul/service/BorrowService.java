@@ -2,8 +2,11 @@ package dongduk.cs.pulpul.service;
 
 import java.util.List;
 
+import dongduk.cs.pulpul.domain.Alert;
+import dongduk.cs.pulpul.domain.Borrow;
+
 public interface BorrowService {
-	/*
+	
 	// 회원 id로 대여 예약 목록 조회
 	List<Borrow> getBorrowReservationByMember(String memberId);
 	
@@ -36,5 +39,5 @@ public interface BorrowService {
 	
 	// 반납 (returnItem에서 메소드명 변경)
 	boolean returnShareThings(Borrow borrow);
-	*/
+	
 }

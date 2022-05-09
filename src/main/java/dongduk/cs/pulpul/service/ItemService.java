@@ -2,8 +2,11 @@ package dongduk.cs.pulpul.service;
 
 import java.util.List;
 
+import dongduk.cs.pulpul.domain.Goods;
+import dongduk.cs.pulpul.domain.ShareThings;
+
 public interface ItemService {
-	/*
+	
 	// 상품 목록 조회
 	List<Goods> getGoodsList();
 	
@@ -45,5 +48,5 @@ public interface ItemService {
 	
 	// 품목 삭제
 	boolean deleteItem(String itemId);
-	*/
+	
 }

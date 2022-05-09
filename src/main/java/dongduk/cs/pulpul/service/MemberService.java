@@ -1,7 +1,9 @@
 package dongduk.cs.pulpul.service;
 
+import dongduk.cs.pulpul.domain.Member;
+
 public interface MemberService {
-	/*
+	
 	// 로그인
 	Member login(Member member);
 	
@@ -16,5 +18,5 @@ public interface MemberService {
 	
 	// 회원탈퇴
 	boolean resign(Member member);
-	*/
+	
 }

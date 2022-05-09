@@ -2,8 +2,10 @@ package dongduk.cs.pulpul.service;
 
 import java.util.List;
 
+import dongduk.cs.pulpul.domain.Review;
+
 public interface ReviewService {
-	/*
+	
 	// 품목 id로 리뷰 목록 조회
 	List<Review> getReviewByItem(String itemId);
 	
@@ -12,5 +14,5 @@ public interface ReviewService {
 	
 	// 리뷰 작성
 	boolean addReview(Review review);
-	*/
+	
 }

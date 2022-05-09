@@ -2,8 +2,11 @@ package dongduk.cs.pulpul.dao;
 
 import java.util.List;
 
+import dongduk.cs.pulpul.domain.Goods;
+import dongduk.cs.pulpul.domain.ShareThings;
+
 public interface ItemDao {
-	/*
+	
 	// 전체 상품 목록 조회
 	List<Goods> findAllGoods();
 	
@@ -69,5 +72,5 @@ public interface ItemDao {
 	
 	// 품목 이미지 목록 생성
 	boolean deleteItemImages(String itemId, String memberId);
-	*/
+	
 }

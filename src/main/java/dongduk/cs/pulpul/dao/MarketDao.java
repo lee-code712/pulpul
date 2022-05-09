@@ -1,7 +1,9 @@
 package dongduk.cs.pulpul.dao;
 
+import dongduk.cs.pulpul.domain.Market;
+
 public interface MarketDao {
-	/*
+	
 	// 마켓 id로 마켓 정보 조회
 	Market findMarket(int marketId);
 	
@@ -19,5 +21,5 @@ public interface MarketDao {
 	
 	// 마켓 이미지 수정
 	boolean changeMarketImage(Market market);
-	*/
+	
 }

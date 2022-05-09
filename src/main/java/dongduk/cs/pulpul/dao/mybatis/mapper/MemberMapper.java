@@ -2,8 +2,10 @@ package dongduk.cs.pulpul.dao.mybatis.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
+import dongduk.cs.pulpul.domain.Member;
+
 public interface MemberMapper {
-	/*
+	
 	Member selectMemberById(String memberId);
 	
 	int insertMember(Member member);
@@ -15,5 +17,5 @@ public interface MemberMapper {
 	int updatePoint(@Param("id") String memberId, 
 			@Param("status") int status, 
 			@Param("point") int point);
-	*/
+	
 }

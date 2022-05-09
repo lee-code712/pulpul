@@ -2,8 +2,11 @@ package dongduk.cs.pulpul.service;
 
 import java.util.List;
 
+import dongduk.cs.pulpul.domain.Cart;
+import dongduk.cs.pulpul.domain.Orders;
+
 public interface OrderService {
-	/*
+	
 	// 장바구니 조회
 	Cart getCart(String memberId);
 	
@@ -30,5 +33,5 @@ public interface OrderService {
 	
 	// 주문 취소
 	boolean cancelOrder(Orders order);
-	*/
+	
 }

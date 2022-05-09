@@ -5,8 +5,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import dongduk.cs.pulpul.domain.Goods;
+import dongduk.cs.pulpul.domain.ShareThings;
+
 public interface ItemMapper {
-	/*
+	
 	List<Goods> selectAllGoods();
 	
 	List<Goods> selectGoodsByMemberId(String memberId);
@@ -51,5 +54,5 @@ public interface ItemMapper {
 	
 	int deleteItemImages(@Param("memberId") String memberId, 
 			@Param("itemId") String itemId);
-	*/
+	
 }

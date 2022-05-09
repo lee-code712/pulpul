@@ -5,8 +5,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import dongduk.cs.pulpul.domain.Cart;
+import dongduk.cs.pulpul.domain.Orders;
+
 public interface OrderMapper {
-	/*
+	
 	Cart selectCartByMemberId(String memberId);
 	
 	int insertCart(Cart cart);
@@ -28,5 +31,5 @@ public interface OrderMapper {
 	
 	int updateOrderStatus(@Param("orderId") int orderId, 
 			@Param("orderStatus") int orderStatus);
-	*/
+	
 }

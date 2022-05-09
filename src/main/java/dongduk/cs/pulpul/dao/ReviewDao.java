@@ -2,8 +2,10 @@ package dongduk.cs.pulpul.dao;
 
 import java.util.List;
 
+import dongduk.cs.pulpul.domain.Review;
+
 public interface ReviewDao {
-	/*
+	
 	// 품목 id로 리뷰 목록 조회
 	List<Review> findReviewByListItem(String itemId);
 	
@@ -15,5 +17,5 @@ public interface ReviewDao {
 	
 	// 리뷰 이미지 생성
 	boolean createReviewImage(Review review);
-	*/
+	
 }

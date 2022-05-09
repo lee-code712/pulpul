@@ -2,8 +2,11 @@ package dongduk.cs.pulpul.dao;
 
 import java.util.List;
 
+import dongduk.cs.pulpul.domain.Cart;
+import dongduk.cs.pulpul.domain.Orders;
+
 public interface OrderDao {
-	/*
+	
 	// 회원 카트 조회
 	Cart findCartByMember(String memberId);
 	
@@ -33,5 +36,5 @@ public interface OrderDao {
 	
 	// 주문 상태 변경
 	boolean changeOrderStatus(int orderId, int orderStatus);
-	*/
+	
 }
