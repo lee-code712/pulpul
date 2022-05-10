@@ -38,6 +38,6 @@ public interface BorrowService {
 	boolean extendBorrow(Borrow borrow);
 	
 	// 반납 (returnItem에서 메소드명 변경)
-	boolean returnShareThings(Borrow borrow);
+	boolean returnShareThing(Borrow borrow);
 	
 }

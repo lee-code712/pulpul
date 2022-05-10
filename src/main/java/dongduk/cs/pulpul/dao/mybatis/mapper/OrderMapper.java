@@ -20,7 +20,7 @@ public interface OrderMapper {
 	
 	Order selectOrder(int orderId);
 	
-	List<Order> selectOrdersByMemberId(String memberId);
+	List<Order> selectOrderByMemberId(String memberId);
 	
 	int insertOrder(Order order);
 	

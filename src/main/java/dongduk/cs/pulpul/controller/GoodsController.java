@@ -6,58 +6,59 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/market/goods")
 public class GoodsController {
 	/*
 	 * 판매 식물 목록 조회 
 	 */
-	@RequestMapping("/market/goods/list")
+	@GetMapping("/list")
 	public String goodsList(){
 		//마켓 정보 폼
-		return "/market/goodsList";
+		return "market/goodsList";
 	}
 
 	/*
 	 * 판매 식물 등록
 	 */
-	@GetMapping("/market/goods/upload")
+	@GetMapping("/upload")
 	public String uploadForm(){
 		//판매 식물 목록 페이지
-		return "/market/goodsForm";
+		return "market/goodsForm";
 	}
 
-	@PostMapping("/market/goods/upload")
+	@PostMapping("/upload")
 	public void upload(){
 		/*
 		//성공
 		return "redirect:/market/goods/list";
 		//오류
-		return "/market/goodsForm";
+		return "market/goodsForm";
 		*/
 	}
 
 	/*
 	 * 판매 식물 수정
 	 */
-	@GetMapping("/market/goods/update")
+	@GetMapping("/update")
 	public String updateForm(){
 		//판매 식물 목록 페이지
-		return "/market/goodsForm";
+		return "market/goodsForm";
 	}
 	
-	@PostMapping("/market/goods/update")
+	@PostMapping("/update")
 	public void update(){
 		/*
 		//성공
 		return "redirect:/market/goods/list";
 		//오류
-		return "/market/goodsForm";
+		return "market/goodsForm";
 		*/
 	}
 
 	/*
 	 * 판매 식물 삭제
 	 */
-	@RequestMapping("/market/goods/delete")
+	@GetMapping("/delete")
 	public String delete(){
 		//판매 식물 목록 페이지
 		return "redirect:/market/goods/list";

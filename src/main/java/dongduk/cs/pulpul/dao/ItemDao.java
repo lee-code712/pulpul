@@ -3,7 +3,7 @@ package dongduk.cs.pulpul.dao;
 import java.util.List;
 
 import dongduk.cs.pulpul.domain.Goods;
-import dongduk.cs.pulpul.domain.ShareThings;
+import dongduk.cs.pulpul.domain.ShareThing;
 
 public interface ItemDao {
 	
@@ -41,25 +41,25 @@ public interface ItemDao {
 	boolean isExistOrder(String itemId);
 	
 	// 전체 공유물품 목록 조회
-	List<ShareThings> findAllShareThings();
+	List<ShareThing> findAllShareThing();
 	
 	// 회원 id로 공유 물품 목록 조회
-	List<ShareThings> findShareThingsByMember(String memberId);
+	List<ShareThing> findShareThingByMember(String memberId);
 	
 	// 마켓 id로 공유 물품 목록 조회
-	List<ShareThings> findShareThingsByMarket(int marketId);
+	List<ShareThing> findShareThingByMarket(int marketId);
 	
 	// 품목 id로 공유 물품 목록 조회
-	ShareThings findShareThingsByItem(String itemId);
+	ShareThing findShareThingByItem(String itemId);
 	
 	// 공유 물품 생성
-	int createShareThings(ShareThings shareThings);
+	int createShareThing(ShareThing shareThing);
 	
 	// 공유 물품 정보 수정
-	boolean changeShareThingsInfo(ShareThings shareThings);
+	boolean changeShareThingInfo(ShareThing shareThing);
 	
 	// 공유 물품의 대여 여부 변경
-	boolean changeIsBorrowed(ShareThings shareThings);
+	boolean changeIsBorrowed(ShareThing shareThing);
 	
 	// 공유 물품에 대한 대여 내역 존재여부 확인
 	boolean isExistBorrow(String itemId);

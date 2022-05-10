@@ -7,7 +7,7 @@ import lombok.Setter;
 public class Borrow {
 
 	private int id; /*대여 식별 번호*/
-	private ShareThings shareThings; /*물품 정보*/
+	private ShareThing shareThings; /*물품 정보*/
 	private String borrowDate; /*대여일*/
 	private String returnDate; /*반납일*/
 	private String trackingNumber; /*운송장 번호*/

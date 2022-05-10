@@ -1,49 +1,52 @@
 package dongduk.cs.pulpul.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/borrow")
 public class BorrowController {
 	/*
 	 * 공유물품 대여 신청 
 	 */	
-	@RequestMapping("/member/shareThings/borrow")
+	@PostMapping()
 	public void borrow(){
 		/*
 		//성공
 		return "redirect:/member/mypage/borrowList";
 		
 		//오류 - 공유물품 상세정보 페이지
-		return "/lookup/sharedThingsDetail";
+		return "lookup/sharedThingDetail";
 		*/
 	}	
 
 	/*
 	 * 반납 처리
 	 */
-	@RequestMapping("/borrow/return")
+	@GetMapping("/return")
 	public String returnItem() {
-		return "redirect:/market/shareThingsManage";
+		return "redirect:/market/shareThingManage";
 	}
 
 	/*
 	 * 공유물품 예약
 	 */
-	@RequestMapping("/member/shareThings/reservation")
+	@PostMapping("/reservation")
 	public void makeReservation(){
 		/*
 		//성공
 		return "redirect:/member/mypage/borrowList";
 		//오류
-		return "/lookup/sharedThingsDetail";
+		return "lookup/sharedThingDetail";
 		*/
 	}
 
 	/*
 	 * 공유물품 예약 취소
 	 */
-	@RequestMapping("/borrow/reservation/cancel")
+	@GetMapping("/reservation/cancel")
 	public String cancel() {
 		return "redirect:/member/mypage/borrowList";
 	}
@@ -51,7 +54,7 @@ public class BorrowController {
 	/*
 	 * 대여 연장
 	 */
-	@RequestMapping("/borrow/extend")
+	@PostMapping("/extend")
 	public String extend(){
 		return "redirect:/member/mypage/borrowList";
 	}	
@@ -60,18 +63,9 @@ public class BorrowController {
 	 * 마켓에서
 	 * 특정 공유물품 대여 내역에 운송장 번호 입력 시
 	 */
-	@RequestMapping("/borrow/startDeliver")
+	@PostMapping("/startDeliver")
 	public String startDeliver(){
-		return "redirect:/market/shareThingsManage";
+		return "redirect:/market/shareThingManage";
 	}
-
-	/*
-	 * 알림 조회
-	 */
-	@RequestMapping("/borrow/alertList")
-	public String alertList(){
-		return "/lookup/alert";
-	}
-
 
 }

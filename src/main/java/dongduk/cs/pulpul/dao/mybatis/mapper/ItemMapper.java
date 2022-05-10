@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import dongduk.cs.pulpul.domain.Goods;
-import dongduk.cs.pulpul.domain.ShareThings;
+import dongduk.cs.pulpul.domain.ShareThing;
 
 public interface ItemMapper {
 	
@@ -34,19 +34,19 @@ public interface ItemMapper {
 	
 	int selectOrderIdByItemId(String itemId);
 	
-	List<ShareThings> selectAllShareThings();
+	List<ShareThing> selectAllShareThing();
 	
-	List<ShareThings> selectShareThingsByMemberId(String memberId);
+	List<ShareThing> selectShareThingByMemberId(String memberId);
 	
-	List<ShareThings> selectShareThingsByMarketId(int marketId);
+	List<ShareThing> selectShareThingByMarketId(int marketId);
 	
-	ShareThings selectShareThingsByItem(String itemId);
+	ShareThing selectShareThingByItem(String itemId);
 	
-	int insertShareThings(ShareThings shareThings);
+	int insertShareThing(ShareThing shareThing);
 	
-	int updateShareThings(ShareThings shareThings);
+	int updateShareThing(ShareThing shareThing);
 	
-	int updateIsBorrowed(ShareThings shareThings);
+	int updateIsBorrowed(ShareThing shareThing);
 	
 	int selectBorrowIdByItemId(String itemId);
 	

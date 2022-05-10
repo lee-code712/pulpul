@@ -3,7 +3,7 @@ package dongduk.cs.pulpul.service;
 import java.util.List;
 
 import dongduk.cs.pulpul.domain.Goods;
-import dongduk.cs.pulpul.domain.ShareThings;
+import dongduk.cs.pulpul.domain.ShareThing;
 
 public interface ItemService {
 	
@@ -29,22 +29,22 @@ public interface ItemService {
 	boolean changeGoodsInfo(Goods goods);
 	
 	// 전체 공유 물품 목록 조회
-	List<ShareThings> getShareThingsList();
+	List<ShareThing> getShareThingList();
 	
 	// 회원 id로 공유 물품 목록 조회
-	List<ShareThings> getShareThingsListByMember(String memberId);
+	List<ShareThing> getShareThingListByMember(String memberId);
 	
 	// 마켓 id로 공유 물품 목록 조회
-	List<ShareThings> getShareThingsListByMarket(int marketId);
+	List<ShareThing> getShareThingListByMarket(int marketId);
 	
 	// 공유 물품 상세정보 조회
-	ShareThings getShareThings(String itemId);
+	ShareThing getShareThing(String itemId);
 	
 	// 공유 물품 등록
-	boolean uploadShareThings(ShareThings shareThings);
+	boolean uploadShareThing(ShareThing shareThing);
 	
 	// 공유 물품 정보 수정
-	boolean changeShareThingsInfo(ShareThings shareThings);
+	boolean changeShareThingInfo(ShareThing shareThing);
 	
 	// 품목 삭제
 	boolean deleteItem(String itemId);
