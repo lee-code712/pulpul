@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class Orders {
+public class Order {
 
 	private int id; /*주문 식별번호*/
 	private String orderDate; /*주문일*/

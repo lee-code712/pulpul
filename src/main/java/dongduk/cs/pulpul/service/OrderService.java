@@ -3,7 +3,7 @@ package dongduk.cs.pulpul.service;
 import java.util.List;
 
 import dongduk.cs.pulpul.domain.Cart;
-import dongduk.cs.pulpul.domain.Orders;
+import dongduk.cs.pulpul.domain.Order;
 
 public interface OrderService {
 	
@@ -20,18 +20,18 @@ public interface OrderService {
 	boolean deleteCartItemByMarket(String memberId, int marketId);
 	
 	// 회원 id로 주문 목록 조회
-	List<Orders> getOrderListByMember(String memberId);
+	List<Order> getOrderListByMember(String memberId);
 	
 	// 주문 상세내역 조회
-	Orders getOrder(int orderId);
+	Order getOrder(int orderId);
 	
 	// 주문
-	boolean order(Orders order);
+	boolean order(Order order);
 	
 	// 주문에 대한 운송장번호 입력
-	boolean changeTrackingNumber(Orders order);
+	boolean changeTrackingNumber(Order order);
 	
 	// 주문 취소
-	boolean cancelOrder(Orders order);
+	boolean cancelOrder(Order order);
 	
 }

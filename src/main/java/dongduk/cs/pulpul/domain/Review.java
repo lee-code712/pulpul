@@ -10,7 +10,7 @@ public class Review {
 	private String writeDate;
 	private String content;
 	private int rating; 
-	private Orders order; /*주문 정보*/
+	private Order order; /*주문 정보*/
 	private Item item; /*주문 품목*/
 	private String imageUrl; /*후기 이미지 경로*/
 }

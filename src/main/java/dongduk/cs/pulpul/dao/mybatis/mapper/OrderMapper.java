@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import dongduk.cs.pulpul.domain.Cart;
-import dongduk.cs.pulpul.domain.Orders;
+import dongduk.cs.pulpul.domain.Order;
 
 public interface OrderMapper {
 	
@@ -18,11 +18,11 @@ public interface OrderMapper {
 	
 	int deleteCartByMarketId(int marketId);
 	
-	Orders selectOrder(int orderId);
+	Order selectOrder(int orderId);
 	
-	List<Orders> selectOrdersByMemberId(String memberId);
+	List<Order> selectOrdersByMemberId(String memberId);
 	
-	int insertOrder(Orders order);
+	int insertOrder(Order order);
 	
 	int insertOrderGoods(List<Map<String, Object>> orderGoods);
 	

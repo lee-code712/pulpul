@@ -3,7 +3,7 @@ package dongduk.cs.pulpul.dao;
 import java.util.List;
 
 import dongduk.cs.pulpul.domain.Cart;
-import dongduk.cs.pulpul.domain.Orders;
+import dongduk.cs.pulpul.domain.Order;
 
 public interface OrderDao {
 	
@@ -20,13 +20,13 @@ public interface OrderDao {
 	boolean deleteCartItemByMarket(String memberId, int marketId);
 	
 	// 주문 id로 주문 조회
-	Orders findOrder(int orderId);
+	Order findOrder(int orderId);
 	
 	// 회원 id로 주문 목록 조회
-	List<Orders> findOrdersByMember(String memberId, String identity);
+	List<Order> findOrdersByMember(String memberId, String identity);
 	
 	// 주문 생성
-	int createOrder(Orders orders);
+	int createOrder(Order orders);
 	
 	// 주문 상품 목록 생성
 	boolean createOrderGoods(Cart cart);
