@@ -49,13 +49,13 @@ public class MemberController {
 	/*
 	 * 회원 정보 수정
 	 */
-	@RequestMapping("/member/update")
+	@GetMapping("/member/update")
 	public String updateForm() {
 		//회원 정보 수정 폼
 		return "/member/myInfoForm";
 	}
 	
-	@RequestMapping("/member/update")
+	@PostMapping("/member/update")
 	public void update() {
 		/*
 		 //성공
@@ -77,7 +77,7 @@ public class MemberController {
 	/*
 	회원 탈퇴
 	*/
-	@RequestMapping("/member/resign")
+	@PostMapping("/member/resign")
 	public void resign() {
 		/*
 		 //성공
@@ -90,7 +90,7 @@ public class MemberController {
 	/*
 	 * 마이 페이지 접근 - 구매 목록 조회
 	 */
-	@RequestMapping("/member/mypage/orderList")
+	@GetMapping("/member/mypage/orderList")
 	public String myOrderList() {
 		//마이 페이지
 		return "/member/mypage";
@@ -99,7 +99,7 @@ public class MemberController {
 	/*
 	 * 마이 페이지 접근 - 대여, 예약 목록 조회
 	 */
-	@RequestMapping("/member/mypage/borrowList")
+	@GetMapping("/member/mypage/borrowList")
 	public String myBorrowList() {
 		return "/member/mypage";
 	}
