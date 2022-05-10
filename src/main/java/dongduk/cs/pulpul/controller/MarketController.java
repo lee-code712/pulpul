@@ -65,10 +65,10 @@ public class MarketController {
 	/*
      * 특정 공유 물품 대여 현황 조회
 	 */
-	@GetMapping("/shareThingsManage")
-	public String shareThingsManage(){
+	@GetMapping("/shareThingBorrowManage")
+	public String shareThingBorrowManage(){
 		//공유물품 대여 상세 정보 페이지
-		return "market/shareThingsManage";
+		return "market/shareThingBorrowManage";
 	}
 
 
