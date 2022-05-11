@@ -14,12 +14,14 @@
 	<div layout:fragment="content">
 		<div id="pageWrap">
       <div id="pageTit">상품 관리</div>
+      <div id="pageSubTit">전체 구매 현황</div>
+      
        <div id="menu">
 		    <div><a href="/market/view" class="list">마켓 정보</a></div>
 		    <div>|</div>
 		    <div><a href="/market/goods/list" class="list-on">상품 관리</a></div>
 		    <div>|</div>
-		    <div><a class="list">공유 물품 관리</a></div>
+		    <div><a href="/market/shareThing/list" class="list">공유 물품 관리</a></div>
 		  </div>
 
       <div id="searchWrap">
@@ -107,6 +109,8 @@
           <span id="totalPrice">16000원</span>
         </div>
       </div>
+      
+      <button id="returnBtn" onclick="location.href='/market/goods/list'">뒤로 가기</button>
     </div>
 	</div>
 </html>

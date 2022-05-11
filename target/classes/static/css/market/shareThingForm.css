@@ -43,16 +43,16 @@ input {
   color: #676767;
 }
 
+#fileWrap {
+  padding: 0px;
+  border: none;
+}
+
 textarea {
   padding: 20px;
   width: 954px;
   height: 54px;
   border: 1px solid #eaeaea;
-}
-
-#fileWrap {
-  padding: 0px;
-  border: none;
 }
 
 form {

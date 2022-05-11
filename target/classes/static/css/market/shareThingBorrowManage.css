@@ -72,38 +72,19 @@ td {
   text-align: center;
 }
 
-.deleteBtn {
+.rental-btn {
   width: 80px;
   height: 40px;
-  border: 1px solid #c09693;
-  color: #c09693;
+  border: 1px solid #93c0b5;
+  color: #93c0b5;
   background-color: white;
   font-size: 14px;
   cursor: pointer;
 }
 
-.order-num {
-  width: 234px;
-}
-
-.order-date {
-  width: 230px;
-}
-
-.order-price {
-  width: 200px;
-}
-
-.order-status {
-  width: 200px;
-}
-
-.order-waybill {
-  width: 330px;
-}
-
 #wayBillBox {
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
@@ -122,38 +103,34 @@ td {
   cursor: pointer;
 }
 
-.table-disabled {
-  background-color: #f3f3f4;
-  color: #c4c4c4;
+.img-size {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
 }
 
-.order-num-hover:hover {
-	color: #93c0b5;
+.sharething-img {
+  width: 100px;
 }
 
-#totalPriceWrap {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 60px;
-  padding-right: 40px;
-  width: 1194px;
-  height: 120px;
-  background-color: #f9f9f9;
+.sharething-name {
+  width: 260px;
 }
 
-#totalPriceInner {
-  display: flex;
-  gap: 20px;
+.sharething-lender {
+  width: 120px;
 }
 
-#totalPriceTit {
-  font-size: 18px;
+.rental-period {
+  width: 240px;
 }
 
-#totalPrice {
-  font-size: 18px;
-  color: #93c0b5;
+.order-waybill {
+  width: 334px;
+}
+
+.sharething-return {
+  width: 140px;
 }
 
 #returnBtn {

@@ -51,6 +51,26 @@ td {
   text-align: center;
 }
 
+.item-img {
+  width: 140px;
+}
+
+.item-info {
+  width: 394px;
+}
+
+.item-rental {
+  width: 180px;
+}
+
+.item-waiting {
+  width: 180px;
+}
+
+.item-btn {
+  width: 300px;
+}
+
 .deleteBtn {
   width: 80px;
   height: 40px;
@@ -61,43 +81,28 @@ td {
   cursor: pointer;
 }
 
-.item-img {
-  width: 140px;
-}
-
-.item-info {
-  width: 320px;
-}
-
-.item-num {
-  width: 140px;
-}
-
-.item-shipping {
-  width: 180px;
-}
-
-.item-price {
-  width: 180px;
-}
-
-.item-delete {
-  width: 234px;
-}
-
-#btnWrap {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 80px;
-}
-
-#addItemBtn,
-#purchaseStatusBtn {
+#addItemBtn {
+  display: block;
+  margin: 80px auto 0px auto;
   width: 140px;
   height: 40px;
   border: 1px solid black;
   background-color: white;
   color: black;
+  cursor: pointer;
+}
+
+.buttonWrap {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.rentalStatusBtn {
+  width: 80px;
+  height: 40px;
+  color: #93c0b5;
+  border: 1px solid #93c0b5;
+  background-color: white;
   cursor: pointer;
 }

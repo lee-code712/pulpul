@@ -4,8 +4,14 @@
 }
 
 #pageTit {
-  margin-bottom: 60px;
+  margin-bottom: 10px;
   font-size: 24px;
+}
+
+#pageSubTit {
+	margin-bottom: 60px;
+	font-size: 14px;
+	color: #c4c4c4;
 }
 
 table {
