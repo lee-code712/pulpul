@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <th:block layout:fragment="css">
+    <link th:href="@{/css/fragments/header.css}" rel="stylesheet" />
+	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
+  	<link rel="stylesheet" th:href="@{/css/lookup/alert.css}" >
+  </th:block>
+  
+  <th:block layout:fragment="script">
+  	<script th:src="@{/js/lookup/alert.js}"></script>
+  </th:block>
+
+	<div layout:fragment="content">
+		<div id="alertHeader">
+      <div id="alertTit">알림</div>
+      <img src="/images/alertClose.svg" />
+    </div>
+
+    <div id="alertBox">
+      <div id="alertBtnWrap">
+        <div id="alertType">알림 제목</div>
+        <div class="link">바로가기</div>
+      </div>
+      <div id="alertContent">알림 내용</div>
+      <div id="alertDate">2022-05-07</div>
+    </div>
+	</div>
+</html>

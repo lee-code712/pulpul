@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+  layout:decorate="~{layout/default_layout}">
+
+  <th:block layout:fragment="css">
+    <link th:href="@{/css/fragments/header.css}" rel="stylesheet" />
+	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
+  	<link rel="stylesheet" th:href="@{/css/order/purchase.css}" >
+  </th:block>
+
+	<div layout:fragment="content">
+		<div id="pageWrap">
+      <div id="pageTit">결제화면</div>
+      <div id="pageSubTit">Payment</div>
+
+      <div id="tableWrap">
+        <table>
+          <tr>
+            <th class="item-img-wrap"></th>
+            <th class="item-info">상품 정보</th>
+            <th class="item-num">수량</th>
+            <th class="price">판매 가격</th>
+            <th class="shipping">배송비</th>
+            <th class="seller">판매자</th>
+          </tr>
+
+          <tr>
+            <td class="item-img-wrap">
+              <img src="/images/smallItemImg.svg" class="item-img" />
+            </td>
+            <td class="item-info">### 식물</td>
+            <td class="item-num">1</td>
+            <td class="price">2000원</td>
+            <td class="shipping">2250원</td>
+            <td class="seller">### 님</td>
+          </tr>
+
+          <tr>
+            <td class="item-img-wrap">
+              <img src="/images/smallItemImg.svg" class="item-img" />
+            </td>
+            <td class="item-info">### 식물</td>
+            <td class="item-num">1</td>
+            <td class="price">2000원</td>
+            <td class="shipping">2250원</td>
+            <td class="seller">### 님</td>
+          </tr>
+        </table>
+
+        <div id="finalPaymentWrap">
+          <div id="finalPaymentTit">최종 결제 금액</div>
+
+          <div class="price-info-wrap">
+            <div class="price-info-tit">총 상품가격</div>
+            <div class="price-info">20000원</div>
+          </div>
+
+          <div class="price-info-wrap">
+            <div class="price-info-tit">배송비</div>
+            <div class="price-info">20000원</div>
+          </div>
+
+          <div class="price-info-wrap">
+            <div class="price-info-tit">포인트</div>
+            <div id="pointWrap">
+              <div><input type="text" placeholder="100" id="point" />원</div>
+              <div id="leftover">잔여 10원</div>
+            </div>
+          </div>
+
+          <hr class="hr-solid" />
+
+          <div class="price-info-wrap">
+            <div class="price-info-tit">총 결제 금액</div>
+            <div class="price-info">56000원</div>
+          </div>
+
+          <div id="paymentBtnWrap">
+            <button id="paymentBtn">결제하기</button>
+            <button id="cancelBtn"  onclick="location.href='/cart/cartList'">취소하기</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="user-info-tit">주문자 정보</div>
+
+      <div class="user-info-box">
+        <div class="user-info-wrap">
+          <div class="user-info-subtit">주문하신 분</div>
+          <div class="user-info">(주분하신 분)</div>
+        </div>
+        <div class="user-info-wrap">
+          <div class="user-info-subtit">주소</div>
+          <div class="user-info">(주소)</div>
+        </div>
+        <div class="user-info-wrap">
+          <div class="user-info-subtit">휴대폰</div>
+          <div class="user-info">(휴대폰)</div>
+        </div>
+      </div>
+
+      <div class="user-info-tit">결제 정보</div>
+
+      <div class="user-info-box">
+        <div class="user-info-wrap">
+          <div class="user-info-subtit">카드사</div>
+          <div class="user-info">
+            <select>
+              <option>KB 국민</option>
+            </select>
+          </div>
+        </div>
+        <div class="user-info-wrap">
+          <div class="user-info-subtit">카드 번호</div>
+          <div class="user-info">
+            <input
+              type="text"
+              placeholder="카드 번호를 입력해주세요."
+              id="cardNum"
+            />
+          </div>
+        </div>
+        <div class="user-info-wrap">
+          <div class="user-info-subtit">유효기간</div>
+          <div class="user-info">
+            <input type="text" placeholder="11/22" id="validDate" />
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+</html>

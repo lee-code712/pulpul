@@ -41,6 +41,28 @@
   color: #333333;
 }
 
+#rental-ok {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 90px;
+	height: 28px;
+	color: #93c0b5;
+	border: 1px solid #93c0b5;
+	border-radius: 50px;
+}
+
+#rental-notok {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 90px;
+	height: 28px;
+	color: #c4c4c4;
+	border: 1px solid #c4c4c4;
+	border-radius: 50px;
+}
+
 td {
   width: 200px;
   height: 34px;
@@ -61,7 +83,8 @@ td {
   margin-top: 40px;
 }
 
-#rentalBtn {
+#rentalBtn,
+#rezBtn {
   width: 240px;
   height: 50px;
   background-color: #93c0b5;

@@ -13,17 +13,17 @@
 	      <li><a href="/market/view">마켓관리</a></li>
 	      <li><a href="/lookup/goodsList">식물조회</a></li>
 	      <li><a href="/lookup/shareThingList">물품대여</a></li>
-	      <li><a>마이페이지</a></li>
+	      <li><a href="/member/mypage/orderList">마이페이지</a></li>
 	      
 	      <li>
-	        <div id="basketIconWrap">
+	        <div id="basketIconWrap" onclick="location.href='/cart/cartList'">
 	        	<img th:src="@{/images/basketIcon.svg}" />
 	          <div id="basketCnt">3</div>
 	        </div>
 	      </li>
 	      
 	      <li>
-	        <div id="alertIconWrap">
+	        <div id="alertIconWrap" onclick="location.href='/lookup/alertList'">
 	          <img th:src="@{/images/alertIcon.svg}" />
 	          <div id="alertCnt">3</div>
 	        </div>

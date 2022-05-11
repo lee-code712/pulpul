@@ -13,6 +13,7 @@
 
 	<div layout:fragment="content">
 		<div id="pageWrap">
+		<!-- shareThingDetail - 대여 -->
       <div id="infoCover">
         <img src="../images/bigShareThing.svg" id="itemImg" />
 
@@ -29,7 +30,7 @@
           <table>
             <tr>
               <td>대여 상태</td>
-              <td>대여 가능</td>
+              <td><div id="rental-ok">대여 가능</div></td>
             </tr>
 
             <tr>
@@ -51,6 +52,49 @@
           <div id="btnWrap">
             <button id="rentalBtn">대여하기</button>
             <button id="cancelBtn" onclick="location.href='/lookup/shareThingList'">취소</button>
+          </div>
+
+          <a href="/lookup/market/shareThingList" id="marketLink">
+            <img src="../images/smallShopIcon.svg" />
+            (작성자 이름) 마켓으로 이동하기
+          </a>
+        </div>
+      </div>
+      
+      <!-- shareThingDetail - 예약 -->
+      <div id="infoCover">
+        <img src="../images/bigShareThing.svg" id="itemImg" />
+
+        <div id="info">
+          <div class="waitingWrap">
+            <img src="../images/waiting.svg" />
+            <div class="waiting">2</div>
+          </div>
+
+          <div id="itemName">### 관리용품</div>
+
+          <div id="itemInfo">(관리용품 소개)</div>
+
+          <table>
+            <tr>
+              <td>대여 상태</td>
+              <td><div id="rental-notok">대여 중</div></td>
+            </tr>
+
+            <tr>
+              <td>대여 시 유의사항</td>
+              <td>(대여 시 유의사항)</td>
+            </tr>
+
+            <tr>
+              <td>배송비</td>
+              <td>(배송비)</td>
+            </tr>
+          </table>
+
+          <div id="btnWrap">
+            <button id="rezBtn">예약하기</button>
+            <button id="cancelBtn">취소</button>
           </div>
 
           <a href="/lookup/market/shareThingList" id="marketLink">

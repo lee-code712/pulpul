@@ -1,0 +1,119 @@
+#pageWrap {
+  margin: 80px auto;
+  width: 1194px;
+}
+
+#pageTit {
+  margin: 80px 0px 10px 0px;
+  font-size: 24px;
+  color: #6f6f6f;
+  text-align: center;
+}
+
+#pageSubTit {
+  font-size: 14px;
+  color: #c4c4c4;
+  text-align: center;
+}
+
+table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 1px solid #93c0b5;
+}
+
+th {
+  height: 48px;
+  text-align: center;
+  border-top: 1px solid black;
+  border-bottom: 1px solid #eaeaea;
+}
+
+td {
+  height: 60px;
+}
+
+.market-name {
+	margin-top: 60px;
+	font-size: 14px;
+	color: #c4c4c4;	
+}
+
+.check-box {
+  width: 20px;
+  text-align: center;
+}
+
+.item-info {
+  width: 514px;
+  text-align: center;
+}
+
+.item-num {
+  width: 140px;
+  text-align: center;
+}
+
+.price {
+  width: 180px;
+  text-align: center;
+}
+
+.shipping {
+  width: 180px;
+  text-align: center;
+}
+
+.btn-wrap {
+  width: 160px;
+  text-align: center;
+}
+
+.cancel-btn {
+  width: 80px;
+  height: 40px;
+  color: #c09693;
+  background-color: white;
+  border: 1px solid #c09693;
+  cursor: pointer;
+}
+
+.total-price-wrap {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 40px;
+  margin: 80px 0px;
+  padding-right: 40px;
+  width: 1154px;
+  height: 120px;
+  background-color: #f9f9f9;
+}
+
+.total-price-tit {
+  font-size: 18px;
+}
+
+.total-price {
+  font-size: 18px;
+  color: #93c0b5;
+}
+
+.bottom-btn-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.continue-shopping,
+.check-item-order,
+.all-item-delete {
+  width: 140px;
+  height: 40px;
+  background-color: #eaeaea;
+  color: #535353;
+  border: 1px solid #eaeaea;
+  cursor: pointer;
+}

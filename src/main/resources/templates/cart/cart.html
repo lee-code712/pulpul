@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+  layout:decorate="~{layout/default_layout}">
+
+  <th:block layout:fragment="css">
+    <link th:href="@{/css/fragments/header.css}" rel="stylesheet" />
+	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
+  	<link rel="stylesheet" th:href="@{/css/cart/cart.css}" >
+  </th:block>
+
+	<div layout:fragment="content">
+		<div id="pageWrap">
+      <div id="pageTit">장바구니</div>
+      <div id="pageSubTit">Shopping bag</div>
+
+			<div class="market-name">풀풀 마켓</div>
+      <table>
+        <tr>
+          <th class="check-box"></th>
+          <th class="item-info">상품 정보</th>
+          <th class="item-num">수량</th>
+          <th class="price">판매 가격</th>
+          <th class="shipping">배송비</th>
+          <th class="btn-wrap"></th>
+        </tr>
+
+        <tr>
+          <td class="check-box"><input type="checkbox" /></td>
+          <td class="item-info">다육이(상품명)</td>
+          <td class="item-num">2</td>
+          <td class="price">2500원</td>
+          <td class="shipping">2000원</td>
+          <td class="btn-wrap"><button class="cancel-btn">삭제</button></td>
+        </tr>
+
+        <tr>
+          <td class="check-box"><input type="checkbox" /></td>
+          <td class="item-info">다육이(상품명)</td>
+          <td class="item-num">2</td>
+          <td class="price">2500원</td>
+          <td class="shipping">2000원</td>
+          <td class="btn-wrap"><button class="cancel-btn">삭제</button></td>
+        </tr>
+
+        <tr>
+          <td class="check-box"><input type="checkbox" /></td>
+          <td class="item-info">다육이(상품명)</td>
+          <td class="item-num">2</td>
+          <td class="price">2500원</td>
+          <td class="shipping">2000원</td>
+          <td class="btn-wrap"><button class="cancel-btn">삭제</button></td>
+        </tr>
+      </table>
+
+      <div class="total-price-wrap">
+        <div class="total-price-tit">판매금액</div>
+        <div class="total-price">10000원</div>
+      </div>
+
+      <div class="bottom-btn-wrap">
+      	<button class="continue-shopping" onclick="location.href='/lookup/goodsList'">쇼핑 계속하기</button>
+        <button class="check-item-order" onclick="location.href='/order/purchase'">선택 상품 주문</button>
+        <button class="all-item-delete">전체 항목 삭제</button>
+      </div>
+
+			<div class="market-name">당근 마켓</div>
+      <table>
+        <tr>
+          <th class="check-box"></th>
+          <th class="item-info">상품 정보</th>
+          <th class="item-num">수량</th>
+          <th class="price">판매 가격</th>
+          <th class="shipping">배송비</th>
+          <th class="btn-wrap"></th>
+        </tr>
+
+        <tr>
+          <td class="check-box"><input type="checkbox" /></td>
+          <td class="item-info">다육이(상품명)</td>
+          <td class="item-num">2</td>
+          <td class="price">2500원</td>
+          <td class="shipping">2000원</td>
+          <td class="btn-wrap"><button class="cancel-btn">삭제</button></td>
+        </tr>
+
+        <tr>
+          <td class="check-box"><input type="checkbox" /></td>
+          <td class="item-info">다육이(상품명)</td>
+          <td class="item-num">2</td>
+          <td class="price">2500원</td>
+          <td class="shipping">2000원</td>
+          <td class="btn-wrap"><button class="cancel-btn">삭제</button></td>
+        </tr>
+
+        <tr>
+          <td class="check-box"><input type="checkbox" /></td>
+          <td class="item-info">다육이(상품명)</td>
+          <td class="item-num">2</td>
+          <td class="price">2500원</td>
+          <td class="shipping">2000원</td>
+          <td class="btn-wrap"><button class="cancel-btn">삭제</button></td>
+        </tr>
+      </table>
+
+      <div class="total-price-wrap">
+        <div class="total-price-tit">판매금액</div>
+        <div class="total-price">10000원</div>
+      </div>
+
+      <div class="bottom-btn-wrap">
+      	<button class="continue-shopping" onclick="location.href='/lookup/goodsList'">쇼핑 계속하기</button>
+        <button class="check-item-order" onclick="location.href='/order/purchase'">선택 상품 주문</button>
+        <button class="all-item-delete">전체 항목 삭제</button>
+      </div>
+    </div>
+	</div>
+</html>

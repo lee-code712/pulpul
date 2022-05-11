@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+  layout:decorate="~{layout/default_layout}">
+
+  <th:block layout:fragment="css">
+    <link th:href="@{/css/fragments/header.css}" rel="stylesheet" />
+	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
+  	<link rel="stylesheet" th:href="@{/css/order/orderDetail.css}" >
+  </th:block>
+
+	<div layout:fragment="content">
+	<div id="pageWrap">
+      <div id="pageTit">결제 상세 정보</div>
+      <div id="pageSubTit">Payment info</div>
+
+      <table>
+        <tr>
+          <th class="item-img"></th>
+          <th class="item-info">상품 정보</th>
+          <th class="item-num">수량</th>
+          <th class="seller">판매자</th>
+          <th class="pay-id">결제 ID</th>
+          <th class="pay-date">결제 일자</th>
+          <th class="review"></th>
+        </tr>
+
+        <tr>
+          <td class="item-img">
+            <img src="/images/smallItemImg.svg" class="item-image" />
+          </td>
+          <td class="item-info">
+            <div class="info">
+              <div class="item-name">### 식물</div>
+              <div class="item-market">풀풀마켓</div>
+            </div>
+          </td>
+          <td class="item-num">2</td>
+          <td class="seller">###님</td>
+          <td class="pay-id">(결제 ID)</td>
+          <td class="pay-date">2022-05-09</td>
+          <td class="review">
+            <button class="review-btn">리뷰 쓰기</button>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="item-img">
+            <img src="/images/smallItemImg.svg" class="item-image" />
+          </td>
+          <td class="item-info">
+            <div class="info">
+              <div class="item-name">### 식물</div>
+              <div class="item-market">풀풀마켓</div>
+            </div>
+          </td>
+          <td class="item-num">2</td>
+          <td class="seller">###님</td>
+          <td class="pay-id">(결제 ID)</td>
+          <td class="pay-date">2022-05-09</td>
+          <td class="review">
+            <button class="review-btn">리뷰 쓰기</button>
+          </td>
+        </tr>
+      </table>
+
+      <div id="shippingInfoTit">배송지 정보</div>
+      <div id="shippingInfoWrap">
+        <div class="shipping-info-inner">
+          <div class="shipping-info-tit">수령인</div>
+          <div class="shipping-info">(수령인)</div>
+        </div>
+
+        <div class="shipping-info-inner">
+          <div class="shipping-info-tit">수령인</div>
+          <div class="shipping-info">(수령인)</div>
+        </div>
+
+        <div class="shipping-info-inner">
+          <div class="shipping-info-tit">수령인</div>
+          <div class="shipping-info">(수령인)</div>
+        </div>
+      </div>
+
+      <div id="payInfoTit">결제 정보</div>
+      <div id="payInfoWrap">
+        <div class="pay-info-inner">
+          <div class="pay-info-tit">상품 금액</div>
+          <div class="pay-info">18000원</div>
+        </div>
+
+        <div class="pay-info-inner">
+          <div class="pay-info-tit">배송비</div>
+          <div class="pay-info">2000원</div>
+        </div>
+
+        <div class="pay-info-inner">
+          <div class="pay-info-tit">최종 결제 금액</div>
+          <div id="totalPrice">20000원</div>
+        </div>
+      </div>
+    </div>
+	</div>
+</html>
