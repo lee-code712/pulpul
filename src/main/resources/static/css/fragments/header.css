@@ -13,6 +13,10 @@ header {
   height: 100%;
 }
 
+#logo {
+	cursor: pointer;
+}
+
 #gnb {
   display: flex;
 }

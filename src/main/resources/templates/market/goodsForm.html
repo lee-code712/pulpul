@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+  layout:decorate="~{layout/default_layout}">
+
+  <th:block layout:fragment="css">
+    <link th:href="@{/css/fragments/header.css}" rel="stylesheet" />
+	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
+  	<link rel="stylesheet" th:href="@{/css/market/goodsForm.css}" >
+  </th:block>
+
+	<div layout:fragment="content">
+		<div id="pageWrap">
+      <div id="pageTit">상품 등록</div>
+
+      <table>
+        <tr>
+          <td class="text-name">상품명</td>
+          <td><input type="text" placeholder="상품명을 입력하세요." /></td>
+        </tr>
+        <tr>
+          <td class="text-name">상품 설명</td>
+          <td>
+            <textarea placeholder="상품 설명을 작성해주세요."></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-name">식물 크기</td>
+          <td><input type="text" placeholder="예) 10, 20 (가로, 세로)" /></td>
+        </tr>
+        <tr>
+          <td class="text-name">연관태그</td>
+          <td><input type="text" placeholder="예) 다육이, 식물" /></td>
+        </tr>
+        <tr>
+          <td class="text-name">수량</td>
+          <td><input type="text" placeholder="예) 2" /></td>
+        </tr>
+        <tr>
+          <td class="text-name">판매가격</td>
+          <td><input type="text" placeholder="예) 8000" /></td>
+        </tr>
+        <tr>
+          <td class="text-name">배송비</td>
+          <td><input type="text" placeholder="예) 2000" /></td>
+        </tr>
+        <tr>
+          <td class="text-name">식물 사진</td>
+          <td>
+            <input type="file" id="fileWrap" />
+          </td>
+        </tr>
+
+        <tr>
+          <td class="text-name">공개 여부</td>
+          <td>
+            <form>
+              <label>
+                <input type="radio" id="dark" name="radio" checked />
+                <span>공개</span>
+              </label>
+              <label>
+                <input type="radio" id="light" name="radio" />
+                <span>비공개</span>
+              </label>
+            </form>
+          </td>
+        </tr>
+      </table>
+
+      <div id="btnWrap">
+        <button id="cancelBtn">취소</button>
+        <button id="saveBtn">등록</button>
+      </div>
+    </div>
+	</div>
+</html>

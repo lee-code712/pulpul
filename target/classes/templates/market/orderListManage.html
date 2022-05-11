@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+  layout:decorate="~{layout/default_layout}">
+
+  <th:block layout:fragment="css">
+    <link th:href="@{/css/fragments/header.css}" rel="stylesheet" />
+	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
+  	<link rel="stylesheet" th:href="@{/css/market/orderListManage.css}" >
+  </th:block>
+
+	<div layout:fragment="content">
+		<div id="pageWrap">
+      <div id="pageTit">상품 관리</div>
+       <div id="menu">
+		    <div><a href="/market/view" class="list">마켓 정보</a></div>
+		    <div>|</div>
+		    <div><a href="/market/goods/list" class="list-on">상품 관리</a></div>
+		    <div>|</div>
+		    <div><a class="list">공유 물품 관리</a></div>
+		  </div>
+
+      <div id="searchWrap">
+        <img src="/images/searchWayBill.svg" />
+        <input
+          type="text"
+          placeholder="운송장 번호를 검색해주세요."
+          id="wayBill"
+        />
+      </div>
+
+      <table>
+        <tr>
+          <th class="order-num">주문 번호</th>
+          <th class="order-date">주문일</th>
+          <th class="order-price">총 가격</th>
+          <th class="order-status">주문 상태</th>
+          <th class="order-waybill">운송장 번호</th>
+        </tr>
+
+        <tr class="table-disabled">
+          <td>192393-190201-00</td>
+          <td>2022-03-31</td>
+          <td>8000원</td>
+          <td>결제확인중</td>
+          <td>
+            <div id="wayBillBox">
+              <input type="text" id="perWayBill" />
+              <button id="wayBillBtn">
+                <img src="/images/checkBtn.svg" />
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a href="/market/orderDetailManage" class="order-num-hover">192393-190201-00</a></td>
+          <td>2022-03-31</td>
+          <td>8000원</td>
+          <td>결제확인중</td>
+          <td>
+            <div id="wayBillBox">
+              <input type="text" id="perWayBill" />
+              <button id="wayBillBtn">
+                <img src="/images/checkBtn.svg" />
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a href="/market/orderDetailManage" class="order-num-hover">192393-190201-00</a></td>
+          <td>2022-03-31</td>
+          <td>8000원</td>
+          <td>결제확인중</td>
+          <td>
+            <div id="wayBillBox">
+              <input type="text" id="perWayBill" />
+              <button id="wayBillBtn">
+                <img src="/images/checkBtn.svg" />
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td><a href="/market/orderDetailManage" class="order-num-hover">192393-190201-00</a></td>
+          <td>2022-03-31</td>
+          <td>8000원</td>
+          <td>결제확인중</td>
+          <td>
+            <div id="wayBillBox">
+              <input type="text" id="perWayBill" />
+              <button id="wayBillBtn">
+                <img src="/images/checkBtn.svg" />
+              </button>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <div id="totalPriceWrap">
+        <div id="totalPriceInner">
+          <span id="totalPriceTit">판매 총 금액</span>
+          <span id="totalPrice">16000원</span>
+        </div>
+      </div>
+    </div>
+	</div>
+</html>
