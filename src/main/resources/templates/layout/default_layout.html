@@ -1,10 +1,11 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" 
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> 
 	
-	<th:block layout:fragment="head"></th:block> 
-	<div> 
-		<div layout:fragment="header"></div> 
-		<div layout:fragment="content"></div> 
-		<div layout:fragment="footer"></div> 
-	</div> 
+	<head th:replace="fragments/head :: headFragment"></head>
+	
+	<th:block layout:fragment="script"></th:block>
+
+	<header th:replace="fragments/header :: headerFragment"></header> 
+	<div layout:fragment="content"></div> 
+	<footer th:replace="fragments/footer :: footerFragment"></footer> 
 </html>

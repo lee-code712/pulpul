@@ -1,6 +1,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org">
-
-	<header>header</header>
-
+  
+  <header th:fragment="headerFragment">
+	  <div id="headerInner">
+	    <img th:src="@{/images/logo.svg}" />
+	    
+	    <ul id="gnb">
+	      <li><a>마켓관리</a></li>
+	      <li><a>식물조회</a></li>
+	      <li><a>물품대여</a></li>
+	      <li><a>마이페이지</a></li>
+	      
+	      <li>
+	        <div id="basketIconWrap">
+	        	<img th:src="@{/images/basketIcon.svg}" />
+	          <div id="basketCnt">3</div>
+	        </div>
+	      </li>
+	      
+	      <li>
+	        <div id="alertIconWrap">
+	          <img th:src="@{/images/alertIcon.svg}" />
+	          <div id="alertCnt">3</div>
+	        </div>
+	      </li>
+	      
+	      <li><button id="loginBtn">sign in</button></li>
+	    </ul>
+	  </div>
+	</header>
 </html>
