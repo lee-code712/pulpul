@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+  layout:decorate="~{layout/default_layout}">
+
+  <th:block layout:fragment="css">
+    <link th:href="@{/css/fragments/header.css}" rel="stylesheet" />
+	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
+  	<link rel="stylesheet" th:href="@{/css/lookup/shareThingList.css}" >
+  </th:block>
+
+	<div layout:fragment="content">
+		<div id="pageWrap">
+      <div id="pageTit">물품 대여에서<br />관리 용품들을 구경해 보세요.</div>
+
+      <div id="searchWrap">
+        <img src="/images/searchWayBill.svg" />
+        <input
+          type="text"
+          placeholder="관리 용품 이름을 검색해 주세요."
+          id="itemSearch"
+        />
+      </div>
+
+      <div id="itemWrap">
+        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
+          <img src="/images/mediumShareThing.svg" />
+          <div class="item-name">### 물품</div>
+
+          <div class="waitingWrap">
+            <img src="/images/waiting.svg" />
+            <div class="waiting">2</div>
+          </div>
+
+          <div class="rental-ok">대여 가능</div>
+        </div>
+
+        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
+          <img src="/images/mediumShareThing.svg" />
+          <div class="item-name">### 물품</div>
+
+          <div class="waitingWrap">
+            <img src="/images/waiting.svg" />
+            <div class="waiting">2</div>
+          </div>
+
+          <div class="rental-notok">대여 불가</div>
+        </div>
+
+        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
+          <img src="/images/mediumShareThing.svg" />
+          <div class="item-name">### 물품</div>
+
+          <div class="waitingWrap">
+            <img src="/images/waiting.svg" />
+            <div class="waiting">2</div>
+          </div>
+
+          <div class="rental-ok">대여 가능</div>
+        </div>
+
+        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
+          <img src="/images/mediumShareThing.svg" />
+          <div class="item-name">### 물품</div>
+
+          <div class="waitingWrap">
+            <img src="/images/waiting.svg" />
+            <div class="waiting">2</div>
+          </div>
+
+          <div class="rental-notok">대여 불가</div>
+        </div>
+
+        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
+          <img src="/images/mediumShareThing.svg" />
+          <div class="item-name">### 물품</div>
+
+          <div class="waitingWrap">
+            <img src="/images/waiting.svg" />
+            <div class="waiting">2</div>
+          </div>
+
+          <div class="rental-ok">대여 가능</div>
+        </div>
+
+        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
+          <img src="/images/mediumShareThing.svg" />
+          <div class="item-name">### 물품</div>
+
+          <div class="waitingWrap">
+            <img src="/images/waiting.svg" />
+            <div class="waiting">2</div>
+          </div>
+
+          <div class="rental-notok">대여 불가</div>
+        </div>
+
+        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
+          <img src="../images/mediumShareThing.svg" />
+          <div class="item-name">### 물품</div>
+
+          <div class="waitingWrap">
+            <img src="/images/waiting.svg" />
+            <div class="waiting">2</div>
+          </div>
+
+          <div class="rental-ok">대여 가능</div>
+        </div>
+
+        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
+          <img src="/images/mediumShareThing.svg" />
+          <div class="item-name">### 물품</div>
+
+          <div class="waitingWrap">
+            <img src="/images/waiting.svg" />
+            <div class="waiting">2</div>
+          </div>
+
+          <div class="rental-notok">대여 불가</div>
+        </div>
+      </div>
+    </div>
+	</div>
+</html>

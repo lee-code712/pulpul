@@ -47,7 +47,7 @@ public class LookupController {
 	/*
 	 * 마켓 조회
 	 */
-	@GetMapping("/marekt/goodsList")
+	@GetMapping("/market/goodsList")
 	public String marketGoodsList(){
 		//마켓 페이지
 		return "lookup/market";
@@ -56,7 +56,7 @@ public class LookupController {
 	/*
 	 * 마켓 조회
 	 */
-	@GetMapping("/marekt/shareThingList")
+	@GetMapping("/market/shareThingList")
 	public String marketshareThingList(){
 		//마켓 페이지
 		return "lookup/market";

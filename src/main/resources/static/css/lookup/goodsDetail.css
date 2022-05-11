@@ -1,0 +1,214 @@
+#pageWrap {
+  margin: 80px auto;
+  width: 1194px;
+}
+
+#infoCover {
+  display: flex;
+  justify-content: space-between;
+  margin: 80px auto;
+  width: 1194px;
+}
+
+#itemImg {
+  width: 596px;
+  height: 398px;
+  object-fit: cover;
+}
+
+#info {
+  width: 518px;
+}
+
+#tagWrap {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.tag {
+  font-size: 14px;
+  color: #93c0b5;
+}
+
+#itemName {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: medium;
+}
+
+#itemInfo {
+  margin-bottom: 40px;
+  font-size: 14px;
+  color: #333333;
+}
+
+#priceWrap,
+#itemNumWrap,
+#itemSizeWrap {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+#priceTit,
+#price,
+#itemNumTit,
+#itemSizeTit,
+#itemSize {
+  font-size: 14px;
+}
+
+#itemNumInput {
+  width: 60px;
+  height: 20px;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  text-align: center;
+}
+
+#itemSizeWrap {
+  margin-bottom: 40px;
+}
+
+#totalPriceWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#totalPriceTit {
+  font-size: 18px;
+  font-weight: medium;
+}
+
+#calWrap {
+  display: flex;
+  gap: 4px;
+  margin: 40px 0px;
+}
+
+#itemPriceWrap,
+#itemQuantityWrap,
+#shippingWrap {
+  display: flex;
+  gap: 4px;
+}
+
+#itemPrice,
+#itemQuantity,
+#shipping {
+  font-size: 12px;
+}
+
+#itemPriceTit,
+#itemQuantityTit,
+#shippingTit {
+  font-size: 12px;
+  color: #c4c4c4;
+}
+
+#mul {
+  font-size: 12px;
+  color: #93c0b5;
+}
+
+#totalPrice {
+  font-size: 18px;
+  color: #93c0b5;
+}
+
+.hr-dotted {
+  border: 0px;
+  border-top: 2px dotted #c4c4c4;
+}
+
+#btnWrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+#cartBtn {
+  width: 240px;
+  height: 50px;
+  background-color: #93c0b5;
+  color: white;
+  border: 1px solid #93c0b5;
+  cursor: pointer;
+}
+
+#cancelBtn {
+  width: 240px;
+  height: 50px;
+  background-color: white;
+  border: 1px solid #535353;
+  color: #535353;
+  cursor: pointer;
+}
+
+#marketLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+  font-size: 12px;
+  color: #9493c0;
+  cursor: pointer;
+}
+
+#reviewHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 60px;
+}
+
+#ratingTotalWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#ratingTotal,
+#rating {
+  font-size: 14px;
+  color: #93c0b5;
+}
+
+#reviewBox {
+  margin-top: 40px;
+}
+
+#reviewContent {
+  margin-bottom: 20px;
+}
+
+#reviewWrap {
+  display: flex;
+  gap: 20px;
+}
+
+#ratingWrap {
+  display: flex;
+  gap: 8px;
+}
+
+#reviewerWrap {
+  display: flex;
+  gap: 14px;
+}
+
+#reviewer {
+  font-size: 12px;
+  color: #535353;
+}
+
+#reviewDate {
+  font-size: 12px;
+  color: #c4c4c4;
+}
+
+#review {
+  margin-bottom: 40px;
+  font-size: 14px;
+}
