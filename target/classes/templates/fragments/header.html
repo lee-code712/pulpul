@@ -3,6 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org">
   
+  <script th:src="@{/js/fragments/header.js}"></script>
+  
   <header th:fragment="headerFragment">
 	  <div id="headerInner">
 	    <img th:src="@{/images/logo.svg}" />
@@ -27,7 +29,7 @@
 	        </div>
 	      </li>
 	      
-	      <li><button id="loginBtn">sign in</button></li>
+	      <li><button id="loginBtn" onclick="location.href='/member/login'">sign in</button></li>
 	    </ul>
 	  </div>
 	</header>

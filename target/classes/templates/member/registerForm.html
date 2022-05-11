@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+  <th:block layout:fragment="css">
+  	<link rel="stylesheet" th:href="@{/css/member/registerForm.css}" >
+  </th:block>
+
+	<div layout:fragment="content">
+		<div id="joinPageWrap">
+		  <div id="joinText">
+		    <div id="joinTit">회원가입</div>
+		    <div id="joinSubTit">회원정보를 입력하세요.</div>
+		  </div>
+		
+		  <table>
+		    <tr>
+		      <td class="text-name">아이디<span>*</span></td>
+		      <td><input type="text" placeholder="아이디" /></td>
+		    </tr>
+		    <tr>
+		      <td class="text-name">비밀번호<span>*</span></td>
+		      <td><input type="text" placeholder="비밀번호" /></td>
+		    </tr>
+		    <tr>
+		      <td class="text-name">비밀번호 확인<span>*</span></td>
+		      <td><input type="text" placeholder="비밀번호 확인" /></td>
+		    </tr>
+		    <tr>
+		      <td class="text-name">이름<span>*</span></td>
+		      <td><input type="text" placeholder="이름" /></td>
+		    </tr>
+		    <tr>
+		      <td class="text-name">생년월일<span>*</span></td>
+		      <td>
+		        <input type="text" placeholder="생년월일 (8자리로 입력해주세요.)" />
+		      </td>
+		    </tr>
+		    <tr>
+		      <td class="text-name">이메일<span>*</span></td>
+		      <td><input type="text" placeholder="이메일" /></td>
+		    </tr>
+		    <tr>
+		      <td class="text-name">연락처<span>*</span></td>
+		      <td>
+		        <input type="text" placeholder="연락처 (숫자만 입력해주세요." />
+		      </td>
+		    </tr>
+		    <tr>
+		      <td class="text-name">주소<span>*</span></td>
+		      <td>
+		        <div id="addressText">
+		          <input type="text" placeholder="우편번호" />
+		          <input type="text" placeholder="주소" />
+		          <input type="text" placeholder="상세주소" />
+		        </div>
+		      </td>
+		    </tr>
+		  </table>
+		
+		  <div id="btnWrap">
+		    <button id="joinCancelBtn">회원가입 취소</button>
+		    <button id="joinBtn">회원가입</button>
+		  </div>
+		</div>
+	</div>
+</html>

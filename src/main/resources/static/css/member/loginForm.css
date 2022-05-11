@@ -1,0 +1,65 @@
+#loginWrap {
+  margin: 200px auto;
+  width: 500px;
+  min-height: 100vh;
+}
+
+#loginTit {
+  margin-bottom: 60px;
+  font-size: 24px;
+  font-weight: medium;
+  text-align: center;
+}
+
+#loginTit:after {
+  content: "";
+  display: block;
+  margin: 20px auto;
+  width: 50px;
+  border-bottom: 4px solid #93c0b5;
+}
+
+.text-label {
+  font-size: 14px;
+  color: #535353;
+}
+
+#loginId,
+#loginPwd {
+  margin: 14px 0px 20px 0px;
+  padding: 0px 20px;
+  width: 460px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #f3f3f4;
+  font-size: 14px;
+  border: none;
+}
+
+#loginId:focus,
+#loginPwd:focus {
+  outline-color: #93c0b5;
+}
+
+#loginBtn {
+  margin: 40px 0px;
+  width: 500px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #93c0b5;
+  font-size: 14px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+#askJoin {
+  font-size: 12px;
+  color: #535353;
+}
+
+#askJoin > a {
+  margin-left: 14px;
+  color: #93c0b5;
+  cursor: pointer;
+}
