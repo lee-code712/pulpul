@@ -8,6 +8,12 @@
   font-weight: medium;
 }
 
+#pageSubTit {
+	margin: 12px 0px 20px 0px;
+	font-size: 14px;
+	color: #c4c4c4;
+}
+
 #searchWrap {
   display: flex;
   align-items: center;
@@ -15,8 +21,8 @@
   margin: 60px 0px 100px 0px;
   padding-left: 20px;
   width: 1174px;
-  height: 50px;
-  border-bottom: 1px solid #93c0b5;
+  height: 80px;
+  border-bottom: 1px solid #463B37;
 }
 
 #itemSearch {
@@ -29,22 +35,32 @@
   display: inline-flex;
   flex-wrap: wrap;
   width: 1194px;
-  gap: 14px;
+  gap: 38px;
+}
+
+.item-img-size {
+	width: 270px;
+	height: 270px;
+	background-color: #F1F1F1;
+	object-fit: cover;	
+}
+
+.item {
+	height: 400px;
 }
 
 .item:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   transition: 0.5s;
   cursor: pointer;
 }
 
 .item-name {
+	margin: 20px 0px 10px 0px;
   font-size: 18px;
-  text-align: center;
 }
 
 .item-price {
-  font-size: 18px;
+  font-size: 14px;
   color: #535353;
-  text-align: center;
 }
