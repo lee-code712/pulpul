@@ -21,129 +21,125 @@
       <div id="point">p 1000</div>
 
 			<!-- member/mypage/orderlist -->
-      <div id="menu">
-        <div><a href="/member/mypage/orderList" class="list-on">구매 목록</a></div>
-        |
-        <div><a href="/member/mypage/borrowList" class="list">대여 목록</a></div>
-      </div>
-
-      <table>
-        <tr>
-          <th class="order-num">주문 번호</th>
-          <th class="order-date">주문일</th>
-          <th class="order-market">주문한 상품상점</th>
-          <th class="waybill">운송장 번호</th>
-          <th class="total-price">총 가격</th>
-          <th class="order-status">주문 상태</th>
-          <th class="cancel-btn"></th>
-        </tr>
-
-        <tr>
-          <td class="order-num"><a href="/order/orderDetail" class="order-num-hover">20201010-0292-00</a></td>
-          <td class="order-date">2022-05-09</td>
-          <td class="order-market">풀풀 상점</td>
-          <td class="waybill">운송장 번호</td>
-          <td class="total-price">총 가격</td>
-          <td class="order-status">결제확인 중</td>
-          <td class="cancel-btn">
-            <button class="cancelBtn-on">주문 취소</button>
-          </td>
-        </tr>
-
-        <tr class="tb-disable">
-          <td class="order-num">20201010-0292-00</td>
-          <td class="order-date">2022-05-09</td>
-          <td class="order-market">풀풀 상점</td>
-          <td class="waybill">운송장 번호</td>
-          <td class="total-price">총 가격</td>
-          <td class="order-status">결제확인 중</td>
-          <td class="cancel-btn">
-            <button class="cancelBtn-noton">주문 취소</button>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="order-num"><a href="/order/orderDetail" class="order-num-hover">20201010-0292-00</a></td>
-          <td class="order-date">2022-05-09</td>
-          <td class="order-market">풀풀 상점</td>
-          <td class="waybill">운송장 번호</td>
-          <td class="total-price">총 가격</td>
-          <td class="order-status">결제확인 중</td>
-          <td class="cancel-btn">
-            <button class="cancelBtn-on">주문 취소</button>
-          </td>
-        </tr>
-      </table>
-
-      <button id="shoppingBtn" onclick="location.href='/lookup/goodsList'">쇼핑 계속하기</button>
+			<th:block th:if="${#httpServletRequest.requestURI} == '/member/mypage/orderList'">
+	      <div id="menu">
+	        <div><a href="/member/mypage/orderList" class="list-on">구매 목록</a></div>
+	        |
+	        <div><a href="/member/mypage/borrowList" class="list">대여 목록</a></div>
+	      </div>
+	
+	      <table>
+	        <tr>
+	          <th class="order-num">주문 번호</th>
+	          <th class="order-date">주문일</th>
+	          <th class="order-market">주문한 상품상점</th>
+	          <th class="waybill">운송장 번호</th>
+	          <th class="total-price">총 가격</th>
+	          <th class="order-status">주문 상태</th>
+	          <th class="cancel-btn"></th>
+	        </tr>
+	
+	        <tr>
+	          <td class="order-num"><a href="/order/orderDetail" class="order-num-hover">20201010-0292-00</a></td>
+	          <td class="order-date">2022-05-09</td>
+	          <td class="order-market">풀풀 상점</td>
+	          <td class="waybill">운송장 번호</td>
+	          <td class="total-price">총 가격</td>
+	          <td class="order-status">결제확인 중</td>
+	          <td class="cancel-btn">
+	            <button class="cancelBtn-on">주문 취소</button>
+	          </td>
+	        </tr>
+	
+	        <tr class="tb-disable">
+	          <td class="order-num">20201010-0292-00</td>
+	          <td class="order-date">2022-05-09</td>
+	          <td class="order-market">풀풀 상점</td>
+	          <td class="waybill">운송장 번호</td>
+	          <td class="total-price">총 가격</td>
+	          <td class="order-status">결제확인 중</td>
+	          <td class="cancel-btn">
+	            <button class="cancelBtn-noton">주문 취소</button>
+	          </td>
+	        </tr>
+	
+	        <tr>
+	          <td class="order-num"><a href="/order/orderDetail" class="order-num-hover">20201010-0292-00</a></td>
+	          <td class="order-date">2022-05-09</td>
+	          <td class="order-market">풀풀 상점</td>
+	          <td class="waybill">운송장 번호</td>
+	          <td class="total-price">총 가격</td>
+	          <td class="order-status">결제확인 중</td>
+	          <td class="cancel-btn">
+	            <button class="cancelBtn-on">주문 취소</button>
+	          </td>
+	        </tr>
+	      </table>
+	
+	      <button id="shoppingBtn" onclick="location.href='/lookup/goodsList'">쇼핑 계속하기</button>
+      </th:block>
       
-      <!-- member/mypage/shareThing -->
-      <div id="pageWrap">
-      <div id="pageTit">마이페이지</div>
-      <div id="pageSubTit">Mypage</div>
+      <!-- member/mypage/borrowList -->
+      <th:block th:if="${#httpServletRequest.requestURI} == '/member/mypage/borrowList'">
 
-      <img src="/images/infoBtn.svg" id="infoBtn" onclick="location.href='/member/view'" />
-      <div id="memberName">회원 이름</div>
-      <div id="point">p 1000</div>
-
-      <div id="menu">
-        <div><a href="/member/mypage/orderList" class="list">구매 목록</a></div>
-        |
-        <div><a href="/member/mypage/borrowList" class="list-on">대여 목록</a></div>
-      </div>
-
-      <table>
-        <tr>
-          <th class="sharething-img"></th>
-          <th class="sharething-info">상품 정보</th>
-          <th class="sharething-status">대여 상태</th>
-          <th class="sharething-waybill">운송자 번호</th>
-          <th class="sharething-date">대여 기간</th>
-          <th class="sharething-btn"></th>
-        </tr>
-
-        <tr>
-          <td class="sharething-img">
-            <img src="/images/smallShareThing.svg" />
-          </td>
-          <td class="sharething-info">### 공유 물품</td>
-          <td class="sharething-status">대여</td>
-          <td class="sharething-waybill">209302-1131-00</td>
-          <td class="sharething-date"><input type="text" placeholder="datepicker 사용하기"> ~ <input type="text" placeholder="datepicker 사용하기"></td>
-          <td class="sharething-btn">
-            <button class="extension-btn">연장하기</button>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="sharething-img">
-            <img src="/images/smallShareThing.svg" />
-          </td>
-          <td class="sharething-info">### 공유 물품</td>
-          <td class="sharething-status">대여</td>
-          <td class="sharething-waybill">209302-1131-00</td>
-          <td class="sharething-date"><input type="text" placeholder="datepicker 사용하기"> ~ <input type="text" placeholder="datepicker 사용하기"></td>
-          <td class="sharething-btn">
-            <button class="rental-btn">대여 신청</button>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="sharething-img">
-            <img src="/images/smallShareThing.svg" />
-          </td>
-          <td class="sharething-info">### 공유 물품</td>
-          <td class="sharething-status">대여</td>
-          <td class="sharething-waybill">209302-1131-00</td>
-          <td class="sharething-date">2022-03-02 ~ 2022-03-21</td>
-          <td class="sharething-btn">
-            <button class="rental-btn-disable">대여 신청</button>
-          </td>
-        </tr>
-      </table>
-
-      <button id="shoppingBtn" onclick="location.href='/lookup/goodsList'">쇼핑 계속하기</button>
-    </div>
-    </div>
+	      <div id="menu">
+	        <div><a href="/member/mypage/orderList" class="list">구매 목록</a></div>
+	        |
+	        <div><a href="/member/mypage/borrowList" class="list-on">대여 목록</a></div>
+	      </div>
+	
+	      <table>
+	        <tr>
+	          <th class="sharething-img"></th>
+	          <th class="sharething-info">상품 정보</th>
+	          <th class="sharething-status">대여 상태</th>
+	          <th class="sharething-waybill">운송자 번호</th>
+	          <th class="sharething-date">대여 기간</th>
+	          <th class="sharething-btn"></th>
+	        </tr>
+	
+	        <tr>
+	          <td class="sharething-img">
+	            <img src="/images/smallShareThing.svg" />
+	          </td>
+	          <td class="sharething-info">### 공유 물품</td>
+	          <td class="sharething-status">대여</td>
+	          <td class="sharething-waybill">209302-1131-00</td>
+	          <td class="sharething-date"><input type="text" placeholder="datepicker 사용하기"> ~ <input type="text" placeholder="datepicker 사용하기"></td>
+	          <td class="sharething-btn">
+	            <button class="extension-btn">연장하기</button>
+	          </td>
+	        </tr>
+	
+	        <tr>
+	          <td class="sharething-img">
+	            <img src="/images/smallShareThing.svg" />
+	          </td>
+	          <td class="sharething-info">### 공유 물품</td>
+	          <td class="sharething-status">대여</td>
+	          <td class="sharething-waybill">209302-1131-00</td>
+	          <td class="sharething-date"><input type="text" placeholder="datepicker 사용하기"> ~ <input type="text" placeholder="datepicker 사용하기"></td>
+	          <td class="sharething-btn">
+	            <button class="rental-btn">대여 신청</button>
+	          </td>
+	        </tr>
+	
+	        <tr>
+	          <td class="sharething-img">
+	            <img src="/images/smallShareThing.svg" />
+	          </td>
+	          <td class="sharething-info">### 공유 물품</td>
+	          <td class="sharething-status">대여</td>
+	          <td class="sharething-waybill">209302-1131-00</td>
+	          <td class="sharething-date">2022-03-02 ~ 2022-03-21</td>
+	          <td class="sharething-btn">
+	            <button class="rental-btn-disable">대여 신청</button>
+	          </td>
+	        </tr>
+	      </table>
+	
+	      <button id="shoppingBtn" onclick="location.href='/lookup/goodsList'">쇼핑 계속하기</button>
+	    </div>
+    </th:block>
 	</div>
 </html>
