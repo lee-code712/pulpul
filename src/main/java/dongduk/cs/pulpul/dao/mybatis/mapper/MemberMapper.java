@@ -1,9 +1,11 @@
 package dongduk.cs.pulpul.dao.mybatis.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import dongduk.cs.pulpul.domain.Member;
 
+@Mapper
 public interface MemberMapper {
 	
 	Member selectMemberById(String memberId);

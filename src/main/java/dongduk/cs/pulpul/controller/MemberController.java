@@ -1,14 +1,38 @@
 package dongduk.cs.pulpul.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import dongduk.cs.pulpul.domain.Member;
+import dongduk.cs.pulpul.service.MemberService;
+import dongduk.cs.pulpul.service.LoginValidator;
+import dongduk.cs.pulpul.service.exception.LoginException;
 
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-
+	
+	private final MemberService memberService;
+	
+	@Autowired 
+	public MemberController(MemberService memberService) {
+		this.memberService = memberService;
+	}
+	
+	@Autowired
+	private LoginValidator loginValidator;
+	public void setValidator(LoginValidator loginValidator) {
+		this.loginValidator = loginValidator;
+	}
 
 	/* 
 	 * 회원 가입
@@ -38,13 +62,33 @@ public class MemberController {
 	}
 	
 	@PostMapping("/login")
-	public void login() {
+	public String login(@ModelAttribute("command") Member member, Errors result, HttpServletRequest req, RedirectAttributes rttr) {
 		/*
 		 //성공
 		 return "redirect:/home";
 		 //실패 - 로그인 폼
 		 return "member/loginForm";
 		 */
+		
+		loginValidator.validate(member, result);
+		if(result.hasErrors()) {
+			return "member/loginForm";
+		}
+		
+		try {
+			member = memberService.login(member);
+			
+			HttpSession session = req.getSession();
+			session.setAttribute("id", member.getId());
+			
+			return "redirect:/home";
+		} catch (LoginException e) {
+			e.printStackTrace(); 
+			
+			rttr.addFlashAttribute("loginFailed", true); 
+			rttr.addFlashAttribute("exception", e.getMessage());
+			return "member/loginForm";
+		}
 	}
 	
 	/*
@@ -70,7 +114,9 @@ public class MemberController {
 	 * 로그아웃
 	 */
 	@GetMapping("/logout")
-	public String logout() {
+	public String logout(HttpServletRequest req, RedirectAttributes rttr) {
+		HttpSession session = req.getSession();
+		session.invalidate();
 		
 		return "redirect:/home";
 	}
