@@ -8,18 +8,18 @@
 	<link rel="stylesheet" th:href="@{/css/member/loginForm.css}">
 </th:block>
 
-<form action="/member/login" method="post">
+<form action="/member/login" method="post" th:object="${member}">
 	<div layout:fragment="content">
 		<div id="loginWrap">
 			<div id="loginTit">로그인</div>
 
 			<label class="text-label">아이디</label> <br />
 			<input type="text" placeholder="아이디" id="loginId" name="id" /> <br />
-			<!-- <div class="invalid-feedback" th:errors="*{member}"> </div> -->
+			<div class="invalid-feedback" th:errors="*{id}"> </div>
 			
 			<label class="text-label">비밀번호</label> <br />
 			<input type="text" placeholder="비밀번호" id="loginPwd" name="password" /> <br />
-			<!-- <div class="invalid-feedback" th:errors="*{member}"> </div>  -->
+			<div class="invalid-feedback" th:errors="*{password}"> </div>
 
 			<button type="submit" id="loginBtn">로그인</button>
 

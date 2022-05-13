@@ -34,6 +34,11 @@ public class MemberController {
 	public void setValidator(LoginValidator loginValidator) {
 		this.loginValidator = loginValidator;
 	}
+	
+	@ModelAttribute("member")
+	public Member formBacking() {
+		return new Member();
+	}
 
 	/* 
 	 * 회원 가입
