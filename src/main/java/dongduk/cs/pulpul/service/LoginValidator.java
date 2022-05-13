@@ -16,7 +16,7 @@ public class LoginValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 		Member member = (Member) obj;
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "member.id", "ID_REQUIRED", "ID is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "member.password", "PASSWORD_REQUIRED", "Password is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required");
 	}
 }

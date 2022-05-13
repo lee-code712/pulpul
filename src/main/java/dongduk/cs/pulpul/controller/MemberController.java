@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -62,14 +63,14 @@ public class MemberController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@ModelAttribute("command") Member member, Errors result, HttpServletRequest req, RedirectAttributes rttr) {
+	public String login(@ModelAttribute("member") Member member, Errors result, Model model, HttpServletRequest req, RedirectAttributes rttr) {
 		/*
 		 //성공
 		 return "redirect:/home";
 		 //실패 - 로그인 폼
 		 return "member/loginForm";
 		 */
-		
+		model.addAttribute("member", member);
 		loginValidator.validate(member, result);
 		if(result.hasErrors()) {
 			return "member/loginForm";
