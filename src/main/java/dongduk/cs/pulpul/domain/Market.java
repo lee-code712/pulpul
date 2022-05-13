@@ -1,10 +1,13 @@
 package dongduk.cs.pulpul.domain;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class Market {
+@SuppressWarnings("serial")
+public class Market implements Serializable {
 
 	private int id; /*마켓 식별 번호*/
 	private String name; /*마켓 이름*/

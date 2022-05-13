@@ -1,4 +1,4 @@
-package dongduk.cs.pulpul.service;
+package dongduk.cs.pulpul.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

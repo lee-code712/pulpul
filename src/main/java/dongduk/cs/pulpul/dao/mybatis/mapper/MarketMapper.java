@@ -1,7 +1,10 @@
 package dongduk.cs.pulpul.dao.mybatis.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import dongduk.cs.pulpul.domain.Market;
 
+@Mapper
 public interface MarketMapper {
 	
 	Market selectMarketByMarketId(int marketId);

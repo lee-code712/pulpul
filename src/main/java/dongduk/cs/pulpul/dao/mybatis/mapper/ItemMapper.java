@@ -3,11 +3,13 @@ package dongduk.cs.pulpul.dao.mybatis.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.domain.ShareThing;
 
+@Mapper
 public interface ItemMapper {
 	
 	List<Goods> selectAllGoods();

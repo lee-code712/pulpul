@@ -4,14 +4,19 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
   layout:decorate="~{layout/default_layout}">
-
+  
   <th:block layout:fragment="css">
     <link th:href="@{/css/fragments/header.css}" rel="stylesheet" />
 	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
   	<link rel="stylesheet" th:href="@{/css/market/marketForm.css}" >
   </th:block>
-
+  
 	<div layout:fragment="content">
+		<script th:inline="javascript">
+  		console.log('데이터 확인');
+  		var market = [[${market}]];
+  		console.log(market);
+  	</script>
 		<div id="pageWrap">
 		  <div id="pageTit">마켓 관리</div>
 		  <div id="pageSubTit">마켓 정보</div>

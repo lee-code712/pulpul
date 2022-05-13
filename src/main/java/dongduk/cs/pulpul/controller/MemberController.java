@@ -15,8 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.service.MemberService;
-import dongduk.cs.pulpul.service.LoginValidator;
 import dongduk.cs.pulpul.service.exception.LoginException;
+import dongduk.cs.pulpul.validator.LoginValidator;
 
 @Controller
 @RequestMapping("/member")

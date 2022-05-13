@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dongduk.cs.pulpul.dao.mybatis.mapper.MarketMapper">
+
+	<!-- 마켓 id로 마켓 정보 조회 -->
+	<select id="selectMarketByMarketId" parameterType="int" resultType="Market">
+	    SELECT market_id AS id, name, intro, contactable_time AS contactableTime, policy, precaution, 
+	    	open_status AS openStatus, member_id AS "member.id", image_src AS imageUrl
+	    FROM market FULL OUTER JOIN image USING (member_id)
+	    WHERE market_id = #{marketId} OR category_id = 'MIMG'
+	</select>
+	
+	<!-- 회원 id로 마켓 정보 조회 -->
+	<select id="selectMarketByMemberId" parameterType="String" resultType="Market">
+    SELECT market_id AS id, name, intro, contactable_time AS contactableTime, policy, precaution, 
+    	open_status AS openStatus, member_id AS "member.id", image_src AS imageUrl
+    FROM market FULL OUTER JOIN image USING (member_id)
+    WHERE member_id = #{memberId} OR category_id = 'MIMG'
+	</select>
+	
+</mapper>

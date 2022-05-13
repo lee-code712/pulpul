@@ -1,20 +1,43 @@
 package dongduk.cs.pulpul.controller;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import dongduk.cs.pulpul.domain.Market;
+import dongduk.cs.pulpul.service.MarketService;
 
 @Controller
 @RequestMapping("/market")
 public class MarketController {
 
+	private final MarketService marketSvc;
+	
+	@Autowired
+	public MarketController(MarketService marketSvc) {
+		this.marketSvc = marketSvc;
+	}
+	
+	@ModelAttribute("market")
+	public Market formBacking() {
+		return new Market();
+	}
+	
 	/*
 	 * 마켓 관리 > 마켓 정보 조회
 	 */
 	@GetMapping("/view")
-	public String view() {
-		//마켓 정보 폼
+	public String view(@ModelAttribute("market") Market market, HttpSession session) {
+		String memberId = (String) session.getAttribute("id");
+		Market findMarket = marketSvc.getMarketByMember(memberId);
+		if (findMarket != null)
+			BeanUtils.copyProperties(findMarket, market);
 		return "market/marketForm";
 	}
 	

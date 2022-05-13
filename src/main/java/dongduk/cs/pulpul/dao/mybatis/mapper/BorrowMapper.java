@@ -2,11 +2,13 @@ package dongduk.cs.pulpul.dao.mybatis.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import dongduk.cs.pulpul.domain.Alert;
 import dongduk.cs.pulpul.domain.Borrow;
 
+@Mapper
 public interface BorrowMapper {
 
 	List<Borrow> selectBorrowReservationByMemberId(String memberId);

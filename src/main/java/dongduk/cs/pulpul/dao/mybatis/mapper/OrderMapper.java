@@ -3,11 +3,13 @@ package dongduk.cs.pulpul.dao.mybatis.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import dongduk.cs.pulpul.domain.Cart;
 import dongduk.cs.pulpul.domain.Order;
 
+@Mapper
 public interface OrderMapper {
 	
 	Cart selectCartByMemberId(String memberId);
