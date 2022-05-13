@@ -35,6 +35,11 @@ public class MarketController {
 	@GetMapping("/view")
 	public String view(@ModelAttribute("market") Market market, HttpSession session) {
 		String memberId = (String) session.getAttribute("id");
+		
+		if(memberId == null) {
+			return "redirect:/home";
+		}
+		
 		Market findMarket = marketSvc.getMarketByMember(memberId);
 		if (findMarket != null)
 			BeanUtils.copyProperties(findMarket, market);

@@ -20,6 +20,11 @@ public class HomeController {
 		HttpSession session = req.getSession();
 		String id = (String) session.getAttribute("id");
 		
+		// 로그인한 상태인지 확인
+		if(id == null) {
+			mav.addObject("isNotLogined", true);
+		}
+		
 		mav.setViewName("home");
 		
 		return mav;
