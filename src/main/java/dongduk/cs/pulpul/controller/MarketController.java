@@ -1,6 +1,7 @@
 package dongduk.cs.pulpul.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import dongduk.cs.pulpul.domain.Market;
 import dongduk.cs.pulpul.service.MarketService;
@@ -33,7 +36,9 @@ public class MarketController {
 	 * 마켓 관리 > 마켓 정보 조회
 	 */
 	@GetMapping("/view")
-	public String view(@ModelAttribute("market") Market market, HttpSession session) {
+	public String view(@ModelAttribute("market") Market market, 
+			HttpSession session) {
+		
 		String memberId = (String) session.getAttribute("id");
 		
 		if(memberId == null) {
@@ -44,13 +49,16 @@ public class MarketController {
 		if (findMarket != null)
 			BeanUtils.copyProperties(findMarket, market);
 		return "market/marketForm";
+		
 	}
 	
 	/*
 	 * 마켓 등록
 	 */ 
 	@PostMapping("/create")
-	public void create() {
+	public void create(@Valid @ModelAttribute("market") Market market, 
+			@RequestParam MultipartFile[] uploadFile) {
+		
 		/*
 		 //성공
 		 return "redirect:/market/view";

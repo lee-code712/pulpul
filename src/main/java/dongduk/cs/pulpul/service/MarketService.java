@@ -1,5 +1,7 @@
 package dongduk.cs.pulpul.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import dongduk.cs.pulpul.domain.Market;
 
 public interface MarketService {
@@ -11,7 +13,7 @@ public interface MarketService {
 	Market getMarketByMember(String memberId);
 	
 	// 마켓 생성
-	boolean makeMarket(Market market);
+	boolean makeMarket(Market market, MultipartFile[] uploadfile);
 	
 	// 마켓 정보 수정
 	boolean changeMarketInfo(Market market);
