@@ -39,11 +39,5 @@ public class MarketDaoImpl implements MarketDao {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
-	public boolean changeMarketImage(Market market) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 }

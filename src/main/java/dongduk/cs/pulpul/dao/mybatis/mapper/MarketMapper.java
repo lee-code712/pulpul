@@ -17,6 +17,4 @@ public interface MarketMapper {
 	
 	int updateMarket(Market market);
 	
-	int updateMarketImage(Market market);
-	
 }
