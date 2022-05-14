@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import dongduk.cs.pulpul.domain.Market;
 import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.service.MarketService;
+import dongduk.cs.pulpul.validator.MarketValidator;
 
 @Controller
 @RequestMapping("/market")
@@ -70,16 +71,16 @@ public class MarketController {
 	 */ 
 	@PostMapping("/create")
 	public String create(@ModelAttribute("market") Market market, Model model,
-			@RequestParam("report") MultipartFile uploadFile, BindingResult result) throws IOException {
+			/*@RequestParam("report") MultipartFile uploadFile,*/ BindingResult result) throws IOException {
 		
+		new MarketValidator().validate(market, result);
 		if (result.hasErrors())
 			return "market/marketForm";
-
-		boolean successed = marketSvc.makeMarket(market, uploadFile);
-		if (!successed) {
-			model.addAttribute("createFailed", true);
-			return "market/marketForm";
-		}
+		
+		/*
+		 * boolean successed = marketSvc.makeMarket(market, uploadFile); if (!successed)
+		 * { model.addAttribute("createFailed", true); return "market/marketForm"; }
+		 */
 		return "redirect:/market/view";
 		
 	}
@@ -89,16 +90,17 @@ public class MarketController {
 	 */
 	@PostMapping("/update")
 	public String update(@ModelAttribute("market") Market market, Model model,
-			@RequestParam("report") MultipartFile updateFile, BindingResult result) throws IOException {
+			/* @RequestParam("report") MultipartFile updateFile, */ BindingResult result) throws IOException {
 
+		new MarketValidator().validate(market, result);
 		if (result.hasErrors())
 			return "market/marketForm";
 		
-		boolean successed = marketSvc.changeMarketInfo(market, updateFile);
-		if (!successed) {
-			model.addAttribute("updateFailed", true);
-			return "market/marketForm";
-		}
+		/*
+		 * boolean successed = marketSvc.changeMarketInfo(market, updateFile); if
+		 * (!successed) { model.addAttribute("updateFailed", true); return
+		 * "market/marketForm"; }
+		 */
 		return "redirect:/market/view";
 	}
 	
