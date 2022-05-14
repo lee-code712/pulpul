@@ -28,7 +28,7 @@
 		    <div>|</div>
 		    <div><a href="/market/shareThing/list" class="list">공유 물품 관리</a></div>
 		  </div>
-		
+		<form action="/market/create" method="post" th:object="${market}" enctype="multipart/form-data">
 		  <table>
 		    <tr>
 		      <td class="text-name">마켓명</td>
@@ -38,12 +38,14 @@
 		      <td class="text-name">마켓 소개</td>
 		      <td><textarea placeholder="마켓 소개를 작성해주세요."></textarea></td>
 		    </tr>
+		    
 		    <tr>
 		      <td class="text-name">마켓 사진</td>
 		      <td>
-		        <input type="file" id="fileWrap" />
+		        <input type="file" id="fileWrap" name="report" />
 		      </td>
 		    </tr>
+		    
 		    <tr>
 		      <td class="text-name">연락 가능 시간</td>
 		      <td><input type="text" placeholder="예) 오후 1:00 ~ 오후 3:00" /></td>
@@ -63,7 +65,6 @@
 		    <tr>
 		      <td class="text-name">마켓 공개</td>
 		      <td>
-		        <form>
 		          <label>
 		            <input type="radio" id="dark" name="radio" checked />
 		            <span>공개</span>
@@ -78,8 +79,9 @@
 		  </table>
 		
 		  <div id="btnWrap">
-		    <button id="saveBtn">저장</button>
+		    <button type="submit" id="saveBtn">저장</button>
 		  </div>
+		  </form>
 		</div>
 	</div>
 </html>

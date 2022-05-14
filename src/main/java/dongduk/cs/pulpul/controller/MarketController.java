@@ -1,16 +1,23 @@
 package dongduk.cs.pulpul.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import dongduk.cs.pulpul.domain.Market;
@@ -19,7 +26,7 @@ import dongduk.cs.pulpul.service.MarketService;
 @Controller
 @RequestMapping("/market")
 public class MarketController {
-
+	
 	private final MarketService marketSvc;
 	
 	@Autowired
@@ -56,15 +63,14 @@ public class MarketController {
 	 * 마켓 등록
 	 */ 
 	@PostMapping("/create")
-	public void create(@Valid @ModelAttribute("market") Market market, 
-			@RequestParam MultipartFile[] uploadFile) {
+	public String create(@Valid @ModelAttribute("market") Market market, 
+			@RequestParam("report") MultipartFile[] uploadFile, BindingResult result) throws IOException {
 		
-		/*
-		 //성공
-		 return "redirect:/market/view";
-		 //실패
-		 return "market/marketForm";
-		 */
+		if (result.hasErrors())
+			return "redirect:/market/view";
+
+		boolean successed = marketSvc.makeMarket(market, uploadFile);
+		return "redirect:/market/view";
 	}
 	
 	/*
@@ -106,6 +112,5 @@ public class MarketController {
 		//공유물품 대여 상세 정보 페이지
 		return "market/shareThingBorrowManage";
 	}
-
 
 }
