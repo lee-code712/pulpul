@@ -19,4 +19,25 @@
     WHERE member_id = #{memberId} OR category_id = 'MIMG'
 	</select>
 	
+	<!-- 마켓 생성 -->
+	<insert id="insertMarket" parameterType="Market">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">SELECT market_seq.NEXTVAL FROM DUAL</selectKey>
+    INSERT INTO market (market_id, name, intro, contactable_time, policy, precaution, open_status, member_id)
+    VALUES (#{id}, #{name}, #{intro}, #{contactableTime}, #{policy}, #{precaution}, #{openStatus}, #{member.id})
+	</insert>
+	
+	<!-- 마켓 이미지 생성 -->
+	<insert id="insertMarketImage" parameterType="Market">
+    INSERT INTO image (image_src, member_id, category_id)
+    VALUES (#{imageUrl}, #{member.id}, 'MIMG')
+	</insert>
+	
+	<!-- 마켓 정보 수정 -->
+	<update id="updateMarket" parameterType="Market">
+    UPDATE market
+    SET name = #{name}, intro = #{intro}, contactable_time = #{contactableTime}, policy = #{policy}, 
+    	precaution = #{precaution}, open_status = #{openStatus}
+    WHERE market_id = #{id}
+	</update>
+	
 </mapper>

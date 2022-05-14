@@ -15,9 +15,9 @@ public interface MarketService {
 	Market getMarketByMember(String memberId);
 	
 	// 마켓 생성
-	boolean makeMarket(Market market, MultipartFile[] uploadfile) throws IOException;
+	boolean makeMarket(Market market, MultipartFile uploadfile) throws IOException;
 	
 	// 마켓 정보 수정
-	boolean changeMarketInfo(Market market);
+	boolean changeMarketInfo(Market market, MultipartFile uploadfile)  throws IOException;
 	
 }

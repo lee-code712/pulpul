@@ -23,14 +23,14 @@ public class MarketDaoImpl implements MarketDao {
 	}
 
 	@Override
-	public boolean createMarket(Market market) {
-		// TODO Auto-generated method stub
-		return false;
+	public int createMarket(Market market) {
+		return marketMapper.insertMarket(market);
 	}
 
 	@Override
 	public boolean createMarketImage(Market market) {
-		// TODO Auto-generated method stub
+		int ck = marketMapper.insertMarketImage(market);
+		if (ck > 0) return true;
 		return false;
 	}
 

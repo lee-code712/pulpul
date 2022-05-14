@@ -2,25 +2,24 @@ package dongduk.cs.pulpul.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import dongduk.cs.pulpul.domain.Market;
+import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.service.MarketService;
 
 @Controller
@@ -35,18 +34,25 @@ public class MarketController {
 	}
 	
 	@ModelAttribute("market")
-	public Market formBacking() {
-		return new Market();
+	public Market formBacking(HttpServletRequest request) {
+		Market market = new Market();
+		if (request.getMethod().equalsIgnoreCase("GET")) {
+			HttpSession session = request.getSession();
+			String memberId = (String) session.getAttribute("id");
+			Member member = new Member();
+			member.setId(memberId);	// market class에 memberId 저장
+			market.setMember(member);
+		}
+		return market;
 	}
 	
 	/*
 	 * 마켓 관리 > 마켓 정보 조회
 	 */
 	@GetMapping("/view")
-	public String view(@ModelAttribute("market") Market market, 
-			HttpSession session) {
+	public String view(@ModelAttribute("market") Market market) {
 		
-		String memberId = (String) session.getAttribute("id");
+		String memberId = market.getMember().getId();
 		
 		if(memberId == null) {
 			return "redirect:/home";
@@ -63,27 +69,37 @@ public class MarketController {
 	 * 마켓 등록
 	 */ 
 	@PostMapping("/create")
-	public String create(@Valid @ModelAttribute("market") Market market, 
-			@RequestParam("report") MultipartFile[] uploadFile, BindingResult result) throws IOException {
+	public String create(@ModelAttribute("market") Market market, Model model,
+			@RequestParam("report") MultipartFile uploadFile, BindingResult result) throws IOException {
 		
 		if (result.hasErrors())
-			return "redirect:/market/view";
+			return "market/marketForm";
 
 		boolean successed = marketSvc.makeMarket(market, uploadFile);
+		if (!successed) {
+			model.addAttribute("createFailed", true);
+			return "market/marketForm";
+		}
 		return "redirect:/market/view";
+		
 	}
 	
 	/*
 	 * 마켓 수정
 	 */
 	@PostMapping("/update")
-	public void update() {
-		/*
-		 //성공
-		 return "redirect:/market/view";
-		 //실패
-		 return "market/marketForm";
-		 */
+	public String update(@ModelAttribute("market") Market market, Model model,
+			@RequestParam("report") MultipartFile updateFile, BindingResult result) throws IOException {
+
+		if (result.hasErrors())
+			return "market/marketForm";
+		
+		boolean successed = marketSvc.changeMarketInfo(market, updateFile);
+		if (!successed) {
+			model.addAttribute("updateFailed", true);
+			return "market/marketForm";
+		}
+		return "redirect:/market/view";
 	}
 	
 	/*
