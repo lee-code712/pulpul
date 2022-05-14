@@ -15,10 +15,10 @@ public class MarketValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "intro", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "policy", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contactableTime", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "precaution", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotBlank");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "intro", "NotBlank");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "policy", "NotBlank");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contactableTime", "NotBlank");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "precaution", "NotBlank");
 	}
 }
