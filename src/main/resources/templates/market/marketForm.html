@@ -11,12 +11,16 @@
   	<link rel="stylesheet" th:href="@{/css/market/marketForm.css}" >
   </th:block>
   
+  	<th:block layout:fragment="script">
+  	<script th:src="@{/js/market.js}"></script>
+  </th:block>
+  
 	<div layout:fragment="content">
-		<script th:inline="javascript">
+		<!-- <script th:inline="javascript">
   		console.log('데이터 확인');
   		var market = [[${market}]];
   		console.log(market);
-  	</script>
+  	</script> -->
 		<div id="pageWrap">
 		  <div id="pageTit">마켓 관리</div>
 		  <div id="pageSubTit">마켓 정보</div>
@@ -28,58 +32,82 @@
 		    <div>|</div>
 		    <div><a href="/market/shareThing/list" class="list">공유 물품 관리</a></div>
 		  </div>
-		<form action="/market/create" method="post" th:object="${market}" enctype="multipart/form-data">
+		  <form th:object="${market}" method="post"> 
+		    <input type="hidden" th:field="*{id}">
 		  <table>
 		    <tr>
 		      <td class="text-name">마켓명</td>
-		      <td><input type="text" placeholder="마켓명을 입력하세요." /></td>
+		      <td><input type="text" placeholder="마켓명을 입력하세요." th:field="*{name}" /></td>
+		    </tr>
+		    <tr>
+		      <td></td>
+		      <td th:errors="*{name}"></td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">마켓 소개</td>
-		      <td><textarea placeholder="마켓 소개를 작성해주세요."></textarea></td>
+		      <td><textarea placeholder="마켓 소개를 작성해주세요." th:field="*{intro}"></textarea></td>
 		    </tr>
-		    
 		    <tr>
-		      <td class="text-name">마켓 사진</td>
-		      <td>
-		        <input type="file" id="fileWrap" name="report" />
-		      </td>
+		      <td></td>
+		      <td th:errors="*{intro}"></td>
 		    </tr>
-		    
+		    <tr id="isMarketImage">
+		      <td class="text-name">마켓 사진</td>
+		      <td th:text="${not #strings.isEmpty(market.imageUrl)} ? ${market.imageUrl} : '마켓 이미지가 없습니다.'"></td>  
+		    </tr>
+		    <tr>
+		      <td></td>
+		      <td><input type="file" id="fileWrap" accept=".png, .jpeg, .jpg" onchange="previewFile()"></td>
+		    </tr>
+		    <tr>
+		    	<td><img class="marketImage" th:unless="${#strings.isEmpty(market.imageUrl)}" th:src="${market.imageUrl}"></td>
+				<td><img class="marketImage" th:if="${#strings.isEmpty(market.imageUrl)}" src="" alt="사진을 추가해주세요."></td>
+		  	</tr>
 		    <tr>
 		      <td class="text-name">연락 가능 시간</td>
-		      <td><input type="text" placeholder="예) 오후 1:00 ~ 오후 3:00" /></td>
+		      <td><input type="text" placeholder="예) 오후 1:00 ~ 오후 3:00" th:field="*{contactableTime}"  /></td>
+		    </tr>
+		    <tr>
+		      <td></td>
+		      <td th:errors="*{contactableTime}"></td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">교환/반품/환불 정책</td>
 		      <td>
-		        <input type="text" placeholder="교환/반품/환불 정책을 입력해주세요." />
+		        <input type="text" placeholder="교환/반품/환불 정책을 입력해주세요." th:field="*{policy}" />
 		      </td>
+		    </tr>
+		    <tr>
+		      <td></td>
+		      <td th:errors="*{policy}"></td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">구매 전 유의사항</td>
 		      <td>
-		        <input type="text" placeholder="구매 전 유의사항을 입력해주세요." />
+		        <input type="text" placeholder="구매 전 유의사항을 입력해주세요." th:field="*{precaution}" />
 		      </td>
+		    </tr>
+		    <tr>
+		      <td></td>
+		      <td th:erros="*{precaution}"></td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">마켓 공개</td>
 		      <td>
 		          <label>
-		            <input type="radio" id="dark" name="radio" checked />
+		            <input th:attr="checked=*{openStatus.toString() == '1' ? 'true' : 'false'}" type="radio" id="dark" name="radio"/>
 		            <span>공개</span>
 		          </label>
 		          <label>
-		            <input type="radio" id="light" name="radio" />
+		            <input th:attr="checked=*{openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="radio" />
 		            <span>비공개</span>
 		          </label>
-		        </form>
 		      </td>
 		    </tr>
 		  </table>
-		
-		  <div id="btnWrap">
-		    <button type="submit" id="saveBtn">저장</button>
+		   <div id="btnWrap" class="marketBtn">
+		    <button th:if="*{id == 0}" onclick="javascript: form.action='/market/create';" id="saveBtn">저장</button>
+		    <button th:unless="*{id == 0}" onclick="javascript: form.action='/market/update';" id="saveBtn">수정</button>
 		  </div>
 		  </form>
 		</div>
