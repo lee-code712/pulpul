@@ -93,6 +93,8 @@ public class MemberController {
 			
 			rttr.addFlashAttribute("loginFailed", true); 
 			rttr.addFlashAttribute("exception", e.getMessage());
+			
+			result.reject("invalidIdOrPassword", new Object[] {member.getId()}, null);
 			return "member/loginForm";
 		}
 	}
