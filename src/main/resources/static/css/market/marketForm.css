@@ -138,6 +138,6 @@ input[type="radio"]:checked + span:before {
 	justify-content: flex-end;
 }
 .marketImage {
-	width: 80px;
-	height: 80px;
+	width: 100px;
+	height: 100px;
 }

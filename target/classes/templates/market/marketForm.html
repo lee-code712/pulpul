@@ -16,13 +16,13 @@
   </th:block>
   
 	<div layout:fragment="content">
-		<script th:inline="javascript">
+		<!-- <script th:inline="javascript">
   		console.log('데이터 확인');
   		var market = [[${market}]];
   		console.log(market);
   		if ([[${updateFailed}]])
   			console.log('업데이트 실패');
-  	</script>
+  	</script> -->
 		<div id="pageWrap">
 		  <div id="pageTit">마켓 관리</div>
 		  <div id="pageSubTit">마켓 정보</div>
@@ -59,7 +59,7 @@
 		    </tr>
 		    <tr>
 		      <td></td>
-		      <td><input type="file" id="fileWrap" accept=".png, .jpeg, .jpg" onchange="previewFile()" name="report"></td>
+		      <td><input type="file" id="fileWrap" accept=".jpg" onchange="previewFile()" name="report"></td>
 		    </tr>
 		    <tr>
 		    	<td><img class="marketImage" th:unless="${#strings.isEmpty(market.imageUrl)}" th:src="${market.imageUrl}"></td>
@@ -99,9 +99,7 @@
 		          <label>
 		            <input th:attr="checked=*{openStatus.toString() == '1' ? 'true' : 'false'}" type="radio" id="dark" name="openStatus" value="1" />
 		            <span>공개</span>
-		          </label>
-		          <label>
-		            <input th:attr="checked=*{openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="openStatus" value="0" />
+		             <input th:attr="checked=*{openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="openStatus" value="0"/>
 		            <span>비공개</span>
 		          </label>
 		      </td>
