@@ -69,7 +69,7 @@ public class MarketController {
 	@PostMapping("/create")
 	public String create(@Valid @ModelAttribute("market") Market market,  BindingResult result,
 			@RequestParam("report") MultipartFile uploadFile, Model model) throws IOException {
-
+		
 		if (result.hasErrors())
 			return "market/marketForm";
 		
