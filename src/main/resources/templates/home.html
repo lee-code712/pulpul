@@ -14,6 +14,13 @@
   <th:block layout:fragment="script">
   	<script th:src="@{/js/home.js}"></script>
   </th:block>
+  
+  <th:block layout:fragment="script">
+  	<script>
+  		var newGoodsList = [[${newGoodsList}]];
+		console.log(newGoodsList);
+  	</script>
+  </th:block>
 
 	<div layout:fragment="content">
 		<div id="banner">

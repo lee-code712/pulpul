@@ -10,6 +10,9 @@ public interface ItemService {
 	// 상품 목록 조회
 	List<Goods> getGoodsList();
 	
+	// 상품목록 조회
+	List<Goods> getGoodsList(String keyword);
+	
 	// 회원 id로 상품 목록 조회
 	List<Goods> getGoodsListByMember(String memberId);
 	
