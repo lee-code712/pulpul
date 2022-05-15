@@ -19,5 +19,6 @@ public interface MarketDao {
 	// 마켓 정보 수정
 	boolean changeMarketInfo(Market market);
 	
-	
+	// 마켓 이미지 존재 여부 확인
+	boolean isExistMarketImage(String memberId);
 }

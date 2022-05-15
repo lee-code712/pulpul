@@ -40,4 +40,11 @@
     WHERE market_id = #{id}
 	</update>
 	
+	<!-- 마켓 이미지 존재 여부 확인 -->
+	<select id="selectCountOfMarketImage" parameterType="String" resultType="int">
+	    SELECT count(*)
+	    FROM image
+	    WHERE member_id = #{memberId} AND category_id = 'MIMG'
+	</select>
+	
 </mapper>

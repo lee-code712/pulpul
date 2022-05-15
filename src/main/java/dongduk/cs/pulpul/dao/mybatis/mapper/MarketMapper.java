@@ -17,4 +17,5 @@ public interface MarketMapper {
 	
 	int updateMarket(Market market);
 	
+	int selectCountOfMarketImage(String memberId);
 }

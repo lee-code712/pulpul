@@ -36,7 +36,15 @@ public class MarketDaoImpl implements MarketDao {
 
 	@Override
 	public boolean changeMarketInfo(Market market) {
-		// TODO Auto-generated method stub
+		int ck = marketMapper.updateMarket(market);
+		if (ck > 0) return true;
+		return false;
+	}
+
+	@Override
+	public boolean isExistMarketImage(String memberId) {
+		int ck = marketMapper.selectCountOfMarketImage(memberId);
+		if (ck > 0) return true;
 		return false;
 	}
 	

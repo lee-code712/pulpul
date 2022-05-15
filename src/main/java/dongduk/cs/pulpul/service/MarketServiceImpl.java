@@ -37,7 +37,7 @@ public class MarketServiceImpl implements MarketService {
 			market.setId(marketId);
 			if (!uploadFile.isEmpty()) {
 				String fileUrl = uploadFile(uploadFile, market.getId());
-				market.setImageUrl(fileUrl);
+				market.setImageUrl("/uploads/" + fileUrl);
 				return marketDao.createMarketImage(market);
 			}
 			return true;
@@ -50,7 +50,15 @@ public class MarketServiceImpl implements MarketService {
 		boolean successed = marketDao.changeMarketInfo(market);
 		if (!successed) return false;
 		if (!updateFile.isEmpty()) {
-			updateFile(updateFile, market.getId());
+			boolean ck = marketDao.isExistMarketImage(market.getMember().getId());
+			if (ck) {
+				updateFile(updateFile, market.getId());
+			}
+			else {
+				String fileUrl = uploadFile(updateFile, market.getId());
+				market.setImageUrl("/uploads/" + fileUrl);
+				return marketDao.createMarketImage(market);
+			}
 			return true;
 		}
 		return false;
