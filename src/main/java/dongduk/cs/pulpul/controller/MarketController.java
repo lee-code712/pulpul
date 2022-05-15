@@ -67,8 +67,8 @@ public class MarketController {
 	 * 마켓 등록
 	 */ 
 	@PostMapping("/create")
-	public String create(@Valid @ModelAttribute("market") Market market, Model model,
-			@RequestParam("report") MultipartFile uploadFile, BindingResult result) throws IOException {
+	public String create(@Valid @ModelAttribute("market") Market market,  BindingResult result,
+			@RequestParam("report") MultipartFile uploadFile, Model model) throws IOException {
 
 		if (result.hasErrors())
 			return "market/marketForm";
@@ -86,8 +86,8 @@ public class MarketController {
 	 * 마켓 수정
 	 */
 	@PostMapping("/update")
-	public String update(@Valid @ModelAttribute("market") Market market, Model model,
-			@RequestParam("report") MultipartFile updateFile, BindingResult result) throws IOException {
+	public String update(@Valid @ModelAttribute("market") Market market, BindingResult result,
+			@RequestParam("report") MultipartFile updateFile, Model model) throws IOException {
 
 		if (result.hasErrors())
 			return "market/marketForm";
