@@ -9,7 +9,7 @@ import dongduk.cs.pulpul.domain.Market;
 public interface MarketService {
 	
 	// 마켓 id로 마켓 조회
-	Market getMarket(int marketId);
+	Market getMarket(int marketId, String memberId);
 	
 	// 회원 id로 마켓 조회
 	Market getMarketByMember(String memberId);

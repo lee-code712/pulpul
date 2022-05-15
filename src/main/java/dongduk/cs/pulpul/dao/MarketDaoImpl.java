@@ -21,6 +21,11 @@ public class MarketDaoImpl implements MarketDao {
 	public Market findMarketByMember(String memberId) {
 		return marketMapper.selectMarketByMemberId(memberId);
 	}
+	
+	@Override
+	public String findMarketImage(String memberId) {
+		return marketMapper.selectMarketImage(memberId);
+	}
 
 	@Override
 	public int createMarket(Market market) {
@@ -37,13 +42,6 @@ public class MarketDaoImpl implements MarketDao {
 	@Override
 	public boolean changeMarketInfo(Market market) {
 		int ck = marketMapper.updateMarket(market);
-		if (ck > 0) return true;
-		return false;
-	}
-
-	@Override
-	public boolean isExistMarketImage(String memberId) {
-		int ck = marketMapper.selectCountOfMarketImage(memberId);
 		if (ck > 0) return true;
 		return false;
 	}

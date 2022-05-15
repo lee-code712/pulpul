@@ -11,11 +11,12 @@ public interface MarketMapper {
 	
 	Market selectMarketByMemberId(String memberId);
 	
+	String selectMarketImage(String memberId);
+	
 	int insertMarket(Market market);
 	
 	int insertMarketImage(Market market);
 	
 	int updateMarket(Market market);
 	
-	int selectCountOfMarketImage(String memberId);
 }

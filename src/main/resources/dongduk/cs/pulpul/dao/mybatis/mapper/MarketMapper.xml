@@ -6,17 +6,24 @@
 	<!-- 마켓 id로 마켓 정보 조회 -->
 	<select id="selectMarketByMarketId" parameterType="int" resultType="Market">
 	    SELECT market_id AS id, name, intro, contactable_time AS contactableTime, policy, precaution, 
-	    	open_status AS openStatus, member_id AS "member.id", image_src AS imageUrl
-	    FROM market FULL OUTER JOIN image USING (member_id)
-	    WHERE market_id = #{marketId} OR category_id = 'MIMG'
+	    	open_status AS openStatus, member_id AS "member.id"
+	    FROM market
+	    WHERE market_id = #{marketId}
 	</select>
 	
 	<!-- 회원 id로 마켓 정보 조회 -->
 	<select id="selectMarketByMemberId" parameterType="String" resultType="Market">
     SELECT market_id AS id, name, intro, contactable_time AS contactableTime, policy, precaution, 
-    	open_status AS openStatus, member_id AS "member.id", image_src AS imageUrl
-    FROM market FULL OUTER JOIN image USING (member_id)
-    WHERE member_id = #{memberId} OR category_id = 'MIMG'
+    	open_status AS openStatus, member_id AS "member.id"
+    FROM market
+    WHERE member_id = #{memberId}
+	</select>
+	
+	<!-- 마켓 이미지 조회 -->
+	<select id="selectMarketImage" parameterType="String" resultType="String">
+	    SELECT image_src
+	    FROM image
+	    WHERE member_id = #{memberId} AND category_id = 'MIMG'
 	</select>
 	
 	<!-- 마켓 생성 -->
@@ -39,12 +46,5 @@
     	precaution = #{precaution}, open_status = #{openStatus}
     WHERE market_id = #{id}
 	</update>
-	
-	<!-- 마켓 이미지 존재 여부 확인 -->
-	<select id="selectCountOfMarketImage" parameterType="String" resultType="int">
-	    SELECT count(*)
-	    FROM image
-	    WHERE member_id = #{memberId} AND category_id = 'MIMG'
-	</select>
 	
 </mapper>

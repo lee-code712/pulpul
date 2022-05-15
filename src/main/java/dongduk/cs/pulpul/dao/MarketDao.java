@@ -10,6 +10,9 @@ public interface MarketDao {
 	// 회원 id로 마켓 정보 조회
 	Market findMarketByMember(String memberId);
 	
+	// 마켓 이미지 조회
+	String findMarketImage(String memberId);
+	
 	// 마켓 생성
 	int createMarket(Market market);
 	
@@ -18,7 +21,5 @@ public interface MarketDao {
 	
 	// 마켓 정보 수정
 	boolean changeMarketInfo(Market market);
-	
-	// 마켓 이미지 존재 여부 확인
-	boolean isExistMarketImage(String memberId);
+
 }
