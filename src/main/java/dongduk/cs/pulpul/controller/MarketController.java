@@ -39,6 +39,7 @@ public class MarketController {
 		Member member = new Member();
 		member.setId(memberId);	// market class에 memberId 저장
 		market.setMember(member);
+		market.setOpenStatus('0'); //openStatus 초기화
 		return market;
 	}
 	
