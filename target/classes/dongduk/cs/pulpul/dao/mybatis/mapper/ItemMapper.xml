@@ -50,7 +50,7 @@
 			JOIN market m USING (market_id)
 			JOIN goods g USING (item_id)
 			JOIN image i USING (member_id)
-		WHERE member_id = #{memberId} AND INSTR(i.image_src, item_id + '-1') <![CDATA[>]]> 0
+		WHERE member_id = #{memberId} AND INSTR(i.image_src, item_id || '-1') <![CDATA[>]]> 0
 	</select>
 	
 	<!-- 마켓 id로 상품목록 조회 -->
