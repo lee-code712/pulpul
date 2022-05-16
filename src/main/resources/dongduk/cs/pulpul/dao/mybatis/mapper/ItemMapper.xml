@@ -43,21 +43,21 @@
 	
 	<!-- 회원 id로 상품목록 조회 -->
 	<select id="selectGoodsByMemberId" parameterType="string" resultType="Goods">
-		SELECT it.item_id AS item.id, it.name AS item.name, 
+		SELECT item_id AS "item.id", it.name AS "item.name", 
 			g.price, g.sales_quantity AS salesQuantity, g.remain_quantity AS remainQuantity, g.shipping_fee AS shippingFee,
-			i.img_src AS item.thumbnailUrl
+			i.image_src AS "item.thumbnailUrl"
 		FROM item it
 			JOIN market m USING (market_id)
 			JOIN goods g USING (item_id)
 			JOIN image i USING (member_id)
-		WHERE m.member_id = #{memberId} AND INSTR(i.image_src, it.item_id + '_1') <![CDATA[>]]> 0
+		WHERE member_id = #{memberId} AND INSTR(i.image_src, item_id + '-1') <![CDATA[>]]> 0
 	</select>
 	
 	<!-- 마켓 id로 상품목록 조회 -->
 	<select id="selectGoodsByMarketId" parameterType="int" resultType="Goods">
-		SELECT it.item_id AS item.id, it.name AS item.name, 
+		SELECT item_id AS item.id, it.name AS item.name, 
 			g.price, g.remain_quantity AS remainQuantity,
-			it.img_src AS item.thumbnailUrl
+			it.image_src AS item.thumbnailUrl
 		FROM item it
 			JOIN goods g USING (item_id)
 			JOIN image i USING (member_id)

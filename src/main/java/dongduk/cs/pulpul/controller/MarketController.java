@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import dongduk.cs.pulpul.domain.Market;
@@ -24,7 +23,6 @@ import dongduk.cs.pulpul.service.MarketService;
 
 @Controller
 @RequestMapping("/market")
-@SessionAttributes("market")
 public class MarketController {
 	
 	private final MarketService marketSvc;

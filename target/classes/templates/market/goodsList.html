@@ -10,6 +10,12 @@
 	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
   	<link rel="stylesheet" th:href="@{/css/market/goodsList.css}" >
   </th:block>
+  
+  <script th:inline="javascript">
+  		console.log('데이터 확인');
+  		var goodsList = [[${goodsList}]];
+  		console.log(goodsList);
+  </script>
 
 	<div layout:fragment="content">
 		<div id="pageWrap">

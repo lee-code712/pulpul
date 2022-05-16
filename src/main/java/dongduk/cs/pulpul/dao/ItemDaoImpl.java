@@ -23,8 +23,7 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public List<Goods> findGoodsByMember(String memberId) {
-		// TODO Auto-generated method stub
-		return null;
+		return itemMapper.selectGoodsByMemberId(memberId);
 	}
 
 	@Override
