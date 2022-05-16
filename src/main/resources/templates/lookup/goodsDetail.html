@@ -9,12 +9,39 @@
     <link th:href="@{/css/fragments/header.css}" rel="stylesheet" />
 	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
   	<link rel="stylesheet" th:href="@{/css/lookup/goodsDetail.css}" >
+  	<link rel="stylesheet" th:href="@{/css/swiper-bundle.min.css}" >
+  </th:block>
+  
+  <th:block layout:fragment="script">
+  	<script th:src="@{/js/swiper-bundle.min.js}" defer></script>
+  	<script th:src="@{/js/lookup/goodsDetail.js}" defer></script>
   </th:block>
 
 	<div layout:fragment="content">
 		<div id="pageWrap">
       <div id="infoCover">
-        <img src="../images/bigItemImg.svg" id="itemImg" />
+		    <div class="swiper-container mySwiper">
+		      <div class="swiper-wrapper">
+		        <div class="swiper-slide">
+		          <img src="https://placeimg.com/596/398/any" />
+		        </div>
+		        <div class="swiper-slide">
+		          <img src="https://placeimg.com/596/398/animals" />
+		        </div>
+		        <div class="swiper-slide">
+		          <img src="https://placeimg.com/596/398/nature" />
+		        </div>
+		        <div class="swiper-slide">
+		          <img src="https://placeimg.com/596/398/people" />
+		        </div>
+		        <div class="swiper-slide">
+		          <img src="https://placeimg.com/596/398/tech" />
+		        </div>
+		      </div>
+		      <div class="swiper-button-next"></div>
+		      <div class="swiper-button-prev"></div>
+		      <div class="swiper-pagination"></div>
+		    </div>
 
         <div id="info">
           <div id="tagWrap">

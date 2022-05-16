@@ -116,3 +116,23 @@ td {
   color: #9493c0;
   cursor: pointer;
 }
+
+/* swiper */
+
+.swiper-container {
+  width: 596px;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+ 	width: 596px;
+  object-fit: cover;
+}
