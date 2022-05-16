@@ -158,8 +158,14 @@ public class MemberController {
 		HttpSession session = req.getSession();
 		String id = (String) session.getAttribute("id");
 		
-		List<Order> orderList = orderService.getOrderListByMember(id, "buyer");
+		// 로그인한 상태인지 확인
+		if (id == null) {
+			mav.addObject("isNotLogined", true);
+			mav.setViewName("redirect:/home");
+			return mav;
+		}
 		
+		List<Order> orderList = orderService.getOrderListByMember(id, "buyer");
 		if (orderList != null) {
 			mav.addObject("orderList", orderList);
 		}

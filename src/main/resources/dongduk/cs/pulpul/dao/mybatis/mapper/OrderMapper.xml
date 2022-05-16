@@ -70,20 +70,20 @@
 	<!--  ====================================================================  -->
 	
 	<!-- 회원 id로 주문내역 조회 -->
-	<select id="selectOrdersByMemberId" parameterType="string" resultType="Order">
+	<select id="selectOrderByMemberId" parameterType="string" resultType="Order">
 		SELECT order_id AS id, order_date AS orderDate, total_price AS totalPrice, 
 			tracking_number AS trackingNumber, order_status AS orderStatus
 		FROM orders
 		<if test='identity eq "buyer"'>
 			WHERE buyer_id = #{memberId}
 		</if>
-		<if test='identity eq "seller'>
+		<if test='identity eq "seller"'>
 			WHERE seller_id = #{memberId}
 		</if>
 	</select>
 	
 	<!-- 회원 id 및 운송장번호로 주문내역 조회 -->
-	<select id="selectOrdersBytrackingNumber" parameterType="string" resultType="Order">
+	<select id="selectOrderBytrackingNumber" parameterType="string" resultType="Order">
 		SELECT order_id AS id, order_date AS orderDate, total_price AS totalPrice, 
 			tracking_number AS trackingNumber, order_status AS orderStatus
 		FROM orders

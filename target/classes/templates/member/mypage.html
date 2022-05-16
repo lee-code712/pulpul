@@ -10,15 +10,13 @@
 	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
   	<link rel="stylesheet" th:href="@{/css/member/mypage.css}" >
   </th:block>
-
-  <th:block layout:fragment="script">
-  	<script>
-  		var orderList = [[${orderList}]];
-		console.log(orderList);
-  	</script>
-  </th:block>
-
+  
 	<div layout:fragment="content">
+		<script th:inline="javascript">
+	  		console.log('데이터 확인');
+	  		var orderList = [[${orderList}]];
+			console.log(orderList);
+		 </script>
 		<div id="pageWrap">
       <div id="pageTit">마이페이지</div>
       <div id="pageSubTit">Mypage</div>
