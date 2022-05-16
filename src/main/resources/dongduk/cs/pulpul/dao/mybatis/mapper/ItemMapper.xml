@@ -65,16 +65,16 @@
 	</select>
 	
 	<!-- 새 상품 목록 조회(3개) -->
-	<select id="selectNewGoods" resultType="Goods">
-		SELECT item_id AS id, name AS name, 
-			price, remain_quantity AS remainQuantity,
-			image_src AS thumbnailUrl
-		FROM (SELECT item_id, item.name, price, remain_quantity, image_src
-				FROM item JOIN market USING (market_id) JOIN goods USING (item_id) JOIN image USING (member_id)
-				WHERE item.open_status = 1 AND market_id IS NOT NULL AND (INSTR(image_src, '-1') <![CDATA[>]]> 0)
-				ORDER BY upload_date)
-		WHERE ROWNUM <![CDATA[<=]]> 3
-	</select>
+  <select id="selectNewGoods" resultType="Goods">
+     SELECT item_id AS "item.id", name AS "item.name", 
+        price, remain_quantity AS remainQuantity,
+        image_src AS thumbnailUrl
+     FROM (SELECT item_id, item.name, price, remain_quantity, image_src
+           FROM item JOIN market USING (market_id) JOIN goods USING (item_id) JOIN image USING (member_id)
+           WHERE item.open_status = 1 AND market_id IS NOT NULL AND (INSTR(image_src, '-1') <![CDATA[>]]> 0)
+           ORDER BY upload_date)
+     WHERE ROWNUM <![CDATA[<=]]> 3
+  </select>
 	
 	<!-- 키워드(상품명 또는 태그)로 상품목록 조회 -->
 	<select id="selectGoodsByKeyword" parameterType="string" resultType="Goods">
