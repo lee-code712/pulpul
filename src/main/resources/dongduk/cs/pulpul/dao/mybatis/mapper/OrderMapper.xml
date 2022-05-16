@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dongduk.cs.pulpul.dao.mybatis.mapper.OrderMapper">
+	<!--  ====================================================================  -->
+	<!--  장바구니 관련 질의문  -->
+	<!--  ====================================================================  -->
+	
+	<!-- 회원 id로 장바구니목록 조회 -->
+	<resultMap id="cartMap" type="Cart">
+		<id column="member_id" jdbcType="VARCHAR" property="memberId" javaType="string" />
+		<collection property="cartItemList" ofType="CartItem">
+			<result column="quantity" jdbcType="INTEGER" property="quantity" javaType="int" />
+			<result column="total_price" jdbcType="INTEGER" property="price" javaType="int" />
+			<association property="goods" column="goods_id" javaType="Goods">
+				<result column="item_price" jdbcType="INTEGER" property="price" javaType="int" />
+				<result column="remain_quantity" jdbcType="INTEGER" property="remainQuantity" javaType="int" />
+				<result column="shipping_fee" jdbcType="INTEGER" property="openStatus" javaType="int" />
+				<association property="item" column="goods_id" javaType="Item">
+					<id column="goods_id" jdbcType="VARCHAR" property="id" javaType="String" />
+					<result column="name" jdbcType="VARCHAR" property="name" javaType="String" />
+					<result column="item_open_status" jdbcType="INTEGER" property="openStatus" javaType="int" />
+					<result column="img_src" jdbcType="VARCHAR" property="thumbnailUrl" javaType="String" />
+					<association property="market" column="market_id" javaType="Market">
+						<id column="market_id" jdbcType="INTEGER" property="id" javaType="int" />
+						<result column="market_name" jdbcType="VARCHAR" property="name" javaType="String" />
+						<result column="market_open_status" jdbcType="INTEGER" property="openStatus" javaType="int" />
+					</association>
+				</association>
+			</association>
+		</collection>
+	</resultMap>
+	
+	<select id="selectCartByMemberId" parameterType="string" resultMap="CartMap">
+		SELECT c.goods_id, c.quantity, c.price AS total_price,
+			it.name AS item.name, it.open_status AS item_open_status, it.market_id,
+			m.name AS market_name, m.open_status AS market_open_status,
+			g.price AS item_price, g.remain_quantity, g.shipping_fee,
+			i.img_src
+		FROM cart c
+			FULL OUTER JOIN item it ON c.goods_id = it.item_id
+			FULL OUTER JOIN market m ON it.market_id = m.market_id
+			FULL OUTER JOIN goods g ON it.item_id = g.item_id
+			FULL OUTER JOIN image i ON c.member_id = i.member_id
+		WHERE c.member_id = #{memberId} AND INSTR(i.image_src, it.item_id + '_1') <![CDATA[>]]> 0
+	</select>
+	
+	<!-- 장바구니 내역 생성 -->
+	<insert id="insertCart">		
+		INSERT INTO cart (member_id, goods_id, quantity, price)
+		VALUES (#{memberId}, #{cartItemList[0].goods.item.id}, #{cartItemList[0].quantity}, #{cartItemList[0].price})
+	</insert>
+	
+	<!-- 특정 장바구니 내역 삭제 -->
+	<delete id="deleteOneCartByItemId" parameterType="string">
+		DELETE FROM cart
+		WHERE member_id = #{memberId} AND goods_id = #{itemId}
+	</delete>
+	
+	<!-- 회원의 전체 장바구니 내역 삭제 -->
+	<delete id="deletCartByMarketId" parameterType="string">
+		DELETE FROM cart
+		WHERE member_id = #{memberId} 
+			AND goods_id IN (SELECT item_id FROM item JOIN market USING(market_id) WHERE market_id = #{market_id})
+	</delete>
+	
+	
+	<!--  ====================================================================  -->
+	<!--  주문 관련 질의문  -->
+	<!--  ====================================================================  -->
+	
+	<!-- 회원 id로 주문내역 조회 -->
+	<select id="selectOrdersByMemberId" parameterType="string" resultType="Orders">
+		SELECT order_id AS id, order_date AS orderDate, total_price AS totalPrice, 
+			tracking_number AS trackingNumber, order_status AS orderStatus
+		FROM orders
+		<if test='identity eq "buyer"'>
+			WHERE buyer_id = #{memberId}
+		</if>
+		<if test='identity eq "seller'>
+			WHERE seller_id = #{memberId}
+		</if>
+	</select>
+	
+	<!-- 회원 id 및 운송장번호로 주문내역 조회 -->
+	<select id="selectOrdersBytrackingNumber" parameterType="string" resultType="Orders">
+		SELECT order_id AS id, order_date AS orderDate, total_price AS totalPrice, 
+			tracking_number AS trackingNumber, order_status AS orderStatus
+		FROM orders
+		WHERE tracking_number = #{trackingNumber}
+	</select>
+
+	<!-- 주문 상세정보 조회 -->
+	<resultMap id="OrderInfoMap" type="Orders">
+		<id column="order_id" jdbcType="INTEGER" property="id" javaType="int" />
+		<result column="order_date" jdbcType="DATE" property="orderDate" javaType="string" />
+		<result column="total_price" jdbcType="INTEGER" property="totalPrice" javaType="int" />
+		<result column="used_point" jdbcType="INTEGER" property="usedPoint" javaType="int" />
+		<result column="card_company" jdbcType="VARCHAR" property="cardCompany" javaType="string" />
+		<result column="card_number" jdbcType="VARCHAR" property="cardNumber" javaType="string" />
+		<association property="seller" column="seller_id" javaType="Member">
+			<id column="seller_id" jdbcType="VARCHAR" property="id" javaType="string" />
+			<result column="seller_name" jdbcType="VARCHAR" property="name" javaType="string" />
+			<result column="seller_address" jdbcType="VARCHAR" property="address" javaType="string" />
+			<result column="seller_phone" jdbcType="VARCHAR" property="phone" javaType="string" />
+		</association>
+		<association property="buyer" column="buyer_id" javaType="Member">
+			<id column="buyer_id" jdbcType="VARCHAR" property="id" javaType="string" />
+			<result column="buyer_name" jdbcType="VARCHAR" property="name" javaType="string" />
+			<result column="buyer_address" jdbcType="VARCHAR" property="address" javaType="string" />
+			<result column="buyer_address_detail" jdbcType="VARCHAR" property="addressDetail" javaType="string" />
+			<result column="buyer_zip" jdbcType="VARCHAR" property="zip" javaType="string" />
+			<result column="buyer_phone" jdbcType="VARCHAR" property="phone" javaType="string" />
+		</association>
+		<collection property="goodsList" ofType="CartItem">
+			<result column="quantity" jdbcType="INTEGER" property="quantity" javaType="int" />
+			<association property="goods" column="goods_id" javaType="Goods">
+				<result column="item_price" jdbcType="INTEGER" property="price" javaType="int" />
+				<result column="shipping_fee" jdbcType="INTEGER" property="openStatus" javaType="int" />
+				<association property="item" column="goods_id" javaType="Item">
+					<id column="goods_id" jdbcType="VARCHAR" property="id" javaType="String" />
+					<result column="item_name" jdbcType="VARCHAR" property="name" javaType="String" />
+					<result column="item_open_status" jdbcType="INTEGER" property="openStatus" javaType="int" />
+					<result column="img_src" jdbcType="VARCHAR" property="thumbnailUrl" javaType="String" />
+					<association property="market" column="market_id" javaType="Market">
+						<id column="market_id" jdbcType="INTEGER" property="id" javaType="int" />
+						<result column="market_name" jdbcType="VARCHAR" property="name" javaType="String" />
+						<result column="market_open_status" jdbcType="INTEGER" property="openStatus" javaType="int" />
+					</association>
+				</association>
+			</association>
+		</collection>
+	</resultMap>
+	
+	<select id="selectOrder" parameterType="int" resultMap="OrderInfoMap">
+		SELECT o.order_id, order_date, total_price, used_point, card_company, card_number,
+			og.goods_id, og.quantity,
+			it.name AS item_name, it.open_status AS item_open_status, it.market_id,
+			g.price AS item_price, g.shipping_fee,
+			m.name AS market_name, m.open_status AS market_open_status,
+			i.image_src,
+			sm.member_id AS seller_id, sm.name AS seller_name, sm.address AS seller_address, sm.phone AS seller_phone,
+			bm.member_id AS buyer_id, bm.name AS buyer_name, bm.address AS buyer_address, 
+			bm.address_detail AS buyer_address_detail, bm.zip AS buyer_zip, bm.phone AS buyer_phone
+		FROM orders o
+			FULL OUTER JOIN order_goods og o.order_id = og.order_id
+			FULL OUTER JOIN item it og.goods_id = it.item_id
+			FULL OUTER JOIN goods g og.goods_id = g.item_id
+			FULL OUTER JOIN market m o.seller_id = m.member_id
+			FULL OUTER JOIN image i o.seller_id = i.member_id
+			FULL OUTER JOIN member sm o.seller_id = sm.member_id
+			FULL OUTER JOIN member bm o.buyer_id = bm.member_id
+		WHERE o.order_id = #{orderId} AND INSTR(i.image_src, it.item_id + '_1') <![CDATA[>]]> 0
+	</select>
+	
+	<!-- 주문 생성 -->
+	<insert id="insertOrder" parameterType="Orders">		
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">SELECT order_seq.NEXTVAL FROM DUAL</selectKey>
+		INSERT INTO orders (order_id, order_date, total_price, used_point, card_company, card_number, expiry_date, buyer_id, seller_id)
+		VALUES (#{id}, SYSDATE, #{totalPrice}, #{usedPoint}, #{cardCompany}, #{cardNumber}, #{expiryDate}, #{buyer_id}, 
+			(SELECT member_id FROM item JOIN market USING (market_id) WHERE item_id = #{goodsList[0].item.id}))
+	</insert>
+	
+	<!-- 주문 상품 생성 -->
+	<insert id="insertOrderGoods" parameterType="hashMap">
+    	<foreach collection="list" item="map" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" >
+	    	INTO order_goods (order_id, goods_id, quantity)
+	    	VALUES (#{map.order}, #{map.goods}, #{map.quantity})	
+		</foreach>
+	</insert>
+	
+	<!-- 운송장번호 수정(입력) -->
+	<update id="updateTrackingNumber">
+		UPDATE orders
+		SET tracking_number = #{trackingNumber}
+		WHERE order_id = #{orderId}
+	</update>
+	
+	<!-- 주문상태 변경 -->
+	<update id="updateOrderStatus">
+		UPDATE orders
+		SET order_status = #{orderStatus}
+		WHERE order_id = #{orderId}
+	</update>
+</mapper>

@@ -1,5 +1,7 @@
 package dongduk.cs.pulpul.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,10 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dongduk.cs.pulpul.domain.Member;
+import dongduk.cs.pulpul.domain.Order;
 import dongduk.cs.pulpul.service.MemberService;
+import dongduk.cs.pulpul.service.OrderService;
 import dongduk.cs.pulpul.service.exception.LoginException;
 import dongduk.cs.pulpul.validator.LoginValidator;
 
@@ -23,10 +28,12 @@ import dongduk.cs.pulpul.validator.LoginValidator;
 public class MemberController {
 	
 	private final MemberService memberService;
+	private final OrderService orderService;
 	
 	@Autowired 
-	public MemberController(MemberService memberService) {
+	public MemberController(MemberService memberService, OrderService orderService) {
 		this.memberService = memberService;
+		this.orderService = orderService;
 	}
 	
 	@Autowired
@@ -146,9 +153,19 @@ public class MemberController {
 	 * 마이 페이지 접근 - 구매 목록 조회
 	 */
 	@GetMapping("/mypage/orderList")
-	public String myOrderList() {
+	public ModelAndView myOrderList(HttpServletRequest req, RedirectAttributes rttr, ModelAndView mav) {
 		//마이 페이지
-		return "member/mypage";
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("id");
+		
+		List<Order> orderList = orderService.getOrderListByMember(id, "buyer");
+		
+		if (orderList != null) {
+			mav.addObject("orderList", orderList);
+		}
+		
+		mav.setViewName("member/mypage");
+		return mav;
 	}
 	
 	/*

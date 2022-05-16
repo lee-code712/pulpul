@@ -22,7 +22,7 @@ public interface OrderMapper {
 	
 	Order selectOrder(int orderId);
 	
-	List<Order> selectOrderByMemberId(String memberId);
+	List<Order> selectOrderByMemberId(String memberId, String identity);
 	
 	int insertOrder(Order order);
 	

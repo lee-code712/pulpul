@@ -20,7 +20,7 @@ public interface OrderService {
 	boolean deleteCartItemByMarket(String memberId, int marketId);
 	
 	// 회원 id로 주문 목록 조회
-	List<Order> getOrderListByMember(String memberId);
+	List<Order> getOrderListByMember(String memberId, String identity);
 	
 	// 주문 상세내역 조회
 	Order getOrder(int orderId);
