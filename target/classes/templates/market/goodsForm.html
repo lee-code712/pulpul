@@ -79,15 +79,15 @@
           <td></td>
           <td th:errors="${goods.shippingFee}"></td>
         </tr>
-        <tr th:if="${not #lists.isEmpty(goods.item.imageUrl)}">
+        <tr th:unless="${#lists.isEmpty(goods.item.imageUrlList)}">
           <td class="text-name">식물 사진</td>
           <td class="putFilename">
-            <div class="putFilenameDiv" th:each="image : ${goods.item.imageUrl}">
+            <div class="putFilenameDiv" th:each="image : ${goods.item.imageUrlList}">
               <span class="putFilenameSpan" th:text="${image}"></span>
             </div>
           </td>
         </tr>
-        <tr th:if="${#lists.isEmpty(goods.item.imageUrl)}">
+        <tr th:if="${#lists.isEmpty(goods.item.imageUrlList)}">
           <td class="text-name">식물 사진</td>
           <td class="putFilename">
             <div class="putFilenameDiv"></div>
