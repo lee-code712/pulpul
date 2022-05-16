@@ -2,6 +2,8 @@ package dongduk.cs.pulpul.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.domain.ShareThing;
 
@@ -26,7 +28,7 @@ public interface ItemService {
 	Goods getGoods(String itemId);
 	
 	// 상품 등록
-	boolean uploadGoods(Goods goods);
+	boolean uploadGoods(Goods goods, MultipartFile[] uploadFiles);
 	
 	// 상품 정보 수정
 	boolean changeGoodsInfo(Goods goods);

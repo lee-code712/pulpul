@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import dongduk.cs.pulpul.dao.ItemDao;
 import dongduk.cs.pulpul.dao.MemberDao;
@@ -58,7 +59,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	// 상품 등록
-	public boolean uploadGoods(Goods goods) {
+	public boolean uploadGoods(Goods goods, MultipartFile[] uploadsFiles) {
 		// 상품 레코드 생성에 필요한 데이터 가공
 		/* int success = itemDao.createGoods(goods);
 		if (success != 1) return false;
