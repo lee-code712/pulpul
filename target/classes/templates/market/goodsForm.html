@@ -11,70 +11,124 @@
   	<link rel="stylesheet" th:href="@{/css/market/goodsForm.css}" >
   </th:block>
 
+  <th:block layout:fragment="script">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  	<script th:src="@{/js/goods.js}"></script>
+  </th:block>
 	<div layout:fragment="content">
 		<div id="pageWrap">
       <div id="pageTit">상품 관리</div>
       <div id="pageSubTit">상품 추가</div>
-
+      <form method="post" enctype="multipart/form-data">
       <table>
         <tr>
           <td class="text-name">상품명</td>
-          <td><input type="text" placeholder="상품명을 입력하세요." /></td>
+          <td><input type="text" placeholder="상품명을 입력하세요." th:field="${goods.item.name}" /></td>
+        </tr>
+         <tr>
+          <td></td>
+          <td th:errors="${goods.item.name}"></td>
         </tr>
         <tr>
           <td class="text-name">상품 설명</td>
           <td>
-            <textarea placeholder="상품 설명을 작성해주세요."></textarea>
+            <textarea placeholder="상품 설명을 작성해주세요."  th:field="${goods.item.description}" ></textarea>
           </td>
+        </tr>
+         <tr>
+          <td></td>
+          <td th:errors="${goods.item.description}"></td>
         </tr>
         <tr>
           <td class="text-name">식물 크기</td>
-          <td><input type="text" placeholder="예) 10, 20 (가로, 세로)" /></td>
+          <td><input type="text" placeholder="예) 10, 20 (가로, 세로)" th:field="${goods.size}" /></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td th:errors="${goods.size}"></td>
         </tr>
         <tr>
           <td class="text-name">연관태그</td>
-          <td><input type="text" placeholder="예) 다육이, 식물" /></td>
+          <td><input type="text" placeholder="예) 다육이, 식물" th:field="${goods.tags}"/></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td th:errors="${goods.tags}"></td>
         </tr>
         <tr>
           <td class="text-name">수량</td>
-          <td><input type="text" placeholder="예) 2" /></td>
+          <td><input type="text" placeholder="예) 2" th:field="${goods.salesQuantity}" /></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td th:errors="${goods.salesQuantity}"></td>
         </tr>
         <tr>
           <td class="text-name">판매가격</td>
-          <td><input type="text" placeholder="예) 8000" /></td>
+          <td><input type="text" placeholder="예) 8000" th:field="${goods.price}"/></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td th:errors="${goods.price}"></td>
         </tr>
         <tr>
           <td class="text-name">배송비</td>
-          <td><input type="text" placeholder="예) 2000" /></td>
+          <td><input type="text" placeholder="예) 2000" th:field="${goods.shippingFee}" /></td>
         </tr>
         <tr>
+          <td></td>
+          <td th:errors="${goods.shippingFee}"></td>
+        </tr>
+        <tr th:if="${not #lists.isEmpty(goods.item.imageUrl)}">
           <td class="text-name">식물 사진</td>
-          <td>
-            <input type="file" id="fileWrap" />
+          <td class="putFilename">
+            <div class="putFilenameDiv" th:each="image : ${goods.item.imageUrl}">
+              <span class="putFilenameSpan" th:text="${image}"></span>
+            </div>
           </td>
         </tr>
-
+        <tr th:if="${#lists.isEmpty(goods.item.imageUrl)}">
+          <td class="text-name">식물 사진</td>
+          <td class="putFilename">
+            <div class="putFilenameDiv"></div>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <input type="file" id="fileWrap" accept=".jpg" multiple="multiple" onchange="previewFiles()" name="report"/>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+			<div id="putGoodsImg">
+			</div>
+		  </td>
+		</tr>
         <tr>
           <td class="text-name">공개 여부</td>
           <td>
-            <form>
+           <div class="radio">
               <label>
-                <input type="radio" id="dark" name="radio" checked />
+                <input th:attr="checked=${goods.item.openStatus.toString() =='1' ? 'true' : 'false'}" type="radio" id="dark" name="openStatus" value="1"/>
                 <span>공개</span>
               </label>
               <label>
-                <input type="radio" id="light" name="radio" />
-                <span>비공개</span>
-              </label>
-            </form>
+                <input th:attr="checked=${goods.item.openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="openStatus" value="0" />
+		        <span>비공개</span>
+		      </label>
+		     </div>
           </td>
         </tr>
       </table>
-
-      <div id="btnWrap">
-        <button id="cancelBtn" onclick="location.href='/market/goods/list'">취소</button>
-        <button id="saveBtn">등록</button>
+      <div id="btnWrap" class="goodsFormBtn">
+        <button th:if="${goods.item.id == 0}" id="saveBtn" onclick="javascript: form.action='/market/goods/update';">수정</button>
+        <button th:unless="${goods.item.id == 0}" id="saveBtn" onclick="javascript: form.action='/market/goods/upload';">등록</button>
+        <button id="cancelBtn" type="button" class="cancel" onclick="location.href='/market/goods/list'">취소</button>
       </div>
+      </form>
     </div>
-	</div>
+    </div>
+  </th:block>
 </html>
