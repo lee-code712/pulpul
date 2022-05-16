@@ -14,8 +14,10 @@
 	<div layout:fragment="content">
 		<script th:inline="javascript">
 	  		console.log('데이터 확인');
-	  		var orderList = [[${orderList}]];
+	  		var orderList = [[${borrowList}]];
 			console.log(orderList);
+			var reservationList = [[${reservationList}]];
+			console.log(reservationList);
 		 </script>
 		<div id="pageWrap">
       <div id="pageTit">마이페이지</div>

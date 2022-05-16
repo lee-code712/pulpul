@@ -15,6 +15,6 @@ public class Item {
 	private int openStatus; /*품목 공개여부*/
 	private Market market; /*마켓 정보*/
 	private String thumbnailUrl; /*품목 대표 이미지 경로*/
-	private List<String> imageUrl; /*품목 이미지 경로 리스트*/
+	private List<String> imageUrlList; /*품목 이미지 경로 리스트*/
 	
 }

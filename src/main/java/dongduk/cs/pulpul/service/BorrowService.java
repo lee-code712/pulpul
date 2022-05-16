@@ -23,7 +23,7 @@ public interface BorrowService {
 	List<Alert> getAlertByMember(String memberId);
 	
 	// 회원 id로 대여 목록 조회
-	List<Borrow> getBorrowByMember(String memberId);
+	List<Borrow> getBorrowByMember(String memberId, String identity);
 	
 	// 품목 id로 대여 목록 조회
 	List<Borrow> getBorrowByItem(String itemId);

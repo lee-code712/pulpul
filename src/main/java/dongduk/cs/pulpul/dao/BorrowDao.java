@@ -8,7 +8,7 @@ import dongduk.cs.pulpul.domain.Borrow;
 public interface BorrowDao {
 	
 	// 회원 id로 대여 예약 조회
-	List<Borrow> findBorrowsBorrowReservationByMember(String memberId);
+	List<Borrow> findBorrowReservationByMember(String memberId);
 	
 	// 대여 예약 생성
 	boolean createBorrowReservation(Borrow borrow);
@@ -41,7 +41,7 @@ public interface BorrowDao {
 	 boolean changeIsRead(String memberId);
 	
 	// 회원 id로 대여 목록 조회
-	List<Borrow> findBorrowByMember(String memberId);
+	List<Borrow> findBorrowByMember(String memberId, String identity);
 	
 	// 품목 id로 대여 목록 조회
 	List<Borrow> findBorrowByItem(String itemId);
@@ -50,7 +50,7 @@ public interface BorrowDao {
 	boolean createBorrow(Borrow borrow);
 	
 	// 대여 운송장 번호 입력
-	boolean changeTrackingNumber(int borrowId, String trackingNumber);
+	boolean changeTrackingNumber(Borrow borrow);
 	
 	// 대여 상태 변경
 	boolean changeBorrowStatus(int orderId, int borrowStatus);
