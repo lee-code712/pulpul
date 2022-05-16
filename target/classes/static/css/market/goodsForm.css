@@ -119,3 +119,52 @@ input[type="radio"]:checked + span:before {
   background-color: #93c0b5;
   cursor: pointer;
 }
+
+.put{
+	width: 100px;
+	height: 100px;
+}
+
+
+/*이미지 가로로 정렬*/
+#putGoodsImg{
+	display:flex;
+}
+
+.putGoodsImgSpan{
+	margin: 0px 10px;
+	position:relative;
+}
+
+/*이미지 삭제 버튼 css*/
+.deleteBtn{
+	background-color: #93c0b5;
+	border-radius:20%;
+	color: white;
+	border: 0;
+	outline: 0;
+	width: 15px;
+	height: 15px;
+	position: absolute;
+	right: -10px;
+}
+
+/* goodsForm 등록, 수정 버튼 위치 정렬*/
+.goodsFormBtn button {
+	margin-right: 5px;
+}
+
+.goodsFormBtn {
+	width: 100%;
+	justify-content: flex-end;
+}
+
+/*form radio 타입 위치 정렬*/
+.radio {
+	display:flex;
+}
+
+/* 파일 이름 정렬 */
+.putFilenameSpan {
+	margin-right: 5px;
+}
