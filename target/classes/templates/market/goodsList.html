@@ -41,31 +41,14 @@
 		      <td class="item-delete"></td>
 		    </tr>
 		
-		    <tr>
-		      <td><img src="/images/smallItemImg.svg" /></td>
-		      <td>### 식물</td>
-		      <td>수량</td>
-		      <td>2500원</td>
-		      <td>8000원</td>
-		      <td><button class="deleteBtn">삭제</button></td>
-		    </tr>
-		
-		    <tr>
-		      <td><img src="/images/smallItemImg.svg" /></td>
-		      <td>### 식물</td>
-		      <td>수량</td>
-		      <td>2500원</td>
-		      <td>8000원</td>
-		      <td><button class="deleteBtn">삭제</button></td>
-		    </tr>
-		
-		    <tr>
-		      <td><img src="/images/smallItemImg.svg" /></td>
-		      <td>### 식물</td>
-		      <td>수량</td>
-		      <td>2500원</td>
-		      <td>8000원</td>
-		      <td><button class="deleteBtn">삭제</button></td>
+		    <tr th:if="${goods.item.orderStatus} == 0" th:each="goods : ${goodsList}" class="tb-disable">
+        	<tr th:unless="${goods.item.orderStatus} == 0" th:each="goods : ${goodsList}">
+		      <td><img th:src="${goods.item.thumbnailUrl}" /></td>
+		      <td th:text="${goods.item.name}"></td>
+		      <td th:text="${goods.salesQuantity}"></td>
+		      <td th:text="${goods.shippingFee}"></td>
+		      <td th:text="${goods.price}"></td>
+		      <td><button class="deleteBtn" onclick="location.href='/market/goods/delete'">삭제</button></td>
 		    </tr>
 		  </table>
 		
