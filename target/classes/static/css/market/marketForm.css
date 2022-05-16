@@ -137,7 +137,13 @@ input[type="radio"]:checked + span:before {
 	width: 100%;
 	justify-content: flex-end;
 }
+
 .marketImage {
 	width: 100px;
 	height: 100px;
+}
+
+/*form radio 타입 위치 정렬*/
+.radio {
+	display:flex;
 }
