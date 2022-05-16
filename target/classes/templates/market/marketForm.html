@@ -96,12 +96,16 @@
 		    <tr>
 		      <td class="text-name">마켓 공개</td>
 		      <td>
+		        <div class="radio">
 		          <label>
 		            <input th:attr="checked=*{openStatus.toString() == '1' ? 'true' : 'false'}" type="radio" id="dark" name="openStatus" value="1" />
 		            <span>공개</span>
-		             <input th:attr="checked=*{openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="openStatus" value="0"/>
+		           </label>
+		           <label>
+		            <input th:attr="checked=*{openStatus.toString() == '0'? 'true' : 'false'}" type="radio" id="light" name="openStatus" value="0"/>
 		            <span>비공개</span>
 		          </label>
+		        </div>
 		      </td>
 		    </tr>
 		  </table>
