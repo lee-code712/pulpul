@@ -11,6 +11,13 @@
   	<link rel="stylesheet" th:href="@{/css/member/mypage.css}" >
   </th:block>
 
+  <th:block layout:fragment="script">
+  	<script>
+  		var orderList = [[${orderList}]];
+		console.log(orderList);
+  	</script>
+  </th:block>
+
 	<div layout:fragment="content">
 		<div id="pageWrap">
       <div id="pageTit">마이페이지</div>

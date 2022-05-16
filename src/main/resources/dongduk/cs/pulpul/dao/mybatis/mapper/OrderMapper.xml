@@ -31,7 +31,7 @@
 		</collection>
 	</resultMap>
 	
-	<select id="selectCartByMemberId" parameterType="string" resultMap="CartMap">
+	<select id="selectCartByMemberId" parameterType="string" resultMap="cartMap">
 		SELECT c.goods_id, c.quantity, c.price AS total_price,
 			it.name AS item.name, it.open_status AS item_open_status, it.market_id,
 			m.name AS market_name, m.open_status AS market_open_status,
@@ -70,7 +70,7 @@
 	<!--  ====================================================================  -->
 	
 	<!-- 회원 id로 주문내역 조회 -->
-	<select id="selectOrdersByMemberId" parameterType="string" resultType="Orders">
+	<select id="selectOrdersByMemberId" parameterType="string" resultType="Order">
 		SELECT order_id AS id, order_date AS orderDate, total_price AS totalPrice, 
 			tracking_number AS trackingNumber, order_status AS orderStatus
 		FROM orders
@@ -83,7 +83,7 @@
 	</select>
 	
 	<!-- 회원 id 및 운송장번호로 주문내역 조회 -->
-	<select id="selectOrdersBytrackingNumber" parameterType="string" resultType="Orders">
+	<select id="selectOrdersBytrackingNumber" parameterType="string" resultType="Order">
 		SELECT order_id AS id, order_date AS orderDate, total_price AS totalPrice, 
 			tracking_number AS trackingNumber, order_status AS orderStatus
 		FROM orders
@@ -91,7 +91,7 @@
 	</select>
 
 	<!-- 주문 상세정보 조회 -->
-	<resultMap id="OrderInfoMap" type="Orders">
+	<resultMap id="OrderInfoMap" type="Order">
 		<id column="order_id" jdbcType="INTEGER" property="id" javaType="int" />
 		<result column="order_date" jdbcType="DATE" property="orderDate" javaType="string" />
 		<result column="total_price" jdbcType="INTEGER" property="totalPrice" javaType="int" />
@@ -154,7 +154,7 @@
 	</select>
 	
 	<!-- 주문 생성 -->
-	<insert id="insertOrder" parameterType="Orders">		
+	<insert id="insertOrder" parameterType="Order">		
 		<selectKey keyProperty="id" resultType="int" order="BEFORE">SELECT order_seq.NEXTVAL FROM DUAL</selectKey>
 		INSERT INTO orders (order_id, order_date, total_price, used_point, card_company, card_number, expiry_date, buyer_id, seller_id)
 		VALUES (#{id}, SYSDATE, #{totalPrice}, #{usedPoint}, #{cardCompany}, #{cardNumber}, #{expiryDate}, #{buyer_id}, 
