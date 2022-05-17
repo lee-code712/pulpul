@@ -2,6 +2,8 @@ package dongduk.cs.pulpul.domain;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +11,10 @@ import lombok.Setter;
 public class Item {
 
 	private String id; /*품목 식별번호*/
+	@NotBlank
 	private String name; /*품목 이름*/
 	private String uploadDate; /*품목 생성일*/
+	@NotBlank
 	private String description; /*품목 설명*/
 	private int openStatus; /*품목 공개여부*/
 	private Market market; /*마켓 정보*/

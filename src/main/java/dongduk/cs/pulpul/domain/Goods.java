@@ -1,7 +1,8 @@
 package dongduk.cs.pulpul.domain;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PositiveOrZero;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Goods {
 
+	@Valid
 	private Item item; /*상품 품목 정보*/
 	@NotBlank
 	private String tags; /*상품 태그*/
@@ -20,7 +22,7 @@ public class Goods {
 	@NotBlank
 	private String size;
 	
-	@PositiveOrZero(message = "수량은 0개 이상이어야 합니다.")
+	@Min(1)
 	private int salesQuantity; /*총 판매 수량*/
 	private int remainQuantity; /*남은 수량*/
 	private int shippingFee; /*배송비*/

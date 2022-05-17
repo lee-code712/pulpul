@@ -102,7 +102,7 @@ public class GoodsController {
 	@GetMapping("/update")
 	public String updateForm(@RequestParam("goodsId") String id){
 		//판매 식물 목록 페이지
-		System.out.println(id  +"id 값");
+		//System.out.println(id  +"id 값");
 		return "market/goodsForm";
 	}
 	
