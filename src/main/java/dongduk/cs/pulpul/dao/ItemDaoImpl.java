@@ -1,6 +1,8 @@
 package dongduk.cs.pulpul.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -50,9 +52,10 @@ public class ItemDaoImpl implements ItemDao {
 	}
 
 	@Override
-	public int createGoods(Goods goods) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean createGoods(Goods goods) {
+		int ck = itemMapper.insertGoods(goods);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override
@@ -135,8 +138,12 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public boolean createItemImages(List<String> imageUrlList, String memberId) {
-		// TODO Auto-generated method stub
-		return false;
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("memberId", memberId);
+		param.put("imageUrlList", imageUrlList);
+		int ck = itemMapper.insertItemImages(param);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override

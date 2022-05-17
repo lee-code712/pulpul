@@ -1,5 +1,7 @@
 package dongduk.cs.pulpul.service;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import dongduk.cs.pulpul.dao.ItemDao;
 import dongduk.cs.pulpul.dao.MemberDao;
 import dongduk.cs.pulpul.domain.Goods;
-import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.ShareThing;
 
 @Service
@@ -60,19 +61,31 @@ public class ItemServiceImpl implements ItemService {
 
 	// 상품 등록
 	public boolean uploadGoods(Goods goods, MultipartFile[] uploadsFiles) {
-		// 상품 레코드 생성에 필요한 데이터 가공
-		/* int success = itemDao.createGoods(goods);
-		if (success != 1) return false;
-		if (goods.getItem().getImageUrlList().size() > 0) {
-			return itemDao.createItemImages(goods.getItem());
-		}
-		return memberDao.changePoint(new Member(memberId, 100), "+"); */
+		boolean successed = itemDao.createGoods(goods);
+		if (!successed) return false;
 		
+		String itemId = goods.getItem().getId();
+		if (itemId != null) { // 정상적으로 레코드를 생성했다면
+			goods.getItem().setId(itemId);
+			List<String> imageUrlList = new ArrayList<String>();
+			int cnt = 1;
+			for (MultipartFile uploadFile : uploadsFiles) {
+				if (!uploadFile.isEmpty()) {
+					String fileUrl = uploadFile(uploadFile, goods.getItem().getId(), cnt);
+					imageUrlList.add("/upload/" + fileUrl);
+					cnt++;
+				}
+			}
+			String memberId = goods.getItem().getMarket().getMember().getId();
+			successed = itemDao.createItemImages(imageUrlList, memberId);
+			if (!successed) return false;
+			return memberDao.changePoint(memberId, 1, 500);
+		}
 		return false;
 	}
 
 	// 상품정보 수정
-	public boolean changeGoodsInfo(Goods goods) {
+	public boolean changeGoodsInfo(Goods goods, MultipartFile[] uploadsFiles) {
 		// 상품 레코드 수정에 필요한 데이터 가공
 		/* boolean success = itemDao.changeGoodsInfo(goods);
 		if (!success)
@@ -150,4 +163,30 @@ public class ItemServiceImpl implements ItemService {
 		
 		return false;
 	}
+	
+	// 파일 업로드 메소드
+	public String uploadFile(MultipartFile uploadFile, String itemId, int cnt) {
+		String newFilename = "";
+		String absolutePath = new File("").getAbsolutePath() + "\\";
+		String path = absolutePath + "src\\main\\resources\\static\\upload";
+
+		// System.out.println(path);
+		try {       
+//			  // 확장자를 jpg로 제한
+//            String filename = uploadFile.getOriginalFilename();
+//            String ext = filename.substring(filename.lastIndexOf( "." ));
+            newFilename = itemId + "-" + cnt + ".jpg";
+            
+            File newFile = new File(path, newFilename);
+            if (newFile.exists())
+            	newFile.delete();
+            uploadFile.transferTo(newFile);
+
+        }catch(Exception e) {            
+            e.printStackTrace();
+        }
+		
+		return newFilename;
+	}
+	
 }

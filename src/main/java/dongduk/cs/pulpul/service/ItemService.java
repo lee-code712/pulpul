@@ -31,7 +31,7 @@ public interface ItemService {
 	boolean uploadGoods(Goods goods, MultipartFile[] uploadFiles);
 	
 	// 상품 정보 수정
-	boolean changeGoodsInfo(Goods goods);
+	boolean changeGoodsInfo(Goods goods, MultipartFile[] uploadFiles);
 	
 	// 전체 공유 물품 목록 조회
 	List<ShareThing> getShareThingList();

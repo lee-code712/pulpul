@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import dongduk.cs.pulpul.domain.Goods;
+import dongduk.cs.pulpul.domain.Item;
+import dongduk.cs.pulpul.domain.Market;
+import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.service.ItemService;
 
 @Controller
@@ -31,8 +34,16 @@ public class GoodsController {
 	}
 	
 	@ModelAttribute("goods")
-	public Goods formBacking() {
-		return new Goods();
+	public Goods formBacking(HttpSession session) {
+		Member member = new Member();
+		member.setId((String) session.getAttribute("id"));
+		Market market = new Market();
+		market.setMember(member);
+		Item item = new Item();
+		item.setMarket(market);
+		Goods goods = new Goods();
+		goods.setItem(item);
+		return goods;
 	}
 	
 	/*
@@ -58,6 +69,13 @@ public class GoodsController {
 	 */
 	@GetMapping("/upload")
 	public String uploadForm(@ModelAttribute("goods") Goods goods){
+		
+		String memberId = goods.getItem().getMarket().getMember().getId();
+		
+		if(memberId == null) {
+			return "redirect:/home";
+		}
+		
 		return "market/goodsForm";
 	}
 
@@ -67,17 +85,15 @@ public class GoodsController {
 		
 		if (result.hasErrors())
 			return "market/goodsForm";
-		
+
 		boolean successed = itemSvc.uploadGoods(goods, uploadFiles);
+		if (!successed) {
+			model.addAttribute("uplaodFalid", true);
+			return "market/goodsForm";
+		}
 		
 		return "redirect:/market/goods/list";
-		
-		/*
-		//성공
-		return "redirect:/market/goods/list";
-		//오류
-		return "market/goodsForm";
-		*/
+
 	}
 
 	/*
@@ -108,6 +124,5 @@ public class GoodsController {
 		//판매 식물 목록 페이지
 		return "redirect:/market/goods/list";
 	}
-
 
 }

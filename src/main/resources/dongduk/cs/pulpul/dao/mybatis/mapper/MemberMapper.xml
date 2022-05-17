@@ -36,18 +36,15 @@
 	
 	<!-- 포인트 +- (회원 id, 변동 포인트 값, +인지 -인지 확인하는 값 전달) -->
 	<update id="updatePoint">
-		UPDATE
-	   	<trim prefix="SET" suffixOverrides=",">
-	   		<if test='"+".equals(#{status})'>
-				point += #{point},
+		UPDATE member
+	 	<set>
+			<if test='status eq 1'>
+				point = point + #{point}
 			</if>
-			<if test='"-".equals(#{status})'>
-				point -= #{point},
+			<if test='status eq -1'>
+				point = point - #{point}
 			</if>
-	   	</trim>
+		</set>
 		WHERE member_id = #{id}
-
-		SET point = (CASE WHEN #{status}.equals("+") THEN point + #{point}
-					ELSE (point - #{point}))
 	</update>
 </mapper>

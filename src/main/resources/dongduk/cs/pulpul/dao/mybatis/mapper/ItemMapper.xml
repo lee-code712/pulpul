@@ -4,10 +4,10 @@
 <mapper namespace="dongduk.cs.pulpul.dao.mybatis.mapper.ItemMapper">
 
 	<!-- 물품 이미지(들) 저장 -->
-	<insert id="insertImagesOfItem" parameterType="hashMap">
-    	<foreach collection="list" item="map" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" >
-	    	INTO order_goods (image_src, member_id, category_id)
-	    	VALUES (#{map.image}, #{map.member}, '물품 이미지 번호')
+	<insert id="insertItemImages" parameterType="java.util.Map">
+    	<foreach collection="imageUrlList" item="imageUrl" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" >
+	    	INTO image (image_src, member_id, category_id)
+	    	VALUES (#{imageUrl}, #{memberId}, 'IIMG')
 		</foreach>
 	</insert>
 	
@@ -120,12 +120,13 @@
 	
 	<!-- 상품 생성 --> 
 	<insert id="insertGoods" parameterType="Goods">
-		<selectKey keyProperty="item.id" resultType="string" order="BEFORE">SELECT 'G' || item_seq.NEXTVAL FROM DUAL</selectKey>
+		<selectKey keyProperty="item.id" resultType="string" order="BEFORE">SELECT ('G' || item_seq.NEXTVAL) FROM DUAL</selectKey>
 		INSERT ALL 
 			INTO item (item_id, name, upload_date, description, open_status, market_id)
-			VALUES (#{item.id}, #{item.name}, SYSDATE, #{item.description}, #{item.openStatus}, #{item.market.id})
+			VALUES (#{item.id}, #{item.name}, SYSDATE, #{item.description}, #{item.openStatus}, 
+				(SELECT market_id FROM market JOIN member USING (member_id) WHERE member_id = #{item.market.member.id}))
 			INTO goods (item_id, tags, price, shipping_fee, goods_size, sales_quantity, remain_quantity) 
-			VALUES (#{item.id}, #{tags}, #{price}, #{shippingFee}, #{goodsSize}, #{salesQuantity}, #{salesQuantity}) 
+			VALUES (#{item.id}, #{tags}, #{price}, #{shippingFee}, #{size}, #{salesQuantity}, #{salesQuantity}) 
 		SELECT * FROM DUAL
 	</insert>
 	

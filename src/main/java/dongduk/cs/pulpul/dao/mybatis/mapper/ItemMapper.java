@@ -52,7 +52,7 @@ public interface ItemMapper {
 	
 	int selectBorrowIdByItemId(String itemId);
 	
-	int insertItemImages(List<Map<String, String>> itemImages);
+	int insertItemImages(Map<String, Object> itemImages);
 	
 	int deleteItemImages(@Param("memberId") String memberId, 
 			@Param("itemId") String itemId);

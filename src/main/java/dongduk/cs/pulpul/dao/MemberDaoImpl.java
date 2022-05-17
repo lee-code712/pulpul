@@ -37,8 +37,9 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public boolean changePoint(String memberId, int status, int point) {
-		// TODO Auto-generated method stub
-		return false;
+		int ck = memberMapper.updatePoint(memberId, status, point);
+		if (ck < 0) return false;
+		return true;
 	}
 
 }

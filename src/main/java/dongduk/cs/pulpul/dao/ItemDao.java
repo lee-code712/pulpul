@@ -26,7 +26,7 @@ public interface ItemDao {
 	Goods findGoodsByItem(String itemId);
 	
 	// 상품 생성
-	int createGoods(Goods goods);
+	boolean createGoods(Goods goods);
 	
 	// 상품 정보 수정
 	boolean changeGoodsInfo(Goods goods);
