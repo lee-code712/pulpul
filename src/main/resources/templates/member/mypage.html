@@ -19,9 +19,13 @@
   
 	<div layout:fragment="content">
 		<script th:inline="javascript">
-	  		console.log('데이터 확인');
-	  		var orderList = [[${borrowList}]];
-			console.log(orderList);
+	  		console.log('orderList 확인');
+	  		var orderList = [[${orderList}]];
+	  		console.log(orderList);
+	  		console.log('borrowList 확인');
+	  		var borrowList = [[${borrowList}]];
+			console.log(borrowList);
+			console.log('reservationList 확인');
 			var reservationList = [[${reservationList}]];
 			console.log(reservationList);
 		 </script>
@@ -61,7 +65,9 @@
 	          <td class="order-market">풀풀 상점</td> 
 	          <td class="waybill" th:text="${order.trakingNumber}"></td>
 	          <td class="total-price" th:text="${order.totalPrice}"></td>
-	          <td class="order-status" th:text="${order.orderStatus}"></td>
+	          <td class="order-status" th:if="${order.orderStatus} == 0">주문 취소</td>
+	          <td class="order-status" th:if="${order.orderStatus} == 1">결제 완료</td>
+	          <td class="order-status" th:if="${order.orderStatus} == 2">배송 시작</td>
 	          <td class="cancel-btn">
 	          	<!-- 주문 상태: 주문 취소일 때 -->
 		          <button th:if="${order.orderStatus} == 0" class="cancelBtn-noton">주문 취소</button>
