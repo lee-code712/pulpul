@@ -19,9 +19,13 @@
   
 	<div layout:fragment="content">
 		<script th:inline="javascript">
-	  		console.log('데이터 확인');
-	  		var orderList = [[${borrowList}]];
-			console.log(orderList);
+	  		console.log('orderList 확인');
+	  		var orderList = [[${orderList}]];
+	  		console.log(orderList);
+	  		console.log('borrowList 확인');
+	  		var borrowList = [[${borrowList}]];
+			console.log(borrowList);
+			console.log('reservationList 확인');
 			var reservationList = [[${reservationList}]];
 			console.log(reservationList);
 		 </script>

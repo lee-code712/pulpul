@@ -171,6 +171,9 @@ public class MemberController {
 		
 		List<Order> orderList = orderService.getOrderListByMember(id, "buyer");
 		if (orderList != null) {
+			for (Order order : orderList) {
+				System.out.println(order.getId());
+			}
 			mav.addObject("orderList", orderList);
 		}
 		
