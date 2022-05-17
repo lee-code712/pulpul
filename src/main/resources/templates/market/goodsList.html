@@ -11,6 +11,11 @@
   	<link rel="stylesheet" th:href="@{/css/market/goodsList.css}" >
   </th:block>
 
+  <th:block layout:fragment="script">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  	<script th:src="@{/js/market/goodsList.js}"></script>
+  </th:block>
+  
 	<div layout:fragment="content">
 	
  <!--  <script th:inline="javascript">
@@ -48,8 +53,8 @@
 		      <td th:text="${#numbers.formatInteger(goods.shippingFee, 0, 'COMMA')}"></td>
 		      <td th:text="${#numbers.formatInteger(goods.price, 0, 'COMMA')}"></td>
 		      <td>
-		         <button class="deleteBtn" onclick="location.href='/market/goods/update'">수정</button>
-		        <button class="deleteBtn" onclick="location.href='/market/goods/delete'">삭제</button>
+		        <button class="updateBtn" th:onclick="updateGoods([[${goods.item.id}]])">수정</button>
+		        <button class="deleteBtn" th:onclick="deleteGoods([[${goods.item.id}]])">삭제</button>
 		      </td>
 		    </tr>
 
