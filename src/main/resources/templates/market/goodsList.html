@@ -41,15 +41,18 @@
 		      <td class="item-delete"></td>
 		    </tr>
 		
-		    <tr th:if="${goods.item.orderStatus} == 0" th:each="goods : ${goodsList}" class="tb-disable">
-        	<tr th:unless="${goods.item.orderStatus} == 0" th:each="goods : ${goodsList}">
-		      <td><img th:src="${goods.item.thumbnailUrl}" /></td>
+		    <tr th:each="goods : ${goodsList}" th:style="${goods.item.openStatus == 0 ? 'background-color: #f3f3f4;' : ''}">
+		      <td><img th:src="${goods.item.thumbnailUrl}" width="100px" height="100px"/></td>
 		      <td th:text="${goods.item.name}"></td>
 		      <td th:text="${goods.salesQuantity}"></td>
-		      <td th:text="${goods.shippingFee}"></td>
-		      <td th:text="${goods.price}"></td>
-		      <td><button class="deleteBtn" onclick="location.href='/market/goods/delete'">삭제</button></td>
+		      <td th:text="${#numbers.formatInteger(goods.shippingFee, 0, 'COMMA')}"></td>
+		      <td th:text="${#numbers.formatInteger(goods.price, 0, 'COMMA')}"></td>
+		      <td>
+		         <button class="deleteBtn" onclick="location.href='/market/goods/update'">수정</button>
+		        <button class="deleteBtn" onclick="location.href='/market/goods/delete'">삭제</button>
+		      </td>
 		    </tr>
+
 		  </table>
 		
 		  <div id="btnWrap">
