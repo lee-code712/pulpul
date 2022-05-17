@@ -98,17 +98,11 @@
 	            <img src="/images/smallShareThing.svg" />
 	          </td>
 	          <td class="sharething-info" th:text="${borrow.shareThing.item.name}"></td>
-	          <!-- 
-	          	📢 궁금한 점: 
-	          		대여: 0 / 예약: 1
-	          		연장했음: 1 / 연장 안 했음: 0  
-	          		첫 번째 예약자일 때: 1 / 첫 번째 예약자가 아닐 때: 0
-	           -->
 	           
 	          <!-- 대여-->
-	          <td class="sharething-status" th:if="${borrow.borrowStatus} == 0">대여</td>
+	          <td class="sharething-status" th:if="${borrow.id}">대여</td>
 	          <!-- 예약-->
-	          <td class="sharething-status" th:if="${borrow.borrowStatus} == 1">예약</td>
+	          <td class="sharething-status" th:unless="${borrow.id}">예약</td>
 	          
 	          <td class="sharething-waybill" th:text="${borrow.trackingNumber}"></td>
 	          <td class="sharething-date">
@@ -116,21 +110,16 @@
 	          </td>
 	          
 	          <td class="sharething-btn">
-	          	<!-- 대여 -->
-	          	<th:block th:if="${borrow.borrowStatus} == 0">
-	          		<!-- 연장 가능 -->
-	            	<button th:if="${borrow.isExtended} == 0" class="extension-btn">연장하기</button>
-	            	<!-- 연장 불가능 -->
-	            	<button th:if="${borrow.isExtended} == 1" class="not-extension-btn"  disabled>연장하기</button>
-	            </th:block>
-	             
-	            <!-- 예약 -->
-	            <th:block th:if="${borrow.borrowStatus} == 1">
-	              <!-- 대여 신청 가능 -->
-	            	<button th:if="${borrow.isFirstBooker} == 1" class="extension-btn">대여 신청</button>
-	            	<!-- 대여 신청 불가능 -->
-	            	<button th:if="${borrow.isFirstBooker} == 0" class="not-extension-btn" disabled>대여 신청</button>
-	            </th:block>
+	          
+	          <!-- 대여 -->
+           	<button th:if="${borrow.id}" class="extension-btn">연장하기</button>
+       
+           	<!-- 예약 -->
+            <!-- 대여 신청 가능 -->
+           	<button th:if="${borrow.isFirstBooker} == 1" class="extension-btn">대여 신청</button>
+           	<!-- 대여 신청 불가능 -->
+           	<button th:if="${borrow.isFirstBooker} == 0" class="not-extension-btn" disabled>대여 신청</button>
+	           
 	          </td>
 	        </tr>
 	      </table>
