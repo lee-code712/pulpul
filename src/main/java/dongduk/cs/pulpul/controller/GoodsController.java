@@ -104,7 +104,7 @@ public class GoodsController {
 	 */
 	@GetMapping("/update")
 	public String updateForm(@ModelAttribute("goods") Goods goods, 
-			@RequestParam("goodsId") String id){
+			@RequestParam("itemId") String id){
 		
 		String memberId = goods.getItem().getMarket().getMember().getId();
 		
@@ -138,7 +138,7 @@ public class GoodsController {
 	 * 판매 식물 삭제
 	 */
 	@GetMapping("/delete")
-	public String delete(@RequestParam("goodsId") String id, HttpSession session, 
+	public String delete(@RequestParam("itemId") String id, HttpSession session, 
 			RedirectAttributes rttr){
 
 		try {
