@@ -119,19 +119,13 @@ input[type="radio"]:checked + span:before {
   background-color: #93c0b5;
   cursor: pointer;
 }
-
-.put{
-	width: 100px;
-	height: 100px;
-}
-
-
+ 
 /*이미지 가로로 정렬*/
-#putGoodsImg{
+#putItemImg{
 	display:flex;
 }
 
-.putGoodsImgSpan{
+.putItemImgSpan{
 	margin: 0px 10px;
 	position:relative;
 }
