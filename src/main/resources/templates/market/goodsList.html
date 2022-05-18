@@ -52,7 +52,7 @@
 		      <td th:text="${goods.salesQuantity}"></td>
 		      <td th:text="${#numbers.formatInteger(goods.shippingFee, 0, 'COMMA')}"></td>
 		      <td th:text="${#numbers.formatInteger(goods.price, 0, 'COMMA')}"></td>
-		      <td>
+		      <td><!-- goodsId -> itemId -->
 		        <button class="updateBtn" th:onclick="updateGoods([[${goods.item.id}]])">수정</button>
 		        <button class="deleteBtn" th:onclick="deleteGoods([[${goods.item.id}]])">삭제</button>
 		      </td>
