@@ -10,9 +10,9 @@ var check = 0;
 function inputFilename(){
 	
 	 const div = document.querySelector(".putFilenameDiv");
-	
+
 	 var spanList = document.querySelectorAll(".putFilenameSpan");
-	 if(spanList.length != 0){
+	 if(spanList.length > 0){
 		for(var i = 0; i < spanList.length; i++){
 			var initSpan = spanList[i];
 			initSpan.innerHTML = '';
@@ -21,9 +21,9 @@ function inputFilename(){
 	}
 	
 	 for (var i = 0; i < fileArray.length; i++) {
+		
 		const span = document.createElement("span");
-		span.classList.add("putFilenameSpan")
-   
+		span.classList.add("putFilenameSpan");
 		span.innerHTML = fileArray[i].name;
 		
 		div.appendChild(span);
@@ -98,8 +98,35 @@ function inputFilename(){
         span.appendChild(button);
         
         // 이미지 삭제 버튼 눌렀을 때
-        button.onclick= function(event){
-	       event.preventDefault();
+        button.addEventListener("click", deleteImg);
+	       
+
+	 }, false);
+ 
+    reader.readAsDataURL(file);
+ 	}
+ 	if (files) {
+		    [].forEach.call(files, readAndPreview);
+   }
+ }
+ 
+ //기존에 존재하던 이미지 수정
+ function updateImg(event){
+	
+	event.preventDefault();
+	var deleteFile = document.querySelectorAll('.updateImage');
+	var selectdeleteBtn = event.target.id;//선택한 button의 아이디
+	console.log(deleteFile);
+	
+	for(var i = 0; i < deleteFile.length; i++){
+		if(selectdeleteBtn == deleteFile[i].innerHTML){
+			deleteFile[i].parentNode.removeChild(deleteFile[0]);
+			event.target.parentElement.remove();
+		}
+	}
+}
+ function deleteImg(event){
+	     event.preventDefault();
 	       
 	       var deleteFile = event.target.id;//선택한 button의 아이디
 	       
@@ -127,12 +154,3 @@ function inputFilename(){
          document.querySelector('input[type=file]').files = dataTransfer.files;
  
   		}
-
-	 }, false);
- 
-    reader.readAsDataURL(file);
- 	}
- 	if (files) {
-		    [].forEach.call(files, readAndPreview);
-   }
- }
