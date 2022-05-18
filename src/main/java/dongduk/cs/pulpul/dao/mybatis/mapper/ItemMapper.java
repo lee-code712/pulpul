@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import dongduk.cs.pulpul.domain.Goods;
+import dongduk.cs.pulpul.domain.Item;
 import dongduk.cs.pulpul.domain.ShareThing;
 
 @Mapper
@@ -51,6 +52,8 @@ public interface ItemMapper {
 	int updateIsBorrowed(ShareThing shareThing);
 	
 	int selectBorrowIdByItemId(String itemId);
+	
+	int updateItem(Item item);
 	
 	int insertItemImages(Map<String, Object> itemImages);
 	

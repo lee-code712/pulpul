@@ -60,16 +60,18 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	// 상품 등록
-	public boolean uploadGoods(Goods goods, MultipartFile[] uploadsFiles) {
+	public boolean uploadGoods(Goods goods, MultipartFile[] uploadFiles) {
+		// 상품 레코드 생성
 		boolean successed = itemDao.createGoods(goods);
 		if (!successed) return false;
 		
+		// 상품 이미지 저장, 이미지 레코드 생성
 		String itemId = goods.getItem().getId();
 		if (itemId != null) { // 정상적으로 레코드를 생성했다면
 			goods.getItem().setId(itemId);
 			List<String> imageUrlList = new ArrayList<String>();
 			int cnt = 1;
-			for (MultipartFile uploadFile : uploadsFiles) {
+			for (MultipartFile uploadFile : uploadFiles) {
 				if (!uploadFile.isEmpty()) {
 					String fileUrl = uploadFile(uploadFile, goods.getItem().getId(), cnt);
 					imageUrlList.add("/upload/" + fileUrl);
@@ -79,26 +81,44 @@ public class ItemServiceImpl implements ItemService {
 			String memberId = goods.getItem().getMarket().getMember().getId();
 			successed = itemDao.createItemImages(imageUrlList, memberId);
 			if (!successed) return false;
+			
+			// 포인트 +500
 			return memberDao.changePoint(memberId, 1, 500);
 		}
 		return false;
 	}
 
 	// 상품정보 수정
-	public boolean changeGoodsInfo(Goods goods, MultipartFile[] uploadsFiles) {
-		// 상품 레코드 수정에 필요한 데이터 가공
-		/* boolean success = itemDao.changeGoodsInfo(goods);
-		if (!success)
-			return false;
-		success = itemDao.changeSalesQuantity(goods);
-		if (!success)
-			return false;
-		success = itemDao.deleteItemImages(memberId, goods.getItem().getId());
-		if (!success)
-			return false;
-		return itemDao.createItemImages(goods.getItem()); */
+	public boolean changeGoodsInfo(Goods goods, MultipartFile[] updateFiles) {
+		// 품목 레코드 수정
+		boolean successed = itemDao.chageItemInfo(goods.getItem());
+		if (!successed) return false;
+		// 상품 레코드 수정
+		successed = itemDao.changeGoodsInfo(goods);
+		if (!successed) return false;
+		// 상품 판매수량 수정
+		successed = itemDao.changeSalesQuantity(goods);
+		if (!successed) return false;
 		
-		return false;
+		
+		// 상품 이미지 삭제, 이미지 레코드 삭제
+		String itemId = goods.getItem().getId();
+		String memberId = goods.getItem().getMarket().getMember().getId();
+		int cnt = itemDao.deleteItemImages(itemId, memberId);
+		if (cnt < 0) return false;
+		deleteFile(itemId, cnt);
+		
+		// 새로운 상품 이미지 저장, 이미지 레코드 생성
+		List<String> imageUrlList = new ArrayList<String>();
+		int newCnt = 1;
+		for (MultipartFile updateFile : updateFiles) {
+			if (!updateFile.isEmpty()) {
+				String fileUrl = uploadFile(updateFile, itemId, newCnt);
+				imageUrlList.add("/upload/" + fileUrl);
+				newCnt++;
+			}
+		}
+		return itemDao.createItemImages(imageUrlList, memberId);
 	}
 
 // 공유물품목록 조회
@@ -187,6 +207,26 @@ public class ItemServiceImpl implements ItemService {
         }
 		
 		return newFilename;
+	}
+	
+	// 특정 상품에 대한 파일 삭제 메소드
+	public void deleteFile(String itemId, int cnt) {
+		String absolutePath = new File("").getAbsolutePath() + "\\";
+		String path = absolutePath + "src\\main\\resources\\static\\upload";
+		
+		try {       
+//			  // 확장자를 jpg로 제한
+//          String filename = uploadFile.getOriginalFilename();
+//          String ext = filename.substring(filename.lastIndexOf( "." ));
+			for (int i = 1; i <= cnt; i++) {
+				String filename = itemId + "-" + cnt + ".jpg";
+				File file = new File(path, filename);
+				if (file.exists())
+					file.delete();
+			}
+		}catch(Exception e) {            
+			e.printStackTrace();
+		}
 	}
 	
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import dongduk.cs.pulpul.dao.mybatis.mapper.ItemMapper;
 import dongduk.cs.pulpul.domain.Goods;
+import dongduk.cs.pulpul.domain.Item;
 import dongduk.cs.pulpul.domain.ShareThing;
 
 @Component
@@ -59,14 +60,16 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public boolean changeGoodsInfo(Goods goods) {
-		// TODO Auto-generated method stub
-		return false;
+		int ck = itemMapper.updateGoods(goods);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override
 	public boolean changeSalesQuantity(Goods goods) {
-		// TODO Auto-generated method stub
-		return false;
+		int ck = itemMapper.updateSalesQuantity(goods);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override
@@ -128,6 +131,13 @@ public class ItemDaoImpl implements ItemDao {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public boolean chageItemInfo(Item item) {
+		int ck = itemMapper.updateItem(item);
+		if (ck < 0) return false;
+		return true;
+	}
 
 	@Override
 	public boolean deleteItem(String itemId) {
@@ -146,9 +156,8 @@ public class ItemDaoImpl implements ItemDao {
 	}
 
 	@Override
-	public boolean deleteItemImages(String itemId, String memberId) {
-		// TODO Auto-generated method stub
-		return false;
+	public int deleteItemImages(String itemId, String memberId) {
+		return itemMapper.deleteItemImages(memberId, itemId);
 	}
 
 }

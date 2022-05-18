@@ -3,6 +3,7 @@ package dongduk.cs.pulpul.dao;
 import java.util.List;
 
 import dongduk.cs.pulpul.domain.Goods;
+import dongduk.cs.pulpul.domain.Item;
 import dongduk.cs.pulpul.domain.ShareThing;
 
 public interface ItemDao {
@@ -64,13 +65,16 @@ public interface ItemDao {
 	// 공유 물품에 대한 대여 내역 존재여부 확인
 	boolean isExistBorrow(String itemId);
 	
+	// 품목 정보 수정
+	boolean chageItemInfo(Item item);
+	
 	// 품목 삭제
 	boolean deleteItem(String itemId);
 	
 	// 품목 이미지 목록 생성
 	boolean createItemImages(List<String> imageUrlList, String memberId);
 	
-	// 품목 이미지 목록 생성
-	boolean deleteItemImages(String itemId, String memberId);
+	// 품목 이미지 목록 삭제(삭제 개수 반환)
+	int deleteItemImages(String itemId, String memberId);
 	
 }

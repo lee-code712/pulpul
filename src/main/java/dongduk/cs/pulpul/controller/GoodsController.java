@@ -103,7 +103,7 @@ public class GoodsController {
 	@GetMapping("/update")
 	public String updateForm(@ModelAttribute("goods") Goods goods, 
 			@RequestParam("goodsId") String id){
-
+		
 		String memberId = goods.getItem().getMarket().getMember().getId();
 		
 		if(memberId == null) {
@@ -117,13 +117,19 @@ public class GoodsController {
 	}
 	
 	@PostMapping("/update")
-	public void update(){
-		/*
-		//성공
+	public String update(@Valid @ModelAttribute("goods") Goods goods, BindingResult result,
+			@RequestParam("report") MultipartFile[] updateFiles, Model model){
+
+		if (result.hasErrors())
+			return "market/goodsForm";
+		
+		boolean successed = itemSvc.changeGoodsInfo(goods, updateFiles);
+		if (!successed) {
+			model.addAttribute("updateFalid", true);
+			return "market/goodsForm";
+		}
+
 		return "redirect:/market/goods/list";
-		//오류
-		return "market/goodsForm";
-		*/
 	}
 
 	/*

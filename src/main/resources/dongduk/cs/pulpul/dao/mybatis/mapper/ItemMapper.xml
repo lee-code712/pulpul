@@ -12,10 +12,17 @@
 	</insert>
 	
 	<!-- 물품 이미지(들) 삭제 -->
-	<delete id="deleteImagesOfItem" parameterType="string"> 
+	<delete id="deleteItemImages" parameterType="string"> 
 		DELETE FROM image
-		WHERE member_id = #{memberId} AND INSTR(image_src, #{itemId}) <![CDATA[>]]> 0) 
+		WHERE member_id = #{memberId} AND INSTR(image_src, #{itemId}) <![CDATA[>]]> 0
 	</delete>
+	
+	<!-- 물품정보 수정 -->
+	<update id="updateItem" parameterType="Item">
+		UPDATE item
+		SET name = #{name}, description = #{description}, open_status = #{openStatus}
+		WHERE item_id = #{id}
+	</update>
 	
 	<!-- 물품 삭제 -->
 	<delete id="deleteItem" parameterType="string">
@@ -108,7 +115,9 @@
 					<id column="member_id" jdbcType="VARCHAR" property="id" javaType="string" />
 				</association>
 			</association>
-			<collection column="image_src" jdbcType="VARCHAR" property="imageUrlList" javaType="java.util.List" ofType="string" />
+			<collection property="imageUrlList" ofType="string" javaType="java.util.List">
+        <result column="image_src" />
+    	</collection>
 		</association>
 	</resultMap>
 	
@@ -137,11 +146,9 @@
 	
 	<!-- 상품정보 수정 -->
 	<update id="updateGoods" parameterType="Goods">
-		UPDATE (SELECT name, description, open_status, tags, price, shipping_fee, goods_size 
-			FROM item JOIN goods USING (item_id) 
-			WHERE item_id = #{item.id})
-		SET name = #{item.name}, description = #{item.description}, open_status = #{item.openStatus},
-			tags = #{tags}, price = #{price}, shipping_fee = #{shippingFee}, goods_size = #{goodsSize}
+		UPDATE goods
+		SET tags = #{tags}, price = #{price}, shipping_fee = #{shippingFee}, goods_size = #{size}
+		WHERE item_id = #{item.id}
 	</update>
 	
 	<!-- 상품 판매수량 수정 -->
