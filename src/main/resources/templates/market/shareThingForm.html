@@ -27,16 +27,28 @@
           <td><input type="text" placeholder="물품명을 입력하세요." th:field="${shareThing.item.name}"/></td>
         </tr>
         <tr>
+          <td></td>
+          <td th:errors="${shareThing.item.name}"></td>
+        </tr>
+        <tr>
           <td class="text-name">물품 설명</td>
           <td>
             <textarea placeholder="물품 설명을 작성해주세요." th:field="${shareThing.item.description}"></textarea>
           </td>
         </tr>
         <tr>
+          <td></td>
+          <td th:errors="${shareThing.item.description}"></td>
+        </tr>
+        <tr>
           <td class="text-name">대여 시 유의사항</td>
           <td>
             <input type="text" placeholder="대여 시 유의사항을 입력해주세요." th:field="${shareThing.precaution}"/>
           </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td th:errors="${shareThing.precaution}"></td>
         </tr>
         <tr>
           <td class="text-name">대여 여부</td>
@@ -56,14 +68,13 @@
         <tr th:unless="${#lists.isEmpty(shareThing.item.imageUrlList)}">
           <td class="text-name">식물 사진</td>
           <td class="putFilename">
-            <div class="putFilenameDiv" th:each="image : ${shareThing.item.imageUrlList}">
-              <span class="putFilenameSpan" th:text="${image}">
-                <button type="button" class="deleteBtn" th:id="${image}">X</button>
+            <div class="putFilenameDiv">
+              <span class="updateImage" th:each="image : ${shareThing.item.imageUrlList}" th:text="${image}">
               </span>
             </div>
           </td>
         </tr>
-        <tr th:if="${#lists.isEmpty(shareThing.item.imageUrlList)}">
+        <tr th:if="${#lists.isEmpty(shareThings.item.imageUrlList)}">
           <td class="text-name">식물 사진</td>
           <td class="putFilename">
             <div class="putFilenameDiv"></div>
@@ -75,11 +86,15 @@
             <input type="file" id="fileWrap" accept=".jpg" multiple="multiple" onchange="previewFiles()" name="report"/>
           </td>
         </tr>
-        <tr>
-          <td></td>
-          <td>
-			<div id="putItemImg">
-			</div>
+        <tr th:if="${not #lists.isEmpty(shareThing.item.imageUrlList)}">
+		  <td></td>
+		  <td>
+		    <div id="putItemImg">
+		      <span class="putItemImgSpan" th:each="image : ${shareThing.item.imageUrlList}">
+		        <img th:src="${image}" height="100px" width="100px" th:title="${image}">
+		        <button class="deleteBtn" th:id="${image}" type="button" th:onclick="updateImg(event)">X</button>
+		      </span>
+		    </div>
 		  </td>
 		</tr>
         <tr>

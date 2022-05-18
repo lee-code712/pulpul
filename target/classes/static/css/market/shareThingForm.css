@@ -159,7 +159,8 @@ input[type="radio"]:checked + span:before {
 }
 
 /* 파일 이름 정렬 */
-.putFilenameSpan {
+.putFilenameSpan, .updateImage{
+	font-size: 14px;
 	margin-right: 5px;
 }
 
