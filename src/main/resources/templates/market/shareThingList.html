@@ -10,6 +10,12 @@
 	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
   	<link rel="stylesheet" th:href="@{/css/market/shareThingList.css}" >
   </th:block>
+  
+  <th:block layout:fragment="script">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  	<script th:src="@{/js/market/shareThingList.js}"></script>
+  </th:block>
+  
 
 	<div layout:fragment="content">
 		<div id="pageWrap">
@@ -33,46 +39,21 @@
           <td class="item-btn"></td>
         </tr>
 
-        <tr>
-          <td><img src="/images/smallShareThing.svg" /></td>
-          <td>### 공유 물품</td>
-          <td><div class="rental-status-on">대여 가능</div></td>
-          <td>대기자</td>
+        <tr th:each="shareThing : ${shareThingList}" th:style="${shareThing.item.openStatus == 0 ? 'background-color: #f3f3f4;' : ''}">
+          <td><img th:src="${shareThing.item.thumbnailUrl}" width="100px" height="100px"/></td>
+          <td th:text="${shareThing.item.name}"></td>
           <td>
-            <div class="buttonWrap">
-              <button class="rentalStatusBtn" onclick="location.href='/market/shareThingBorrowManage'">대여 현황</button>
-              <button class="deleteBtn">삭제</button>
-            </div>
+            <div class="rental-status-on" th:text="${shareThing.isBorrowed == 0 ? '대여 가능' : '대여 불가'}"></div>
           </td>
-        </tr>
-
-        <tr>
-          <td><img src="/images/smallShareThing.svg" /></td>
-          <td>### 공유 물품</td>
-          <td><div class="rental-status-on">대여 가능</div></td>
-          <td>대기자</td>
+          <td th:text="${shareThing.reservationNumber}">대기자</td>
           <td>
             <div class="buttonWrap">
-              <button class="rentalStatusBtn" onclick="location.href='/market/shareThingBorrowManage'">대여 현황</button>
-              <button class="deleteBtn">삭제</button>
-            </div>
-          </td>
-        </tr>
-
-        <tr>
-          <td><img src="/images/smallShareThing.svg" /></td>
-          <td>### 공유 물품</td>
-          <td><div class="rental-status-on">대여 가능</div></td>
-          <td>대기자</td>
-          <td>
-            <div class="buttonWrap">
-              <button class="rentalStatusBtn" onclick="location.href='/market/shareThingBorrowManage'">대여 현황</button>
-              <button class="deleteBtn">삭제</button>
+              <button class="rentalStatusBtn" th:onclick="findBorrowShareThing([[${shareThing.item.id}]])">대여 현황</button>
+              <button class="deleteBtn" th:onclick="deleteShareThing([[${shareThing.item.id}]])">삭제</button>
             </div>
           </td>
         </tr>
       </table>
-
       <button id="addItemBtn" onclick="location.href='/market/shareThing/upload'">상품 추가</button>
     </div>
 	</div>
