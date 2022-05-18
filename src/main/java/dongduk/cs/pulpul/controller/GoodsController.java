@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,9 +101,18 @@ public class GoodsController {
 	 * 판매 식물 수정
 	 */
 	@GetMapping("/update")
-	public String updateForm(@RequestParam("goodsId") String id){
-		//판매 식물 목록 페이지
-		//System.out.println(id  +"id 값");
+	public String updateForm(@ModelAttribute("goods") Goods goods, 
+			@RequestParam("goodsId") String id){
+
+		String memberId = goods.getItem().getMarket().getMember().getId();
+		
+		if(memberId == null) {
+			return "redirect:/home";
+		}
+		
+		Goods findGoods = itemSvc.getGoods(id);
+		if (findGoods != null)
+			BeanUtils.copyProperties(findGoods, goods);
 		return "market/goodsForm";
 	}
 	
