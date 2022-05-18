@@ -12,6 +12,7 @@ import dongduk.cs.pulpul.dao.ItemDao;
 import dongduk.cs.pulpul.dao.MemberDao;
 import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.domain.ShareThing;
+import dongduk.cs.pulpul.service.exception.DeleteItemException;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -167,21 +168,25 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	// 업로드한 물품 삭제
-	public boolean deleteItem(String itemId) {
-		/*boolean isExist = true;
-		if (itemId.substring(0, 1).equals("G")) {
-			isExist = itemDao.isExistOrder(itemId);
-		} else if (itemId.substring(0, 1).equals("S")) {
-			isExist = itemDao.isExistBorrow(itemId);
+	public boolean deleteItem(String itemId, String memberId) throws DeleteItemException {
+		// 주문 내역 또는 대여 내역이 존재하는지 확인
+		if (itemId.substring(0, 1).equals("G") && itemDao.isExistOrder(itemId)) { // 품목이 상품이면
+			System.out.println("주문내역 있음");
+			throw new DeleteItemException("주문내역이 존재하여 삭제할 수 없습니다. 비공개로 돌려주시기 바랍니다.");
 		}
-		if (isExist)
-			return false;
-		boolean success = itemDao.deleteItem(itemId);
-		if (!success)
-			return false;
-		return itemDao.deleteItemImages(itemId); */
-		
-		return false;
+		else if (itemId.substring(0, 1).equals("S") && itemDao.isExistBorrow(itemId)) { // 품목이 공유물품이면
+			throw new DeleteItemException("대여내역이 존재하여 삭제할 수 없습니다. 비공개로 돌려주시기 바랍니다.");
+		}
+
+		// 품목 삭제
+		boolean successed = itemDao.deleteItem(itemId);
+		if (!successed) return false;
+
+		// 품목 이미지 삭제
+		int cnt = itemDao.deleteItemImages(itemId, memberId);
+		if (cnt < 0) return false;
+		deleteFile(itemId, cnt);
+		return true;
 	}
 	
 	// 파일 업로드 메소드
@@ -219,7 +224,7 @@ public class ItemServiceImpl implements ItemService {
 //          String filename = uploadFile.getOriginalFilename();
 //          String ext = filename.substring(filename.lastIndexOf( "." ));
 			for (int i = 1; i <= cnt; i++) {
-				String filename = itemId + "-" + cnt + ".jpg";
+				String filename = itemId + "-" + i + ".jpg";
 				File file = new File(path, filename);
 				if (file.exists())
 					file.delete();

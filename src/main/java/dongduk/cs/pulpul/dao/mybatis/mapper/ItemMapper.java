@@ -35,7 +35,7 @@ public interface ItemMapper {
 			@Param("orderStatus") int orderStatus, 
 			@Param("quantity") int quantity);
 	
-	int selectOrderIdByItemId(String itemId);
+	int selectOrderCountByItemId(String itemId);
 	
 	List<ShareThing> selectAllShareThing();
 	
@@ -51,9 +51,11 @@ public interface ItemMapper {
 	
 	int updateIsBorrowed(ShareThing shareThing);
 	
-	int selectBorrowIdByItemId(String itemId);
+	int selectBorrowCountByItemId(String itemId);
 	
 	int updateItem(Item item);
+	
+	int deleteItem(String itemId);
 	
 	int insertItemImages(Map<String, Object> itemImages);
 	

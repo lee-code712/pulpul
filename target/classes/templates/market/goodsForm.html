@@ -131,8 +131,8 @@
         </tr>
       </table>
       <div id="btnWrap" class="goodsFormBtn">
-      	<button th:if="${goods.item.id == 0}" id="saveBtn" onclick="javascript: form.action='/market/goods/upload';">등록</button>
-        <button th:unless="${goods.item.id == 0}" id="saveBtn" onclick="javascript: form.action='/market/goods/update';">수정</button>
+      	<button th:if="${goods.item.id == null}" id="saveBtn" onclick="javascript: form.action='/market/goods/upload';">등록</button>
+        <button th:unless="${goods.item.id == null}" id="saveBtn" onclick="javascript: form.action='/market/goods/update';">수정</button>
         <button id="cancelBtn" type="button" class="cancel" onclick="location.href='/market/goods/list'">취소</button>
       </div>
       </form>

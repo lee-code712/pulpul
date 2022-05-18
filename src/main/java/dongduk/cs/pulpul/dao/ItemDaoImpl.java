@@ -80,7 +80,8 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public boolean isExistOrder(String itemId) {
-		// TODO Auto-generated method stub
+		int cnt = itemMapper.selectOrderCountByItemId(itemId);
+		if (cnt > 0) return true;
 		return false;
 	}
 
@@ -128,7 +129,8 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public boolean isExistBorrow(String itemId) {
-		// TODO Auto-generated method stub
+		int cnt = itemMapper.selectBorrowCountByItemId(itemId);
+		if (cnt > 0) return true;
 		return false;
 	}
 	
@@ -141,8 +143,9 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public boolean deleteItem(String itemId) {
-		// TODO Auto-generated method stub
-		return false;
+		int ck = itemMapper.deleteItem(itemId);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.domain.ShareThing;
+import dongduk.cs.pulpul.service.exception.DeleteItemException;
 
 public interface ItemService {
 	
@@ -52,6 +53,6 @@ public interface ItemService {
 	boolean changeShareThingInfo(ShareThing shareThing);
 	
 	// 품목 삭제
-	boolean deleteItem(String itemId);
+	boolean deleteItem(String itemId, String memberId) throws DeleteItemException;
 	
 }

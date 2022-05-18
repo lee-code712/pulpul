@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.domain.Item;
 import dongduk.cs.pulpul.domain.Market;
 import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.service.ItemService;
+import dongduk.cs.pulpul.service.exception.DeleteItemException;
 
 @Controller
 @RequestMapping("/market/goods")
@@ -136,8 +138,21 @@ public class GoodsController {
 	 * 판매 식물 삭제
 	 */
 	@GetMapping("/delete")
-	public String delete(){
-		//판매 식물 목록 페이지
+	public String delete(@RequestParam("goodsId") String id, HttpSession session, 
+			RedirectAttributes rttr){
+
+		try {
+			
+			boolean successed = itemSvc.deleteItem(id, (String)session.getAttribute("id"));
+			if (!successed) {
+				rttr.addFlashAttribute("deleteFailed", true);
+			}
+			
+		} catch (DeleteItemException e) {
+			rttr.addFlashAttribute("deleteFailed", true);
+			rttr.addFlashAttribute("exception", e.getMessage());
+		}
+
 		return "redirect:/market/goods/list";
 	}
 

@@ -177,8 +177,8 @@
 	</update>
 	
 	<!-- 상품에 대해 판매내역이 있는지 확인 -->
-	<select id="selectOrderByItem" parameterType="string" resultType="int">
-		SELECT order_id
+	<select id="selectOrderCountByItemId" parameterType="string" resultType="int">
+		SELECT COUNT(order_id)
 		FROM item it
 			JOIN order_goods og ON it.item_id = og.goods_id 
 		WHERE it.item_id = #{item_id}
@@ -276,8 +276,8 @@
 	</update>
 	
 	<!-- 공유물품에 대해 대여내역이 있는지 확인 -->
-	<select id="selectBorrowByItem" parameterType="string" resultType="int">
-		SELECT borrow_id
+	<select id="selectBorrowCountByItemId" parameterType="string" resultType="int">
+		SELECT COUNT(borrow_id)
 		FROM item it
 			JOIN borrow b ON it.item_id = b.share_thing_id 
 		WHERE it.item_id = #{item_id}
