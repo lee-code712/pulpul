@@ -12,6 +12,7 @@
   </th:block>
   
   	<th:block layout:fragment="script">
+  	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   	<script th:src="@{/js/market/marketForm.js}"></script>
   </th:block>
   
@@ -55,15 +56,21 @@
 		    </tr>
 		    <tr id="isMarketImage">
 		      <td class="text-name">마켓 사진</td>
-		      <td th:text="${not #strings.isEmpty(market.imageUrl)} ? ${market.imageUrl} : '마켓 이미지가 없습니다.'"></td>  
+		      <td class="imgUrl" th:text="${not #strings.isEmpty(market.imageUrl)} ? ${market.imageUrl} : '마켓 이미지가 없습니다.'">
+		      </td>
 		    </tr>
 		    <tr>
 		      <td></td>
 		      <td><input type="file" id="fileWrap" accept=".jpg" onchange="previewFile()" name="report"></td>
 		    </tr>
 		    <tr>
-		    	<td><img class="marketImage" th:unless="${#strings.isEmpty(market.imageUrl)}" th:src="${market.imageUrl}"></td>
-				<td><img class="marketImage" th:if="${#strings.isEmpty(market.imageUrl)}" src="" alt="사진을 추가해주세요."></td>
+		        <td><input type="hidden" th:field="*{imageUrl}"></td>
+		    	<td th:if="${not #strings.isEmpty(market.imageUrl)}">
+		    	  <img class="marketImage" th:src="${market.imageUrl}">
+		    	</td>
+				<td th:if="${#strings.isEmpty(market.imageUrl)}">
+				  <img class="marketImage" src="" alt="사진을 추가해주세요.">
+				</td>
 		  	</tr>
 		    <tr>
 		      <td class="text-name">연락 가능 시간</td>
@@ -111,7 +118,7 @@
 		  </table>
 		   <div id="btnWrap" class="marketBtn">
 		    <button th:if="*{id == 0}" onclick="javascript: form.action='/market/create';" id="saveBtn">저장</button>
-		    <button th:unless="*{id == 0}" onclick="javascript: form.action='/market/update';" id="saveBtn">수정</button>
+		    <button th:unless="*{id == 0}" id="saveBtn" onclick="javascript: form.action='/market/update';">수정</button>
 		  </div>
 		  </form>
 		</div>

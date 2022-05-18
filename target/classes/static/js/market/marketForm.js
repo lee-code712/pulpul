@@ -1,3 +1,4 @@
+
  /*
 * input file에서 이미지 선택 시 선택한 이미지 보여줌.
 */
@@ -17,7 +18,7 @@
   }
   
    isImage();
-
+ 
 }
 
 //input type="file"에서 file 선택하면 이미지 보여짐.
@@ -41,4 +42,4 @@ function isImage(){
 		marketImgPath.innerHTML = fileName;
 		
 	}
-}
+} 
