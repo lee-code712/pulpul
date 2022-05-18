@@ -6,7 +6,10 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,13 +31,22 @@ import dongduk.cs.pulpul.service.exception.DeleteItemException;
 
 @Controller
 @RequestMapping("/market/goods")
-public class GoodsController {
+public class GoodsController implements ApplicationContextAware {
 	
+	private WebApplicationContext context;	
+	private String uploadDir;
 	private final ItemService itemSvc;
 	
 	@Autowired
 	public GoodsController(ItemService itemSvc) {
 		this.itemSvc = itemSvc;
+	}
+	
+	@Override
+	public void setApplicationContext(ApplicationContext appContext) throws BeansException {
+		this.context = (WebApplicationContext) appContext;
+		this.uploadDir = context.getServletContext().getRealPath("/upload/");
+		System.out.println(this.uploadDir);
 	}
 	
 	@ModelAttribute("goods")
@@ -89,7 +102,7 @@ public class GoodsController {
 		if (result.hasErrors())
 			return "market/goodsForm";
 
-		boolean successed = itemSvc.uploadGoods(goods, uploadFiles);
+		boolean successed = itemSvc.uploadGoods(goods, uploadFiles, uploadDir);
 		if (!successed) {
 			model.addAttribute("uplaodFalid", true);
 			return "market/goodsForm";
@@ -125,7 +138,7 @@ public class GoodsController {
 		if (result.hasErrors())
 			return "market/goodsForm";
 		
-		boolean successed = itemSvc.changeGoodsInfo(goods, updateFiles);
+		boolean successed = itemSvc.changeGoodsInfo(goods, updateFiles, uploadDir);
 		if (!successed) {
 			model.addAttribute("updateFalid", true);
 			return "market/goodsForm";
@@ -143,7 +156,7 @@ public class GoodsController {
 
 		try {
 			
-			boolean successed = itemSvc.deleteItem(id, (String)session.getAttribute("id"));
+			boolean successed = itemSvc.deleteItem(id, (String)session.getAttribute("id"), uploadDir);
 			if (!successed) {
 				rttr.addFlashAttribute("deleteFailed", true);
 			}

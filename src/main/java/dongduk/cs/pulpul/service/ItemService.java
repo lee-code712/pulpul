@@ -29,10 +29,10 @@ public interface ItemService {
 	Goods getGoods(String itemId);
 	
 	// 상품 등록
-	boolean uploadGoods(Goods goods, MultipartFile[] uploadFiles);
+	boolean uploadGoods(Goods goods, MultipartFile[] uploadFiles, String uploadDir);
 	
 	// 상품 정보 수정
-	boolean changeGoodsInfo(Goods goods, MultipartFile[] uploadFiles);
+	boolean changeGoodsInfo(Goods goods, MultipartFile[] uploadFiles, String uploadDir);
 	
 	// 전체 공유 물품 목록 조회
 	List<ShareThing> getShareThingList();
@@ -53,6 +53,6 @@ public interface ItemService {
 	boolean changeShareThingInfo(ShareThing shareThing);
 	
 	// 품목 삭제
-	boolean deleteItem(String itemId, String memberId) throws DeleteItemException;
+	boolean deleteItem(String itemId, String memberId, String uploadDir) throws DeleteItemException;
 	
 }

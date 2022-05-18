@@ -20,6 +20,7 @@
       <div id="pageTit">상품 관리</div>
       <div id="pageSubTit">상품 추가</div>
       <form method="post" enctype="multipart/form-data">
+      <input type="hidden" th:field="${goods.item.id}" />
       <table>
         <tr>
           <td class="text-name">상품명</td>

@@ -61,7 +61,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	// 상품 등록
-	public boolean uploadGoods(Goods goods, MultipartFile[] uploadFiles) {
+	public boolean uploadGoods(Goods goods, MultipartFile[] uploadFiles, String uploadDir) {
 		// 상품 레코드 생성
 		boolean successed = itemDao.createGoods(goods);
 		if (!successed) return false;
@@ -74,8 +74,8 @@ public class ItemServiceImpl implements ItemService {
 			int cnt = 1;
 			for (MultipartFile uploadFile : uploadFiles) {
 				if (!uploadFile.isEmpty()) {
-					String fileUrl = uploadFile(uploadFile, goods.getItem().getId(), cnt);
-					imageUrlList.add("/upload/" + fileUrl);
+					String filename = uploadFile(uploadFile, goods.getItem().getId(), uploadDir, cnt);
+					imageUrlList.add("/upload/" + filename);
 					cnt++;
 				}
 			}
@@ -90,7 +90,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	// 상품정보 수정
-	public boolean changeGoodsInfo(Goods goods, MultipartFile[] updateFiles) {
+	public boolean changeGoodsInfo(Goods goods, MultipartFile[] updateFiles, String uploadDir) {
 		// 품목 레코드 수정
 		boolean successed = itemDao.chageItemInfo(goods.getItem());
 		if (!successed) return false;
@@ -107,15 +107,15 @@ public class ItemServiceImpl implements ItemService {
 		String memberId = goods.getItem().getMarket().getMember().getId();
 		int cnt = itemDao.deleteItemImages(itemId, memberId);
 		if (cnt < 0) return false;
-		deleteFile(itemId, cnt);
+		deleteFile(itemId, uploadDir, cnt);
 		
 		// 새로운 상품 이미지 저장, 이미지 레코드 생성
 		List<String> imageUrlList = new ArrayList<String>();
 		int newCnt = 1;
 		for (MultipartFile updateFile : updateFiles) {
 			if (!updateFile.isEmpty()) {
-				String fileUrl = uploadFile(updateFile, itemId, newCnt);
-				imageUrlList.add("/upload/" + fileUrl);
+				String filename = uploadFile(updateFile, itemId, uploadDir, newCnt);
+				imageUrlList.add("/upload/" + filename);
 				newCnt++;
 			}
 		}
@@ -168,7 +168,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	// 업로드한 물품 삭제
-	public boolean deleteItem(String itemId, String memberId) throws DeleteItemException {
+	public boolean deleteItem(String itemId, String memberId, String uploadDir) throws DeleteItemException {
 		// 주문 내역 또는 대여 내역이 존재하는지 확인
 		if (itemId.substring(0, 1).equals("G") && itemDao.isExistOrder(itemId)) { // 품목이 상품이면
 			System.out.println("주문내역 있음");
@@ -185,16 +185,13 @@ public class ItemServiceImpl implements ItemService {
 		// 품목 이미지 삭제
 		int cnt = itemDao.deleteItemImages(itemId, memberId);
 		if (cnt < 0) return false;
-		deleteFile(itemId, cnt);
+		deleteFile(itemId, uploadDir, cnt);
 		return true;
 	}
 	
 	// 파일 업로드 메소드
-	public String uploadFile(MultipartFile uploadFile, String itemId, int cnt) {
+	public String uploadFile(MultipartFile uploadFile, String itemId, String uploadDir, int cnt) {
 		String newFilename = "";
-		String absolutePath = new File("").getAbsolutePath() + "\\";
-		String path = absolutePath + "src\\main\\resources\\static\\upload";
-
 		// System.out.println(path);
 		try {       
 //			  // 확장자를 jpg로 제한
@@ -202,7 +199,7 @@ public class ItemServiceImpl implements ItemService {
 //            String ext = filename.substring(filename.lastIndexOf( "." ));
             newFilename = itemId + "-" + cnt + ".jpg";
             
-            File newFile = new File(path, newFilename);
+            File newFile = new File(uploadDir, newFilename);
             if (newFile.exists())
             	newFile.delete();
             uploadFile.transferTo(newFile);
@@ -215,17 +212,14 @@ public class ItemServiceImpl implements ItemService {
 	}
 	
 	// 특정 상품에 대한 파일 삭제 메소드
-	public void deleteFile(String itemId, int cnt) {
-		String absolutePath = new File("").getAbsolutePath() + "\\";
-		String path = absolutePath + "src\\main\\resources\\static\\upload";
-		
+	public void deleteFile(String itemId, String uploadDir, int cnt) {
 		try {       
 //			  // 확장자를 jpg로 제한
 //          String filename = uploadFile.getOriginalFilename();
 //          String ext = filename.substring(filename.lastIndexOf( "." ));
 			for (int i = 1; i <= cnt; i++) {
 				String filename = itemId + "-" + i + ".jpg";
-				File file = new File(path, filename);
+				File file = new File(uploadDir, filename);
 				if (file.exists())
 					file.delete();
 			}

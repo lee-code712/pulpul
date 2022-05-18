@@ -37,13 +37,13 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public boolean makeMarket(Market market, MultipartFile uploadFile) throws IOException {
+	public boolean makeMarket(Market market, MultipartFile uploadFile, String uploadDir) throws IOException {
 		int marketId = marketDao.createMarket(market);
 		if (marketId > 0) { // 정상적으로 레코드를 생성했다면
 			market.setId(marketId);
 			if (!uploadFile.isEmpty()) {
-				String fileUrl = uploadFile(uploadFile, market.getId());
-				market.setImageUrl("/upload/" + fileUrl);
+				String filename = uploadFile(uploadFile, market.getId(), uploadDir);
+				market.setImageUrl("/upload/" + filename);
 				return marketDao.createMarketImage(market);
 			}
 			return true;
@@ -52,17 +52,17 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public boolean changeMarketInfo(Market market, MultipartFile updateFile) throws IOException {
+	public boolean changeMarketInfo(Market market, MultipartFile updateFile, String uploadDir) throws IOException {
 		boolean successed = marketDao.changeMarketInfo(market);
 		if (!successed) return false;
 		if (!updateFile.isEmpty()) {
 			String imageSrc = marketDao.findMarketImage(market.getMember().getId());
 			if (imageSrc != null) {
-				updateFile(updateFile, market.getId());
+				updateFile(updateFile, market.getId(), uploadDir);
 			}
 			else {
-				String fileUrl = uploadFile(updateFile, market.getId());
-				market.setImageUrl("/upload/" + fileUrl);
+				String filename = uploadFile(updateFile, market.getId(), uploadDir);
+				market.setImageUrl("/upload/" + filename);
 				return marketDao.createMarketImage(market);
 			}
 			return true;
@@ -71,11 +71,8 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	// 파일 업로드 메소드
-	public String uploadFile(MultipartFile uploadFile, int marketId) {
+	public String uploadFile(MultipartFile uploadFile, int marketId, String uploadDir) {
 		String newFilename = "";
-		String absolutePath = new File("").getAbsolutePath() + "\\";
-		String path = absolutePath + "src\\main\\resources\\static\\upload";
-
 		// System.out.println(path);
 		try {       
 //			  // 확장자를 jpg로 제한
@@ -83,7 +80,7 @@ public class MarketServiceImpl implements MarketService {
 //            String ext = filename.substring(filename.lastIndexOf( "." ));
             newFilename = "MIMG-" + marketId + ".jpg";
             
-            File newFile = new File(path, newFilename);
+            File newFile = new File(uploadDir + newFilename);
             if (newFile.exists())
             	newFile.delete();
             uploadFile.transferTo(newFile);
@@ -96,10 +93,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	// 파일 업데이트 메소드
-	public void updateFile(MultipartFile updateFile, int marketId) {
-		String absolutePath = new File("").getAbsolutePath() + "\\";
-		String path = absolutePath + "src\\main\\resources\\static\\upload";
-
+	public void updateFile(MultipartFile updateFile, int marketId, String uploadDir) {
 		// System.out.println(path);
 		try {            
 //			  // 확장자를 jpg로 제한
@@ -107,7 +101,7 @@ public class MarketServiceImpl implements MarketService {
 //            String ext = filename.substring(filename.lastIndexOf( "." ));
             String newFilename = "MIMG-" + marketId + ".jpg";
             
-            File newFile = new File(path, newFilename);
+            File newFile = new File(uploadDir + newFilename);
             updateFile.transferTo(newFile);
 
         }catch(Exception e) {            

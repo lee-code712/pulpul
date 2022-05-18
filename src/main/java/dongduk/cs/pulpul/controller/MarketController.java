@@ -6,7 +6,10 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import dongduk.cs.pulpul.domain.Market;
@@ -23,13 +27,22 @@ import dongduk.cs.pulpul.service.MarketService;
 
 @Controller
 @RequestMapping("/market")
-public class MarketController {
+public class MarketController implements ApplicationContextAware {
 	
+	private WebApplicationContext context;	
+	private String uploadDir;
 	private final MarketService marketSvc;
 	
 	@Autowired
 	public MarketController(MarketService marketSvc) {
 		this.marketSvc = marketSvc;
+	}
+	
+	@Override
+	public void setApplicationContext(ApplicationContext appContext) throws BeansException {
+		this.context = (WebApplicationContext) appContext;
+		this.uploadDir = context.getServletContext().getRealPath("/upload/");
+		System.out.println(this.uploadDir);
 	}
 	
 	@ModelAttribute("market")
@@ -71,7 +84,7 @@ public class MarketController {
 		if (result.hasErrors())
 			return "market/marketForm";
 		
-		 boolean successed = marketSvc.makeMarket(market, uploadFile); 
+		 boolean successed = marketSvc.makeMarket(market, uploadFile, uploadDir); 
 		 if (!successed) {
 			 model.addAttribute("createFailed", true); 
 			 return "market/marketForm"; 
@@ -90,7 +103,7 @@ public class MarketController {
 		if (result.hasErrors())
 			return "market/marketForm";
 		
-		 boolean successed = marketSvc.changeMarketInfo(market, updateFile); 
+		 boolean successed = marketSvc.changeMarketInfo(market, updateFile, uploadDir); 
 		 if (!successed) { 
 			 model.addAttribute("updateFailed", true); 
 			 return "market/marketForm"; 
