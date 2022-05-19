@@ -24,6 +24,7 @@ import dongduk.cs.pulpul.service.MemberService;
 import dongduk.cs.pulpul.service.OrderService;
 import dongduk.cs.pulpul.service.exception.LoginException;
 import dongduk.cs.pulpul.validator.LoginValidator;
+import dongduk.cs.pulpul.validator.MemberValidator;
 
 @Controller
 @RequestMapping("/member")
@@ -46,6 +47,12 @@ public class MemberController {
 		this.loginValidator = loginValidator;
 	}
 	
+	@Autowired
+	private MemberValidator memberValidator;
+	public void setValidator(MemberValidator memberValidator) {
+		this.memberValidator = memberValidator;
+	}
+	
 	@ModelAttribute("member")
 	public Member formBacking() {
 		return new Member();
@@ -61,13 +68,21 @@ public class MemberController {
 	}
 	
 	@PostMapping("/register")
-	public void register() {
+	public String register(@ModelAttribute("member") Member member, Errors result, Model model, HttpServletRequest req) {
 		/*
 		 //성공
 		 return "member/login";
 		 //실패
 		 return "member/registerForm";
 		 */
+		model.addAttribute("member", member);
+		memberValidator.validate(member, result);
+		if(result.hasErrors()) {
+			return "member/registerForm";
+		}
+		else {
+			return "member/login";
+		}
 	}
 
 	/*

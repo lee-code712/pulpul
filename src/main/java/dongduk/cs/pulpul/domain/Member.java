@@ -8,6 +8,7 @@ public class Member {
 
 	private String id;
 	private String password;
+	private String passwordCheck;
 	private String name;
 	private String birth;
 	private String address;

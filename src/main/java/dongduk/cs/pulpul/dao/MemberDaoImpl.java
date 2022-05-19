@@ -19,8 +19,12 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public boolean createMember(Member member) {
-		// TODO Auto-generated method stub
-		return false;
+		if (memberMapper.insertMember(member) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
