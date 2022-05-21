@@ -2,8 +2,7 @@ package dongduk.cs.pulpul.service;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
+import dongduk.cs.pulpul.controller.FileCommand;
 import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.domain.ShareThing;
 import dongduk.cs.pulpul.service.exception.DeleteItemException;
@@ -29,10 +28,10 @@ public interface ItemService {
 	Goods getGoods(String itemId);
 	
 	// 상품 등록
-	boolean uploadGoods(Goods goods, MultipartFile[] uploadFiles, String uploadDir);
+	boolean uploadGoods(Goods goods, FileCommand uploadFiles);
 	
 	// 상품 정보 수정
-	boolean changeGoodsInfo(Goods goods, MultipartFile[] uploadFiles, String uploadDir);
+	boolean changeGoodsInfo(Goods goods, FileCommand uploadFiles);
 	
 	// 전체 공유 물품 목록 조회
 	List<ShareThing> getShareThingList();

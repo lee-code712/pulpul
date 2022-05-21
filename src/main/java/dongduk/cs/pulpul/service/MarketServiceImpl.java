@@ -1,12 +1,11 @@
 package dongduk.cs.pulpul.service;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
+import dongduk.cs.pulpul.controller.FileCommand;
 import dongduk.cs.pulpul.dao.MarketDao;
 import dongduk.cs.pulpul.domain.Market;
 
@@ -37,12 +36,12 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public boolean makeMarket(Market market, MultipartFile uploadFile, String uploadDir) throws IOException {
+	public boolean makeMarket(Market market, FileCommand uploadFile) {
 		int marketId = marketDao.createMarket(market);
 		if (marketId > 0) { // 정상적으로 레코드를 생성했다면
 			market.setId(marketId);
-			if (!uploadFile.isEmpty()) {
-				String filename = uploadFile(uploadFile, market.getId(), uploadDir);
+			if (!uploadFile.getFile().isEmpty()) {
+				String filename = uploadFile(uploadFile, market.getId());
 				market.setImageUrl("/upload/" + filename);
 				return marketDao.createMarketImage(market);
 			}
@@ -52,16 +51,16 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
-	public boolean changeMarketInfo(Market market, MultipartFile updateFile, String uploadDir) throws IOException {
+	public boolean changeMarketInfo(Market market, FileCommand updateFile) {
 		boolean successed = marketDao.changeMarketInfo(market);
 		if (!successed) return false;
-		if (!updateFile.isEmpty()) {
+		if (!updateFile.getFile().isEmpty()) {
 			String imageSrc = marketDao.findMarketImage(market.getMember().getId());
 			if (imageSrc != null) {
-				updateFile(updateFile, market.getId(), uploadDir);
+				updateFile(updateFile, market.getId());
 			}
 			else {
-				String filename = uploadFile(updateFile, market.getId(), uploadDir);
+				String filename = uploadFile(updateFile, market.getId());
 				market.setImageUrl("/upload/" + filename);
 				return marketDao.createMarketImage(market);
 			}
@@ -71,19 +70,17 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	// 파일 업로드 메소드
-	public String uploadFile(MultipartFile uploadFile, int marketId, String uploadDir) {
+	public String uploadFile(FileCommand uploadFile, int marketId) {
 		String newFilename = "";
 		// System.out.println(path);
 		try {       
-//			  // 확장자를 jpg로 제한
-//            String filename = uploadFile.getOriginalFilename();
-//            String ext = filename.substring(filename.lastIndexOf( "." ));
+			// 확장자를 jpg로 제한
             newFilename = "MIMG-" + marketId + ".jpg";
             
-            File newFile = new File(uploadDir + newFilename);
+            File newFile = new File(uploadFile.getPath() + newFilename);
             if (newFile.exists())
             	newFile.delete();
-            uploadFile.transferTo(newFile);
+            uploadFile.getFile().transferTo(newFile);
 
         }catch(Exception e) {            
             e.printStackTrace();
@@ -93,16 +90,14 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	// 파일 업데이트 메소드
-	public void updateFile(MultipartFile updateFile, int marketId, String uploadDir) {
+	public void updateFile(FileCommand updateFile, int marketId) {
 		// System.out.println(path);
 		try {            
-//			  // 확장자를 jpg로 제한
-//            String filename = updateFile.getOriginalFilename();
-//            String ext = filename.substring(filename.lastIndexOf( "." ));
+			// 확장자를 jpg로 제한
             String newFilename = "MIMG-" + marketId + ".jpg";
             
-            File newFile = new File(uploadDir + newFilename);
-            updateFile.transferTo(newFile);
+            File newFile = new File(updateFile.getPath() + newFilename);
+            updateFile.getFile().transferTo(newFile);
 
         }catch(Exception e) {            
             e.printStackTrace();

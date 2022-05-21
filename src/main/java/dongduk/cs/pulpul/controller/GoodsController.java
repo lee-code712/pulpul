@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dongduk.cs.pulpul.domain.Goods;
@@ -66,7 +65,7 @@ public class GoodsController implements ApplicationContextAware {
 	 * 판매 식물 목록 조회 
 	 */
 	@GetMapping("/list")
-	public String goodsList(HttpSession session, Model model){
+	public String goodsList(HttpSession session, Model model) {
 		
 		String memberId = (String) session.getAttribute("id");
 		
@@ -84,7 +83,7 @@ public class GoodsController implements ApplicationContextAware {
 	 * 판매 식물 등록
 	 */
 	@GetMapping("/upload")
-	public String uploadForm(@ModelAttribute("goods") Goods goods){
+	public String uploadForm(@ModelAttribute("goods") Goods goods) {
 		
 		String memberId = goods.getItem().getMarket().getMember().getId();
 		
@@ -97,12 +96,13 @@ public class GoodsController implements ApplicationContextAware {
 
 	@PostMapping("/upload")
 	public String upload(@Valid @ModelAttribute("goods") Goods goods, BindingResult result,
-			@RequestParam("report") MultipartFile[] uploadFiles, Model model){
+			FileCommand uploadFiles, Model model) {
 		
 		if (result.hasErrors())
 			return "market/goodsForm";
 
-		boolean successed = itemSvc.uploadGoods(goods, uploadFiles, uploadDir);
+		uploadFiles.setPath(uploadDir);
+		boolean successed = itemSvc.uploadGoods(goods, uploadFiles);
 		if (!successed) {
 			model.addAttribute("uplaodFalid", true);
 			return "market/goodsForm";
@@ -117,7 +117,7 @@ public class GoodsController implements ApplicationContextAware {
 	 */
 	@GetMapping("/update")
 	public String updateForm(@ModelAttribute("goods") Goods goods, 
-			@RequestParam("itemId") String id){
+			@RequestParam("itemId") String id) {
 		
 		String memberId = goods.getItem().getMarket().getMember().getId();
 		
@@ -133,12 +133,13 @@ public class GoodsController implements ApplicationContextAware {
 	
 	@PostMapping("/update")
 	public String update(@Valid @ModelAttribute("goods") Goods goods, BindingResult result,
-			@RequestParam("report") MultipartFile[] updateFiles, Model model){
+			FileCommand updateFiles, Model model) {
 
 		if (result.hasErrors())
 			return "market/goodsForm";
 		
-		boolean successed = itemSvc.changeGoodsInfo(goods, updateFiles, uploadDir);
+		updateFiles.setPath(uploadDir);
+		boolean successed = itemSvc.changeGoodsInfo(goods, updateFiles);
 		if (!successed) {
 			model.addAttribute("updateFalid", true);
 			return "market/goodsForm";
@@ -152,10 +153,9 @@ public class GoodsController implements ApplicationContextAware {
 	 */
 	@GetMapping("/delete")
 	public String delete(@RequestParam("itemId") String id, HttpSession session, 
-			RedirectAttributes rttr){
+			RedirectAttributes rttr) {
 
 		try {
-			
 			boolean successed = itemSvc.deleteItem(id, (String)session.getAttribute("id"), uploadDir);
 			if (!successed) {
 				rttr.addFlashAttribute("deleteFailed", true);

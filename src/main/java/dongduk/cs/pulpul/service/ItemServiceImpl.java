@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import dongduk.cs.pulpul.controller.FileCommand;
 import dongduk.cs.pulpul.dao.ItemDao;
 import dongduk.cs.pulpul.dao.MemberDao;
 import dongduk.cs.pulpul.domain.Goods;
@@ -61,7 +62,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	// 상품 등록
-	public boolean uploadGoods(Goods goods, MultipartFile[] uploadFiles, String uploadDir) {
+	public boolean uploadGoods(Goods goods, FileCommand uploadFiles) {
 		// 상품 레코드 생성
 		boolean successed = itemDao.createGoods(goods);
 		if (!successed) return false;
@@ -72,9 +73,10 @@ public class ItemServiceImpl implements ItemService {
 			goods.getItem().setId(itemId);
 			List<String> imageUrlList = new ArrayList<String>();
 			int cnt = 1;
-			for (MultipartFile uploadFile : uploadFiles) {
+			for (MultipartFile uploadFile : uploadFiles.getFiles()) {
 				if (!uploadFile.isEmpty()) {
-					String filename = uploadFile(uploadFile, goods.getItem().getId(), uploadDir, cnt);
+					uploadFiles.setFile(uploadFile);
+					String filename = uploadFile(uploadFiles, goods.getItem().getId(), cnt);
 					imageUrlList.add("/upload/" + filename);
 					cnt++;
 				}
@@ -90,7 +92,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	// 상품정보 수정
-	public boolean changeGoodsInfo(Goods goods, MultipartFile[] updateFiles, String uploadDir) {
+	public boolean changeGoodsInfo(Goods goods, FileCommand updateFiles) {
 		// 품목 레코드 수정
 		boolean successed = itemDao.chageItemInfo(goods.getItem());
 		if (!successed) return false;
@@ -107,14 +109,15 @@ public class ItemServiceImpl implements ItemService {
 		String memberId = goods.getItem().getMarket().getMember().getId();
 		int cnt = itemDao.deleteItemImages(itemId, memberId);
 		if (cnt < 0) return false;
-		deleteFile(itemId, uploadDir, cnt);
+		deleteFile(itemId, updateFiles.getPath(), cnt);
 		
 		// 새로운 상품 이미지 저장, 이미지 레코드 생성
 		List<String> imageUrlList = new ArrayList<String>();
 		int newCnt = 1;
-		for (MultipartFile updateFile : updateFiles) {
+		for (MultipartFile updateFile : updateFiles.getFiles()) {
 			if (!updateFile.isEmpty()) {
-				String filename = uploadFile(updateFile, itemId, uploadDir, newCnt);
+				updateFiles.setFile(updateFile);
+				String filename = uploadFile(updateFiles, itemId, newCnt);
 				imageUrlList.add("/upload/" + filename);
 				newCnt++;
 			}
@@ -190,19 +193,17 @@ public class ItemServiceImpl implements ItemService {
 	}
 	
 	// 파일 업로드 메소드
-	public String uploadFile(MultipartFile uploadFile, String itemId, String uploadDir, int cnt) {
+	public String uploadFile(FileCommand uploadFiles, String itemId, int cnt) {
 		String newFilename = "";
 		// System.out.println(path);
 		try {       
-//			  // 확장자를 jpg로 제한
-//            String filename = uploadFile.getOriginalFilename();
-//            String ext = filename.substring(filename.lastIndexOf( "." ));
+			// 확장자를 jpg로 제한
             newFilename = itemId + "-" + cnt + ".jpg";
             
-            File newFile = new File(uploadDir, newFilename);
+            File newFile = new File(uploadFiles.getPath(), newFilename);
             if (newFile.exists())
             	newFile.delete();
-            uploadFile.transferTo(newFile);
+            uploadFiles.getFile().transferTo(newFile);
 
         }catch(Exception e) {            
             e.printStackTrace();
@@ -214,9 +215,7 @@ public class ItemServiceImpl implements ItemService {
 	// 특정 상품에 대한 파일 삭제 메소드
 	public void deleteFile(String itemId, String uploadDir, int cnt) {
 		try {       
-//			  // 확장자를 jpg로 제한
-//          String filename = uploadFile.getOriginalFilename();
-//          String ext = filename.substring(filename.lastIndexOf( "." ));
+			// 확장자를 jpg로 제한
 			for (int i = 1; i <= cnt; i++) {
 				String filename = itemId + "-" + i + ".jpg";
 				File file = new File(uploadDir, filename);
