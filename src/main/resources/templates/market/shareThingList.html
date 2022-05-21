@@ -18,6 +18,11 @@
   
 
 	<div layout:fragment="content">
+		<script th:inline="javascript">
+  		console.log('데이터 확인');
+  		var shareThingList = [[${shareThingList}]];
+  		console.log(shareThingList);
+  	</script>
 		<div id="pageWrap">
       <div id="pageTit">공유 물품 관리</div>
       <div id="pageSubTit">공유 물품 목록</div>

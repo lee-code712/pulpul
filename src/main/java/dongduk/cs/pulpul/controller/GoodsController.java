@@ -45,7 +45,7 @@ public class GoodsController implements ApplicationContextAware {
 	public void setApplicationContext(ApplicationContext appContext) throws BeansException {
 		this.context = (WebApplicationContext) appContext;
 		this.uploadDir = context.getServletContext().getRealPath("/upload/");
-		System.out.println(this.uploadDir);
+		// System.out.println(this.uploadDir);
 	}
 	
 	@ModelAttribute("goods")
@@ -128,6 +128,7 @@ public class GoodsController implements ApplicationContextAware {
 		Goods findGoods = itemSvc.getGoods(id);
 		if (findGoods != null)
 			BeanUtils.copyProperties(findGoods, goods);
+		
 		return "market/goodsForm";
 	}
 	

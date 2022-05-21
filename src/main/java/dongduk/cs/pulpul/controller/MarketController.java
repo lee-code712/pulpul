@@ -38,7 +38,7 @@ public class MarketController implements ApplicationContextAware {
 	public void setApplicationContext(ApplicationContext appContext) throws BeansException {
 		this.context = (WebApplicationContext) appContext;
 		this.uploadDir = context.getServletContext().getRealPath("/upload/");
-		System.out.println(this.uploadDir);
+		// System.out.println(this.uploadDir);
 	}
 	
 	@ModelAttribute("market")

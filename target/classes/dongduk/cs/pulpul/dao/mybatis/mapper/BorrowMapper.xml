@@ -87,6 +87,13 @@
 		WHERE share_thing_id = #{itemId}
 	</select>
 	
+	<!-- 특정 공유 물품의 예약자 수 조회 -->
+	<select id="selectReservationNumber" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM borrow_reservation
+		WHERE share_thing_id = #{item_id}
+	</select>
+	
 	<!-- 두 번째 예약자를 첫 번째 예약자로 변경 -->
 	<update id="updateIsFirstBooker" parameterType="Borrow">
 		UPDATE borrow_reservation

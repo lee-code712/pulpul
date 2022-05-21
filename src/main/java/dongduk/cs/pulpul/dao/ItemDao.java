@@ -54,7 +54,7 @@ public interface ItemDao {
 	ShareThing findShareThingByItem(String itemId);
 	
 	// 공유 물품 생성
-	int createShareThing(ShareThing shareThing);
+	boolean createShareThing(ShareThing shareThing);
 	
 	// 공유 물품 정보 수정
 	boolean changeShareThingInfo(ShareThing shareThing);

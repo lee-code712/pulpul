@@ -35,8 +35,7 @@ public class BorrowDaoImpl implements BorrowDao {
 
 	@Override
 	public int checkNumberBorrowReservation(String itemId) {
-		// TODO Auto-generated method stub
-		return 0;
+		return borrowMapper.selectReservationNumber(itemId);
 	}
 
 	@Override

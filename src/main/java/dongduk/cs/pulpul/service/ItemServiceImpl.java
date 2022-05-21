@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import dongduk.cs.pulpul.controller.FileCommand;
+import dongduk.cs.pulpul.dao.BorrowDao;
 import dongduk.cs.pulpul.dao.ItemDao;
 import dongduk.cs.pulpul.dao.MemberDao;
 import dongduk.cs.pulpul.domain.Goods;
@@ -20,11 +21,13 @@ public class ItemServiceImpl implements ItemService {
 
 	private final ItemDao itemDao;
 	private final MemberDao memberDao;
+	private final BorrowDao borrowDao;
 
 	@Autowired
-	public ItemServiceImpl(ItemDao itemDao, MemberDao memberDao) {
+	public ItemServiceImpl(ItemDao itemDao, MemberDao memberDao, BorrowDao borrowDao) {
 		this.itemDao = itemDao;
 		this.memberDao = memberDao;
+		this.borrowDao = borrowDao;
 	}
 
 	// 전체 상품 목록 조회
@@ -132,7 +135,14 @@ public class ItemServiceImpl implements ItemService {
 
 	// 회원이 업로드한 공유물품목록 조회
 	public List<ShareThing> getShareThingListByMember(String memberId) {
-		return itemDao.findShareThingByMember(memberId);
+		List<ShareThing> shareThingList = itemDao.findShareThingByMember(memberId);
+		if (shareThingList != null) {
+			for (ShareThing shareThing : shareThingList) {
+				String itemId = shareThing.getItem().getId();
+				shareThing.setReservationNumber(borrowDao.checkNumberBorrowReservation(itemId));
+			}
+		}
+		return shareThingList;
 	}
 
 	// 마켓의 공유물품 조회
@@ -142,32 +152,71 @@ public class ItemServiceImpl implements ItemService {
 
 	// 공유물품 상세정보 조회
 	public ShareThing getShareThing(String itemId) {
-		return itemDao.findShareThingByItem(itemId);
+		ShareThing shareThing = itemDao.findShareThingByItem(itemId);
+		if (shareThing != null) {
+			shareThing.setReservationNumber(borrowDao.checkNumberBorrowReservation(itemId));
+		}
+		return shareThing;
 	}
 
 	// 공유물품 등록
-	public boolean uploadShareThing(ShareThing ShareThing) {
-		// 공유물품 레코드 생성에 필요한 데이터 가공
-		/*boolean success = itemDao.createShareThing(ShareThing);
-		if (!success)
-			return false;
-		if (ShareThing.getItem().getImageUrlList().size() > 0) {
-			return itemDao.createItemImages(ShareThing.getItem());
-		} */
-		return true;
+	public boolean uploadShareThing(ShareThing shareThing, FileCommand uploadFiles) {
+		// 공유물품 레코드 생성
+		boolean successed = itemDao.createShareThing(shareThing);
+		if (!successed) return false;
+		
+		// 공유물품 이미지 저장, 이미지 레코드 생성
+		String itemId = shareThing.getItem().getId();
+		if (itemId != null) { // 정상적으로 레코드를 생성했다면
+			shareThing.getItem().setId(itemId);
+			List<String> imageUrlList = new ArrayList<String>();
+			int cnt = 1;
+			for (MultipartFile uploadFile : uploadFiles.getFiles()) {
+				if (!uploadFile.isEmpty()) {
+					uploadFiles.setFile(uploadFile);
+					String filename = uploadFile(uploadFiles, shareThing.getItem().getId(), cnt);
+					imageUrlList.add("/upload/" + filename);
+					cnt++;
+				}
+			}
+			String memberId = shareThing.getItem().getMarket().getMember().getId();
+			successed = itemDao.createItemImages(imageUrlList, memberId);
+			if (!successed) return false;
+			
+			// 포인트 +500
+			return memberDao.changePoint(memberId, 1, 500);
+		}
+		return false;
 	}
 
 	// 공유물품정보 수정
-	public boolean changeShareThingInfo(ShareThing ShareThing) {
-		// 공유물품 레코드 수정에 필요한 데이터 가공
-		/* boolean success = itemDao.changeShareThingInfo(ShareThing);
-		if (!success)
-			return false;
-		success = itemDao.deleteItemImages(memberId, ShareThing.getItem().getId());
-		if (!success)
-			return false;
-		return itemDao.createItemImages(ShareThing.getItem()); */
-		return false;
+	public boolean changeShareThingInfo(ShareThing shareThing, FileCommand updateFiles) {
+		// 품목 레코드 수정
+		boolean successed = itemDao.chageItemInfo(shareThing.getItem());
+		if (!successed) return false;
+		// 공유물품 레코드 수정
+		successed = itemDao.changeShareThingInfo(shareThing);
+		if (!successed) return false;		
+		
+		// 상품 이미지 삭제, 이미지 레코드 삭제
+		String itemId = shareThing.getItem().getId();
+		String memberId = shareThing.getItem().getMarket().getMember().getId();
+		int cnt = itemDao.deleteItemImages(itemId, memberId);
+		if (cnt < 0) return false;
+		deleteFile(itemId, updateFiles.getPath(), cnt);
+		
+		// 새로운 상품 이미지 저장, 이미지 레코드 생성
+		List<String> imageUrlList = new ArrayList<String>();
+		int newCnt = 1;
+		for (MultipartFile updateFile : updateFiles.getFiles()) {
+			if (!updateFile.isEmpty()) {
+				updateFiles.setFile(updateFile);
+				String filename = uploadFile(updateFiles, itemId, newCnt);
+				imageUrlList.add("/upload/" + filename);
+				newCnt++;
+			}
+		}
+		return itemDao.createItemImages(imageUrlList, memberId);
 	}
 
 	// 업로드한 물품 삭제

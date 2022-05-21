@@ -93,8 +93,7 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public List<ShareThing> findShareThingByMember(String memberId) {
-		// TODO Auto-generated method stub
-		return null;
+		return  itemMapper.selectShareThingByMemberId(memberId);
 	}
 
 	@Override
@@ -105,20 +104,21 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public ShareThing findShareThingByItem(String itemId) {
-		// TODO Auto-generated method stub
-		return null;
+		return itemMapper.selectShareThingByItem(itemId);
 	}
 
 	@Override
-	public int createShareThing(ShareThing shareThing) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean createShareThing(ShareThing shareThing) {
+		int ck = itemMapper.insertShareThing(shareThing);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override
 	public boolean changeShareThingInfo(ShareThing shareThing) {
-		// TODO Auto-generated method stub
-		return false;
+		int ck = itemMapper.updateShareThing(shareThing);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override

@@ -193,7 +193,7 @@
 	<select id="selectAllShareThing" resultType="ShareThing">
 		SELECT it.item_id AS item.id, it.name AS item.name,
 			s.is_borrowed,
-			i.img_src AS item.thumbnailUrl,
+			i.image_src AS item.thumbnailUrl,
 			(SELECT COUNT(*) FROM borrow_reservation WHERE it.item_id) AS reservation_number
 		FROM item it
 			JOIN market m USING (market_id)
@@ -205,22 +205,21 @@
 	
 	<!-- 회원 id로 공유물품목록 조회 -->
 	<select id="selectShareThingByMemberId" parameterType="string" resultType="ShareThing">
-		SELECT it.item_id AS item.id, it.name AS item.name,
-			s.is_borrowed,
-			i.img_src AS item.thumbnailUrl,
-			(SELECT COUNT(*) FROM borrow_reservation WHERE it.item_id) AS reservation_number
+		SELECT item_id AS "item.id", it.name AS "item.name", it.open_status AS "item.openStatus",
+			s.is_borrowed AS isBorrowed,
+			i.image_src AS "item.thumbnailUrl"
 		FROM item it
 			JOIN market m USING (market_id)
 			JOIN share_thing s USING (item_id)
 			JOIN image i USING (member_id)
-		WHERE m.member_id = #{memberId} AND INSTR(i.image_src, it.item_id + '_1') <![CDATA[>]]> 0
+		WHERE member_id = #{memberId} AND INSTR(i.image_src, item_id || '-1') <![CDATA[>]]> 0
 	</select>
-	
+
 	<!-- 마켓 id로 공유물품목록 조회 -->
 	<select id="selectShareThingByMarketId" parameterType="int" resultType="ShareThing">
 		SELECT it.item_id AS item.id, it.name AS item.name,
 			s.is_borrowed,
-			i.img_src AS item.thumbnailUrl,
+			i.image_src AS item.thumbnailUrl,
 			(SELECT COUNT(*) FROM borrow_reservation WHERE it.item_id) AS reservation_number
 		FROM item it
 			JOIN share_thing s USING (item_id)
@@ -232,35 +231,44 @@
 	<resultMap id="ShareThingInfoMap" type="ShareThing">
 		<result column="precaution" jdbcType="VARCHAR" property="precaution" javaType="string" />
 		<result column="is_borrowed" jdbcType="INTEGER" property="isBorrowed" javaType="int" />
+		<result column="reservation_number" jdbcType="INTEGER" property="reservationNumber" javaType="int" />
 		<association property="item" column="item_id" javaType="Item">
 			<id column="item_id" jdbcType="VARCHAR" property="id" javaType="string" />
 			<result column="name" jdbcType="VARCHAR" property="name" javaType="string" />
 			<result column="upload_date" jdbcType="DATE" property="uploadDate" javaType="string" />
 			<result column="description" jdbcType="VARCHAR" property="description" javaType="string" />
+			<result column="open_status" jdbcType="INTEGER" property="openStatus" javaType="int" />
 			<association property="market" column="market_id" javaType="Market">
 				<id column="market_id" jdbcType="INTEGER" property="id" javaType="int" />
+				<association property="member" column="member_id" javaType="Member">
+					<id column="member_id" jdbcType="VARCHAR" property="id" javaType="string" />
+				</association>
 			</association>
-			<collection column="img_src" property="imageUrlList" javaType="java.util.List" ofType="string" />
+			<collection property="imageUrlList" ofType="string" javaType="java.util.List">
+        <result column="image_src" />
+    	</collection>
 		</association>
 	</resultMap>
 	
 	<select id="selectShareThingByItem" parameterType="string" resultMap="ShareThingInfoMap">
-		SELECT it.item_id, name, upload_date, description, market_id,
+		SELECT item_id, it.name, it.upload_date, it.description, it.open_status, market_id,
 			s.precaution, s.is_borrowed,
-			i.img_src,
-			(SELECT COUNT(*) FROM borrow_reservation WHERE it.item_id) AS reservation_number
+			member_id, i.image_src,
+			(SELECT COUNT(*) FROM borrow_reservation JOIN borrow USING (item_id)) AS reservation_number
 		FROM item it
 			FULL OUTER JOIN share_thing s USING (item_id)
+			FULL OUTER JOIN market m USING (market_id)
 			FULL OUTER JOIN image i USING (member_id)
-		WHERE it.item_id = #{item_id} AND INSTR(i.image_src, it.item_id) <![CDATA[>]]> 0
+		WHERE item_id = #{item_id} AND INSTR(i.image_src, item_id) <![CDATA[>]]> 0
 	</select>
-	
+
 	<!-- 공유물품 생성 --> 
 	<insert id="insertShareThing" parameterType="ShareThing">
-		<selectKey keyProperty="item.id" resultType="string" order="BEFORE">SELECT 'S' || item_seq.NEXTVAL FROM DUAL</selectKey>
+		<selectKey keyProperty="item.id" resultType="string" order="BEFORE">SELECT ('S' || item_seq.NEXTVAL) FROM DUAL</selectKey>
 		INSERT ALL 
 			INTO item (item_id, name, upload_date, description, open_status, market_id)
-			VALUES (#{item.id}, #{item.name}, SYSDATE, #{item.description}, #{item.openStatus}, #{item.market.id})
+			VALUES (#{item.id}, #{item.name}, SYSDATE, #{item.description}, #{item.openStatus}, 
+				(SELECT market_id FROM market JOIN member USING (member_id) WHERE member_id = #{item.market.member.id}))
 			INTO share_thing (item_id, precaution) 
 			VALUES (#{item.id}, #{precaution})
 		SELECT * FROM DUAL
@@ -268,11 +276,8 @@
 	
 	<!-- 공유물품정보 수정 -->
 	<update id="updateShareThing" parameterType="ShareThing">
-		UPDATE (SELECT name, description, open_status, precaution
-			FROM item JOIN share_thing USING (item_id) 
-			WHERE item_id = #{item.id})
-		SET name = #{item.name}, description = #{item.description}, open_status = #{item.openStatus},
-			precaution = #{precaution}
+		UPDATE share_thing
+		SET precaution = #{precaution}
 	</update>
 	
 	<!-- 공유물품에 대해 대여내역이 있는지 확인 -->
