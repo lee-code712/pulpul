@@ -23,49 +23,70 @@
 		  <table>
 		    <tr>
 		      <td class="text-name">아이디<span>*</span></td>
-		      <td><input type="text" placeholder="아이디" name="id" /></td>
+		      <td class="inputWrap">
+		      	<input type="text" placeholder="아이디" name="id" />
+		      	<div class="invalid-feedback" th:errors="*{id}"></div>
+		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">비밀번호<span>*</span></td>
-		      <td><input type="text" placeholder="비밀번호" name="password"/></td>
+		      <td class="inputWrap">
+		      	<input type="text" placeholder="비밀번호" name="password"/>
+		      	<div class="invalid-feedback" th:errors="*{password}"></div>
+		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">비밀번호 확인<span>*</span></td>
-		      <td><input type="text" placeholder="비밀번호 확인" name="passwordCheck"/></td>
+		      <td class="inputWrap">
+		      	<input type="text" placeholder="비밀번호 확인" name="passwordCheck"/>
+		      	<div class="invalid-feedback" th:errors="*{passwordCheck}"></div>
+		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">이름<span>*</span></td>
-		      <td><input type="text" placeholder="이름" name="name"/></td>
+		      <td class="inputWrap">
+		      	<input type="text" placeholder="이름" name="name"/>
+		      	<div class="invalid-feedback" th:errors="*{name}"></div>
+		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">생년월일<span>*</span></td>
-		      <td>
+		      <td class="inputWrap">
 		        <input type="text" placeholder="생년월일 (8자리로 입력해주세요.)" name="birth"/>
+		        <div class="invalid-feedback" th:errors="*{birth}"></div>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">이메일<span>*</span></td>
-		      <td><input type="text" placeholder="이메일" name="email"/></td>
+		      <td class="inputWrap">
+		      	<input type="text" placeholder="이메일" name="email"/>
+		      	<div class="invalid-feedback" th:errors="*{email}"></div>
+		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">연락처<span>*</span></td>
-		      <td>
+		      <td class="inputWrap">
 		        <input type="text" placeholder="연락처 (숫자만 입력해주세요.)" name="phone" />
+		        <div class="invalid-feedback" th:errors="*{phone}"></div>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">주소<span>*</span></td>
 		      <td>
 		        <div id="addressText">
-		          <input type="text" placeholder="우편번호" name="zip" />
-		          <input type="text" placeholder="주소" name="address"/>
+			        <div class="inputWrap">
+			          <input type="text" placeholder="우편번호" name="zip" />
+			          <div class="invalid-feedback" th:errors="*{zip}"></div>
+			        </div>
+			        <div class="inputWrap">
+		          	<input type="text" placeholder="주소" name="address"/>
+		          	<div class="invalid-feedback" th:errors="*{address}"></div>
+		          </div>
 		          <input type="text" placeholder="상세주소" name="addressDetail"/>
 		        </div>
 		      </td>
 		    </tr>
 		  </table>
-		  
-	      <div class="invalid-feedback" th:errors="*"> </div>
 	      
 		  <div id="btnWrap">
 		    <button id="joinCancelBtn"  onclick="location.href='/member/login'">회원가입 취소</button>

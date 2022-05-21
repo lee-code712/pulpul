@@ -53,7 +53,7 @@ input {
 .text-name > span {
   margin-left: 4px;
   font-size: 14px;
-  color: #c09693;
+  color: #FA625C;
 }
 
 #addressText {
@@ -81,11 +81,23 @@ input {
 }
 
 #joinCancelBtn {
-  color: #8f8f8f;
-  background-color: #d4d4d4;
+  color: #535353;
+  background-color: white;
+  border: 1px solid #535353;
 }
 
 #joinBtn {
   color: white;
   background-color: #93c0b5;
+}
+
+.inputWrap {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.invalid-feedback {
+	color: #FA625C;
+	font-size: 14px;
 }
