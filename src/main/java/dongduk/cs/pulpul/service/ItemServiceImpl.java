@@ -180,11 +180,7 @@ public class ItemServiceImpl implements ItemService {
 				}
 			}
 			String memberId = shareThing.getItem().getMarket().getMember().getId();
-			successed = itemDao.createItemImages(imageUrlList, memberId);
-			if (!successed) return false;
-			
-			// 포인트 +500
-			return memberDao.changePoint(memberId, 1, 500);
+			return itemDao.createItemImages(imageUrlList, memberId);
 		}
 		return false;
 	}
