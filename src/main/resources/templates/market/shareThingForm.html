@@ -74,7 +74,7 @@
             </div>
           </td>
         </tr>
-        <tr th:if="${#lists.isEmpty(shareThings.item.imageUrlList)}">
+        <tr th:if="${#lists.isEmpty(shareThing.item.imageUrlList)}">
           <td class="text-name">식물 사진</td>
           <td class="putFilename">
             <div class="putFilenameDiv"></div>
@@ -83,9 +83,16 @@
         <tr>
           <td></td>
           <td>
-            <input type="file" id="fileWrap" accept=".jpg" multiple="multiple" onchange="previewFiles()" name="report"/>
+            <input type="file" id="fileWrap" accept=".jpg" multiple="multiple" onchange="previewFiles()" name="files"/>
           </td>
         </tr>
+        <tr th:if="${#lists.isEmpty(shareThing.item.imageUrlList)}">
+          <td></td>
+          <td>
+			<div id="putItemImg">
+			</div>
+		  </td>
+		</tr>
         <tr th:if="${not #lists.isEmpty(shareThing.item.imageUrlList)}">
 		  <td></td>
 		  <td>
