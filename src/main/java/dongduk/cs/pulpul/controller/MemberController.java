@@ -81,7 +81,8 @@ public class MemberController {
 			return "member/registerForm";
 		}
 		else {
-			return "member/login";
+			memberService.register(member);
+			return "member/loginForm";
 		}
 	}
 

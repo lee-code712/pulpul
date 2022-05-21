@@ -9,12 +9,17 @@
   </th:block>
 
 	<div layout:fragment="content">
+		<script th:inline="javascript">
+	  		console.log('데이터 확인');
+	  		var member = [[${member}]];
+			console.log(member);
+		</script>
+		<form action="/member/register" method="post" th:object="${member}">
 		<div id="joinPageWrap">
 		  <div id="joinText">
 		    <div id="joinTit">회원가입</div>
 		    <div id="joinSubTit">회원정보를 입력하세요.</div>
 		  </div>
-		
 		  <table>
 		    <tr>
 		      <td class="text-name">아이디<span>*</span></td>
@@ -59,11 +64,14 @@
 		      </td>
 		    </tr>
 		  </table>
-		
+		  
+	      <div class="invalid-feedback" th:errors="*"> </div>
+	      
 		  <div id="btnWrap">
 		    <button id="joinCancelBtn"  onclick="location.href='/member/login'">회원가입 취소</button>
 		    <button id="joinBtn" type="submit">회원가입</button>
 		  </div>
 		</div>
+		</form>
 	</div>
 </html>

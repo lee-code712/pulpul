@@ -29,7 +29,7 @@ public class MemberValidator implements Validator {
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordCk", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordCheck", "required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birth", "required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required");
@@ -42,11 +42,15 @@ public class MemberValidator implements Validator {
 			errors.rejectValue("email", "badPattern");
 		}
 		if (!member.getPassword().equals(member.getPasswordCheck())) {
-			errors.rejectValue("passwordCheckk", "noMatch");
+			errors.rejectValue("passwordCheck", "noMatch");
 		}
 		String birth = member.getBirth();
 		if (birth.length() != 8 || !isStringInt(birth)) {
 			errors.rejectValue("birth", "badPattern");
+		}
+		String phone = member.getPhone();
+		if (!isStringInt(phone)) {
+			errors.rejectValue("phone", "badPattern");
 		}
 	}
 

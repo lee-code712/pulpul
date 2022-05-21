@@ -6,7 +6,7 @@
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER (member_id, password, name, birth, address, address_detail, zip,
 						phone, email, point) 
-		VALUES (#{id}, #{password}, #{name}, #{birth}, #{address}, #{addressDetail},
+		VALUES (#{id}, #{password}, #{name}, TO_DATE(#{birth}, 'YYYYMMDD'), #{address}, #{addressDetail},
 				#{zip}, #{phone}, #{email}, #{point}) 
 	</insert>
 	
