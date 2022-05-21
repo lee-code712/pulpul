@@ -25,21 +25,21 @@
         <tr>
           <td class="tb-tit">이름</td>
           <td>
-            <input type="text" placeholder="이름을 입력하세요." />
+            <input type="text" placeholder="이름을 입력하세요." th:value="${member.name}" />
           </td>
         </tr>
 
         <tr>
           <td class="tb-tit">연락처</td>
           <td>
-            <input type="text" placeholder="연락처를 입력하세요." />
+            <input type="text" placeholder="연락처를 입력하세요." th:value="${member.phone}" />
           </td>
         </tr>
 
         <tr>
           <td class="tb-tit">생년월일</td>
           <td>
-            <input type="text" placeholder="생년월일을 입력하세요." />
+            <input type="text" placeholder="생년월일을 입력하세요." th:value="${member.birth}" />
           </td>
         </tr>
 
@@ -47,9 +47,9 @@
           <td class="tb-tit">주소</td>
           <td>
             <div id="inputWrap">
-              <input type="text" placeholder="우편번호를 입력하세요." />
-              <input type="text" placeholder="주소를 입력하세요." />
-              <input type="text" placeholder="상세주소를 입력하세요." />
+              <input type="text" placeholder="우편번호를 입력하세요." th:value="${member.zip}" />
+              <input type="text" placeholder="주소를 입력하세요." th:value="${member.address}" />
+              <input type="text" placeholder="상세주소를 입력하세요." th:value="${member.addressDetail}" />
             </div>
           </td>
         </tr>

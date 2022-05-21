@@ -72,12 +72,12 @@ td {
   padding: 10px;
 }
 
-.order-num {
+.order-id {
   width: 150px;
   text-align: center;
 }
 
-.order-num-hover:hover {
+.order-id-hover:hover {
 	color: #93c0b5;
 	cursor: pointer;
 }
@@ -92,7 +92,7 @@ td {
   text-align: center;
 }
 
-.waybill {
+.traking-number {
   width: 180px;
   text-align: center;
 }

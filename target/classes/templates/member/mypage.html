@@ -47,34 +47,39 @@
 	
 	      <table>
 	        <tr>
-	          <th class="order-num">주문 번호</th>
+	          <th class="order-id">주문 번호</th>
 	          <th class="order-date">주문일</th>
 	          <th class="order-market">주문한 상품상점</th>
-	          <th class="waybill">운송장 번호</th>
+	          <th class="traking-number">운송장 번호</th>
 	          <th class="total-price">총 가격</th>
 	          <th class="order-status">주문 상태</th>
 	          <th class="cancel-btn"></th>
 	        </tr>
 	
-        	<tr th:if="${order.orderStatus} == 0" th:each="order : ${orderList}" class="tb-disable">
-        	<tr th:unless="${order.orderStatus} == 0" th:each="order : ${orderList}">
-	     
-	          <td class="order-num"><a href="/order/orderDetail" class="order-num-hover" th:text="${order.id}"></a></td>
-	          <td class="order-date" th:text="${order.orderDate}"></td>
-	          <!-- <td class="order-market" th:text="${order.goodsList.goods.item.market.name}">풀풀 상점</td>  -->
-	          <td class="order-market">풀풀 상점</td> 
-	          <td class="waybill" th:text="${order.trakingNumber}"></td>
-	          <td class="total-price" th:text="${order.totalPrice}"></td>
-	          <td class="order-status" th:if="${order.orderStatus} == 0">주문 취소</td>
-	          <td class="order-status" th:if="${order.orderStatus} == 1">결제 완료</td>
+	      	<tr th:each="order : ${orderList}" th:if="${order.orderStatus} == 0">
+		      	<td class="order-id"><a href="/order/orderDetail" class="order-num-hover" th:text="${order.id}"></a></td>
+		      	<td class="order-date" th:text="${order.orderDate}"></td>
+		      	<td class="order-market" th:text="${order.goodsList[0].goods.item.market.name}"></td>
+		      	<td class="traking-number" th:text="${order.trakingNumber}"></td>
+		      	<td class="total-price" th:text="${order.totalPrice}"></td>
+		      	<td class="order-status">주문 취소</td>
+		      	<td class="cancel-btn">
+		          <button class="cancelBtn-noton">주문 취소</button>	  
+		        </td>    	 	 	 	
+	      	</tr>
+	      	
+	      	<tr th:each="order : ${orderList}" th:unless="${order.orderStatus} == 0">
+		      	<td class="order-id"><a href="/order/orderDetail" class="order-num-hover" th:text="${order.id}"></a></td>
+		      	<td class="order-date" th:text="${order.orderDate}"></td>
+		      	<td class="order-market" th:text="${order.goodsList[0].goods.item.market.name}"></td>
+		      	<td class="traking-number" th:text="${order.trakingNumber}"></td>
+		      	<td class="total-price" th:text="${order.totalPrice}"></td>
+		      	<td class="order-status" th:if="${order.orderStatus} == 1">결제 완료</td>
 	          <td class="order-status" th:if="${order.orderStatus} == 2">배송 시작</td>
-	          <td class="cancel-btn">
-	          	<!-- 주문 상태: 주문 취소일 때 -->
-		          <button th:if="${order.orderStatus} == 0" class="cancelBtn-noton">주문 취소</button>
-		          <!-- 주문 상태: 결제 완료, 배송 시작일 때 -->
-		          <button th:unless="${order.orderStatus} == 0" class="cancelBtn-on">주문 취소</button>
-	          </td>
-	        </tr>
+		      	<td class="cancel-btn">
+		          <button class="cancelBtn-on">주문 취소</button>	  
+		        </td>    	 	 	 	
+	      	</tr>
 	      </table>
 		  
 	      <button id="shoppingBtn" onclick="location.href='/lookup/goodsList'">쇼핑 계속하기</button>

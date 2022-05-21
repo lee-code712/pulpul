@@ -24,49 +24,49 @@
 		    <tr>
 		      <td class="text-name">아이디<span>*</span></td>
 		      <td class="inputWrap">
-		      	<input type="text" placeholder="아이디" name="id" />
+		      	<input type="text" placeholder="아이디" name="id" th:value="${member.id}" />
 		      	<div class="invalid-feedback" th:errors="*{id}"></div>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">비밀번호<span>*</span></td>
 		      <td class="inputWrap">
-		      	<input type="text" placeholder="비밀번호" name="password"/>
+		      	<input type="text" placeholder="비밀번호" name="password" th:value="${member.password}" />
 		      	<div class="invalid-feedback" th:errors="*{password}"></div>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">비밀번호 확인<span>*</span></td>
 		      <td class="inputWrap">
-		      	<input type="text" placeholder="비밀번호 확인" name="passwordCheck"/>
+		      	<input type="text" placeholder="비밀번호 확인" name="passwordCheck" th:value="${member.passwordCheck}" />
 		      	<div class="invalid-feedback" th:errors="*{passwordCheck}"></div>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">이름<span>*</span></td>
 		      <td class="inputWrap">
-		      	<input type="text" placeholder="이름" name="name"/>
+		      	<input type="text" placeholder="이름" name="name" th:value="${member.name}" />
 		      	<div class="invalid-feedback" th:errors="*{name}"></div>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">생년월일<span>*</span></td>
 		      <td class="inputWrap">
-		        <input type="text" placeholder="생년월일 (8자리로 입력해주세요.)" name="birth"/>
+		        <input type="text" placeholder="생년월일 (8자리로 입력해주세요.)" name="birth" th:value="${member.birth}"/>
 		        <div class="invalid-feedback" th:errors="*{birth}"></div>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">이메일<span>*</span></td>
 		      <td class="inputWrap">
-		      	<input type="text" placeholder="이메일" name="email"/>
+		      	<input type="text" placeholder="이메일" name="email" th:value="${member.email}" />
 		      	<div class="invalid-feedback" th:errors="*{email}"></div>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">연락처<span>*</span></td>
 		      <td class="inputWrap">
-		        <input type="text" placeholder="연락처 (숫자만 입력해주세요.)" name="phone" />
+		        <input type="text" placeholder="연락처 (숫자만 입력해주세요.)" name="phone" th:value="${member.phone}" />
 		        <div class="invalid-feedback" th:errors="*{phone}"></div>
 		      </td>
 		    </tr>
@@ -75,14 +75,14 @@
 		      <td>
 		        <div id="addressText">
 			        <div class="inputWrap">
-			          <input type="text" placeholder="우편번호" name="zip" />
+			          <input type="text" placeholder="우편번호" name="zip" th:value="${member.zip}" />
 			          <div class="invalid-feedback" th:errors="*{zip}"></div>
 			        </div>
 			        <div class="inputWrap">
-		          	<input type="text" placeholder="주소" name="address"/>
+		          	<input type="text" placeholder="주소" name="address" th:value="${member.address}"/>
 		          	<div class="invalid-feedback" th:errors="*{address}"></div>
 		          </div>
-		          <input type="text" placeholder="상세주소" name="addressDetail"/>
+		          <input type="text" placeholder="상세주소" name="addressDetail" th:value="${member.addressDetail}" />
 		        </div>
 		      </td>
 		    </tr>
