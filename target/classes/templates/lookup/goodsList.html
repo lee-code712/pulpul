@@ -10,7 +10,12 @@
 	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
   	<link rel="stylesheet" th:href="@{/css/lookup/goodsList.css}" >
   </th:block>
-
+  
+  <th:block layout:fragment="script">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script th:src="@{/js/lookup/goodsList.js}"></script>
+  </th:block>
+  
 	<div layout:fragment="content">
 		<div id="pageWrap">
       <div id="pageTit">반려 식물</div>
@@ -21,59 +26,21 @@
         <input
           type="text"
           placeholder="식물 이름을 검색해 주세요."
-          id="itemSearch"
+          id="itemSearch" class="filterText"
         />
       </div>
-
+      
       <div id="itemWrap">
-        <div class="item" onclick="location.href='/lookup/goodsDetail'">
+          <div id="noItem">판매 상품이 없습니다.</div>
+       </div>
+     
+       <div id="itemWrap" th:if="${not #lists.isEmpty(itemList)}">
+        <div class="item" th:onclick="moveToGoodsDetail([[${item.id}]])" th:each="item : ${itemList}">
           <div class="item-img-size"></div>
-          <div class="item-name">### 식물</div>
-          <div class="item-price">8000원</div>
+          <div class="item-name" th:text="${item.name}"></div>
+          <div class="item-price" th:text="${item.price}">8000원</div>
         </div>
-				
-				<div class="item" onclick="location.href='/lookup/goodsDetail'">
-          <div class="item-img-size"></div>
-          <div class="item-name">### 식물</div>
-          <div class="item-price">8000원</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/goodsDetail'">
-          <div class="item-img-size"></div>
-          <div class="item-name">### 식물</div>
-          <div class="item-price">8000원</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/goodsDetail'">
-          <div class="item-img-size"></div>
-          <div class="item-name">### 식물</div>
-          <div class="item-price">8000원</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/goodsDetail'">
-          <div class="item-img-size"></div>
-          <div class="item-name">### 식물</div>
-          <div class="item-price">8000원</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/goodsDetail'">
-          <div class="item-img-size"></div>
-          <div class="item-name">### 식물</div>
-          <div class="item-price">8000원</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/goodsDetail'">
-          <div class="item-img-size"></div>
-          <div class="item-name">### 식물</div>
-          <div class="item-price">8000원</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/goodsDetail'">
-          <div class="item-img-size"></div>
-          <div class="item-name">### 식물</div>
-          <div class="item-price">8000원</div>
-        </div>
-      </div>
+       </div>
+   </div>
     </div>
-	</div>
 </html>

@@ -23,12 +23,30 @@
   width: 1174px;
   height: 80px;
   border-bottom: 1px solid #463B37;
+  transition: border-bottom 0.4s ease-in-out;
+}
+
+#searchWrap:hover {
+	border-bottom: 1px solid #93c0b5;
 }
 
 #itemSearch {
   width: 1004px;
   font-size: 18px;
   border: none;
+  padding: 10px 0px 10px 20px;
+}
+
+#itemSearch::placeholder {
+	color: #c4c4c4;
+}
+
+#itemSearch:focus {
+	outline-color:#93c0b5;
+}
+
+#itemSearch:focus::placeholder {
+	color: rgba(0, 0, 0, 0);
 }
 
 #itemWrap {
@@ -56,11 +74,17 @@
 }
 
 .item-name {
-	margin: 20px 0px 10px 0px;
+  margin: 20px 0px 10px 0px;
   font-size: 18px;
 }
 
 .item-price {
   font-size: 14px;
   color: #535353;
+}
+
+#noItem {
+	font-size: 18px;
+	color: #c4c4c4;
+	margin: 0 auto;
 }
