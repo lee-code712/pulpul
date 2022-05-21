@@ -68,29 +68,6 @@
 	<!--  ====================================================================  -->
 	<!--  주문 관련 질의문  -->
 	<!--  ====================================================================  -->
-	
-	<!-- 회원 id로 주문내역 조회 -->
-	<select id="selectOrderByMemberId" parameterType="string" resultType="Order">
-		SELECT order_id AS id, order_date AS orderDate, total_price AS totalPrice, 
-			tracking_number AS trackingNumber, order_status AS orderStatus
-		FROM orders
-		<if test='identity eq "buyer"'>
-			WHERE buyer_id = #{memberId}
-		</if>
-		<if test='identity eq "seller"'>
-			WHERE seller_id = #{memberId}
-		</if>
-	</select>
-	
-	<!-- 회원 id 및 운송장번호로 주문내역 조회 -->
-	<select id="selectOrderBytrackingNumber" parameterType="string" resultType="Order">
-		SELECT order_id AS id, order_date AS orderDate, total_price AS totalPrice, 
-			tracking_number AS trackingNumber, order_status AS orderStatus
-		FROM orders
-		WHERE tracking_number = #{trackingNumber}
-	</select>
-
-	<!-- 주문 상세정보 조회 -->
 	<resultMap id="OrderInfoMap" type="Order">
 		<id column="order_id" jdbcType="INTEGER" property="id" javaType="int" />
 		<result column="order_date" jdbcType="DATE" property="orderDate" javaType="string" />
@@ -116,7 +93,7 @@
 			<result column="quantity" jdbcType="INTEGER" property="quantity" javaType="int" />
 			<association property="goods" column="goods_id" javaType="Goods">
 				<result column="item_price" jdbcType="INTEGER" property="price" javaType="int" />
-				<result column="shipping_fee" jdbcType="INTEGER" property="openStatus" javaType="int" />
+				<result column="shipping_fee" jdbcType="INTEGER" property="shippingFee" javaType="int" />
 				<association property="item" column="goods_id" javaType="Item">
 					<id column="goods_id" jdbcType="VARCHAR" property="id" javaType="String" />
 					<result column="item_name" jdbcType="VARCHAR" property="name" javaType="String" />
@@ -125,13 +102,49 @@
 					<association property="market" column="market_id" javaType="Market">
 						<id column="market_id" jdbcType="INTEGER" property="id" javaType="int" />
 						<result column="market_name" jdbcType="VARCHAR" property="name" javaType="String" />
-						<result column="market_open_status" jdbcType="INTEGER" property="openStatus" javaType="int" />
+						<result column="market_open_status" jdbcType="CHAR" property="openStatus" javaType="String" />
 					</association>
 				</association>
 			</association>
 		</collection>
 	</resultMap>
 	
+	<!-- 회원 id로 주문내역 조회 -->
+	<select id="selectOrderByMemberId" parameterType="string" resultMap="OrderInfoMap">
+		SELECT o.order_id, order_date, total_price, used_point, card_company, card_number,
+			og.goods_id, og.order_quantity AS goodsList_quantity,
+			it.name AS item_name, it.open_status AS item_open_status, it.market_id,
+			g.price AS item_price, g.shipping_fee,
+			m.name AS market_name, m.open_status AS market_open_status,
+			i.image_src,
+			sm.member_id AS seller_id, sm.name AS seller_name, sm.address AS seller_address, sm.phone AS seller_phone,
+			bm.member_id AS buyer_id, bm.name AS buyer_name, bm.address AS buyer_address, 
+			bm.address_detail AS buyer_address_detail, bm.zip AS buyer_zip, bm.phone AS buyer_phone
+		FROM orders o
+			FULL OUTER JOIN order_goods og ON o.order_id = og.order_id
+			FULL OUTER JOIN item it ON og.goods_id = it.item_id
+			FULL OUTER JOIN goods g ON og.goods_id = g.item_id
+			FULL OUTER JOIN market m ON o.seller_id = m.member_id
+			FULL OUTER JOIN image i ON o.seller_id = i.member_id
+			FULL OUTER JOIN member sm ON o.seller_id = sm.member_id
+			FULL OUTER JOIN member bm ON o.buyer_id = bm.member_id
+		<if test='identity eq "buyer"'>
+			WHERE buyer_id = #{memberId}
+		</if>
+		<if test='identity eq "seller"'>
+			WHERE seller_id = #{memberId}
+		</if>
+	</select>
+	
+	<!-- 회원 id 및 운송장번호로 주문내역 조회 -->
+	<select id="selectOrderBytrackingNumber" parameterType="string" resultType="Order">
+		SELECT order_id AS id, order_date AS orderDate, total_price AS totalPrice, 
+			tracking_number AS trackingNumber, order_status AS orderStatus
+		FROM orders
+		WHERE tracking_number = #{trackingNumber}
+	</select>
+
+	<!-- 주문 상세정보 조회 -->
 	<select id="selectOrder" parameterType="int" resultMap="OrderInfoMap">
 		SELECT o.order_id, order_date, total_price, used_point, card_company, card_number,
 			og.goods_id, og.quantity,

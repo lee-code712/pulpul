@@ -24,7 +24,7 @@ public class Market implements Serializable {
 	private String contactableTime; /*연락가능 시간*/
 	private String policy; /*교환/반품/환불 정책*/
 	private String precaution; /*구매 전 유의사항*/
-	private char openStatus; /*마켓 공개여부*/
+	private String openStatus; /*마켓 공개여부*/
 	private Member member; /*회원정보*/
 	private String imageUrl; /*마켓 이미지 경로*/
 	
