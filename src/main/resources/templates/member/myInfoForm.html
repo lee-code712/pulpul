@@ -12,6 +12,11 @@
   </th:block>
 
 	<div layout:fragment="content">
+		<script th:inline="javascript">
+	  		console.log('member 확인');
+	  		var member = [[${member}]];
+	  		console.log(member);
+  		</script>
 		<div id="pageWrap">
       <div id="pageTit">내 정보</div>
       <div id="pageSubTit">My information</div>

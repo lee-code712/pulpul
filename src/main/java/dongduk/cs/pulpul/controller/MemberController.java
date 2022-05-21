@@ -130,9 +130,17 @@ public class MemberController {
 	 * 회원 정보 수정
 	 */
 	@GetMapping("/view")
-	public String view() {
+	public ModelAndView view(HttpServletRequest req, ModelAndView mav) {
 		//회원 정보 수정 폼
-		return "member/myInfoForm";
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("id");
+		Member member = memberService.getMember(id);
+		if (member != null) {
+			mav.addObject("member", member);
+			
+		}
+		mav.setViewName("member/myInfoForm");
+		return mav;
 	}
 	
 	@PostMapping("/update")

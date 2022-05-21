@@ -51,7 +51,7 @@ public class MarketController implements ApplicationContextAware {
 		member.setId((String) session.getAttribute("id"));	// market class에 memberId 저장
 		Market market = new Market();
 		market.setMember(member);
-		market.setOpenStatus('0'); //openStatus 초기화
+		market.setOpenStatus("0"); //openStatus 초기화
 		return market;
 	}
 	
