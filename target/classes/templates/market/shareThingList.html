@@ -45,10 +45,14 @@
         </tr>
 
         <tr th:each="shareThing : ${shareThingList}" th:style="${shareThing.item.openStatus == 0 ? 'background-color: #f3f3f4;' : ''}">
-          <td><img th:src="${shareThing.item.thumbnailUrl}" width="100px" height="100px"/></td>
+          <td>
+           <div class="thumbnail-item">
+            <img class="thumbnail-item-img" th:src="${shareThing.item.thumbnailUrl}"/>
+           </div>
+           </td>
           <td th:text="${shareThing.item.name}"></td>
           <td>
-            <div class="rental-status-on" th:text="${shareThing.isBorrowed == 0 ? '대여 가능' : '대여 불가'}"></div>
+            <div class="rental-status-on" th:style="${shareThing.isBorrowed == 0 ? 'color: #f3f3f4;' : ''}" th:text="${shareThing.isBorrowed == 0 ? '대여 가능' : '대여 불가'}"></div>
           </td>
           <td th:text="${shareThing.reservationNumber}">대기자</td>
           <td>
