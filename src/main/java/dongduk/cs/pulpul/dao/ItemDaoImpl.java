@@ -20,8 +20,7 @@ public class ItemDaoImpl implements ItemDao {
 	
 	@Override
 	public List<Goods> findAllGoods() {
-		// TODO Auto-generated method stub
-		return null;
+		return itemMapper.selectAllGoods();
 	}
 
 	@Override
@@ -42,8 +41,7 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public List<Goods> findGoodsByKeyword(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		return itemMapper.selectGoodsByKeyword(keyword);
 	}
 
 	@Override
