@@ -10,6 +10,7 @@
 	encodeUri(uri);
 }
 
+//검색 필터
 jQuery(function($){ $('.filterText').keyup(function(event) { 
 	var val = $(this).val(); 
  	if (val == "") {

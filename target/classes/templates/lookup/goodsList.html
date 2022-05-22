@@ -34,16 +34,18 @@
           id="itemSearch" class="filterText"
         />
       </div>
-      
-      <div id="itemWrap" th:if="${#lists.isEmpty(itemList)}">
+      <div id="itemWrap" th:if="${#lists.isEmpty(goodsList)}">
           <div id="noItem">판매 상품이 없습니다.</div>
        </div>
      
-       <div id="itemWrap" th:if="${not #lists.isEmpty(itemList)}">
-        <div class="item" th:onclick="moveToGoodsDetail([[${item.id}]])" th:each="item : ${itemList}">
-          <div class="item-img-size"></div>
-          <div class="item-name" th:text="${item.name}"></div>
-          <div class="item-price" th:text="${item.price}">8000원</div>
+       <div id="itemWrap" th:if="${not #lists.isEmpty(goodsList)}">
+        <div class="item" th:onclick="moveToGoodsDetail([[${goods.item.id}]])" th:each="goods : ${goodsList}">
+          <div class="item-img-size">
+            <img class="item-img" th:src="${goods.item.thumbnailUrl}"/>
+            <img class="imggg" src="/images/searchWayBill.svg"/>
+          </div>
+          <div class="item-name" th:text="${goods.item.name}"></div>
+          <div class="item-price" th:text="|${#numbers.formatInteger(goods.price, 0, 'COMMA')}원|"></div>
         </div>
        </div>
    </div>
