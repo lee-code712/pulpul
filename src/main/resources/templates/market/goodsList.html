@@ -47,7 +47,11 @@
 		    </tr>
 		
 		    <tr th:each="goods : ${goodsList}" th:style="${goods.item.openStatus == 0 ? 'background-color: #f3f3f4;' : ''}">
-		      <td><img th:src="${goods.item.thumbnailUrl}" width="100px" height="100px"/></td>
+		      <td>
+		       <div class="thumbnail-item">
+		         <img class="thumbnail-item-img" th:src="${goods.item.thumbnailUrl}"/>
+		       </div>
+		      </td>
 		      <td th:text="${goods.item.name}"></td>
 		      <td th:text="${goods.salesQuantity}"></td>
 		      <td th:text="${#numbers.formatInteger(goods.shippingFee, 0, 'COMMA')}"></td>
