@@ -151,22 +151,31 @@ public class MemberController {
 	}
 	
 	@PostMapping("/update")
-	public ModelAndView update(@ModelAttribute("member") Member member, Errors result,  ModelAndView mav) {
+	public ModelAndView update(@ModelAttribute("member") Member member, Errors result,  ModelAndView mav, HttpServletRequest req) {
 		/*
 		 //성공
 		 return "redirect:/member/update";
 		 //실패 - 회원 정보 수정 폼
 		 return "member/myInfoForm";
 		 */
-		if (member != null) {
-			mav.addObject("member", member);
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("id");
+		Member memberInfo = memberService.getMember(id);
+		if (member != null && memberInfo != null) {
+			memberInfo.setName(member.getName());
+			memberInfo.setName(member.getPhone());
+			memberInfo.setName(member.getBirth());
+			memberInfo.setName(member.getZip());
+			memberInfo.setName(member.getAddress());
+			memberInfo.setName(member.getAddressDetail());
+			mav.addObject("member", memberInfo);
 			changeMemberInfoValidator.validate(member, result);
 			if(result.hasErrors()) {
 				mav.setViewName("member/myInfoForm");
 				return mav;
 			}
 			else {
-				boolean success = memberService.changeMemberInfo(member);
+				boolean success = memberService.changeMemberInfo(memberInfo);
 				if (!success) {
 					mav.setViewName("member/myInfoForm");
 					return mav;
