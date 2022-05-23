@@ -14,7 +14,7 @@
 	<update id="updateMember" parameterType="Member">
 		UPDATE member
 		SET password = #{password}, name = #{name}, birth = #{birth}, address = #{address},
-				address_detail = #{address_detail}, zip = #{zip}, phone = #{phone}, 
+				address_detail = #{addressDetail}, zip = #{zip}, phone = #{phone}, 
 				email = #{email}
 		WHERE member_id = #{id}
 	</update>

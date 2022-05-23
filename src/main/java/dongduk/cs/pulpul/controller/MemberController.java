@@ -143,15 +143,16 @@ public class MemberController {
 		String id = (String) session.getAttribute("id");
 		Member member = memberService.getMember(id);
 		if (member != null) {
+			String birth = member.getBirth().split(" ")[0];
+			member.setBirth(birth.replaceAll("-", ""));
 			mav.addObject("member", member);
-			
 		}
 		mav.setViewName("member/myInfoForm");
 		return mav;
 	}
 	
 	@PostMapping("/update")
-	public ModelAndView update(@ModelAttribute("member") Member member, Errors result,  ModelAndView mav, HttpServletRequest req) {
+	public String update(@ModelAttribute("member") Member member, Errors result, Model model, HttpServletRequest req) {
 		/*
 		 //성공
 		 return "redirect:/member/update";
@@ -162,33 +163,32 @@ public class MemberController {
 		String id = (String) session.getAttribute("id");
 		Member memberInfo = memberService.getMember(id);
 		if (member != null && memberInfo != null) {
+			memberInfo.setId(id);
 			memberInfo.setName(member.getName());
-			memberInfo.setName(member.getPhone());
-			memberInfo.setName(member.getBirth());
-			memberInfo.setName(member.getZip());
-			memberInfo.setName(member.getAddress());
-			memberInfo.setName(member.getAddressDetail());
-			mav.addObject("member", memberInfo);
+			memberInfo.setPhone(member.getPhone());
+			memberInfo.setBirth(member.getBirth());
+			memberInfo.setZip(member.getZip());
+			memberInfo.setAddress(member.getAddress());
+			memberInfo.setAddressDetail(member.getAddressDetail());
+			model.addAttribute("member", memberInfo);
 			changeMemberInfoValidator.validate(member, result);
 			if(result.hasErrors()) {
-				mav.setViewName("member/myInfoForm");
-				return mav;
+				System.out.println("Validation Failed");
+				return "member/myInfoForm";
 			}
 			else {
 				boolean success = memberService.changeMemberInfo(memberInfo);
 				if (!success) {
-					mav.setViewName("member/myInfoForm");
-					return mav;
+					System.out.println("Update Failed");
+					return "member/myInfoForm";
 				}
 				else {
-					mav.setViewName("redirect:/member/update");
-					return mav;
+					System.out.println("Success");
+					return "redirect:/member/view";
 				}
 			}
 		}
-		mav.setViewName("member/myInfoForm");
-		return mav;
-		
+		return "member/myInfoForm";
 	}
 	
 	/*
@@ -233,9 +233,6 @@ public class MemberController {
 		
 		List<Order> orderList = orderService.getOrderListByMember(id, "buyer");
 		if (orderList != null) {
-			for (Order order : orderList) {
-				System.out.println(order.getId());
-			}
 			mav.addObject("orderList", orderList);
 		}
 		
