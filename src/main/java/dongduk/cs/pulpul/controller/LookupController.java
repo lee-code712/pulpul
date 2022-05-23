@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dongduk.cs.pulpul.domain.Goods;
+import dongduk.cs.pulpul.domain.ShareThing;
 import dongduk.cs.pulpul.service.ItemService;
 
 @Controller
@@ -48,8 +49,12 @@ public class LookupController {
 	 * 모든 공유물품 목록 조회- 공유물품 전체 목록 조회
 	 */
 	@GetMapping("/shareThingList")
-	public String shareThing() {
+	public String shareThing(Model model) {
 		//공유물품 전체 목록 조회 페이지
+		
+		List<ShareThing> shareThingList = itemSvc.getShareThingList();
+		model.addAttribute("shareThingList", shareThingList);
+		
 		return "lookup/shareThingList";
 	}
 	

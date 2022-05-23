@@ -130,7 +130,14 @@ public class ItemServiceImpl implements ItemService {
 
 // 공유물품목록 조회
 	public List<ShareThing> getShareThingList() {
-		return itemDao.findAllShareThing();
+		List<ShareThing> shareThingList = itemDao.findAllShareThing();
+		if (shareThingList != null) {
+			for (ShareThing shareThing : shareThingList) {
+				String itemId = shareThing.getItem().getId();
+				shareThing.setReservationNumber(borrowDao.checkNumberBorrowReservation(itemId));
+			}
+		}
+		return shareThingList;
 	}
 
 	// 회원이 업로드한 공유물품목록 조회

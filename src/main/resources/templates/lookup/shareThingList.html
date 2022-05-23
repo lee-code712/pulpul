@@ -12,6 +12,11 @@
   </th:block>
 
 	<div layout:fragment="content">
+		<script th:inline="javascript">
+	  		console.log('shareThingList 확인');
+	  		var shareThingList = [[${shareThingList}]];
+	  		console.log(shareThingList);
+  		</script>
 		<div id="pageWrap">
       <div id="pageTit">관리 용품</div>
       <div id="pageSubTit">물품 대여에서 관리 용품들을 구경해 보세요.</div>

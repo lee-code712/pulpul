@@ -85,8 +85,7 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public List<ShareThing> findAllShareThing() {
-		// TODO Auto-generated method stub
-		return null;
+		return itemMapper.selectAllShareThing();
 	}
 
 	@Override
