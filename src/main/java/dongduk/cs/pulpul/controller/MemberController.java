@@ -23,8 +23,9 @@ import dongduk.cs.pulpul.service.BorrowService;
 import dongduk.cs.pulpul.service.MemberService;
 import dongduk.cs.pulpul.service.OrderService;
 import dongduk.cs.pulpul.service.exception.LoginException;
+import dongduk.cs.pulpul.validator.ChangeMemberInfoValidator;
 import dongduk.cs.pulpul.validator.LoginValidator;
-import dongduk.cs.pulpul.validator.MemberValidator;
+import dongduk.cs.pulpul.validator.RegisterValidator;
 
 @Controller
 @RequestMapping("/member")
@@ -48,9 +49,15 @@ public class MemberController {
 	}
 	
 	@Autowired
-	private MemberValidator memberValidator;
-	public void setValidator(MemberValidator memberValidator) {
-		this.memberValidator = memberValidator;
+	private RegisterValidator registerValidator;
+	public void setValidator(RegisterValidator registerValidator) {
+		this.registerValidator = registerValidator;
+	}
+	
+	@Autowired
+	private ChangeMemberInfoValidator changeMemberInfoValidator;
+	public void setValidator(ChangeMemberInfoValidator changeMemberInfoValidator) {
+		this.changeMemberInfoValidator = changeMemberInfoValidator;
 	}
 	
 	@ModelAttribute("member")
@@ -76,7 +83,7 @@ public class MemberController {
 		 return "member/registerForm";
 		 */
 		model.addAttribute("member", member);
-		memberValidator.validate(member, result);
+		registerValidator.validate(member, result);
 		if(result.hasErrors()) {
 			return "member/registerForm";
 		}
@@ -144,13 +151,35 @@ public class MemberController {
 	}
 	
 	@PostMapping("/update")
-	public void update() {
+	public ModelAndView update(@ModelAttribute("member") Member member, Errors result,  ModelAndView mav) {
 		/*
 		 //성공
 		 return "redirect:/member/update";
 		 //실패 - 회원 정보 수정 폼
 		 return "member/myInfoForm";
 		 */
+		if (member != null) {
+			mav.addObject("member", member);
+			changeMemberInfoValidator.validate(member, result);
+			if(result.hasErrors()) {
+				mav.setViewName("member/myInfoForm");
+				return mav;
+			}
+			else {
+				boolean success = memberService.changeMemberInfo(member);
+				if (!success) {
+					mav.setViewName("member/myInfoForm");
+					return mav;
+				}
+				else {
+					mav.setViewName("redirect:/member/update");
+					return mav;
+				}
+			}
+		}
+		mav.setViewName("member/myInfoForm");
+		return mav;
+		
 	}
 	
 	/*

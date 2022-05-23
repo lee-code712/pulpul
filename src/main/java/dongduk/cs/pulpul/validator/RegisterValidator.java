@@ -11,7 +11,7 @@ import org.springframework.validation.Validator;
 import dongduk.cs.pulpul.domain.Member;
 
 @Component
-public class MemberValidator implements Validator {
+public class RegisterValidator implements Validator {
 	public boolean supports(Class<?> clazz) {
 		return Member.class.isAssignableFrom(clazz);
 	}
@@ -20,7 +20,7 @@ public class MemberValidator implements Validator {
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private Pattern pattern;
 
-	public MemberValidator() {
+	public RegisterValidator() {
 		pattern = Pattern.compile(emailRegExp);
 	}
 

@@ -17,29 +17,29 @@
 	  		var member = [[${member}]];
 	  		console.log(member);
   		</script>
-		<div id="pageWrap">
+  	<form action="/member/update" method="post" th:object="${member}">
+	  <div id="pageWrap">
       <div id="pageTit">내 정보</div>
       <div id="pageSubTit">My information</div>
-
       <table>
         <tr>
           <td class="tb-tit">이름</td>
           <td>
-            <input type="text" placeholder="이름을 입력하세요." th:value="${member.name}" />
+            <input type="text" placeholder="이름을 입력하세요." th:value="${member.name}" name="name" />
           </td>
         </tr>
 
         <tr>
           <td class="tb-tit">연락처</td>
           <td>
-            <input type="text" placeholder="연락처를 입력하세요." th:value="${member.phone}" />
+            <input type="text" placeholder="연락처를 입력하세요." th:value="${member.phone}" name="phone" />
           </td>
         </tr>
 
         <tr>
           <td class="tb-tit">생년월일</td>
           <td>
-            <input type="text" placeholder="생년월일을 입력하세요." th:value="${member.birth}" />
+            <input type="text" placeholder="생년월일을 입력하세요." th:value="${member.birth}" name="birth" />
           </td>
         </tr>
 
@@ -47,15 +47,18 @@
           <td class="tb-tit">주소</td>
           <td>
             <div id="inputWrap">
-              <input type="text" placeholder="우편번호를 입력하세요." th:value="${member.zip}" />
-              <input type="text" placeholder="주소를 입력하세요." th:value="${member.address}" />
-              <input type="text" placeholder="상세주소를 입력하세요." th:value="${member.addressDetail}" />
+              <input type="text" placeholder="우편번호를 입력하세요." th:value="${member.zip}" name="zip" />
+              <input type="text" placeholder="주소를 입력하세요." th:value="${member.address}" name="address"/>
+              <input type="text" placeholder="상세주소를 입력하세요." th:value="${member.addressDetail}" name="addressDetail"/>
             </div>
           </td>
         </tr>
       </table>
 
-      <button id="saveBtn">저장</button>
+      <button id="saveBtn" type="submit">저장</button>
+      <div class="invalid-feedback" th:errors="*"> </div>
     </div>
+    
+    </form>
 	</div>
 </html>
