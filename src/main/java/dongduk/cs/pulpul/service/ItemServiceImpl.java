@@ -106,17 +106,18 @@ public class ItemServiceImpl implements ItemService {
 //		successed = itemDao.changeSalesQuantity(goods);
 //		if (!successed) return false;
 		
-		
-		// 상품 이미지 삭제, 이미지 레코드 삭제
+		// 공유물품 이미지 삭제, 이미지 레코드 삭제
 		String itemId = goods.getItem().getId();
 		String memberId = goods.getItem().getMarket().getMember().getId();
 		int cnt = itemDao.deleteItemImages(itemId, memberId);
 		if (cnt < 0) return false;
-		deleteFileByImages(updateFiles.getPath(), deleteImages);
 		
-		// 새로운 상품 이미지 저장, 이미지 레코드 생성
-		List<String> imageUrlList = new ArrayList<String>();
-		int newCnt = 1;
+		if (deleteImages != null)
+			deleteFileByImages(updateFiles.getPath(), deleteImages);
+		
+		// 새로운 공유물품 이미지 저장, 이미지 레코드 생성
+		List<String> imageUrlList = updateFile(updateFiles.getPath(), itemId);
+		int newCnt = imageUrlList.size() + 1;
 		for (MultipartFile updateFile : updateFiles.getFiles()) {
 			if (!updateFile.isEmpty()) {
 				updateFiles.setFile(updateFile);
@@ -201,16 +202,18 @@ public class ItemServiceImpl implements ItemService {
 		successed = itemDao.changeShareThingInfo(shareThing);
 		if (!successed) return false;		
 		
-		// 상품 이미지 삭제, 이미지 레코드 삭제
+		// 공유물품 이미지 삭제, 이미지 레코드 삭제
 		String itemId = shareThing.getItem().getId();
 		String memberId = shareThing.getItem().getMarket().getMember().getId();
 		int cnt = itemDao.deleteItemImages(itemId, memberId);
 		if (cnt < 0) return false;
-		deleteFileByImages(updateFiles.getPath(), deleteImages);
 		
-		// 새로운 상품 이미지 저장, 이미지 레코드 생성
-		List<String> imageUrlList = new ArrayList<String>();
-		int newCnt = 1;
+		if (deleteImages != null)
+			deleteFileByImages(updateFiles.getPath(), deleteImages);
+		
+		// 새로운 공유물품 이미지 저장, 이미지 레코드 생성
+		List<String> imageUrlList = updateFile(updateFiles.getPath(), itemId);
+		int newCnt = imageUrlList.size() + 1;
 		for (MultipartFile updateFile : updateFiles.getFiles()) {
 			if (!updateFile.isEmpty()) {
 				updateFiles.setFile(updateFile);
@@ -266,23 +269,30 @@ public class ItemServiceImpl implements ItemService {
 	}
 	
 	// 파일 업로드 메소드
-	public String updateFile(String itemId, int cnt) {
-		String newFilename = "";
-		// System.out.println(path);
-		try {       
-			// 확장자를 jpg로 제한
-            newFilename = itemId + "-" + cnt + ".jpg";
-            
-            File newFile = new File(uploadFiles.getPath(), newFilename);
-            if (newFile.exists())
-            	newFile.delete();
-            uploadFiles.getFile().transferTo(newFile);
+	public ArrayList<String> updateFile(String path, String itemId) {
+		ArrayList<String> imageUrlList = new ArrayList<String>();
+		try {
+			File f = new File(path);
 
+            if(f.isDirectory()) {
+                File[] fList = f.listFiles();
+                int cnt = 1;
+                for(int i = 0; i < fList.length; i++) {
+                	String filename = fList[i].getName();
+                	if (filename.contains(itemId)) {
+                		String newFilename = itemId + "-" + cnt + ".jpg";
+                		File newFile = new File(path, newFilename);
+                		fList[i].renameTo(newFile);
+                		imageUrlList.add("/upload/" + newFilename);
+                		cnt++;
+                	}
+                }
+            }
         }catch(Exception e) {            
             e.printStackTrace();
         }
 		
-		return newFilename;
+		return imageUrlList;
 	}
 	
 	// 특정 상품에 대한 파일 삭제 메소드
