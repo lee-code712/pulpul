@@ -133,17 +133,15 @@ public class GoodsController implements ApplicationContextAware {
 	}
 	
 	@PostMapping("/update")
-	public String update(@Valid @ModelAttribute("goods") Goods goods, String[] deleteImage,
+	public String update(@Valid @ModelAttribute("goods") Goods goods, String[] deleteImages,
 			BindingResult result,
 			FileCommand updateFiles, Model model) {
 
-		if (deleteImage != null)
-			System.out.println(deleteImage[0]);
 		if (result.hasErrors())
 			return "market/goodsForm";
 		
 		updateFiles.setPath(uploadDir);
-		boolean successed = itemSvc.changeGoodsInfo(goods, updateFiles);
+		boolean successed = itemSvc.changeGoodsInfo(goods, updateFiles, deleteImages);
 		if (!successed) {
 			model.addAttribute("updateFalid", true);
 			return "market/goodsForm";

@@ -95,16 +95,16 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	// 상품정보 수정
-	public boolean changeGoodsInfo(Goods goods, FileCommand updateFiles) {
+	public boolean changeGoodsInfo(Goods goods, FileCommand updateFiles, String[] deleteImages) {
 		// 품목 레코드 수정
 		boolean successed = itemDao.chageItemInfo(goods.getItem());
 		if (!successed) return false;
 		// 상품 레코드 수정
 		successed = itemDao.changeGoodsInfo(goods);
 		if (!successed) return false;
-		// 상품 판매수량 수정
-		successed = itemDao.changeSalesQuantity(goods);
-		if (!successed) return false;
+//		// 상품 판매수량 수정
+//		successed = itemDao.changeSalesQuantity(goods);
+//		if (!successed) return false;
 		
 		
 		// 상품 이미지 삭제, 이미지 레코드 삭제
@@ -112,7 +112,7 @@ public class ItemServiceImpl implements ItemService {
 		String memberId = goods.getItem().getMarket().getMember().getId();
 		int cnt = itemDao.deleteItemImages(itemId, memberId);
 		if (cnt < 0) return false;
-		deleteFile(itemId, updateFiles.getPath(), cnt);
+		deleteFileByImages(updateFiles.getPath(), deleteImages);
 		
 		// 새로운 상품 이미지 저장, 이미지 레코드 생성
 		List<String> imageUrlList = new ArrayList<String>();
@@ -128,7 +128,7 @@ public class ItemServiceImpl implements ItemService {
 		return itemDao.createItemImages(imageUrlList, memberId);
 	}
 
-// 공유물품목록 조회
+	// 공유물품목록 조회
 	public List<ShareThing> getShareThingList() {
 		List<ShareThing> shareThingList = itemDao.findAllShareThing();
 		if (shareThingList != null) {
@@ -193,7 +193,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	// 공유물품정보 수정
-	public boolean changeShareThingInfo(ShareThing shareThing, FileCommand updateFiles) {
+	public boolean changeShareThingInfo(ShareThing shareThing, FileCommand updateFiles, String[] deleteImages) {
 		// 품목 레코드 수정
 		boolean successed = itemDao.chageItemInfo(shareThing.getItem());
 		if (!successed) return false;
@@ -206,7 +206,7 @@ public class ItemServiceImpl implements ItemService {
 		String memberId = shareThing.getItem().getMarket().getMember().getId();
 		int cnt = itemDao.deleteItemImages(itemId, memberId);
 		if (cnt < 0) return false;
-		deleteFile(itemId, updateFiles.getPath(), cnt);
+		deleteFileByImages(updateFiles.getPath(), deleteImages);
 		
 		// 새로운 상품 이미지 저장, 이미지 레코드 생성
 		List<String> imageUrlList = new ArrayList<String>();
@@ -230,6 +230,7 @@ public class ItemServiceImpl implements ItemService {
 			throw new DeleteItemException("주문내역이 존재하여 삭제할 수 없습니다. 비공개로 돌려주시기 바랍니다.");
 		}
 		else if (itemId.substring(0, 1).equals("S") && itemDao.isExistBorrow(itemId)) { // 품목이 공유물품이면
+			System.out.println("대여내역 있음");
 			throw new DeleteItemException("대여내역이 존재하여 삭제할 수 없습니다. 비공개로 돌려주시기 바랍니다.");
 		}
 
@@ -240,7 +241,7 @@ public class ItemServiceImpl implements ItemService {
 		// 품목 이미지 삭제
 		int cnt = itemDao.deleteItemImages(itemId, memberId);
 		if (cnt < 0) return false;
-		deleteFile(itemId, uploadDir, cnt);
+		deleteFileByItem(itemId, uploadDir, cnt);
 		return true;
 	}
 	
@@ -264,12 +265,46 @@ public class ItemServiceImpl implements ItemService {
 		return newFilename;
 	}
 	
+	// 파일 업로드 메소드
+	public String updateFile(String itemId, int cnt) {
+		String newFilename = "";
+		// System.out.println(path);
+		try {       
+			// 확장자를 jpg로 제한
+            newFilename = itemId + "-" + cnt + ".jpg";
+            
+            File newFile = new File(uploadFiles.getPath(), newFilename);
+            if (newFile.exists())
+            	newFile.delete();
+            uploadFiles.getFile().transferTo(newFile);
+
+        }catch(Exception e) {            
+            e.printStackTrace();
+        }
+		
+		return newFilename;
+	}
+	
 	// 특정 상품에 대한 파일 삭제 메소드
-	public void deleteFile(String itemId, String uploadDir, int cnt) {
+	public void deleteFileByImages(String uploadDir, String[] deleteImages) {
+		try {       
+			// 확장자를 jpg로 제한
+			for (String deleteImage : deleteImages) {
+				File file = new File(uploadDir, deleteImage);
+				if (file.exists())
+					file.delete();
+			}
+		}catch(Exception e) {            
+			e.printStackTrace();
+		}
+	}
+	
+	// 특정 상품에 대한 파일 삭제 메소드
+	public void deleteFileByItem(String itemId, String uploadDir, int cnt) {
 		try {       
 			// 확장자를 jpg로 제한
 			for (int i = 1; i <= cnt; i++) {
-				String filename = itemId + "-" + i + ".jpg";
+				String filename = itemId + "-" + cnt + ".jpg"; 
 				File file = new File(uploadDir, filename);
 				if (file.exists())
 					file.delete();
@@ -278,5 +313,7 @@ public class ItemServiceImpl implements ItemService {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 }

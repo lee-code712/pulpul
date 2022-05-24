@@ -132,14 +132,15 @@ public class ShareThingController implements ApplicationContextAware {
 	}
 	
 	@PostMapping("/update")
-	public String update(@Valid @ModelAttribute("shareThing") ShareThing shareThing, BindingResult result,
+	public String update(@Valid @ModelAttribute("shareThing") ShareThing shareThing,  String[] deleteImages,
+			BindingResult result,
 			FileCommand updateFiles, Model model) {
 		
 		if (result.hasErrors())
 			return "market/shareThingForm";
 		
 		updateFiles.setPath(uploadDir);
-		boolean successed = itemSvc.changeShareThingInfo(shareThing, updateFiles);
+		boolean successed = itemSvc.changeShareThingInfo(shareThing, updateFiles, deleteImages);
 		
 		if (!successed) {
 			model.addAttribute("updateFalid", true);

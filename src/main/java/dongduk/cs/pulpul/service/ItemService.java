@@ -31,7 +31,7 @@ public interface ItemService {
 	boolean uploadGoods(Goods goods, FileCommand uploadFiles);
 	
 	// 상품 정보 수정
-	boolean changeGoodsInfo(Goods goods, FileCommand updateFiles);
+	boolean changeGoodsInfo(Goods goods, FileCommand updateFiles, String[] deleteImages);
 	
 	// 전체 공유 물품 목록 조회
 	List<ShareThing> getShareThingList();
@@ -49,7 +49,7 @@ public interface ItemService {
 	boolean uploadShareThing(ShareThing shareThing, FileCommand uploadFiles);
 	
 	// 공유 물품 정보 수정
-	boolean changeShareThingInfo(ShareThing shareThing, FileCommand updateFiles);
+	boolean changeShareThingInfo(ShareThing shareThing, FileCommand updateFiles, String[] deleteImages);
 	
 	// 품목 삭제
 	boolean deleteItem(String itemId, String memberId, String uploadDir) throws DeleteItemException;

@@ -125,7 +125,7 @@ function inputFilename(){
 	
 	//input type=hidden으로 기존에 있는데 삭제된 파일 controller에 보내기
 	deleteFilename.setAttribute("type", "hidden");
-	deleteFilename.setAttribute("name", "deleteImage");
+	deleteFilename.setAttribute("name", "deleteImages");
 	deleteFilename.setAttribute("value", selectdeleteBtn);
 	
 	fileDiv.appendChild(deleteFilename);
