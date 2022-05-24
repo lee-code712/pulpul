@@ -46,6 +46,7 @@
 			JOIN image i USING (member_id)
 		WHERE market_id IS NOT NULL AND m.open_status ='1' AND it.open_status = 1 
 			AND INSTR(i.image_src, item_id || '-1') <![CDATA[>]]> 0
+		ORDER BY dbms_random.value
 	</select>
 	
 	<!-- 회원 id로 상품목록 조회 -->
