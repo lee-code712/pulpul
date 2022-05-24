@@ -75,10 +75,10 @@
   <select id="selectNewGoods" resultType="Goods">
      SELECT item_id AS "item.id", name AS "item.name", 
         price, remain_quantity AS remainQuantity,
-        image_src AS thumbnailUrl
+        image_src AS "item.thumbnailUrl"
      FROM (SELECT item_id, item.name, price, remain_quantity, image_src
            FROM item JOIN market USING (market_id) JOIN goods USING (item_id) JOIN image USING (member_id)
-           WHERE item.open_status = 1 AND market_id IS NOT NULL AND (INSTR(image_src, '-1') <![CDATA[>]]> 0)
+           WHERE item.open_status = 1 AND market_id IS NOT NULL AND (INSTR(image_src, item_id || '-1') <![CDATA[>]]> 0)
            ORDER BY upload_date DESC)
      WHERE ROWNUM <![CDATA[<=]]> 3
   </select>
@@ -195,7 +195,7 @@
 	<select id="selectAllShareThing" resultType="ShareThing">
 		SELECT item_id AS "item.id", it.name AS "item.name",
 			s.is_borrowed,
-			i.image_src AS thumbnailUrl
+			i.image_src AS "item.thumbnailUrl"
 		FROM item it
 			JOIN market m USING (market_id)
 			JOIN share_thing s USING (item_id)
