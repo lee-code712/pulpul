@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.domain.ShareThing;
@@ -28,9 +27,9 @@ public class LookupController {
 	 * 식물 검색 
 	 */
 	@GetMapping("/goodsList")
-	public String goodsList(@RequestParam(required = false) String keyword, Model model) {
+	public String goodsList(Model model) {
 		
-		List<Goods> goodsList = itemSvc.getGoodsList(keyword);
+		List<Goods> goodsList = itemSvc.getGoodsList();
 		model.addAttribute("goodsList", goodsList);
 
 		return "lookup/goodsList";
