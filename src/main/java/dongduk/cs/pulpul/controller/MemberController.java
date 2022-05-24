@@ -163,14 +163,10 @@ public class MemberController {
 		String id = (String) session.getAttribute("id");
 		Member memberInfo = memberService.getMember(id);
 		if (member != null && memberInfo != null) {
-			memberInfo.setId(id);
-			memberInfo.setName(member.getName());
-			memberInfo.setPhone(member.getPhone());
-			memberInfo.setBirth(member.getBirth());
-			memberInfo.setZip(member.getZip());
-			memberInfo.setAddress(member.getAddress());
-			memberInfo.setAddressDetail(member.getAddressDetail());
-			model.addAttribute("member", memberInfo);
+			member.setId(id);
+			member.setPassword(memberInfo.getPassword());
+			member.setEmail(memberInfo.getEmail());
+			model.addAttribute("member", member);
 			changeMemberInfoValidator.validate(member, result);
 			if(result.hasErrors()) {
 				System.out.println("Validation Failed");
