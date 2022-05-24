@@ -27,6 +27,7 @@ function inputFilename(){
 		span.innerHTML = fileArray[i].name;
 		
 		div.appendChild(span);
+		
 	 }  
 }
 
@@ -118,6 +119,18 @@ function inputFilename(){
 	var selectdeleteBtn = event.target.id;//선택한 button의 아이디
 	console.log(deleteFile);
 	
+	console.log(selectdeleteBtn);
+	var fileDiv = document.querySelector('.putFilenameDiv');
+	var deleteFilename = document.createElement('input');
+	
+	//input type=hidden으로 기존에 있는데 삭제된 파일 controller에 보내기
+	deleteFilename.setAttribute("type", "hidden");
+	deleteFilename.setAttribute("name", "deleteImage");
+	deleteFilename.setAttribute("value", selectdeleteBtn);
+	
+	fileDiv.appendChild(deleteFilename);
+	
+	
 	for(var i = 0; i < deleteFile.length; i++){
 		if(selectdeleteBtn == deleteFile[i].innerHTML){
 			deleteFile[i].parentNode.removeChild(deleteFile[0]);
@@ -152,5 +165,6 @@ function inputFilename(){
          fileArray.forEach(file => { dataTransfer.items.add(file); });
          
          document.querySelector('input[type=file]').files = dataTransfer.files;
+         docum
  
   		}

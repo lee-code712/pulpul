@@ -97,7 +97,7 @@ public class GoodsController implements ApplicationContextAware {
 	@PostMapping("/upload")
 	public String upload(@Valid @ModelAttribute("goods") Goods goods, BindingResult result,
 			FileCommand uploadFiles, Model model) {
-		
+
 		if (result.hasErrors())
 			return "market/goodsForm";
 
@@ -133,9 +133,12 @@ public class GoodsController implements ApplicationContextAware {
 	}
 	
 	@PostMapping("/update")
-	public String update(@Valid @ModelAttribute("goods") Goods goods, BindingResult result,
+	public String update(@Valid @ModelAttribute("goods") Goods goods, String[] deleteImage,
+			BindingResult result,
 			FileCommand updateFiles, Model model) {
 
+		if (deleteImage != null)
+			System.out.println(deleteImage[0]);
 		if (result.hasErrors())
 			return "market/goodsForm";
 		
