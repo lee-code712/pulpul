@@ -116,7 +116,7 @@ public class ItemServiceImpl implements ItemService {
 			deleteFileByImages(updateFiles.getPath(), deleteImages);
 		
 		// 새로운 공유물품 이미지 저장, 이미지 레코드 생성
-		List<String> imageUrlList = updateFile(updateFiles.getPath(), itemId);
+		List<String> imageUrlList = updateFileByItem(updateFiles.getPath(), itemId);
 		int newCnt = imageUrlList.size() + 1;
 		for (MultipartFile updateFile : updateFiles.getFiles()) {
 			if (!updateFile.isEmpty()) {
@@ -212,7 +212,7 @@ public class ItemServiceImpl implements ItemService {
 			deleteFileByImages(updateFiles.getPath(), deleteImages);
 		
 		// 새로운 공유물품 이미지 저장, 이미지 레코드 생성
-		List<String> imageUrlList = updateFile(updateFiles.getPath(), itemId);
+		List<String> imageUrlList = updateFileByItem(updateFiles.getPath(), itemId);
 		int newCnt = imageUrlList.size() + 1;
 		for (MultipartFile updateFile : updateFiles.getFiles()) {
 			if (!updateFile.isEmpty()) {
@@ -269,7 +269,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 	
 	// 파일 업로드 메소드
-	public ArrayList<String> updateFile(String path, String itemId) {
+	public ArrayList<String> updateFileByItem(String path, String itemId) {
 		ArrayList<String> imageUrlList = new ArrayList<String>();
 		try {
 			File f = new File(path);
@@ -298,9 +298,8 @@ public class ItemServiceImpl implements ItemService {
 	// 특정 상품에 대한 파일 삭제 메소드
 	public void deleteFileByImages(String uploadDir, String[] deleteImages) {
 		try {       
-			// 확장자를 jpg로 제한
 			for (String deleteImage : deleteImages) {
-				File file = new File(uploadDir, deleteImage);
+				File file = new File(uploadDir, deleteImage.substring(8));
 				if (file.exists())
 					file.delete();
 			}

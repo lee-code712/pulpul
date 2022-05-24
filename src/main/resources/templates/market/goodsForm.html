@@ -124,11 +124,11 @@
           <td>
            <div class="radio">
               <label>
-                <input th:attr="checked=${goods.item.openStatus.toString() =='1' ? 'true' : 'false'}" type="radio" id="dark" name="openStatus" value="1"/>
+                <input th:attr="checked=${goods.item.openStatus.toString() =='1' ? 'true' : 'false'}" type="radio" id="dark" name="item.openStatus" value="1"/>
                 <span>공개</span>
               </label>
               <label>
-                <input th:attr="checked=${goods.item.openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="openStatus" value="0" />
+                <input th:attr="checked=${goods.item.openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="item.openStatus" value="0" />
 		        <span>비공개</span>
 		      </label>
 		     </div>
