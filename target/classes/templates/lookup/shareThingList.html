@@ -10,6 +10,10 @@
 	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
   	<link rel="stylesheet" th:href="@{/css/lookup/shareThingList.css}" >
   </th:block>
+  
+  <th:block layout:fragment="script">
+    <script th:src="@{/js/lookup/shareThingList.js}" defer></script>
+  </th:block>
 
 	<div layout:fragment="content">
 		<script th:inline="javascript">
@@ -31,7 +35,7 @@
       </div>
 
       <div id="itemWrap">
-				<div class="item" th:each="shareThing : ${shareThingList}">
+			<div class="item" th:onclick="moveToShareThingDetail([[${shareThing.item.id}]])" th:each="shareThing : ${shareThingList}">
 	        <div class="item-img-size" th:src="${shareThing.item.thumbnailUrl}"></div>
 	        
 	        <div class="itemWaitingWrap">

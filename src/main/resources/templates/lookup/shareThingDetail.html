@@ -19,82 +19,79 @@
   
 
 	<div layout:fragment="content">
-		<div id="pageWrap">
-		<!-- shareThingDetail - 대여 
-			<th:block th:if="${??.isBorrowed} == 0">
-		-->
-      <div id="infoCover">
-        <div class="swiper-container mySwiper">
-		      <div class="swiper-wrapper">
-		        <div class="swiper-slide">
-		          <img src="https://placeimg.com/596/398/any" />
-		        </div>
-		        <div class="swiper-slide">
-		          <img src="https://placeimg.com/596/398/animals" />
-		        </div>
-		        <div class="swiper-slide">
-		          <img src="https://placeimg.com/596/398/nature" />
-		        </div>
-		        <div class="swiper-slide">
-		          <img src="https://placeimg.com/596/398/people" />
-		        </div>
-		        <div class="swiper-slide">
-		          <img src="https://placeimg.com/596/398/tech" />
-		        </div>
-		      </div>
-		      <div class="swiper-button-next"></div>
-		      <div class="swiper-button-prev"></div>
-		      <div class="swiper-pagination"></div>
-		    </div>
-
-        <div id="info">
-          <div class="waitingWrap">
-            <img src="/images/waiting.svg" />
-            <div class="waiting">2</div>
-          </div>
-
-          <div id="itemName">### 관리용품</div>
-
-          <div id="itemInfo">(관리용품 소개)</div>
-
-          <table>
-            <tr>
-              <td>대여 상태</td>
-              <td><div id="rentalOk">대여 가능</div></td>
-            </tr>
-
-            <tr>
-              <td>대여 시 유의사항</td>
-              <td>(대여 시 유의사항)</td>
-            </tr>
-
-            <tr>
-              <td>배송비</td>
-              <td>(배송비)</td>
-            </tr>
-
-            <tr>
-              <td>대여 기간</td>
-              <td><input type="text" placeholder="0" id="shipping" /> 일</td>
-            </tr>
-          </table>
-
-          <div id="btnWrap">
-            <button id="rentalBtn">대여하기</button>
-            <button id="cancelBtn" onclick="location.href='/lookup/shareThingList'">취소</button>
-          </div>
-
-          <a href="/lookup/market/shareThingList" id="marketLink">
-            <img src="../images/smallShopIcon.svg" />
-            (작성자 이름) 마켓으로 이동하기
-          </a>
-        </div>
-      </div>
-      <!-- </th:block>  -->
+		<div id="pageWrap"> 
+		<!--  
+			<th:block  th:if="${shareThing.isBorrowed} == 0">-->
+	      <div id="infoCover">
+	        <div class="swiper-container mySwiper">
+			      <div class="swiper-wrapper">
+			        <div class="swiper-slide">
+			          <img src="https://placeimg.com/596/398/any" />
+			        </div>
+			        <div class="swiper-slide">
+			          <img src="https://placeimg.com/596/398/animals" />
+			        </div>
+			        <div class="swiper-slide">
+			          <img src="https://placeimg.com/596/398/nature" />
+			        </div>
+			        <div class="swiper-slide">
+			          <img src="https://placeimg.com/596/398/people" />
+			        </div>
+			        <div class="swiper-slide">
+			          <img src="https://placeimg.com/596/398/tech" />
+			        </div>
+			      </div>
+			      <div class="swiper-button-next"></div>
+			      <div class="swiper-button-prev"></div>
+			      <div class="swiper-pagination"></div>
+			    </div>
+	
+	        <div id="info">
+	          <div class="waitingWrap">
+	            <img src="/images/waiting.svg" />
+	            <div class="waiting">2</div>
+	          </div>
+	
+	          <div id="itemName">### 관리용품</div>
+	
+	          <div id="itemInfo">(관리용품 소개)</div>
+	
+	          <table>
+	            <tr>
+	              <td>대여 상태</td>
+	              <td><div id="rentalOk">대여 가능</div></td>
+	            </tr>
+	
+	            <tr>
+	              <td>대여 시 유의사항</td>
+	              <td>(대여 시 유의사항)</td>
+	            </tr>
+	
+	            <tr>
+	              <td>배송비</td>
+	              <td>(배송비)</td>
+	            </tr>
+	
+	            <tr>
+	              <td>대여 기간</td>
+	              <td><input type="text" placeholder="0" id="shipping" /> 일</td>
+	            </tr>
+	          </table>
+	
+	          <div id="btnWrap">
+	            <button id="rentalBtn">대여하기</button>
+	            <button id="cancelBtn" onclick="location.href='/lookup/shareThingList'">취소</button>
+	          </div>
+	
+	          <a href="/lookup/market/shareThingList" id="marketLink">
+	            <img src="../images/smallShopIcon.svg" />
+	            (작성자 이름) 마켓으로 이동하기
+	          </a>
+	        </div>
+	      </div>
+      <!-- </th:block>
       
-      <!-- shareThingDetail - 예약
-      	<th:block th:if="${??.isBorrowed} == 1">
-      -->
+      <th:block  th:if="${shareThing.isBorrowed} == 1"> -->
 	      <div id="infoCover">
 	        <div class="swiper-container mySwiper">
 			      <div class="swiper-wrapper">
@@ -157,7 +154,7 @@
 	          </a>
 	        </div>
 	      </div>
-      <!-- </th:block>  -->
+    <!--   </th:block>  -->
     </div>
 	</div>
 </html>

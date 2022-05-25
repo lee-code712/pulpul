@@ -10,6 +10,10 @@
 	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
   	<link th:href="@{/css/home/home.css}"  rel="stylesheet" />
   </th:block>
+  
+  <th:block layout:fragment="script">
+    <script th:src="@{/js/home/home.js}" defer></script>
+  </th:block>
 
 	<div layout:fragment="content">
 		  	<script th:inline="javascript">
@@ -55,7 +59,7 @@
       <div id="newItemSubTit">새로운 반려 식물을 구경해보세요.</div>
 
       <div id="newItemWrap">
-    		<div class="new-item" th:each="goods : ${newGoodsList}">
+    		<div class="new-item" th:each="goods : ${newGoodsList}" th:onclick="moveToGoodsDetail([[${goods.item.id}]])">
       		<img class="item-img" th:src="${goods.item.thumbnailUrl}"/>
       		<div th:text="${goods.item.name}" class="item-name"></div>
       		<div th:text="${goods.price}" class="item-price"></div>
