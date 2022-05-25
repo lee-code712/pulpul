@@ -233,7 +233,6 @@
 	<resultMap id="ShareThingInfoMap" type="ShareThing">
 		<result column="precaution" jdbcType="VARCHAR" property="precaution" javaType="string" />
 		<result column="is_borrowed" jdbcType="INTEGER" property="isBorrowed" javaType="int" />
-		<result column="reservation_number" jdbcType="INTEGER" property="reservationNumber" javaType="int" />
 		<association property="item" column="item_id" javaType="Item">
 			<id column="item_id" jdbcType="VARCHAR" property="id" javaType="string" />
 			<result column="name" jdbcType="VARCHAR" property="name" javaType="string" />
@@ -255,8 +254,7 @@
 	<select id="selectShareThingByItem" parameterType="string" resultMap="ShareThingInfoMap">
 		SELECT item_id, it.name, it.upload_date, it.description, it.open_status, market_id,
 			s.precaution, s.is_borrowed,
-			member_id, i.image_src,
-			(SELECT COUNT(*) FROM borrow_reservation JOIN borrow USING (item_id)) AS reservation_number
+			member_id, i.image_src
 		FROM item it
 			FULL OUTER JOIN share_thing s USING (item_id)
 			FULL OUTER JOIN market m USING (market_id)

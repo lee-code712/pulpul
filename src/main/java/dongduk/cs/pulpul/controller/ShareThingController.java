@@ -132,7 +132,7 @@ public class ShareThingController implements ApplicationContextAware {
 	}
 	
 	@PostMapping("/update")
-	public String update(@Valid @ModelAttribute("shareThing") ShareThing shareThing,  String[] deleteImages,
+	public String update(@Valid @ModelAttribute("shareThing") ShareThing shareThing, String[] deleteImages,
 			BindingResult result,
 			FileCommand updateFiles, Model model) {
 		

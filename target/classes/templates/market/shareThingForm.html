@@ -21,6 +21,7 @@
       <div id="pageTit">공유 물품 관리</div>
 	  <div id="pageSubTit">공유 물품 등록</div>	
      <form method="post" enctype="multipart/form-data" th:object="${shareThing}">
+     <input type="hidden" th:field="*{item.id}" />
       <table>
         <tr>
           <td class="text-name">공유 물품명</td>
@@ -94,11 +95,11 @@
           <td>
             <div class="radio">
               <label>
-                <input th:attr="checked=*{item.openStatus.toString() == '1' ? 'true' : 'false'}" type="radio" id="dark" name="item.openStatus"/>
+                <input th:attr="checked=*{item.openStatus.toString() == '1' ? 'true' : 'false'}" type="radio" id="dark" name="item.openStatus" value="1"/>
                 <span>공개</span>
               </label>
               <label>
-                <input th:attr="checked=*{item.openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="item.openStatus" />
+                <input th:attr="checked=*{item.openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="item.openStatus" value="0"/>
                 <span>비공개</span>
               </label>
              </div>
