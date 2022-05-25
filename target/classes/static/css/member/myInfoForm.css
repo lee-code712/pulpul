@@ -55,3 +55,28 @@ input {
   background-color: white;
   cursor: pointer;
 }
+
+#invalidWrap {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 40px;
+	padding: 20px;
+	width: 1154px;	
+	background:#FFF6F6;
+	border-radius: 5px;
+	border: 1px solid #DBAFAE;
+}
+
+.invalid-feedback {
+	color: #DBAFAE;
+}
+
+#closeBtn {
+	width: 40px;
+	color: #DBAFAE;
+	font-size: 18px;
+	cursor: pointer;
+	background: none;
+	border: none;
+}

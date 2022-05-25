@@ -56,7 +56,7 @@
 
       <div id="newItemWrap">
     		<div class="new-item" th:each="goods : ${newGoodsList}">
-      		<img src="/images/newItemImg.svg" />
+      		<img class="item-img" th:src="${goods.item.thumbnailUrl}"/>
       		<div th:text="${goods.item.name}" class="item-name"></div>
       		<div th:text="${goods.price}" class="item-price"></div>
       	</div>

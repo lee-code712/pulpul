@@ -31,117 +31,20 @@
       </div>
 
       <div id="itemWrap">
-        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-        	<div class="item-img-size"></div>
-          <div class="itemWaitingWrap">
-	          <div class="item-name">### 물품</div>
+				<div class="item" th:each="shareThing : ${shareThingList}">
+	        <div class="item-img-size" th:src="${shareThing.item.thumbnailUrl}"></div>
+	        
+	        <div class="itemWaitingWrap">
+		      	<div class="item-name"  th:text="${shareThing.item.name}"></div>
+						<div class="waitingWrap">
+		            <img src="/images/waiting.svg" />
+		            <div class="waiting" th:text="${shareThing.reservationNumber}"></div>
+		        </div>
+	        </div>
 	
-	          <div class="waitingWrap">
-	            <img src="/images/waiting.svg" />
-	            <div class="waiting">2</div>
-	          </div>
-          </div>
-
-          <div class="rental-ok">대여 가능</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-        	<div class="item-img-size"></div>
-          <div class="itemWaitingWrap">
-	          <div class="item-name">### 물품</div>
-	
-	          <div class="waitingWrap">
-	            <img src="/images/waiting.svg" />
-	            <div class="waiting">2</div>
-	          </div>
-          </div>
-
-          <div class="rental-notok">대여 불가</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-        	<div class="item-img-size"></div>
-          <div class="itemWaitingWrap">
-	          <div class="item-name">### 물품</div>
-	
-	          <div class="waitingWrap">
-	            <img src="/images/waiting.svg" />
-	            <div class="waiting">2</div>
-	          </div>
-          </div>
-
-          <div class="rental-ok">대여 가능</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-        	<div class="item-img-size"></div>
-          <div class="itemWaitingWrap">
-	          <div class="item-name">### 물품</div>
-	
-	          <div class="waitingWrap">
-	            <img src="/images/waiting.svg" />
-	            <div class="waiting">2</div>
-	          </div>
-          </div>
-
-          <div class="rental-notok">대여 불가</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-        	<div class="item-img-size"></div>
-          <div class="itemWaitingWrap">
-	          <div class="item-name">### 물품</div>
-	
-	          <div class="waitingWrap">
-	            <img src="/images/waiting.svg" />
-	            <div class="waiting">2</div>
-	          </div>
-          </div>
-
-          <div class="rental-ok">대여 가능</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-        	<div class="item-img-size"></div>
-          <div class="itemWaitingWrap">
-	          <div class="item-name">### 물품</div>
-	
-	          <div class="waitingWrap">
-	            <img src="/images/waiting.svg" />
-	            <div class="waiting">2</div>
-	          </div>
-          </div>
-
-          <div class="rental-notok">대여 불가</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-        	<div class="item-img-size"></div>
-          <div class="itemWaitingWrap">
-	          <div class="item-name">### 물품</div>
-	
-	          <div class="waitingWrap">
-	            <img src="/images/waiting.svg" />
-	            <div class="waiting">2</div>
-	          </div>
-          </div>
-
-          <div class="rental-ok">대여 가능</div>
-        </div>
-        
-        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-        	<div class="item-img-size"></div>
-          <div class="itemWaitingWrap">
-	          <div class="item-name">### 물품</div>
-	
-	          <div class="waitingWrap">
-	            <img src="/images/waiting.svg" />
-	            <div class="waiting">2</div>
-	          </div>
-          </div>
-
-          <div class="rental-notok">대여 불가</div>
-        </div>
+	        <div class="rental-ok" th:if="${shareThing.isBorrowed} == 0">대여 가능</div>
+	        <div class="rental-notok" th:if="${shareThing.isBorrowed} == 1">대여 불가</div>       
+        </div> 
       </div>
     </div>
 	</div>
