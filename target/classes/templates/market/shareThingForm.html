@@ -18,63 +18,48 @@
 
 	<div layout:fragment="content">
 	  <div id="pageWrap">
-      <div id="pageTit">공유 물품 대여</div>
+      <div id="pageTit">공유 물품 관리</div>
 	  <div id="pageSubTit">공유 물품 등록</div>	
-     <form method="post" enctype="multipart/form-data">
+     <form method="post" enctype="multipart/form-data" th:object="${shareThing}">
       <table>
         <tr>
           <td class="text-name">공유 물품명</td>
-          <td><input type="text" placeholder="물품명을 입력하세요." th:field="${shareThing.item.name}"/></td>
+          <td><input type="text" placeholder="물품명을 입력하세요." th:field="*{item.name}"/></td>
         </tr>
         <tr>
           <td></td>
-          <td th:errors="${shareThing.item.name}"></td>
+          <td th:errors="*{item.name}"></td>
         </tr>
         <tr>
           <td class="text-name">물품 설명</td>
           <td>
-            <textarea placeholder="물품 설명을 작성해주세요." th:field="${shareThing.item.description}"></textarea>
+            <textarea placeholder="물품 설명을 작성해주세요." th:field="*{item.description}"></textarea>
           </td>
         </tr>
         <tr>
           <td></td>
-          <td th:errors="${shareThing.item.description}"></td>
+          <td th:errors="*{item.description}"></td>
         </tr>
         <tr>
           <td class="text-name">대여 시 유의사항</td>
           <td>
-            <input type="text" placeholder="대여 시 유의사항을 입력해주세요." th:field="${shareThing.precaution}"/>
+            <input type="text" placeholder="대여 시 유의사항을 입력해주세요." th:field="*{precaution}"/>
           </td>
         </tr>
         <tr>
           <td></td>
-          <td th:errors="${shareThing.precaution}"></td>
+          <td th:errors="*{precaution}"></td>
         </tr>
-        <tr>
-          <td class="text-name">대여 여부</td>
-          <td>
-            <div class="radio">
-              <label>
-                <input th:attr="checked=${shareThing.isBorrowed == 1 ? 'true' : 'false'}" type="radio" id="dark" name="radioBorrow"/>
-                <span>가능</span>
-              </label>
-              <label>
-                <input th:attr="checked=${shareThing.isBorrowed == 0 ? 'true' : 'false'}" type="radio" id="light" name="radioBorrow" />
-                <span>불가능</span>
-              </label>
-             </div>
-          </td>
-        </tr>
-        <tr th:unless="${#lists.isEmpty(shareThing.item.imageUrlList)}">
+        <tr th:unless="*{#lists.isEmpty(item.imageUrlList)}">
           <td class="text-name">식물 사진</td>
           <td class="putFilename">
             <div class="putFilenameDiv">
-              <span class="updateImage" th:each="image : ${shareThing.item.imageUrlList}" th:text="${image}">
+              <span class="updateImage" th:each="image : *{item.imageUrlList}" th:text="${image}">
               </span>
             </div>
           </td>
         </tr>
-        <tr th:if="${#lists.isEmpty(shareThing.item.imageUrlList)}">
+        <tr th:if="*{#lists.isEmpty(item.imageUrlList)}">
           <td class="text-name">식물 사진</td>
           <td class="putFilename">
             <div class="putFilenameDiv"></div>
@@ -86,18 +71,18 @@
             <input type="file" id="fileWrap" accept=".jpg" multiple="multiple" onchange="previewFiles()" name="files"/>
           </td>
         </tr>
-        <tr th:if="${#lists.isEmpty(shareThing.item.imageUrlList)}">
+        <tr th:if="*{#lists.isEmpty(item.imageUrlList)}">
           <td></td>
           <td>
 			<div id="putItemImg">
 			</div>
 		  </td>
 		</tr>
-        <tr th:if="${not #lists.isEmpty(shareThing.item.imageUrlList)}">
+        <tr th:if="*{not #lists.isEmpty(item.imageUrlList)}">
 		  <td></td>
 		  <td>
 		    <div id="putItemImg">
-		      <span class="putItemImgSpan" th:each="image : ${shareThing.item.imageUrlList}">
+		      <span class="putItemImgSpan" th:each="image : *{item.imageUrlList}">
 		        <img th:src="${image}" height="100px" width="100px" th:title="${image}">
 		        <button class="deleteBtn" th:id="${image}" type="button" th:onclick="updateImg(event)">X</button>
 		      </span>
@@ -109,11 +94,11 @@
           <td>
             <div class="radio">
               <label>
-                <input th:attr="checked=${shareThing.item.openStatus.toString() == '1' ? 'true' : 'false'}" type="radio" id="dark" name="radio"/>
+                <input th:attr="checked=*{item.openStatus.toString() == '1' ? 'true' : 'false'}" type="radio" id="dark" name="item.openStatus"/>
                 <span>공개</span>
               </label>
               <label>
-                <input th:attr="checked=${shareThing.item.openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="radio" />
+                <input th:attr="checked=*{item.openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="item.openStatus" />
                 <span>비공개</span>
               </label>
              </div>
@@ -121,8 +106,8 @@
         </tr>
       </table>
       <div id="btnWrap" class="shareThingFormBtn">
-        <button th:if="${not #strings.isEmpty(shareThing.item.id)}" id="saveBtn" onclick="javascript: form.action='/market/shareThing/update';">수정</button>
-        <button th:unless="${not #strings.isEmpty(shareThing.item.id)}" id="saveBtn" onclick="javascript: form.action='/market/shareThing/upload';">등록</button>
+        <button th:if="*{not #strings.isEmpty(item.id)}" id="saveBtn" onclick="javascript: form.action='/market/shareThing/update';">수정</button>
+        <button th:unless="*{not #strings.isEmpty(item.id)}" id="saveBtn" onclick="javascript: form.action='/market/shareThing/upload';">등록</button>
         <button id="cancelBtn" type="button" onclick="location.href='/market/shareThing/list'">취소</button>
       </div>
      </form>
