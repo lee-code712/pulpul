@@ -14,82 +14,87 @@
   <th:block layout:fragment="script">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   	<script th:src="@{/js/market/imgForm.js}"></script>
+  	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   </th:block>
+  
 	<div layout:fragment="content">
 		<div id="pageWrap">
       <div id="pageTit">상품 관리</div>
       <div id="pageSubTit">상품 추가</div>
-      <form method="post" enctype="multipart/form-data">
-      <input type="hidden" th:field="${goods.item.id}" />
+      <form method="post" enctype="multipart/form-data" th:object="${goods}">
+      <input type="hidden" th:field="*{item.id}" />
       <table>
         <tr>
           <td class="text-name">상품명</td>
-          <td><input type="text" placeholder="상품명을 입력하세요." th:field="${goods.item.name}" /></td>
+          <td><input type="text" placeholder="상품명을 입력하세요." th:field="*{item.name}" /></td>
         </tr>
          <tr>
           <td></td>
-          <td th:errors="${goods.item.name}"></td>
+          <td th:errors="*{item.name}"></td>
         </tr>
         <tr>
           <td class="text-name">상품 설명</td>
           <td>
-            <textarea placeholder="상품 설명을 작성해주세요."  th:field="${goods.item.description}" ></textarea>
+            <textarea placeholder="상품 설명을 작성해주세요."  th:field="*{item.description}" ></textarea>
           </td>
         </tr>
          <tr>
           <td></td>
-          <td th:errors="${goods.item.description}"></td>
+          <td th:errors="*{item.description}"></td>
         </tr>
         <tr>
           <td class="text-name">식물 크기</td>
-          <td><input type="text" placeholder="예) 10, 20 (가로, 세로)" th:field="${goods.size}" /></td>
+          <td><input type="text" placeholder="예) 10, 20 (가로, 세로)" th:field="*{size}" /></td>
         </tr>
         <tr>
           <td></td>
-          <td th:errors="${goods.size}"></td>
+          <td th:errors="*{size}"></td>
         </tr>
         <tr>
           <td class="text-name">연관태그</td>
-          <td><input type="text" placeholder="예) 다육이, 식물" th:field="${goods.tags}"/></td>
+          <td><input type="text" placeholder="예) 다육이, 식물" th:field="*{tags}"/></td>
         </tr>
         <tr>
           <td></td>
-          <td th:errors="${goods.tags}"></td>
+          <td th:errors="*{tags}"></td>
         </tr>
-        <tr>
+        <tr th:if="*{#strings.isEmpty(item.id)}">
           <td class="text-name">수량</td>
-          <td><input type="text" placeholder="예) 2" th:field="${goods.salesQuantity}" /></td>
+          <td><input type="text" placeholder="예) 2" th:field="*{salesQuantity}" /></td>
         </tr>
-        <tr>
+        <tr th:unless="*{#strings.isEmpty(item.id)}">
+          <div><input type="hidden" th:field="*{salesQuantity}"/></div>
+        </tr>
+        <tr th:if="*{#strings.isEmpty(item.id)}">
           <td></td>
-          <td th:errors="${goods.salesQuantity}"></td>
+          <td th:errors="*{salesQuantity}"></td>
         </tr>
         <tr>
           <td class="text-name">판매가격</td>
-          <td><input type="text" placeholder="예) 8000" th:field="${goods.price}"/></td>
+          <td><input type="text" placeholder="예) 8000" th:field="*{price}"/></td>
         </tr>
         <tr>
           <td></td>
-          <td th:errors="${goods.price}"></td>
+          <td th:errors="*{price}"></td>
         </tr>
         <tr>
           <td class="text-name">배송비</td>
-          <td><input type="text" placeholder="예) 2000" th:field="${goods.shippingFee}" /></td>
+          <td><input type="text" placeholder="예) 2000" th:field="*{shippingFee}" /></td>
         </tr>
         <tr>
           <td></td>
-          <td th:errors="${goods.shippingFee}"></td>
+          <td th:errors="*{shippingFee}"></td>
         </tr>
-        <tr th:unless="${#lists.isEmpty(goods.item.imageUrlList)}">
+        <tr th:unless="*{#lists.isEmpty(item.imageUrlList)}">
           <td class="text-name">식물 사진</td>
           <td class="putFilename">
             <div class="putFilenameDiv">
-              <span class="updateImage" th:each="image : ${goods.item.imageUrlList}" th:text="${image}">
+              <span class="updateImage" th:each="image : *{item.imageUrlList}" th:text="${image}">
               </span>
             </div>
           </td>
         </tr>
-        <tr th:if="${#lists.isEmpty(goods.item.imageUrlList)}">
+        <tr th:if="*{#lists.isEmpty(item.imageUrlList)}">
           <td class="text-name">식물 사진</td>
           <td class="putFilename">
             <div class="putFilenameDiv"></div>
@@ -101,18 +106,18 @@
             <input type="file" id="fileWrap" accept=".jpg" multiple="multiple" onchange="previewFiles()" name="files"/>
           </td>
         </tr>
-        <tr th:if="${#lists.isEmpty(goods.item.imageUrlList)}">
+        <tr th:if="*{#lists.isEmpty(item.imageUrlList)}">
           <td></td>
           <td>
 			<div id="putItemImg">
 			</div>
 		  </td>
 		</tr>
-		<tr th:if="${not #lists.isEmpty(goods.item.imageUrlList)}">
+		<tr th:if="*{not #lists.isEmpty(item.imageUrlList)}">
 		  <td></td>
 		  <td>
 		    <div id="putItemImg">
-		      <span class="putItemImgSpan" th:each="image : ${goods.item.imageUrlList}">
+		      <span class="putItemImgSpan" th:each="image : *{item.imageUrlList}">
 		        <img th:src="${image}" height="100px" width="100px" th:title="${image}">
 		        <button class="deleteBtn" th:id="${image}" type="button" th:onclick="updateImg(event)">X</button>
 		      </span>
@@ -124,11 +129,11 @@
           <td>
            <div class="radio">
               <label>
-                <input th:attr="checked=${goods.item.openStatus.toString() =='1' ? 'true' : 'false'}" type="radio" id="dark" name="item.openStatus" value="1"/>
+                <input th:attr="checked=*{item.openStatus.toString() =='1' ? 'true' : 'false'}" type="radio" id="dark" name="item.openStatus" value="1"/>
                 <span>공개</span>
               </label>
               <label>
-                <input th:attr="checked=${goods.item.openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="item.openStatus" value="0" />
+                <input th:attr="checked=*{item.openStatus.toString() == '0' ? 'true' : 'false'}" type="radio" id="light" name="item.openStatus" value="0" />
 		        <span>비공개</span>
 		      </label>
 		     </div>
@@ -136,12 +141,11 @@
         </tr>
       </table>
       <div id="btnWrap" class="goodsFormBtn">
-        <button th:if="${not #strings.isEmpty(goods.item.id)}" id="saveBtn" onclick="javascript: form.action='/market/goods/update';">수정</button>
-        <button th:unless="${not #strings.isEmpty(goods.item.id)}" id="saveBtn" onclick="javascript: form.action='/market/goods/upload';">등록</button>
+        <button th:if="*{not #strings.isEmpty(item.id)}" id="saveBtn" onclick="javascript: form.action='/market/goods/update';">수정</button>
+        <button th:unless="*{not #strings.isEmpty(item.id)}" id="saveBtn" onclick="javascript: form.action='/market/goods/upload';">등록</button>
         <button id="cancelBtn" type="button" class="cancel" onclick="location.href='/market/goods/list'">취소</button>
       </div>
       </form>
     </div>
     </div>
-  </th:block>
 </html>
