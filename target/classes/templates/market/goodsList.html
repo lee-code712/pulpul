@@ -14,6 +14,7 @@
   <th:block layout:fragment="script">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   	<script th:src="@{/js/market/goodsList.js}"></script>
+  	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   </th:block>
   
 	<div layout:fragment="content">
@@ -40,28 +41,43 @@
 		    <tr>
 		      <td class="item-img"></td>
 		      <td class="item-info">상품 정보</td>
-		      <td class="item-num">수량</td>
+		      <td class="item-num">남은 수량</td>
 		      <td class="item-shipping">배송비</td>
 		      <td class="item-price">판매가격</td>
 		      <td class="item-delete"></td>
 		    </tr>
 		
-		    <tr th:each="goods : ${goodsList}" th:style="${goods.item.openStatus == 0 ? 'background-color: #f3f3f4;' : ''}">
+		    <tr th:each="goods : ${goodsList}">
 		      <td>
 		       <div class="thumbnail-item">
 		         <img class="thumbnail-item-img" th:src="${goods.item.thumbnailUrl}"/>
 		       </div>
 		      </td>
 		      <td th:text="${goods.item.name}"></td>
-		      <td th:text="${goods.salesQuantity}"></td>
+		      <td th:text="|${goods.remainQuantity}/${goods.salesQuantity}|"></td>
 		      <td th:text="${#numbers.formatInteger(goods.shippingFee, 0, 'COMMA')}"></td>
 		      <td th:text="${#numbers.formatInteger(goods.price, 0, 'COMMA')}"></td>
 		      <td><!-- goodsId -> itemId -->
 		        <button class="updateBtn" th:onclick="updateGoods([[${goods.item.id}]])">수정</button>
 		        <button class="deleteBtn" th:onclick="deleteGoods([[${goods.item.id}]])">삭제</button>
+		    	<script th:inline="javascript">
+		    	  var failed = [[${deleteFailed}]];
+				  		if(failed == true){
+				  			Swal.fire({
+				  			  title: "삭제 불가!",
+				  			  text: [[${exception}]],
+				  			  icon: "error",
+				  			  confirmButtonColor: '#93c0b5',
+				  			  confirmButtonText: '확인',
+				  			}).then((itemDelete) => {
+							  if (itemDelete) {
+								  window.location.href = "/market/goods/list";
+							  }
+						  	});
+				  		}  	
+				  </script>
 		      </td>
 		    </tr>
-
 		  </table>
 		
 		  <div id="btnWrap">
