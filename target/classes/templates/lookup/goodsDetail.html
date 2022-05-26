@@ -15,6 +15,9 @@
   <th:block layout:fragment="script">
   	<script th:src="@{/js/swiper-bundle.min.js}" defer></script>
   	<script th:src="@{/js/lookup/goodsDetail.js}" defer></script>
+  	<script src="https://kit.fontawesome.com/6478f529f2.js"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   </th:block>
 
 	<div layout:fragment="content">
@@ -118,7 +121,7 @@
         </div>
       </div>
 
-      <div id="reviewBox">
+      <div id="reviewBox" th:each="review : ${reviewList}">
         <div id="reviewContent">
           <div id="reviewWrap">
             <img src="/images/reviewer.svg" />
@@ -126,45 +129,55 @@
             <div id="reviewerBox">
               <div id="ratingWrap">
                 <img src="/images/star.svg" />
-                <div id="rating">5.0</div>
+                <div id="rating" th:text="${review.rating}"></div>
               </div>
 
               <div id="reviewerWrap">
-                <div id="reviewer">(작성자 이름)</div>
-                <div id="reviewDate">2022-03-20</div>
+                <div id="reviewer" th:text="${review.order.buyer.id}"></div>
+                <div id="reviewDate" th:text="${review.writeDate}"></div>
               </div>
             </div>
           </div>
         </div>
 
-        <div id="review">(리뷰 내용)</div>
+        <div id="review"></div>
 
         <hr class="hr-dotted" />
       </div>
-
+      <form action="/review">
       <div id="reviewBox">
         <div id="reviewContent">
           <div id="reviewWrap">
             <img src="/images/reviewer.svg" />
 
-            <div id="reviewerBox">
+            <div id="reviewerBox" class="reviewer-box">
               <div id="ratingWrap">
-                <img src="/images/star.svg" />
-                <div id="rating">5.0</div>
-              </div>
-
-              <div id="reviewerWrap">
-                <div id="reviewer">(작성자 이름)</div>
-                <div id="reviewDate">2022-03-20</div>
+                <div class="review-rating">
+		            <img src="/images/star.svg" />
+			         <select name='rating'>
+					  <option value='5.0' selected>5.0</option>
+					  <option value='4.0'>4.0</option>
+					  <option value='3.0'>3.0</option>
+					  <option value='2.0'>2.0</option>
+					  <option value='1.0'>1.0</option>
+					</select>
+		        </div>
               </div>
             </div>
           </div>
+          <textarea placeholder="리뷰를 작성해주세요."></textarea>
+          <div id="imgBox">
+              <div class="imgTit">상품 사진</div>
+	          <input class="upload" type="file" id="fileWrap" accept=".jpg" multiple="multiple" name="file" style="display:none;">
+		       <div class="upload-img-icon-box"><i class="fas fa-camera fa-2x"></i></div>
+		       <div class="upload-img"></div>
+          </div>
+         </div>
+        <div id="reviewBtnWrap">
+           <button type="submit" id="writeReviewBtn">리뷰 작성</button>
         </div>
-
-        <div id="review">(리뷰 내용)</div>
-
-        <hr class="hr-dotted" />
-      </div>
+        </div>
+        </form>
     </div>
 	</div>
 </html>

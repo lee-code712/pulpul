@@ -232,3 +232,96 @@
  	width: 596px;
   object-fit: cover;
 }
+
+/* review content */
+
+textarea {
+  box-sizing: border-box;
+  margin: 20px 0px 20px;
+  padding: 20px;
+  width: 1194px;
+  height: 200px;
+  border: 1px solid #eaeaea;
+  resize: none;
+}
+
+#reviewBtnWrap {
+	display: flex;
+    justify-content: flex-end;
+}
+
+#writeReviewBtn {
+	width: 140px;
+	height: 50px;
+	background-color: white;
+	border: 1px solid #535353;
+}
+
+#writeReviewBtn:hover {
+	color: white;
+	background-color: #93c0b5;
+	border: 1px solid white;
+}
+
+select {
+	margin-left: 8px;
+	width: 46px;
+	height: 18px;
+}
+
+.reviewer-box {
+	display: flex;
+	align-items: center;
+}
+
+#imgBox {
+	display:flex;
+}
+
+.imgTit {
+	margin-right: 8px;
+}
+
+.reviewImage {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.upload-img {
+	 width: 102px;
+     height: 102px;
+     overflow: hidden;
+     position: relative;
+}
+
+.upload-img-icon-box {
+	display:flex;
+	justify-content:center;
+	align-items: center;
+	width: 100px;
+    height: 100px;
+	border: 1px solid #eaeaea;
+	margin: 0px 8px;
+	cursor: pointer;
+}
+
+.upload-img-box {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;	
+}
+
+/*이미지 삭제 버튼 css*/
+.deleteBtn{
+	border-radius:20%;
+	color: red;
+	border: 0;
+	outline: 0;
+	width: 15px;
+	height: 15px;
+	position:absolute;
+	top: -3px;
+	right: -3px;
+	cursor: pointer;
+}
