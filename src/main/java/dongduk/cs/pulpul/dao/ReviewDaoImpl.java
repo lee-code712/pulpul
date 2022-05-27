@@ -1,6 +1,8 @@
 package dongduk.cs.pulpul.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,21 +22,23 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 
 	@Override
-	public boolean isExistReview(String orderId) {
-		// TODO Auto-generated method stub
-		return false;
+	public int findOrderIdByNotReview(String itemId, String memberId) {
+		return reviewMapper.selectOrderIdByNotReview(itemId, memberId);
 	}
 
 	@Override
-	public boolean createReview(Review review) {
-		// TODO Auto-generated method stub
-		return false;
+	public int createReview(Review review) {
+		return reviewMapper.insertReview(review);
 	}
 
 	@Override
-	public boolean createReviewImage(Review review) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean createReviewImages(List<String> imageUrlList, String memberId) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("memberId", memberId);
+		param.put("imageUrlList", imageUrlList);
+		int ck = reviewMapper.insertReviewImages(param);
+		if (ck < 0) return false;
+		return true;
 	}
 
 }

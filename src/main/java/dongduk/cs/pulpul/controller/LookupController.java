@@ -2,6 +2,8 @@ package dongduk.cs.pulpul.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,15 +46,25 @@ public class LookupController {
 	 * 식물 상세 정보 조회
 	 */
 	@GetMapping("/goodsDetail")
-	public String goodsDetail(@RequestParam("itemId") String itemId, Model model) {
+	public String goodsDetail(@RequestParam("itemId") String itemId, 
+			HttpSession session, Model model) {
 		
 		Goods goods = itemSvc.getGoods(itemId);
 		model.addAttribute("goods", goods);
 		
 		List<Review> reviewList = reviewSvc.getReviewByItem(itemId);
-		model.addAttribute("reviewList", reviewList);
+		if (reviewList != null) {
+			model.addAttribute("reviewList", reviewList);
+		}
 		
-		// 리뷰할 건이 있는지 확인
+		// 로그인 한 경우, 리뷰할 건이 있는 주문 id 반환
+		String memberId = (String) session.getAttribute("id");
+		if (memberId != null) {
+			int orderId = reviewSvc.getOrderIdByNotReview(itemId, memberId);
+			if (orderId > 0) {
+				model.addAttribute("orderId", orderId);
+			}
+		}
 		
 		return "lookup/goodsDetail";
 	}

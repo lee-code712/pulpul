@@ -268,7 +268,7 @@ public class ItemServiceImpl implements ItemService {
 		return newFilename;
 	}
 	
-	// 파일 업로드 메소드
+	// 특정 상품에 대한 파일 이름 변경 메소드
 	public ArrayList<String> updateFileByItem(String path, String itemId) {
 		ArrayList<String> imageUrlList = new ArrayList<String>();
 		try {
