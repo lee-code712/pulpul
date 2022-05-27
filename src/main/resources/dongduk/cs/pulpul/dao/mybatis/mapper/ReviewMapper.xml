@@ -32,7 +32,7 @@
 	    WHERE r.item_id = #{itemId} AND INSTR(i.image_src, TO_CHAR(review_id)) <![CDATA[>]]> 0
 	</select>
 	
-	<select id="selectOrderIdByNotReview" parameterType="string" resultType="int">
+	<select id="selectOrderIdByNotReview" parameterType="string" resultType="string">
     SELECT order_id
 		FROM orders
     	JOIN order_goods USING (order_id)

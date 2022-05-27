@@ -13,7 +13,7 @@ public interface ReviewMapper {
 	
 	List<Review> selectReviewByItem(String itemId);
 	
-	int selectOrderIdByNotReview(@Param("itemId") String itemId, 
+	String selectOrderIdByNotReview(@Param("itemId") String itemId, 
 			@Param("memberId") String memberId);
 	
 	int insertReview(Review review);

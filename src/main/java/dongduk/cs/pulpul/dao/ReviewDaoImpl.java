@@ -23,7 +23,10 @@ public class ReviewDaoImpl implements ReviewDao {
 
 	@Override
 	public int findOrderIdByNotReview(String itemId, String memberId) {
-		return reviewMapper.selectOrderIdByNotReview(itemId, memberId);
+		String orderId = reviewMapper.selectOrderIdByNotReview(itemId, memberId);
+		if (orderId == null)
+			return 0;
+		return Integer.parseInt(orderId);
 	}
 
 	@Override
