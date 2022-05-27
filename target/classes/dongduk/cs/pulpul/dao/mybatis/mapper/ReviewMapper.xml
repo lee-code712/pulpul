@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dongduk.cs.pulpul.dao.mybatis.mapper.ReviewMapper">
+
+	<resultMap id="ReviewInfoMap" type="Review">
+		<id column="id" jdbcType="INTEGER" property="id" javaType="int" />
+		<result column="write_date" jdbcType="VARCHAR" property="writeDate" javaType="string" />
+		<result column="content" jdbcType="VARCHAR" property="content" javaType="string" />
+		<result column="rating" jdbcType="INTEGER" property="rating" javaType="int" />
+		<result column="remain_quantity" jdbcType="INTEGER" property="remainQuantity" javaType="int" />
+		<result column="shipping_fee" jdbcType="INTEGER" property="shippingFee" javaType="int" />
+		<association property="order" column="order_id" javaType="Order">
+			<id column="order_id" jdbcType="INTEGER" property="id" javaType="int" />
+			<association property="buyer" column="buyer_id" javaType="Member">
+				<id column="buyer_id" jdbcType="VARCHAR" property="id" javaType="string" />
+			</association>
+		</association>
+		<association property="item" column="item_id" javaType="Item">
+			<id column="id" jdbcType="INTEGER" property="id" javaType="int" />
+		</association>
+		<collection property="imageUrlList" ofType="string" javaType="java.util.List">
+        <result column="image_src" />
+    </collection>
+	</resultMap>
+
+	<select id="selectReviewByItem" parameterType="string" resultMap="ReviewInfoMap">
+	    SELECT review_id, write_date, content, rating, r.item_id, r.order_id,
+	    	o.buyer_id, i.image_src
+	    FROM review r JOIN orders o ON r.order_id = o.order_id
+	    	JOIN image i ON i.member_id = o.buyer_id
+	    WHERE r.item_id = #{itemId} AND INSTR(i.image_src, TO_CHAR(review_id)) <![CDATA[>]]> 0
+	</select>
+
+</mapper>

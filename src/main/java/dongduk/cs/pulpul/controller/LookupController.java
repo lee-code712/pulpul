@@ -7,20 +7,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import dongduk.cs.pulpul.domain.Goods;
+import dongduk.cs.pulpul.domain.Review;
 import dongduk.cs.pulpul.domain.ShareThing;
 import dongduk.cs.pulpul.service.ItemService;
+import dongduk.cs.pulpul.service.ReviewService;
 
 @Controller
 @RequestMapping("/lookup")
 public class LookupController {
 
 	private final ItemService itemSvc;
+	private final ReviewService reviewSvc;
 	
 	@Autowired
-	public LookupController(ItemService itemSvc) {
+	public LookupController(ItemService itemSvc, ReviewService reviewSvc) {
 		this.itemSvc = itemSvc;
+		this.reviewSvc = reviewSvc;
 	}
 	
 	/*
@@ -39,8 +44,16 @@ public class LookupController {
 	 * 식물 상세 정보 조회
 	 */
 	@GetMapping("/goodsDetail")
-	public String goodsDetail(){
-		//상품 상세 정보 페이지
+	public String goodsDetail(@RequestParam("itemId") String itemId, Model model) {
+		
+		Goods goods = itemSvc.getGoods(itemId);
+		model.addAttribute("goods", goods);
+		
+		List<Review> reviewList = reviewSvc.getReviewByItem(itemId);
+		model.addAttribute("reviewList", reviewList);
+		
+		// 리뷰할 건이 있는지 확인
+		
 		return "lookup/goodsDetail";
 	}
 	

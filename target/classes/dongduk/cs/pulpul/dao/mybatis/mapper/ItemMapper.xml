@@ -108,12 +108,13 @@
 		<result column="shipping_fee" jdbcType="INTEGER" property="shippingFee" javaType="int" />
 		<association property="item" column="item_id" javaType="Item">
 			<id column="item_id" jdbcType="VARCHAR" property="id" javaType="string" />
-			<result column="name" jdbcType="VARCHAR" property="name" javaType="string" />
+			<result column="item_name" jdbcType="VARCHAR" property="name" javaType="string" />
 			<result column="upload_date" jdbcType="DATE" property="uploadDate" javaType="string" />
 			<result column="description" jdbcType="VARCHAR" property="description" javaType="string" />
 			<result column="open_status" jdbcType="INTEGER" property="openStatus" javaType="int" />
 			<association property="market" column="market_id" javaType="Market">
 				<id column="market_id" jdbcType="INTEGER" property="id" javaType="int" />
+				<result column="market_name" jdbcType="VARCHAR" property="name" javaType="string" />
 				<association property="member" column="member_id" javaType="Member">
 					<id column="member_id" jdbcType="VARCHAR" property="id" javaType="string" />
 				</association>
@@ -125,7 +126,8 @@
 	</resultMap>
 	
 	<select id="selectGoodsByItem" parameterType="string" resultMap="GoodsInfoMap">
-		SELECT item_id, it.name, it.upload_date, it.description, it.open_status, market_id,
+		SELECT item_id, it.name AS item_name, it.upload_date, it.description, it.open_status, market_id,
+			m.name AS market_name,
 			g.tags, g.price, g.goods_size, g.sales_quantity, g.remain_quantity, g.shipping_fee,
 			member_id, i.image_src
 		FROM item it

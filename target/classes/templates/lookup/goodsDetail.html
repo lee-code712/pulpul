@@ -21,6 +21,13 @@
   </th:block>
 
 	<div layout:fragment="content">
+		<script th:inline="javascript">
+  		console.log('데이터 확인');
+  		var goods = [[${goods}]];
+  		console.log(goods);
+  		var reviewList = [[${reviewList}]];
+  		console.log(reviewList);
+  	</script>
 		<div id="pageWrap">
       <div id="infoCover">
 		    <div class="swiper-container mySwiper">
