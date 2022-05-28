@@ -23,94 +23,47 @@
   		console.log(market);
   		var marketId = [[${market.id}]]; // 이 부분은 지우면 안됨!!
   	</script>
-		<div id="pageWrap">
+		<div id="pageWrap" th:object="${market}">
 			<!-- /lookup/market/goodsList -->
-			<th:block th:if="${#httpServletRequest.requestURI} == '/lookup/market'">
+		<th:block th:if="${#httpServletRequest.requestURI} == '/lookup/market'">
 	      <img src="/images/marketImg.svg" id="marketImg" />
-	      <div id="pageTit">(작성자 이름) 마켓</div>
+	      <div id="pageTit" th:text="*{name}"></div>
 	      <div id="pageSubTit">personal market</div>
 	
 	      <div id="menu">
-	        <div class="list-on" th:onclick="goodsJson([[${market.id}]])">상품</div>
+	        <div id="goods-menu" class="list" th:onclick="goodsJson([[${market.id}]])">상품</div>
 	        |
-	        <div class="list" th:onclick="shareThingJson([[${market.id}]])">공유물품</div>
+	        <div id="shareThing-menu" class="list" th:onclick="shareThingJson([[${market.id}]])">공유물품</div>
 	      </div>
 	      
-	      <div id="itemWrap">
-	        <div class="item" onclick="location.href='/lookup/goodsDetail'">
-	          <div class="item-img-size"></div>
-	          <div class="plant-name">### 식물</div>
-	          <div class="plant-price">8000원</div>
-	        </div>
-				
-					 <div class="item" onclick="location.href='/lookup/goodsDetail'">
-	          <div class="item-img-size"></div>
-	          <div class="plant-name">### 식물</div>
-	          <div class="plant-price">8000원</div>
-	        </div>
-	        
-	         <div class="item" onclick="location.href='/lookup/goodsDetail'">
-	          <div class="item-img-size"></div>
-	          <div class="plant-name">### 식물</div>
-	          <div class="plant-price">8000원</div>
-	        </div>
-	        
-	         <div class="item" onclick="location.href='/lookup/goodsDetail'">
-	          <div class="item-img-size"></div>
-	          <div class="plant-name">### 식물</div>
-	          <div class="plant-price">8000원</div>
-	        </div>
-	        
-	        <div class="item" onclick="location.href='/lookup/goodsDetail'">
-	          <div class="item-img-size"></div>
-	          <div class="plant-name">### 식물</div>
-	          <div class="plant-price">8000원</div>
-	        </div>
-				
-					 <div class="item" onclick="location.href='/lookup/goodsDetail'">
-	          <div class="item-img-size"></div>
-	          <div class="plant-name">### 식물</div>
-	          <div class="plant-price">8000원</div>
-	        </div>
-	        
-	         <div class="item" onclick="location.href='/lookup/goodsDetail'">
-	          <div class="item-img-size"></div>
-	          <div class="plant-name">### 식물</div>
-	          <div class="plant-price">8000원</div>
-	        </div>
-	        
-	         <div class="item" onclick="location.href='/lookup/goodsDetail'">
-	          <div class="item-img-size"></div>
-	          <div class="plant-name">### 식물</div>
-	          <div class="plant-price">8000원</div>
-	        </div>
-      	</div>
+	     <div id="itemWrap">
+      	 </div>
 	
 	      <hr class="hr-dotted" />
-	      <table>
+	      <table class="marketTable">
 	        <tr>
 	          <td>마켓 설명</td>
-	          <td>(마켓 설명)</td>
+	          <td th:text="*{intro}"></td>
 	        </tr>
 	
 	        <tr>
 	          <td>문의</td>
-	          <td>010-0000-0000</td>
+	          <td th:text="*{member.phone}"></td>
 	        </tr>
 	
 	        <tr>
 	          <td>연락 가능 시간</td>
-	          <td>오후 1:00 - 오후 3:00</td>
+	          <td th:text="*{contactableTime}"></td>
 	        </tr>
 	
 	        <tr>
 	          <td>교환/반품/환불</td>
-	          <td>(내용)</td>
+	          <td th:text="*{policy}"></td>
 	        </tr>
 	
 	        <tr>
 	          <td>구매 전 유의사항</td>
-	          <td>(내용)</td>
+	          <td th:text="*{precaution}"></td>
 	        </tr>
 	      </table>
 	      <hr class="hr-dotted" />
@@ -118,19 +71,9 @@
       
       <!-- /lookup/market/shareThingList -->
       <th:block th:if="${#httpServletRequest.requestURI} == '/lookup/market/shareThingList'">
-	      <img src="/images/marketImg.svg" id="marketImg" />
-	      <div id="pageTit">(작성자 이름) 마켓</div>
-	      <div id="pageSubTit">personal market</div>
-	
-	     	<div id="menu">
-	        <div><a href="/lookup/market/goodsList" class="list">상품 등록</a></div>
-	        |
-	        <div><a href="/lookup/market/shareThingList" class="list-on">상품 기증</a></div>
-	      </div>
-	
 	      <div id="itemWrap">
 	        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-	        	<div class="item-img-size"></div>
+	          <div class="item-img-size"></div>
 	          <div class="itemWaitingWrap">
 		          <div class="item-name">### 물품</div>
 		
@@ -141,135 +84,8 @@
 	          </div>
 	
 	          <div class="rental-ok">대여 가능</div>
-	        </div>
-	        
-	        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-	        	<div class="item-img-size"></div>
-	          <div class="itemWaitingWrap">
-		          <div class="item-name">### 물품</div>
-		
-		          <div class="waitingWrap">
-		            <img src="/images/waiting.svg" />
-		            <div class="waiting">2</div>
-		          </div>
-	          </div>
-	
-	          <div class="rental-notok">대여 불가</div>
-	        </div>
-	        
-	        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-	        	<div class="item-img-size"></div>
-	          <div class="itemWaitingWrap">
-		          <div class="item-name">### 물품</div>
-		
-		          <div class="waitingWrap">
-		            <img src="/images/waiting.svg" />
-		            <div class="waiting">2</div>
-		          </div>
-	          </div>
-	
-	          <div class="rental-ok">대여 가능</div>
-	        </div>
-	        
-	        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-	        	<div class="item-img-size"></div>
-	          <div class="itemWaitingWrap">
-		          <div class="item-name">### 물품</div>
-		
-		          <div class="waitingWrap">
-		            <img src="/images/waiting.svg" />
-		            <div class="waiting">2</div>
-		          </div>
-	          </div>
-	
-	          <div class="rental-notok">대여 불가</div>
-	        </div>
-	        
-	        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-	        	<div class="item-img-size"></div>
-	          <div class="itemWaitingWrap">
-		          <div class="item-name">### 물품</div>
-		
-		          <div class="waitingWrap">
-		            <img src="/images/waiting.svg" />
-		            <div class="waiting">2</div>
-		          </div>
-	          </div>
-	
-	          <div class="rental-ok">대여 가능</div>
-	        </div>
-	        
-	        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-	        	<div class="item-img-size"></div>
-	          <div class="itemWaitingWrap">
-		          <div class="item-name">### 물품</div>
-		
-		          <div class="waitingWrap">
-		            <img src="/images/waiting.svg" />
-		            <div class="waiting">2</div>
-		          </div>
-	          </div>
-	
-	          <div class="rental-notok">대여 불가</div>
-	        </div>
-	        
-	        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-	        	<div class="item-img-size"></div>
-	          <div class="itemWaitingWrap">
-		          <div class="item-name">### 물품</div>
-		
-		          <div class="waitingWrap">
-		            <img src="/images/waiting.svg" />
-		            <div class="waiting">2</div>
-		          </div>
-	          </div>
-	
-	          <div class="rental-ok">대여 가능</div>
-	        </div>
-	        
-	        <div class="item" onclick="location.href='/lookup/shareThingDetail'">
-	        	<div class="item-img-size"></div>
-	          <div class="itemWaitingWrap">
-		          <div class="item-name">### 물품</div>
-		
-		          <div class="waitingWrap">
-		            <img src="/images/waiting.svg" />
-		            <div class="waiting">2</div>
-		          </div>
-	          </div>
-	
-	          <div class="rental-notok">대여 불가</div>
 	        </div>
       	</div>
-      
-	      <hr class="hr-dotted" />
-	      <table>
-	        <tr>
-	          <td>마켓 설명</td>
-	          <td>(마켓 설명)</td>
-	        </tr>
-	
-	        <tr>
-	          <td>문의</td>
-	          <td>010-0000-0000</td>
-	        </tr>
-	
-	        <tr>
-	          <td>연락 가능 시간</td>
-	          <td>오후 1:00 - 오후 3:00</td>
-	        </tr>
-	
-	        <tr>
-	          <td>교환/반품/환불</td>
-	          <td>(내용)</td>
-	        </tr>
-	
-	        <tr>
-	          <td>구매 전 유의사항</td>
-	          <td>(내용)</td>
-	        </tr>
-	      </table>
-	      <hr class="hr-dotted" />
       </th:block>
     </div>
 	</div>
