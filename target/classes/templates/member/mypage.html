@@ -116,9 +116,11 @@
 	          <td class="sharething-status" th:unless="${borrow.id}">예약</td>
 	          
 	          <td class="sharething-waybill" th:text="${borrow.trackingNumber}"></td>
-	          <td class="sharething-date">
+	          <td class="sharething-date" th:if="${borrow.id}">
 	          	<input type="text" th:value="${borrow.borrowDate}" class="datepicker" /> ~ <input type="text" th:value="${borrow.returnDate}" class="datepicker"/>
 	          </td>
+	          
+	          <td class="sharething-date" th:unless="${borrow.id}">x</td>
 	          
 	          <td class="sharething-btn">
 	          
