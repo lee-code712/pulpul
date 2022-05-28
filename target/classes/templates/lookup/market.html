@@ -10,8 +10,21 @@
 	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
   	<link rel="stylesheet" th:href="@{/css/lookup/market.css}" >
   </th:block>
+  
+  <th:block layout:fragment="script">
+  	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  	<script th:src="@{/js/lookup/market.js}" defer></script>
+  </th:block>
 
 	<div layout:fragment="content">
+		<script th:inline="javascript">
+  		console.log('데이터 확인');
+  		var market = [[${market}]];
+  		console.log(market);
+  		var goodsList = [[${goodsList}]];
+  		console.log(goodsList);
+  		var marketId = [[${market.id}]];
+  	</script>
 		<div id="pageWrap">
 			<!-- /lookup/market/goodsList -->
 			<th:block th:if="${#httpServletRequest.requestURI} == '/lookup/market/goodsList'">
@@ -20,9 +33,9 @@
 	      <div id="pageSubTit">personal market</div>
 	
 	      <div id="menu">
-	        <div><a href="/lookup/market/goodsList" class="list-on">상품 등록</a></div>
+	        <div class="list-on" th:onclick="goodsJson([[${market.id}]])">상품</div>
 	        |
-	        <div><a href="/lookup/market/shareThingList" class="list">상품 기증</a></div>
+	        <div class="list" th:onclick="shareThingJson([[${market.id}]])">공유물품</div>
 	      </div>
 	      
 	      <div id="itemWrap">

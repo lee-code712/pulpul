@@ -1,20 +1,26 @@
 package dongduk.cs.pulpul.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import dongduk.cs.pulpul.domain.Goods;
+import dongduk.cs.pulpul.domain.Market;
 import dongduk.cs.pulpul.domain.Review;
 import dongduk.cs.pulpul.domain.ShareThing;
 import dongduk.cs.pulpul.service.ItemService;
+import dongduk.cs.pulpul.service.MarketService;
 import dongduk.cs.pulpul.service.ReviewService;
 
 @Controller
@@ -23,11 +29,14 @@ public class LookupController {
 
 	private final ItemService itemSvc;
 	private final ReviewService reviewSvc;
+	private final MarketService marketSvc;
 	
 	@Autowired
-	public LookupController(ItemService itemSvc, ReviewService reviewSvc) {
+	public LookupController(ItemService itemSvc, ReviewService reviewSvc,
+			MarketService marketSvc) {
 		this.itemSvc = itemSvc;
 		this.reviewSvc = reviewSvc;
+		this.marketSvc = marketSvc;
 	}
 
 	/*
@@ -94,23 +103,50 @@ public class LookupController {
 		
 		return "lookup/shareThingDetail";
 	}
-
-	/*
-	 * 마켓 조회
-	 */
-	@GetMapping("/market/goodsList")
-	public String marketGoodsList(){
-		//마켓 페이지
-		return "lookup/market";
-	}
 	
 	/*
 	 * 마켓 조회
 	 */
-	@GetMapping("/market/shareThingList")
-	public String marketshareThingList(){
-		//마켓 페이지
+	@GetMapping("/market")
+	public String market(@RequestParam("marketId") int marketId, Model model) {
+		
+		Market market = marketSvc.getMarket(marketId);
+		if (market != null) {
+			model.addAttribute(market);
+		}
 		return "lookup/market";
+	}
+
+	/*
+	 * 상품 클릭 시 상품목록 json으로 반환
+	 */
+	@GetMapping("/market/goodsList/{marketId}")
+	@ResponseBody
+	public List<Goods> marketGoodsList(@PathVariable("marketId") int marketId,
+			HttpServletResponse response) throws IOException {
+		
+		List<Goods> goodsList = itemSvc.getGoodsListByMarket(marketId);
+		if (goodsList == null) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		}
+		
+		return goodsList;
+	}
+	
+	/*
+	 * 공유물품 클릭 시 공유물품 목록 json으로 반환
+	 */
+	@GetMapping("/market/shareThingList/{marketId}")
+	@ResponseBody
+	public List<ShareThing> marketShareThingList(@PathVariable("marketId") int marketId,
+			HttpServletResponse response) throws IOException {
+
+		List<ShareThing> shareThingList = itemSvc.getShareThingListByMarket(marketId);
+		if (shareThingList == null) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		}
+		
+		return shareThingList;
 	}
 	
 	/*

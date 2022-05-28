@@ -30,8 +30,7 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public List<Goods> findGoodsByMarket(int marketId) {
-		// TODO Auto-generated method stub
-		return null;
+		return itemMapper.selectGoodsByMarketId(marketId);
 	}
 
 	@Override
@@ -103,8 +102,7 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public List<ShareThing> findShareThingByMarket(int marketId) {
-		// TODO Auto-generated method stub
-		return null;
+		return itemMapper.selectShareThingByMarketId(marketId);
 	}
 
 	@Override

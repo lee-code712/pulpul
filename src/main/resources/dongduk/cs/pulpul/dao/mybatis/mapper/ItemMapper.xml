@@ -63,13 +63,15 @@
 	
 	<!-- 마켓 id로 상품목록 조회 -->
 	<select id="selectGoodsByMarketId" parameterType="int" resultType="Goods">
-		SELECT item_id AS item.id, it.name AS item.name, 
-			g.price, g.remain_quantity AS remainQuantity,
-			it.image_src AS item.thumbnailUrl
+		SELECT item_id AS "item.id", it.name AS "item.name",
+			g.tags, g.price, g.sales_quantity AS salesQuantity, g.remain_quantity AS remainQuantity, g.shipping_fee AS shippingFee,
+			i.image_src AS "item.thumbnailUrl"
 		FROM item it
+			JOIN market m USING (market_id)
 			JOIN goods g USING (item_id)
 			JOIN image i USING (member_id)
-		WHERE it.market_id = #{marketId} AND INSTR(i.image_src, it.item_id + '_1') <![CDATA[>]]> 0
+		WHERE market_id = #{marketID} AND INSTR(i.image_src, item_id || '-1') <![CDATA[>]]> 0
+		ORDER BY dbms_random.value
 	</select>
 	
 	<!-- 새 상품 목록 조회(3개) -->
@@ -228,14 +230,14 @@
 
 	<!-- 마켓 id로 공유물품목록 조회 -->
 	<select id="selectShareThingByMarketId" parameterType="int" resultType="ShareThing">
-		SELECT it.item_id AS item.id, it.name AS item.name,
+		SELECT item_id AS "item.id", it.name AS "item.name",
 			s.is_borrowed,
-			i.image_src AS item.thumbnailUrl,
-			(SELECT COUNT(*) FROM borrow_reservation WHERE it.item_id) AS reservation_number
+			i.image_src AS "item.thumbnailUrl"
 		FROM item it
+			JOIN market m USING (market_id)
 			JOIN share_thing s USING (item_id)
 			JOIN image i USING (member_id)
-		WHERE it.market_id = #{marketId} AND INSTR(i.image_src, it.item_id + '_1') <![CDATA[>]]> 0
+		WHERE market_id = #{marketId} AND INSTR(i.image_src, item_id || '-1') <![CDATA[>]]> 0
 	</select>
 	
 	<!-- 공유물품 상세정보 조회 -->

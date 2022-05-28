@@ -117,7 +117,7 @@
             <button id="cancelBtn" type="button" th:onclick="cancel([[${goods.item.id}]])">취소</button>
           </div>
 		</form>
-          <a href="/lookup/market/goodsList" id="marketLink">
+          <a th:href="@{/lookup/market(marketId=${goods.item.market.id})}" id="marketLink">
             <img src="/images/smallShopIcon.svg" />
             <span th:text="|${goods.item.market.name} 마켓으로 이동하기|"></span>
           </a>
