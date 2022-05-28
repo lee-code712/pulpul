@@ -55,8 +55,8 @@
           <div id="priceWrap">
             <div id="priceTit">판매 가격</div>
             <div id="price" th:text="|${#numbers.formatInteger(goods.price, 0, 'COMMA')}원|"></div>
-            <input type="hidden" th:field="${goods.item.id}">
-            <input type="hidden" id="inputTotal" name="total" value="">
+            <input type="hidden" name="goods.item.id" th:value="${goods.item.id}">
+            <input type="hidden" id="inputTotal" name="price" value="">
           </div>
 
           <div id="itemNumWrap">
@@ -98,7 +98,7 @@
           </div>
           <div id="btnWrap">
             <button id="cartBtn" onclick="javascript: form.action='/cart/addItem';">장바구니</button>
-            <script th:inline="javascript">
+           <!--   <script th:inline="javascript">
 		    	  var failed = [[${addFailed}]];
 				  		if(failed == true){
 				  			Swal.fire({
@@ -112,7 +112,7 @@
 							  }
 						  	});
 				  		}  	
-				  </script>
+				  </script> -->
             <button id="cancelBtn" type="button" th:onclick="cancel([[${goods.item.id}]])">취소</button>
           </div>
 		</form>
