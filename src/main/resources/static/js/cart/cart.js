@@ -16,7 +16,6 @@ function deleteItemByMarket(marketId){
 	location.href='/cart/deleteItemByMarket?marketId=' + marketId;
 }
 
-var i = 0;
 $(".market-name").each(function(){
 
 	var checkOfMarket = $(this).parent().find("input[type=checkbox]");

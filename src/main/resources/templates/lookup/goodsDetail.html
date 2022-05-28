@@ -29,6 +29,7 @@
   		console.log(reviewList);
   		var orderId = [[${orderId}]];
   		console.log(orderId);
+  		var i = 0;
   	</script>
 		<div id="pageWrap">
       <div id="infoCover">
@@ -98,7 +99,7 @@
           </div>
           <div id="btnWrap">
             <button id="cartBtn" onclick="javascript: form.action='/cart/addItem';">장바구니</button>
-           <!--   <script th:inline="javascript">
+             <script th:inline="javascript">
 		    	  var failed = [[${addFailed}]];
 				  		if(failed == true){
 				  			Swal.fire({
@@ -107,12 +108,12 @@
 				  			  confirmButtonColor: '#93c0b5',
 				  			  confirmButtonText: '확인',
 				  			}).then((result) => {
-							  if (result.isConfirmed) {
-								  window.location.href = "/lookup/goodsDetail?=" + ${goods.item.id};
+							  if (result.isConfirmed) { 
+								location.href="/lookup/goodsList";
 							  }
 						  	});
-				  		}  	
-				  </script> -->
+				  		}
+				  </script>
             <button id="cancelBtn" type="button" th:onclick="cancel([[${goods.item.id}]])">취소</button>
           </div>
 		</form>
