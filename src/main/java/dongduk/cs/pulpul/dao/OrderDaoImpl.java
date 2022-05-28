@@ -17,8 +17,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public Cart findCartByMember(String memberId) {
-		// TODO Auto-generated method stub
-		return null;
+		return orderMapper.selectCartByMemberId(memberId);
 	}
 
 	@Override
@@ -35,13 +34,15 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public boolean deleteOneCartItem(String memberId, String itemId) {
-		// TODO Auto-generated method stub
+		int ck = orderMapper.deleteOneCartByItemId(memberId, itemId);
+		if (ck > 0) return true;
 		return false;
 	}
 
 	@Override
 	public boolean deleteCartItemByMarket(String memberId, int marketId) {
-		// TODO Auto-generated method stub
+		int ck = orderMapper.deleteCartByMarketId(memberId, marketId);
+		if (ck > 0) return true;
 		return false;
 	}
 

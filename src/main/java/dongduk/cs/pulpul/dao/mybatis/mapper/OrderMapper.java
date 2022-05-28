@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import dongduk.cs.pulpul.domain.Cart;
-import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Order;
 
 @Mapper
@@ -19,9 +18,11 @@ public interface OrderMapper {
 	
 	int insertCart(Cart cart);
 	
-	int deleteOneCartByItemId(String itemId);
+	int deleteOneCartByItemId(@Param("memberId") String memberId, 
+			@Param("itemId") String itemId);
 	
-	int deleteCartByMarketId(int marketId);
+	int deleteCartByMarketId(@Param("memberId") String memberId,
+			@Param("marketId") int marketId);
 	
 	Order selectOrder(int orderId);
 	

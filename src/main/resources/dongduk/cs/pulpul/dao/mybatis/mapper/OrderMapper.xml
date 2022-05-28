@@ -15,16 +15,16 @@
 			<association property="goods" column="goods_id" javaType="Goods">
 				<result column="item_price" jdbcType="INTEGER" property="price" javaType="int" />
 				<result column="remain_quantity" jdbcType="INTEGER" property="remainQuantity" javaType="int" />
-				<result column="shipping_fee" jdbcType="INTEGER" property="openStatus" javaType="int" />
+				<result column="shipping_fee" jdbcType="INTEGER" property="shippingFee" javaType="int" />
 				<association property="item" column="goods_id" javaType="Item">
 					<id column="goods_id" jdbcType="VARCHAR" property="id" javaType="String" />
-					<result column="name" jdbcType="VARCHAR" property="name" javaType="String" />
+					<result column="item_name" jdbcType="VARCHAR" property="name" javaType="String" />
 					<result column="item_open_status" jdbcType="INTEGER" property="openStatus" javaType="int" />
-					<result column="img_src" jdbcType="VARCHAR" property="thumbnailUrl" javaType="String" />
+					<result column="image_src" jdbcType="VARCHAR" property="thumbnailUrl" javaType="String" />
 					<association property="market" column="market_id" javaType="Market">
 						<id column="market_id" jdbcType="INTEGER" property="id" javaType="int" />
 						<result column="market_name" jdbcType="VARCHAR" property="name" javaType="String" />
-						<result column="market_open_status" jdbcType="INTEGER" property="openStatus" javaType="int" />
+						<result column="market_open_status" jdbcType="VARCHAR" property="openStatus" javaType="string" />
 					</association>
 				</association>
 			</association>
@@ -32,17 +32,17 @@
 	</resultMap>
 	
 	<select id="selectCartByMemberId" parameterType="string" resultMap="cartMap">
-		SELECT c.goods_id, c.quantity, c.price AS total_price,
-			it.name AS item.name, it.open_status AS item_open_status, it.market_id,
-			m.name AS market_name, m.open_status AS market_open_status,
-			g.price AS item_price, g.remain_quantity, g.shipping_fee,
-			i.img_src
+		SELECT c.member_id, c.goods_id, c.quantity, c.price AS total_price,
+    	it.name AS item_name, it.open_status AS item_open_status, it.market_id,
+    	m.name AS market_name, m.open_status AS market_open_status,
+    	g.price AS item_price, g.remain_quantity, g.shipping_fee,
+    	i.image_src
 		FROM cart c
-			FULL OUTER JOIN item it ON c.goods_id = it.item_id
-			FULL OUTER JOIN market m ON it.market_id = m.market_id
-			FULL OUTER JOIN goods g ON it.item_id = g.item_id
-			FULL OUTER JOIN image i ON c.member_id = i.member_id
-		WHERE c.member_id = #{memberId} AND INSTR(i.image_src, it.item_id + '_1') <![CDATA[>]]> 0
+    	FULL OUTER JOIN item it ON c.goods_id = it.item_id
+    	FULL OUTER JOIN market m ON it.market_id = m.market_id
+    	FULL OUTER JOIN goods g ON it.item_id = g.item_id
+    	FULL OUTER JOIN image i ON i.member_id = m.member_id
+		WHERE c.member_id = #{memberId} AND INSTR(i.image_src, it.item_id || '-1') <![CDATA[>]]> 0
 	</select>
 	
 	<!-- 장바구니 상품 개수 조회 -->
@@ -65,7 +65,7 @@
 	</delete>
 	
 	<!-- 회원의 전체 장바구니 내역 삭제 -->
-	<delete id="deletCartByMarketId" parameterType="string">
+	<delete id="deletCartByMarketId">
 		DELETE FROM cart
 		WHERE member_id = #{memberId} 
 			AND goods_id IN (SELECT item_id FROM item JOIN market USING(market_id) WHERE market_id = #{market_id})
