@@ -255,12 +255,7 @@ textarea {
 	height: 50px;
 	background-color: white;
 	border: 1px solid #535353;
-}
-
-#writeReviewBtn:hover {
-	color: white;
-	background-color: #93c0b5;
-	border: 1px solid white;
+	cursor: pointer
 }
 
 select {

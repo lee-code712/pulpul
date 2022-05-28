@@ -34,20 +34,8 @@
       <div id="infoCover">
 		    <div class="swiper-container mySwiper">
 		      <div class="swiper-wrapper">
-		        <div class="swiper-slide">
-		          <img src="https://placeimg.com/596/398/any" />
-		        </div>
-		        <div class="swiper-slide">
-		          <img src="https://placeimg.com/596/398/animals" />
-		        </div>
-		        <div class="swiper-slide">
-		          <img src="https://placeimg.com/596/398/nature" />
-		        </div>
-		        <div class="swiper-slide">
-		          <img src="https://placeimg.com/596/398/people" />
-		        </div>
-		        <div class="swiper-slide">
-		          <img src="https://placeimg.com/596/398/tech" />
+		        <div class="swiper-slide" th:each="img : ${goods.item.imageUrlList}">
+		          <img th:src="${img}" />
 		        </div>
 		      </div>
 		      <div class="swiper-button-next"></div>
@@ -57,28 +45,26 @@
 
         <div id="info">
           <div id="tagWrap">
-            <div class="tag"># 태그</div>
-            <div class="tag"># 태그</div>
-            <div class="tag"># 태그</div>
+            <div th:each="tag : ${#strings.arraySplit(goods.tags, ',')}" th:text="|#${tag}|" class="tag"></div>
           </div>
 
-          <div id="itemName">### 식물</div>
+          <div id="itemName" th:text="${goods.item.name}"></div>
 
-          <div id="itemInfo">(식물 소개)</div>
+          <div id="itemInfo" th:text="${goods.item.description}"></div>
 
           <div id="priceWrap">
             <div id="priceTit">판매 가격</div>
-            <div id="price">8000원</div>
+            <div id="price" th:text="|${#numbers.formatInteger(goods.price, 0, 'COMMA')}원|"></div>
           </div>
 
           <div id="itemNumWrap">
             <div id="itemNumTit">수량</div>
-            <input type="text" placeholder="0" id="itemNumInput" />
+            <input type="number" min="1" placeholder="0" id="itemNumInput" name="quantity" th:onclick="totalPrice()"/>
           </div>
 
           <div id="itemSizeWrap">
             <div id="itemSizeTit">식물 크기</div>
-            <div id="itemSize">10, 20 (가로, 세로)</div>
+            <div id="itemSize" th:text="|${goods.size} (가로, 세로)|"></div>
           </div>
 
           <hr class="hr-dotted" />
@@ -88,36 +74,36 @@
 
             <div id="calWrap">
               <div id="itemPriceWrap">
-                <div id="itemPrice">8000</div>
+                <div id="itemPrice" th:text="|${#numbers.formatInteger(goods.price, 0, 'COMMA')}원|"></div>
                 <div id="itemPriceTit">(판매가격)</div>
               </div>
 
               <div id="mul">X</div>
 
               <div id="itemQuantityWrap">
-                <div id="itemQuantity">2</div>
+                <div id="itemQuantity"></div>
                 <div id="itemQuantityTit">(수량)</div>
               </div>
 
               <img src="/images/add.svg" />
 
               <div id="shippingWrap">
-                <div id="shipping">2500</div>
+                <div id="shipping" th:text="|${#numbers.formatInteger(goods.shippingFee, 0, 'COMMA')}원|"></div>
                 <div id="shippingTit">(배송비)</div>
               </div>
             </div>
 
-            <div id="totalPrice">10500원</div>
+            <div id="totalPrice">원</div>
           </div>
 
           <div id="btnWrap">
-            <button id="cartBtn">장바구니</button>
+            <button id="cartBtn" th:onclick="moveToCart([[${goods.item.id}]])">장바구니</button>
             <button id="cancelBtn" onclick="location.href='/lookup/goodsList'">취소</button>
           </div>
 
           <a href="/lookup/market/goodsList" id="marketLink">
             <img src="/images/smallShopIcon.svg" />
-            (작성자 이름) 마켓으로 이동하기
+            <span th:text="|${goods.item.market.name} 마켓으로 이동하기|"></span>
           </a>
         </div>
       </div>
@@ -126,7 +112,7 @@
         <div id="reviewTit">상품 리뷰</div>
         <div id="ratingTotalWrap">
           <img src="/images/star.svg" />
-          <div id="ratingTotal">5.0</div>
+          <div id="ratingTotal"></div>
         </div>
       </div>
 
@@ -154,7 +140,7 @@
         <hr class="hr-dotted" />
       </div>
       <form action="/review">
-      <div id="reviewBox">
+      <div id="reviewBox" th:if="${not #strings.isEmpty(orderId)}">
         <div id="reviewContent">
           <div id="reviewWrap">
             <img src="/images/reviewer.svg" />
@@ -174,7 +160,7 @@
               </div>
             </div>
           </div>
-          <textarea placeholder="리뷰를 작성해주세요."></textarea>
+          <textarea id="writeReview" maxlength="200" placeholder="리뷰를 작성해주세요. (최소 20자, 최대 200자입니다.)"></textarea>
           <div id="imgBox">
               <div class="imgTit">상품 사진</div>
 	          <input class="upload" type="file" id="fileWrap" accept=".jpg" multiple="multiple" name="file" style="display:none;">
@@ -183,7 +169,7 @@
           </div>
          </div>
         <div id="reviewBtnWrap">
-           <button type="submit" id="writeReviewBtn">리뷰 작성</button>
+           <button type="submit" id="writeReviewBtn" th:onclick="uploadReview([[${orderId}]],[[${goods.item.id}]])">리뷰 작성</button>
         </div>
         </div>
         </form>

@@ -15,6 +15,68 @@
   },
 });
 
+/* 경로 */
+ function encodeUri(uri){
+	const encoded = encodeURI(uri);
+	location.href = encoded;
+}
+ function uploadReview(orderId, itemId){
+	const uri = '/review?orderId=' + orderId + '&itemId=' + itemId;
+	encodeUri(uri);
+}
+
+/* 장바구니로 이동 */
+function moveToCart(itemId){
+	Swal.fire({
+			title: '상품이 등록되었습니다!',
+                    text: "장바구니로 이동하시겠습니까?",
+                    showCancelButton: true,
+                    confirmButtonColor: '#93c0b5',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '확인',
+                    cancelButtonText: '취소'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                       const uri = '/cart/addItem?itemId=' + itemId;
+					   encodeUri(uri);
+                    }else{
+						const uri ="/lookup/goodsDetail?itemId=" + itemId;
+						encodeUri(uri);
+					}
+                })
+}
+  
+/*Total Price*/
+function totalPrice(){
+	var quantity = document.querySelector("#itemNumInput").value;
+	var shippingFee = document.querySelector("#shipping").innerHTML.split("원")[0];
+	var price = document.querySelector("#itemPrice").innerHTML.split("원")[0];
+	
+	document.querySelector("#itemQuantity").innerHTML = quantity;
+	
+	var total = Number(price.replace(',',"")) * Number(quantity) + Number(shippingFee.replace(',',""));
+
+	document.querySelector("#totalPrice").innerHTML = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
+}
+
+/* ratingTotal */
+var ratings = document.querySelectorAll("#rating");
+var ratingTotal = document.querySelector("#ratingTotal");
+
+if(ratings == null || ratings.length == 0){
+	ratingTotal.innerHTML = "0.0";
+}else{
+	
+	var sum = 0;
+	var cnt = 0;
+	for(var i = 0; i < ratings.length; i++){
+		sum += Number(ratings[i].innerHTML);
+		cnt++;	
+	}
+	ratingTotal.innerHTML = sum / cnt;
+}
+
+/*사진 업로드*/
 const upload = document.querySelector('.upload');
 
 const uploadBox = document.querySelector('.upload-img-icon-box');
@@ -86,19 +148,21 @@ function deleteImg(event){
 		 
   }
 
-/* ratingTotal */
-var ratings = document.querySelectorAll("#rating");
-var ratingTotal = document.querySelector("#ratingTotal");
-
-if(ratings.length == 0){
-	ratingTotal.innerHTML = "0.0";
-}else{
-	
-	var sum = 0;
-	var cnt = 0;
-	for(var i = 0; i < ratings.length; i++){
-		sum += Number(ratings[i].innerHTML);
-		cnt++;	
-	}
-	ratingTotal.innerHTML = sum / cnt;
+/* 리뷰 글자 수 제한 */
+const btn = document.querySelector("#writeReviewBtn");
+if($('#writeReview').val() == ''){
+	btn.disabled = true;
 }
+$(document).ready(function() {
+    $('#writeReview').on('keyup', function() {    
+		if($(this).val().length < 20){	
+			btn.disabled = true;
+		}else{
+			btn.disabled = false;
+		}
+        if($(this).val().length > 200) {
+            $(this).val($(this).val().substring(0, 200));
+        }
+    });
+});
+
