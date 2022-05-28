@@ -19,6 +19,11 @@
   
 
 	<div layout:fragment="content">
+		<script th:inline="javascript">
+	  		console.log('shareThing 확인');
+	  		var shareThing = [[${shareThing}]];
+	  		console.log(shareThing);
+  		</script>
 		<div id="pageWrap"> 
 		<!--  
 			<th:block  th:if="${shareThing.isBorrowed} == 0">-->

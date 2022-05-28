@@ -86,8 +86,12 @@ public class LookupController {
 	 * 공유물품 상세정보 조회
 	 */
 	@GetMapping("/shareThingDetail")
-	public String shareThingDetail() {
+	public String shareThingDetail(@RequestParam("itemId") String itemId, Model model) {
 		//공유물품 상세 정보 조회 페이지
+		
+		ShareThing shareThing = itemSvc.getShareThing(itemId);
+		model.addAttribute("shareThing", shareThing);
+		
 		return "lookup/shareThingDetail";
 	}
 
