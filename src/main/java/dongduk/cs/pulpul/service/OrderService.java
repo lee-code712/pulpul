@@ -12,6 +12,9 @@ public interface OrderService {
 	// 장바구니 조회
 	Cart getCart(String memberId);
 	
+	// 회원의 장바구니 상품 수 조회
+	int getNumberOfCartItemByMember(String memberId);
+	
 	// 장바구니에 상품 추가
 	boolean addCartItem(String memberId, CartItem cartitem) throws AddCartException;
 	

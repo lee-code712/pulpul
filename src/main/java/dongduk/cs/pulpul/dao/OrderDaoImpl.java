@@ -22,6 +22,11 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	@Override
+	public int findNumberOfCartItemByMember(String memberId) {
+		return orderMapper.selectNumberOfCart(memberId);
+	}
+
+	@Override
 	public boolean createCartItem(Cart cart) {
 		int ck = orderMapper.insertCart(cart);
 		if (ck > 0) return true;

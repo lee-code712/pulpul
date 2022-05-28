@@ -10,6 +10,9 @@ public interface OrderDao {
 	// 회원 카트 조회
 	Cart findCartByMember(String memberId);
 	
+	// 회원 카트 상품 수 조회
+	int findNumberOfCartItemByMember(String memberId);
+	
 	// 카트 상품 생성
 	boolean createCartItem(Cart cart);
 	

@@ -121,6 +121,13 @@ public class MemberController {
 			HttpSession session = req.getSession();
 			session.setAttribute("id", member.getId());
 			
+			// 장바구니 상품 수 세션에 저장
+			if (member.getId() != null) {
+				int numberOfCartItem = orderService.getNumberOfCartItemByMember(member.getId());
+				session.setAttribute("cartItemCnt", numberOfCartItem);
+				System.out.println(numberOfCartItem);
+			}
+			
 			return "redirect:/home";
 		} catch (LoginException e) {
 			e.printStackTrace(); 

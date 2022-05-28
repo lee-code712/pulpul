@@ -28,6 +28,10 @@ public class OrderServiceImpl implements OrderService {
 	public Cart getCart(String memberId) {
 		return orderDao.findCartByMember(memberId);
 	}
+	
+	public int getNumberOfCartItemByMember(String memberId) {
+		return orderDao.findNumberOfCartItemByMember(memberId);
+	}
 
 	// 장바구니 목록 추가
 	public boolean addCartItem(String memberId, CartItem cartItem) throws AddCartException {

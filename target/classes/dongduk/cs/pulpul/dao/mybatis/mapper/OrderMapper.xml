@@ -45,6 +45,13 @@
 		WHERE c.member_id = #{memberId} AND INSTR(i.image_src, it.item_id + '_1') <![CDATA[>]]> 0
 	</select>
 	
+	<!-- 장바구니 상품 개수 조회 -->
+	<select id="selectNumberOfCart" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM cart c
+		WHERE member_id = #{memberId}
+	</select>
+	
 	<!-- 장바구니 내역 생성 -->
 	<insert id="insertCart">
 		INSERT INTO cart (member_id, goods_id, quantity, price)

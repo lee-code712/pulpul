@@ -15,6 +15,8 @@ public interface OrderMapper {
 	
 	Cart selectCartByMemberId(String memberId);
 	
+	int selectNumberOfCart(String memberId);
+	
 	int insertCart(Cart cart);
 	
 	int deleteOneCartByItemId(String itemId);
