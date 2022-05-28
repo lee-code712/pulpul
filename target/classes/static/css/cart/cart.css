@@ -117,3 +117,16 @@ td {
   border: 1px solid #eaeaea;
   cursor: pointer;
 }
+
+.noCartItem {
+	display:flex;
+	justify-content:center;
+	align-items: center;
+	min-height: 50vh;
+	flex-direction: column;
+}
+
+.noCartItemTit {
+	color: #6f6f6f;
+	margin-bottom: 8px;
+}

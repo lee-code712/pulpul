@@ -1,6 +1,21 @@
 /**
  * 
  */
+ /*경로 */
+ 
+ function encodeUri(uri){
+	const encoded = encodeURI(uri);
+	location.href = encoded;
+}
+ function deleteItem(itemId){
+	const uri = '/cart/deleteItem?itemId=' + itemId;
+	encodeUri(uri);
+}
+
+function deleteItemByMarket(marketId){
+	location.href='/cart/deleteItemByMarket?marketId=' + marketId;
+}
+
 var i = 0;
 $(".market-name").each(function(){
 

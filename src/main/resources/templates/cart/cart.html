@@ -20,8 +20,14 @@
 		<div id="pageWrap">
       <div id="pageTit">장바구니</div>
       <div id="pageSubTit">Shopping bag</div>
-      <div>
-      <div class="market-name">풀풀 마켓</div>
+      <div class="noCartItem" th:if="${#lists.isEmpty(cart)}">
+      <div class="noCartItemTit">장바구니에 상품을 추가해주세요!</div>
+       <div class="bottom-btn-wrap">
+      	<button class="continue-shopping" onclick="location.href='/lookup/goodsList'">쇼핑 하러가기</button>
+       </div>
+      </div>
+      <div th:unless="${#lists.isEmpty(cart)}" th:each="cartItem : ${cart.cartItemList}">
+      <div th:text="${cartItem.goods.item.market.name}" class="market-name"></div>
       <table>
         <tr>
           <th class="check-box"></th>
@@ -32,13 +38,13 @@
           <th class="btn-wrap"></th>
         </tr>
 
-        <tr th:each="cartItem : ${cartItemList}">
+        <tr>
           <td class="check-box"><input type="checkbox"/></td>
           <td class="item-info" th:text="${cartItem.goods.item.name}"></td>
-          <td class="item-num" th:text="${cartItem.quantity}"></td>
-          <td class="price" th:text="${cartItem.price}">2500원</td>
-          <td class="shipping" th:text="${cartItem.goods.shippingFee}">2000원</td>
-          <td class="btn-wrap"><button onclick="location.href='/cart/deleteItemByMarketclass'" class="cancel-btn">삭제</button></td>
+          <td class="item-num"  th:text="${cartItem.quantity}"></td>
+          <td class="price" th:text="${cartItem.price}"></td>
+          <td class="shipping" th:text="${cartItem.goods.shippingFee}"></td>
+          <td class="btn-wrap"><button class="cancel-btn" th:onclick="deleteItem([[${cartItem.goods.item.id}]])">삭제</button></td>
         </tr>
 
       </table>
@@ -51,7 +57,7 @@
       <div class="bottom-btn-wrap">
       	<button class="continue-shopping" onclick="location.href='/lookup/goodsList'">쇼핑 계속하기</button>
         <button class="check-item-order" onclick="location.href='/order/purchase'">선택 상품 주문</button>
-        <button class="all-item-delete">전체 항목 삭제</button>
+        <button class="all-item-delete" onclick="location.href='/cart/deleteItemByMarket?marketId=${cartItem.goods.item.market.id}'">전체 항목 삭제</button>
       </div>
       </div>
     </div>
