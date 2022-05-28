@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dongduk.cs.pulpul.dao.mybatis.mapper.ReviewMapper">
 
+	<!-- 리뷰 정보 조회 -->
 	<resultMap id="ReviewInfoMap" type="Review">
 		<id column="id" jdbcType="INTEGER" property="id" javaType="int" />
 		<result column="write_date" jdbcType="VARCHAR" property="writeDate" javaType="string" />
@@ -32,6 +33,7 @@
 	    WHERE r.item_id = #{itemId} AND INSTR(i.image_src, TO_CHAR(review_id)) <![CDATA[>]]> 0
 	</select>
 	
+	<!-- 리뷰할 주문id 1개 반환 -->
 	<select id="selectOrderIdByNotReview" parameterType="string" resultType="string">
     SELECT order_id
 		FROM orders
@@ -39,5 +41,20 @@
 		WHERE goods_id = #{itemId} AND buyer_id = #{memberId}
     	AND order_id NOT IN (SELECT order_id FROM review) AND ROWNUM <![CDATA[<=]]> 1
 	</select>
+	
+	<!-- 리뷰 생성 -->
+	<insert id="insertReview" parameterType="Review">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">SELECT review_seq.NEXTVAL FROM DUAL</selectKey>
+    INSERT INTO review (review_id, write_date, content, rating, order_id, item_id)
+    VALUES (#{id}, #{writeDate}, #{content}, #{rating}, #{order.id}, #{item.id})
+	</insert>
+	
+	<!-- 리뷰 이미지(들) 저장 -->
+	<insert id="insertReviewImages" parameterType="java.util.Map">
+    	<foreach collection="imageUrlList" item="imageUrl" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" >
+	    	INTO image (image_src, member_id, category_id)
+	    	VALUES (#{imageUrl}, #{memberId}, 'RIMG')
+		</foreach>
+	</insert>
 
 </mapper>
