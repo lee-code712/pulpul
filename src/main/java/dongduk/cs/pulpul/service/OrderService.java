@@ -22,7 +22,7 @@ public interface OrderService {
 	boolean deleteCartItem(String memberId, String itemId);
 	
 	// 장바구니에서 특정 마켓의 상품 목록 삭제
-	boolean deleteCartItemByMarket(String memberId, int marketId);
+	int deleteCartItemByMarket(String memberId, int marketId);
 	
 	// 회원 id로 주문 목록 조회
 	List<Order> getOrderListByMember(String memberId, String identity);

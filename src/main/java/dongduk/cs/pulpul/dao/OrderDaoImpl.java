@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import dongduk.cs.pulpul.dao.mybatis.mapper.OrderMapper;
 import dongduk.cs.pulpul.domain.Cart;
+import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Order;
 
 @Component
@@ -26,8 +27,8 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	@Override
-	public boolean createCartItem(Cart cart) {
-		int ck = orderMapper.insertCart(cart);
+	public boolean createCartItem(String memberId, CartItem cartItem) {
+		int ck = orderMapper.insertCart(memberId, cartItem);
 		if (ck > 0) return true;
 		return false;
 	}
@@ -40,10 +41,8 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	@Override
-	public boolean deleteCartItemByMarket(String memberId, int marketId) {
-		int ck = orderMapper.deleteCartByMarketId(memberId, marketId);
-		if (ck > 0) return true;
-		return false;
+	public int deleteCartItemByMarket(String memberId, int marketId) {
+		return orderMapper.deleteCartByMarketId(memberId, marketId);
 	}
 
 	@Override

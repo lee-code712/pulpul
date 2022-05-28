@@ -55,7 +55,7 @@
 	<!-- 장바구니 내역 생성 -->
 	<insert id="insertCart">
 		INSERT INTO cart (member_id, goods_id, quantity, price)
-		VALUES (#{memberId}, #{cartItemList[0].goods.item.id}, #{cartItemList[0].quantity}, #{cartItemList[0].price})
+		VALUES (#{memberId}, #{cartItem.goods.item.id}, #{cartItem.quantity}, #{cartItem.price})
 	</insert>
 	
 	<!-- 특정 장바구니 내역 삭제 -->

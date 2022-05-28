@@ -138,7 +138,7 @@
 	</select>
 	
 	<!-- 상품 id로 남은 수량 조회 -->
-	<select id="selectRemainQuantityByGoodsId" parameterType="string" resultType="int">
+	<select id="selectRemainQuantityByGoodsId" parameterType="string" resultType="string">
 		SELECT remain_quantity
 		FROM goods
 		WHERE item_id = #{item_id}

@@ -35,10 +35,10 @@ public class CartController {
 	public String addCartItem(CartItem cartItem, HttpSession session, RedirectAttributes rttr) {
 
 		String memberId = (String) session.getAttribute("id");
-		
+				
 		if(memberId == null) {
 			rttr.addFlashAttribute("isNotLogined", true);
-			return "redirect:/lookup/goodsDetail";
+			return "redirect:/lookup/goodsDetail?itemId=" + cartItem.getGoods().getItem().getId();
 		}
 		
 		try {
@@ -46,12 +46,16 @@ public class CartController {
 			if (!successed) {
 				rttr.addFlashAttribute("addFailed", true);
 			}
+			else {
+				int newCartItemCnt = (int) session.getAttribute("cartItemCnt") + 1;
+				session.setAttribute("cartItemCnt", newCartItemCnt);
+			}
 		} catch(AddCartException e) {
 			rttr.addFlashAttribute("addFailed", true);
 			rttr.addFlashAttribute("exception", e.getMessage());
 		}
 		
-		return "redirect:/lookup/goodsDetail";
+		return "redirect:/lookup/goodsDetail?itemId=" + cartItem.getGoods().getItem().getId();
 	}
 	
 	/*
@@ -89,6 +93,11 @@ public class CartController {
 		if (!successed) {
 			rttr.addFlashAttribute("deleteFailed", true);
 		}
+		else {
+			int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - 1;
+			session.setAttribute("cartItemCnt", newCartItemCnt);
+		}
+		
 		return "redirect:/cart/cartList";
 	}
 
@@ -104,9 +113,13 @@ public class CartController {
 			return "redirect:/home";
 		}
 		
-		boolean successed = orderSvc.deleteCartItemByMarket(memberId, marketId);
-		if (!successed) {
+		int deleteCnt = orderSvc.deleteCartItemByMarket(memberId, marketId);
+		if (deleteCnt <= 0) {
 			rttr.addFlashAttribute("deleteFailed", true);
+		}
+		else {
+			int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - deleteCnt;
+			session.setAttribute("cartItemCnt", newCartItemCnt);
 		}
 		return "redirect:/cart/cartList";
 	}

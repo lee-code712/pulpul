@@ -29,7 +29,7 @@ public class LookupController {
 		this.itemSvc = itemSvc;
 		this.reviewSvc = reviewSvc;
 	}
-	
+
 	/*
 	 * 식물 검색 
 	 */

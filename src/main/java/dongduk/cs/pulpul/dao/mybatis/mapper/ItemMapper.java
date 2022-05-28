@@ -25,7 +25,7 @@ public interface ItemMapper {
 	
 	Goods selectGoodsByItemId(String itemId);
 	
-	int selectRemainQuantityByGoodsId(String itemId);
+	String selectRemainQuantityByGoodsId(String itemId);
 	
 	int insertGoods(Goods goods);
 	

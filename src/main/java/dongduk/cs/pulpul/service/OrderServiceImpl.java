@@ -1,6 +1,5 @@
 package dongduk.cs.pulpul.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +46,7 @@ public class OrderServiceImpl implements OrderService {
 			throw new AddCartException("남은 상품보다 많은 수량을 선택했습니다. 수량을 다시 선택해주세요.");
 		}
 		
-		Cart cart = new Cart();
-		cart.setMemberId(memberId);
-		List<CartItem> cartItemList = new ArrayList<CartItem>();
-		cartItemList.add(cartItem);
-		return orderDao.createCartItem(cart);
+		return orderDao.createCartItem(memberId, cartItem);
 		
 	}
 
@@ -60,8 +55,8 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.deleteOneCartItem(memberId, itemId);
 	}
 
-	// 장바구니 특정 마켓의 상품 삭제
-	public boolean deleteCartItemByMarket(String memberId, int marketId) {
+	// 장바구니 특정 마켓의 상품 삭제(삭제 개수 반환)
+	public int deleteCartItemByMarket(String memberId, int marketId) {
 		return orderDao.deleteCartItemByMarket(memberId, marketId);
 	}
 

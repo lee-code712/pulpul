@@ -51,7 +51,10 @@ public class ItemDaoImpl implements ItemDao {
 	
 	@Override
 	public int findRemainQuantityByGoods(String itemId) {
-		return itemMapper.selectRemainQuantityByGoodsId(itemId);
+		String remainQuantity = itemMapper.selectRemainQuantityByGoodsId(itemId);
+		if (remainQuantity == null)
+			return 0;
+		return Integer.parseInt(remainQuantity);
 	}
 
 	@Override
