@@ -26,6 +26,9 @@ public interface ItemDao {
 	// 품목 id로 상품 목록 조회
 	Goods findGoodsByItem(String itemId);
 	
+	// 상품 id로 남은 수량 조회
+	int findRemainQuantityByGoods(String itemId);
+	
 	// 상품 생성
 	boolean createGoods(Goods goods);
 	

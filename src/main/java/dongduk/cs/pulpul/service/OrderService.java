@@ -3,7 +3,9 @@ package dongduk.cs.pulpul.service;
 import java.util.List;
 
 import dongduk.cs.pulpul.domain.Cart;
+import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Order;
+import dongduk.cs.pulpul.service.exception.AddCartException;
 
 public interface OrderService {
 	
@@ -11,7 +13,7 @@ public interface OrderService {
 	Cart getCart(String memberId);
 	
 	// 장바구니에 상품 추가
-	boolean addCartItem(Cart cart);
+	boolean addCartItem(String memberId, CartItem cartitem) throws AddCartException;
 	
 	// 장바구니에서 상품 삭제
 	boolean deleteCartItem(String memberId, String itemId);

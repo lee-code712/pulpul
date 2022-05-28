@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import dongduk.cs.pulpul.domain.Cart;
+import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Order;
 
 @Mapper

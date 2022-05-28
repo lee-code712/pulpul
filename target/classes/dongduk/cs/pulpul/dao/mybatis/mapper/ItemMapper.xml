@@ -125,7 +125,7 @@
 		</association>
 	</resultMap>
 	
-	<select id="selectGoodsByItem" parameterType="string" resultMap="GoodsInfoMap">
+	<select id="selectGoodsByItemId" parameterType="string" resultMap="GoodsInfoMap">
 		SELECT item_id, it.name AS item_name, it.upload_date, it.description, it.open_status, market_id,
 			m.name AS market_name,
 			g.tags, g.price, g.goods_size, g.sales_quantity, g.remain_quantity, g.shipping_fee,
@@ -135,6 +135,13 @@
 			FULL OUTER JOIN market m USING (market_id)
 			FULL OUTER JOIN image i USING (member_id)
 		WHERE item_id = #{item_id} AND INSTR(i.image_src, item_id) <![CDATA[>]]> 0
+	</select>
+	
+	<!-- 상품 id로 남은 수량 조회 -->
+	<select id="selectRemainQuantityByGoodsId" parameterType="string" resultType="int">
+		SELECT remain_quantity
+		FROM goods
+		WHERE item_id = #{item_id}
 	</select>
 	
 	<!-- 상품 생성 --> 

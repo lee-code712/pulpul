@@ -46,7 +46,7 @@
 	</select>
 	
 	<!-- 장바구니 내역 생성 -->
-	<insert id="insertCart">		
+	<insert id="insertCart">
 		INSERT INTO cart (member_id, goods_id, quantity, price)
 		VALUES (#{memberId}, #{cartItemList[0].goods.item.id}, #{cartItemList[0].quantity}, #{cartItemList[0].price})
 	</insert>

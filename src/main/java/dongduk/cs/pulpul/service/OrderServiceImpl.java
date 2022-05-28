@@ -1,5 +1,6 @@
 package dongduk.cs.pulpul.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import dongduk.cs.pulpul.dao.OrderDao;
 import dongduk.cs.pulpul.domain.Cart;
 import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Order;
+import dongduk.cs.pulpul.service.exception.AddCartException;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -28,8 +30,25 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	// 장바구니 목록 추가
-	public boolean addCartItem(Cart cart) {
+	public boolean addCartItem(String memberId, CartItem cartItem) throws AddCartException {
+		
+		// 장바구니에 넣기 전 남은 수량 한번 더 확인
+		int remainQuantity = itemDao.findRemainQuantityByGoods(cartItem.getGoods().getItem().getId());
+		if (remainQuantity == 0) {
+			System.out.println("남은 수량 없음");
+			throw new AddCartException("남은 상품이 모두 팔렸습니다.");
+		}
+		else if (cartItem.getQuantity() > remainQuantity) {
+			System.out.println("남은 수량 초과");
+			throw new AddCartException("남은 상품보다 많은 수량을 선택했습니다. 수량을 다시 선택해주세요.");
+		}
+		
+		Cart cart = new Cart();
+		cart.setMemberId(memberId);
+		List<CartItem> cartItemList = new ArrayList<CartItem>();
+		cartItemList.add(cartItem);
 		return orderDao.createCartItem(cart);
+		
 	}
 
 	// 장바구니 특정 상품 삭제

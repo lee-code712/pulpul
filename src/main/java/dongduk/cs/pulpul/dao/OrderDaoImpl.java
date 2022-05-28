@@ -23,7 +23,8 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public boolean createCartItem(Cart cart) {
-		// TODO Auto-generated method stub
+		int ck = orderMapper.insertCart(cart);
+		if (ck > 0) return true;
 		return false;
 	}
 

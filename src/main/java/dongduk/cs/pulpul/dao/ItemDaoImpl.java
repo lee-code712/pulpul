@@ -46,7 +46,12 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public Goods findGoodsByItem(String itemId) {
-		return itemMapper.selectGoodsByItem(itemId);
+		return itemMapper.selectGoodsByItemId(itemId);
+	}
+	
+	@Override
+	public int findRemainQuantityByGoods(String itemId) {
+		return itemMapper.selectRemainQuantityByGoodsId(itemId);
 	}
 
 	@Override

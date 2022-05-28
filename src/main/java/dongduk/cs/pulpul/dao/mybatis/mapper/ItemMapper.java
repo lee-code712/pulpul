@@ -23,7 +23,9 @@ public interface ItemMapper {
 	
 	List<Goods> selectGoodsByKeyword(String keyword);
 	
-	Goods selectGoodsByItem(String itemId);
+	Goods selectGoodsByItemId(String itemId);
+	
+	int selectRemainQuantityByGoodsId(String itemId);
 	
 	int insertGoods(Goods goods);
 	
