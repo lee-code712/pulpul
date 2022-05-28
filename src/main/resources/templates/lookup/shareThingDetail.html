@@ -16,7 +16,6 @@
   	<script th:src="@{/js/swiper-bundle.min.js}" defer></script>
   	<script th:src="@{/js/lookup/shareThingDetail.js}" defer></script>
   </th:block>
-  
 
 	<div layout:fragment="content">
 		<script th:inline="javascript">
@@ -68,7 +67,7 @@
 	
 	            <tr>
 	              <td>대여 시 유의사항</td>
-	              <td><th:block th:text="${shareThing.item.description}"></th:block></td>
+	              <td class="precaution-wrap"><th:block th:text="${shareThing.precaution}"></th:block></td>
 	            </tr>
 	
 	            <tr>
@@ -138,7 +137,7 @@
 	
 	            <tr>
 	              <td>대여 시 유의사항</td>
-	              <td><th:block th:text="${shareThing.item.description}"></th:block></td>
+	              <td class="precaution-wrap"><th:block th:text="${shareThing.precaution}"></th:block></td>
 	            </tr>
 	
 	            <tr>

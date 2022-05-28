@@ -67,6 +67,10 @@
   color: white;
 }
 
+.precaution-wrap {
+ 	padding-top: 18px;
+ 	width: 400px;
+}
 
 td {
   width: 200px;
