@@ -25,8 +25,7 @@
 	  		console.log(shareThing);
   		</script>
 		<div id="pageWrap"> 
-		<!--  
-			<th:block  th:if="${shareThing.isBorrowed} == 0">-->
+			<th:block  th:if="${shareThing.isBorrowed} == 0">
 	      <div id="infoCover">
 	        <div class="swiper-container mySwiper">
 			      <div class="swiper-wrapper">
@@ -54,12 +53,12 @@
 	        <div id="info">
 	          <div class="waitingWrap">
 	            <img src="/images/waiting.svg" />
-	            <div class="waiting">2</div>
+	            <div class="waiting" th:text="${shareThing.reservationNumber}"></div>
 	          </div>
 	
-	          <div id="itemName">### 관리용품</div>
+	          <div id="itemName" th:text=${shareThing.item.name}></div>
 	
-	          <div id="itemInfo">(관리용품 소개)</div>
+	          <div id="itemInfo" th:text=${shareThing.item.description}></div>
 	
 	          <table>
 	            <tr>
@@ -69,7 +68,7 @@
 	
 	            <tr>
 	              <td>대여 시 유의사항</td>
-	              <td>(대여 시 유의사항)</td>
+	              <td><th:block th:text="${shareThing.item.description}"></th:block></td>
 	            </tr>
 	
 	            <tr>
@@ -90,13 +89,13 @@
 	
 	          <a href="/lookup/market/shareThingList" id="marketLink">
 	            <img src="../images/smallShopIcon.svg" />
-	            (작성자 이름) 마켓으로 이동하기
+	            해당 상품의 마켓으로 이동하기
 	          </a>
 	        </div>
 	      </div>
-      <!-- </th:block>
+      </th:block>
       
-      <th:block  th:if="${shareThing.isBorrowed} == 1"> -->
+      <th:block  th:if="${shareThing.isBorrowed} == 1">
 	      <div id="infoCover">
 	        <div class="swiper-container mySwiper">
 			      <div class="swiper-wrapper">
@@ -124,12 +123,12 @@
 	        <div id="info">
 	          <div class="waitingWrap">
 	            <img src="/images/waiting.svg" />
-	            <div class="waiting">2</div>
+	            <div class="waiting" th:text="${shareThing.reservationNumber}"></div>
 	          </div>
 	
-	          <div id="itemName">### 관리용품</div>
+	          <div id="itemName"  th:text=${shareThing.item.name}></div>
 	
-	          <div id="itemInfo">(관리용품 소개)</div>
+	          <div id="itemInfo" th:text=${shareThing.item.description}></div>
 	
 	          <table>
 	            <tr>
@@ -139,7 +138,7 @@
 	
 	            <tr>
 	              <td>대여 시 유의사항</td>
-	              <td>(대여 시 유의사항)</td>
+	              <td><th:block th:text="${shareThing.item.description}"></th:block></td>
 	            </tr>
 	
 	            <tr>
@@ -155,11 +154,11 @@
 	
 	          <a href="/lookup/market/shareThingList" id="marketLink">
 	            <img src="/images/smallShopIcon.svg" />
-	            (작성자 이름) 마켓으로 이동하기
+	            해당 상품의 마켓으로 이동하기
 	          </a>
 	        </div>
 	      </div>
-    <!--   </th:block>  -->
+    </th:block>
     </div>
 	</div>
 </html>
