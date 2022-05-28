@@ -47,21 +47,22 @@
           <div id="tagWrap">
             <div th:each="tag : ${#strings.arraySplit(goods.tags, ',')}" th:text="|#${tag}|" class="tag"></div>
           </div>
-
-          <div id="itemName" th:text="${goods.item.name}"></div>
+          <div id="itemName" th:text="${goods.item.name}">
+          </div>
 
           <div id="itemInfo" th:text="${goods.item.description}"></div>
-
+          <form method="post">
           <div id="priceWrap">
             <div id="priceTit">판매 가격</div>
             <div id="price" th:text="|${#numbers.formatInteger(goods.price, 0, 'COMMA')}원|"></div>
+            <input type="hidden" th:field="${goods.item.id}">
+            <input type="hidden" id="inputTotal" name="total" value="">
           </div>
 
           <div id="itemNumWrap">
             <div id="itemNumTit">수량</div>
             <input type="number" min="1" placeholder="0" id="itemNumInput" name="quantity" th:onclick="totalPrice()"/>
           </div>
-
           <div id="itemSizeWrap">
             <div id="itemSizeTit">식물 크기</div>
             <div id="itemSize" th:text="|${goods.size} (가로, 세로)|"></div>
@@ -95,12 +96,26 @@
 
             <div id="totalPrice">원</div>
           </div>
-
           <div id="btnWrap">
-            <button id="cartBtn" th:onclick="moveToCart([[${goods.item.id}]])">장바구니</button>
-            <button id="cancelBtn" onclick="location.href='/lookup/goodsList'">취소</button>
+            <button id="cartBtn" onclick="javascript: form.action='/cart/addItem';">장바구니</button>
+            <script th:inline="javascript">
+		    	  var failed = [[${addFailed}]];
+				  		if(failed == true){
+				  			Swal.fire({
+				  			  text: [[${exception}]],
+				  			  icon: "error",
+				  			  confirmButtonColor: '#93c0b5',
+				  			  confirmButtonText: '확인',
+				  			}).then((result) => {
+							  if (result.isConfirmed) {
+								  window.location.href = "/lookup/goodsDetail?=" + ${goods.item.id};
+							  }
+						  	});
+				  		}  	
+				  </script>
+            <button id="cancelBtn" type="button" th:onclick="cancel([[${goods.item.id}]])">취소</button>
           </div>
-
+		</form>
           <a href="/lookup/market/goodsList" id="marketLink">
             <img src="/images/smallShopIcon.svg" />
             <span th:text="|${goods.item.market.name} 마켓으로 이동하기|"></span>

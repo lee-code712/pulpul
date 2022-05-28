@@ -25,9 +25,11 @@
 	encodeUri(uri);
 }
 
-/* 장바구니로 이동 */
-function moveToCart(itemId){
-	Swal.fire({
+function cancel(itemId){
+	const uri = '/lookup/goodsDetail?itemId=' + itemId;
+	encodeUri(uri);
+}
+/*Swal.fire({
 			title: '상품이 등록되었습니다!',
                     text: "장바구니로 이동하시겠습니까?",
                     showCancelButton: true,
@@ -37,15 +39,13 @@ function moveToCart(itemId){
                     cancelButtonText: '취소'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                       const uri = '/cart/addItem?itemId=' + itemId;
-					   encodeUri(uri);
+                       window.location.href="/cart/addItem";
                     }else{
 						const uri ="/lookup/goodsDetail?itemId=" + itemId;
 						encodeUri(uri);
 					}
-                })
-}
-  
+                })*/
+
 /*Total Price*/
 function totalPrice(){
 	var quantity = document.querySelector("#itemNumInput").value;
@@ -55,7 +55,7 @@ function totalPrice(){
 	document.querySelector("#itemQuantity").innerHTML = quantity;
 	
 	var total = Number(price.replace(',',"")) * Number(quantity) + Number(shippingFee.replace(',',""));
-
+	$("#inputTotal").val(total);
 	document.querySelector("#totalPrice").innerHTML = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
 }
 
