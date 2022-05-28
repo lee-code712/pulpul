@@ -161,25 +161,19 @@ public class MemberController {
 		 */
 		HttpSession session = req.getSession();
 		String id = (String) session.getAttribute("id");
-		Member memberInfo = memberService.getMember(id);
-		if (member != null && memberInfo != null) {
+		if (member != null) {
 			member.setId(id);
-			member.setPassword(memberInfo.getPassword());
-			member.setEmail(memberInfo.getEmail());
 			model.addAttribute("member", member);
 			changeMemberInfoValidator.validate(member, result);
 			if(result.hasErrors()) {
-				System.out.println("Validation Failed");
 				return "member/myInfoForm";
 			}
 			else {
-				boolean success = memberService.changeMemberInfo(memberInfo);
+				boolean success = memberService.changeMemberInfo(member);
 				if (!success) {
-					System.out.println("Update Failed");
 					return "member/myInfoForm";
 				}
 				else {
-					System.out.println("Success");
 					return "redirect:/member/view";
 				}
 			}

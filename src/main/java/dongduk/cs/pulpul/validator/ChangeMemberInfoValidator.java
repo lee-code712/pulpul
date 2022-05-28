@@ -1,5 +1,8 @@
 package dongduk.cs.pulpul.validator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -12,16 +15,34 @@ public class ChangeMemberInfoValidator implements Validator {
 	public boolean supports(Class<?> clazz) {
 		return Member.class.isAssignableFrom(clazz);
 	}
+	
+	private static final String emailRegExp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	private Pattern pattern;
+
+	public ChangeMemberInfoValidator() {
+		pattern = Pattern.compile(emailRegExp);
+	}
 
 	public void validate(Object obj, Errors errors) {
 		Member member = (Member) obj;
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordCheck", "required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birth", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phone", "required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zip", "required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address", "required");
 
+		Matcher matcher = pattern.matcher(member.getEmail());
+		if (!matcher.matches()) {
+			errors.rejectValue("email", "badPattern");
+		}
+		if (!member.getPassword().equals(member.getPasswordCheck())) {
+			errors.rejectValue("passwordCheck", "noMatch");
+		}
 		String birth = member.getBirth();
 		if (birth.length() != 8 || !isStringInt(birth)) {
 			errors.rejectValue("birth", "badPattern");
