@@ -95,7 +95,9 @@ public class BorrowDaoImpl implements BorrowDao {
 	@Override
 	public boolean createBorrow(Borrow borrow) {
 		// TODO Auto-generated method stub
-		return false;
+		int ck = borrowMapper.insertBorrow(borrow);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override

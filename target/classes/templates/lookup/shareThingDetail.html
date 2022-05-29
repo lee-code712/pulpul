@@ -23,6 +23,8 @@
 	  		var shareThing = [[${shareThing}]];
 	  		console.log(shareThing);
   		</script>
+  		<form action="/borrow/borrow" method="post" th:object="${shareThing}">
+ 
 		<div id="pageWrap"> 
 			<th:block  th:if="${shareThing.isBorrowed} == 0">
 	      <div id="infoCover">
@@ -54,7 +56,7 @@
 	            <img src="/images/waiting.svg" />
 	            <div class="waiting" th:text="${shareThing.reservationNumber}"></div>
 	          </div>
-	
+			  <input type="hidden" name="shareThing.item.id" th:value=${shareThing.item.id}/>
 	          <div id="itemName" th:text=${shareThing.item.name}></div>
 	
 	          <div id="itemInfo" th:text=${shareThing.item.description}></div>
@@ -77,12 +79,12 @@
 	
 	            <tr>
 	              <td>대여 기간</td>
-	              <td><input type="text" placeholder="0" id="shipping" /> 일</td>
+	              <td><input type="text" placeholder="1" id="shipping" name="date"/> 일</td>
+	              <td><div class="invalid-feedback" th:errors="*"> </div></td>
 	            </tr>
 	          </table>
-	
 	          <div id="btnWrap">
-	            <button id="rentalBtn">대여하기</button>
+	            <button id="rentalBtn" type="submit">대여하기</button>
 	            <button id="cancelBtn" onclick="location.href='/lookup/shareThingList'">취소</button>
 	          </div>
 	
@@ -151,13 +153,14 @@
 	            <button id="cancelBtn">취소</button>
 	          </div>
 	
-	          <a href="/lookup/market/shareThingList" id="marketLink">
-	            <img src="/images/smallShopIcon.svg" />
-	            해당 상품의 마켓으로 이동하기
+	          <a th:href="@{/lookup/market(marketId=${shareThing.item.market.id})}" id="marketLink">
+            	<img src="/images/smallShopIcon.svg" />
+            	<span th:text="|${shareThing.item.market.name} 마켓으로 이동하기|"></span>
 	          </a>
 	        </div>
 	      </div>
     </th:block>
     </div>
+    </form>
 	</div>
 </html>

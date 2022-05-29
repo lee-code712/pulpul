@@ -10,6 +10,7 @@ public class Borrow {
 	private ShareThing shareThing; /*물품 정보*/
 	private String borrowDate; /*대여일*/
 	private String returnDate; /*반납일*/
+	private String date; /*대여일수*/
 	private String trackingNumber; /*운송장 번호*/
 	private String borrowStatus; /*대여 상태*/
 	private int isExtended; /*대여기한 연장 여부*/
