@@ -86,9 +86,9 @@
 	            <button id="cancelBtn" onclick="location.href='/lookup/shareThingList'">취소</button>
 	          </div>
 	
-	          <a href="/lookup/market/shareThingList" id="marketLink">
-	            <img src="../images/smallShopIcon.svg" />
-	            해당 상품의 마켓으로 이동하기
+	          <a th:href="@{/lookup/market(marketId=${shareThing.item.market.id})}" id="marketLink">
+            	<img src="/images/smallShopIcon.svg" />
+            	<span th:text="|${shareThing.item.market.name} 마켓으로 이동하기|"></span>
 	          </a>
 	        </div>
 	      </div>
