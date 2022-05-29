@@ -65,10 +65,10 @@
 	</delete>
 	
 	<!-- 회원의 전체 장바구니 내역 삭제 -->
-	<delete id="deletCartByMarketId">
+	<delete id="deleteCartByMarketId">
 		DELETE FROM cart
 		WHERE member_id = #{memberId} 
-			AND goods_id IN (SELECT item_id FROM item JOIN market USING(market_id) WHERE market_id = #{market_id})
+			AND goods_id IN (SELECT item_id FROM item JOIN market USING(market_id) WHERE market_id = #{marketId})
 	</delete>
 	
 	
