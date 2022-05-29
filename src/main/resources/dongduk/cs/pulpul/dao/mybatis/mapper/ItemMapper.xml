@@ -70,7 +70,7 @@
 			JOIN market m USING (market_id)
 			JOIN goods g USING (item_id)
 			JOIN image i USING (member_id)
-		WHERE market_id = #{marketID} AND INSTR(i.image_src, item_id || '-1') <![CDATA[>]]> 0
+		WHERE it.open_status = 1 AND market_id = #{marketId} AND INSTR(i.image_src, item_id || '-1') <![CDATA[>]]> 0
 		ORDER BY dbms_random.value
 	</select>
 	
@@ -237,7 +237,7 @@
 			JOIN market m USING (market_id)
 			JOIN share_thing s USING (item_id)
 			JOIN image i USING (member_id)
-		WHERE market_id = #{marketId} AND INSTR(i.image_src, item_id || '-1') <![CDATA[>]]> 0
+		WHERE it.open_status = 1 AND market_id = #{marketId} AND INSTR(i.image_src, item_id || '-1') <![CDATA[>]]> 0
 	</select>
 	
 	<!-- 공유물품 상세정보 조회 -->
