@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import dongduk.cs.pulpul.domain.Borrow;
 import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.domain.Market;
 import dongduk.cs.pulpul.domain.Review;
@@ -99,7 +100,9 @@ public class LookupController {
 		//공유물품 상세 정보 조회 페이지
 		
 		ShareThing shareThing = itemSvc.getShareThing(itemId);
-		model.addAttribute("shareThing", shareThing);
+		Borrow borrow = new Borrow();
+		borrow.setShareThing(shareThing);
+		model.addAttribute("borrow", borrow);
 		
 		return "lookup/shareThingDetail";
 	}

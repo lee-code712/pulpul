@@ -19,14 +19,14 @@
 
 	<div layout:fragment="content">
 		<script th:inline="javascript">
-	  		console.log('shareThing 확인');
-	  		var shareThing = [[${shareThing}]];
-	  		console.log(shareThing);
+	  		console.log('borrow 확인');
+	  		var borrow = [[${borrow}]];
+	  		console.log(borrow);
   		</script>
-  		<form action="/borrow/borrow" method="post" th:object="${shareThing}">
+  		<form action="/borrow/borrow" method="post" th:object="${borrow}">
  
 		<div id="pageWrap"> 
-			<th:block  th:if="${shareThing.isBorrowed} == 0">
+			<th:block  th:if="${borrow.shareThing.isBorrowed} == 0">
 	      <div id="infoCover">
 	        <div class="swiper-container mySwiper">
 			      <div class="swiper-wrapper">
@@ -54,12 +54,12 @@
 	        <div id="info">
 	          <div class="waitingWrap">
 	            <img src="/images/waiting.svg" />
-	            <div class="waiting" th:text="${shareThing.reservationNumber}"></div>
+	            <div class="waiting" th:text="${borrow.shareThing.reservationNumber}"></div>
 	          </div>
-			  <input type="hidden" name="shareThing.item.id" th:value=${shareThing.item.id}/>
-	          <div id="itemName" th:text=${shareThing.item.name}></div>
+			  <input type="hidden" name="shareThing.item.id" th:value="${borrow.shareThing.item.id}"/>
+	          <div id="itemName" th:text=${borrow.shareThing.item.name}></div>
 	
-	          <div id="itemInfo" th:text=${shareThing.item.description}></div>
+	          <div id="itemInfo" th:text=${borrow.shareThing.item.description}></div>
 	
 	          <table>
 	            <tr>
@@ -69,7 +69,7 @@
 	
 	            <tr>
 	              <td>대여 시 유의사항</td>
-	              <td class="precaution-wrap"><th:block th:text="${shareThing.precaution}"></th:block></td>
+	              <td class="precaution-wrap"><th:block th:text="${borrow.shareThing.precaution}"></th:block></td>
 	            </tr>
 	
 	            <tr>
@@ -83,20 +83,21 @@
 	              <td><div class="invalid-feedback" th:errors="*"> </div></td>
 	            </tr>
 	          </table>
+	          <input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
 	          <div id="btnWrap">
 	            <button id="rentalBtn" type="submit">대여하기</button>
 	            <button id="cancelBtn" onclick="location.href='/lookup/shareThingList'">취소</button>
 	          </div>
 	
-	          <a th:href="@{/lookup/market(marketId=${shareThing.item.market.id})}" id="marketLink">
+	          <a th:href="@{/lookup/market(marketId=${borrow.shareThing.item.market.id})}" id="marketLink">
             	<img src="/images/smallShopIcon.svg" />
-            	<span th:text="|${shareThing.item.market.name} 마켓으로 이동하기|"></span>
+            	<span th:text="|${borrow.shareThing.item.market.name} 마켓으로 이동하기|"></span>
 	          </a>
 	        </div>
 	      </div>
       </th:block>
       
-      <th:block  th:if="${shareThing.isBorrowed} == 1">
+      <th:block  th:if="${borrow.shareThing.isBorrowed} == 1">
 	      <div id="infoCover">
 	        <div class="swiper-container mySwiper">
 			      <div class="swiper-wrapper">
@@ -124,12 +125,12 @@
 	        <div id="info">
 	          <div class="waitingWrap">
 	            <img src="/images/waiting.svg" />
-	            <div class="waiting" th:text="${shareThing.reservationNumber}"></div>
+	            <div class="waiting" th:text="${borrow.shareThing.reservationNumber}"></div>
 	          </div>
+				<input type="hidden" name="shareThing.item.id" th:value="${borrow.shareThing.item.id}"/>
+	          <div id="itemName"  th:text=${borrow.shareThing.item.name}></div>
 	
-	          <div id="itemName"  th:text=${shareThing.item.name}></div>
-	
-	          <div id="itemInfo" th:text=${shareThing.item.description}></div>
+	          <div id="itemInfo" th:text=${borrow.shareThing.item.description}></div>
 	
 	          <table>
 	            <tr>
@@ -139,7 +140,7 @@
 	
 	            <tr>
 	              <td>대여 시 유의사항</td>
-	              <td class="precaution-wrap"><th:block th:text="${shareThing.precaution}"></th:block></td>
+	              <td class="precaution-wrap"><th:block th:text="${borrow.shareThing.precaution}"></th:block></td>
 	            </tr>
 	
 	            <tr>
@@ -147,15 +148,15 @@
 	              <td>(배송비)</td>
 	            </tr>
 	          </table>
-	
+			<input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
 	          <div id="btnWrap">
 	            <button id="rezBtn">예약하기</button>
 	            <button id="cancelBtn">취소</button>
 	          </div>
 	
-	          <a th:href="@{/lookup/market(marketId=${shareThing.item.market.id})}" id="marketLink">
+	          <a th:href="@{/lookup/market(marketId=${borrow.shareThing.item.market.id})}" id="marketLink">
             	<img src="/images/smallShopIcon.svg" />
-            	<span th:text="|${shareThing.item.market.name} 마켓으로 이동하기|"></span>
+            	<span th:text="|${borrow.shareThing.item.market.name} 마켓으로 이동하기|"></span>
 	          </a>
 	        </div>
 	      </div>

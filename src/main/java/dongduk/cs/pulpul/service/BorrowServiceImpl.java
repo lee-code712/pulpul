@@ -95,7 +95,12 @@ public class BorrowServiceImpl implements BorrowService {
 
 	// 대여 생성
 	public boolean borrow(Borrow borrow) {
-		return borrowDao.createBorrow(borrow);
+		boolean success = borrowDao.createBorrow(borrow);
+		
+		if (success) {
+			return borrowDao.changeIsBorrowed(borrow.getShareThing());
+		}
+		return false;
 	}
 	
 	// 특정 대여내역에 운송장번호 입력

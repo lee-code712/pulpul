@@ -4,6 +4,7 @@ import java.util.List;
 
 import dongduk.cs.pulpul.domain.Alert;
 import dongduk.cs.pulpul.domain.Borrow;
+import dongduk.cs.pulpul.domain.ShareThing;
 
 public interface BorrowDao {
 	
@@ -48,6 +49,9 @@ public interface BorrowDao {
 	
 	// 대여 생성
 	boolean createBorrow(Borrow borrow);
+	
+	// 공유물품 대여 상태 변경
+	boolean changeIsBorrowed(ShareThing shareThing);
 	
 	// 대여 운송장 번호 입력
 	boolean changeTrackingNumber(Borrow borrow);

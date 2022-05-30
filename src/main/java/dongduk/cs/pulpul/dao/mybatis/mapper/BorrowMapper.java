@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import dongduk.cs.pulpul.domain.Alert;
 import dongduk.cs.pulpul.domain.Borrow;
+import dongduk.cs.pulpul.domain.ShareThing;
 
 @Mapper
 public interface BorrowMapper {
@@ -45,5 +46,7 @@ public interface BorrowMapper {
 			@Param("borrowStatus") int borrowStatus);
 	
 	int updateReturnDate(Borrow borrow);
+
+	int updateIsBorrowed(ShareThing shareThing);
 
 }

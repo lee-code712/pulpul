@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import dongduk.cs.pulpul.dao.mybatis.mapper.BorrowMapper;
 import dongduk.cs.pulpul.domain.Alert;
 import dongduk.cs.pulpul.domain.Borrow;
+import dongduk.cs.pulpul.domain.ShareThing;
 
 @Component
 public class BorrowDaoImpl implements BorrowDao {
@@ -116,6 +117,13 @@ public class BorrowDaoImpl implements BorrowDao {
 	public boolean changeReturnDate(Borrow borrow) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean changeIsBorrowed(ShareThing shareThing) {
+		int ck = borrowMapper.updateIsBorrowed(shareThing);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	

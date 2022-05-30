@@ -147,15 +147,15 @@
 	
 	<!-- 대여 생성 -->
 	<insert id="insertBorrow" parameterType="Borrow">
-    	INSERT INTO borrow (borrow_id, borrow_date, return_date, tracking_number, borrow_status, is_extended, lender_id, borrower_id, share_thing_id)
-    	VALUES (borrow_seq.NEXTVAL, TO_DATE(#{borrowDate}, 'YYYYMMDD'), TO_DATE(#{returnDate}, 'YYYYMMDD'), #{trackingNumber}, #{borrowStatus}, #{isExtended}, #{lender.id}, #{borrower.id}, #{shareThing.item.id})	
+    	INSERT INTO borrow (borrow_id, borrow_date, return_date, lender_id, borrower_id, share_thing_id)
+    	VALUES (borrow_seq.NEXTVAL, TO_DATE(#{borrowDate}, 'YYYYMMDD'), TO_DATE(#{returnDate}, 'YYYYMMDD'), #{lender.id}, #{borrower.id}, #{shareThing.item.id})	
 	</insert>
 	
 	<!-- 공유 물품 대여 여부 변경 -->
 	<update id="updateIsBorrowed" parameterType="ShareThing">
 		UPDATE share_thing
 		SET is_borrowed = #{isBorrowed}
-		WHERE share_thing_id = #{item.id}
+		WHERE item_id = #{item.id}
 	</update>
 	
 	<!-- 공유 물품 반납 -->
