@@ -26,7 +26,8 @@
       	<button class="continue-shopping" onclick="location.href='/lookup/goodsList'">쇼핑 하러가기</button>
        </div>
       </div>
-
+      
+      
       <div th:each="cartItem : ${cart?.cartItemList}">
       <div th:text="${cartItem.goods.item.market.name}" class="market-name"></div>
       <table>
@@ -38,8 +39,8 @@
           <th class="shipping">배송비</th>
           <th class="btn-wrap"></th>
         </tr>
-
-        <tr>
+        
+        <tr class="cartItem-wrap">
           <td class="check-box"><input type="checkbox"/></td>
           <td class="item-info" th:text="${cartItem.goods.item.name}"></td>
           <td class="item-num"  th:text="${cartItem.quantity}"></td>

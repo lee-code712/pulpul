@@ -16,17 +16,46 @@ function deleteItemByMarket(marketId){
 	location.href='/cart/deleteItemByMarket?marketId=' + marketId;
 }
 
-$(".market-name").each(function(){
+/* 
+페이지 첫 로드할 때 div와 table, checkbox에 class명 추가
+체크할 때마다 가격 보여주기 위해 필요한 함수
+ */
+cartCheck();
 
-	var checkOfMarket = $(this).parent().find("input[type=checkbox]");
-	checkOfMarket.attr('class', 'check' + i); //해당 마켓의 상품들의 checkbox에 class명 추가
-	var tableName = $(this).parent().find("table");
-	tableName.attr('class', 'marketTable' + i); //해당 마켓에 class명 추가
-	var divName = $(this).parent();
-	divName.attr('class', 'marketDiv_' + i); //마켓이 포함된 div에 class명 추가
+function cartCheck(){
 	
+	var i = 0;
+	
+	$(".market-name").each(function(){
+
+	var checkOfCartItem = $(this).parent().find("input[type=checkbox]");
+	checkOfCartItem.attr('class', 'check' + i); //상품들의 checkbox에 class명 추가
+	var tableName = $(this).parent().find("table");
+	tableName.attr('class', 'marketTable' + i); //cartItem들을 보여주는 Table에 class명 추가
+	var divName = $(this).parent();
+	divName.attr('class', 'marketDiv_' + i); //cartItemList들이 포함된 div에 class명 추가
+
 	i++;
 })
+	
+}
+
+/*
+마켓별로 담은 상품 보여주기 위해
+마켓 이름이 같으면 해당 item을 마켓 이름이 같은 table에 append 후,
+item을 담고 있던 div 삭제 -> div class명 다시 정의 (class명 형태-div_0, div_1 ..)
+*/
+var marketName = document.querySelectorAll(".market-name");
+for(let k = 0; k < marketName.length; k++){
+	for(let j = k + 1; j < marketName.length; j++){
+		if(marketName[k].innerHTML == marketName[j].innerHTML){
+			var cartItem = $(marketName[j]).next().children().find(".cartItem-wrap"); 
+			$(cartItem).closest("div").remove();
+			cartCheck();
+			$(marketName[k]).next().children().append(cartItem);
+		}	
+	}
+}
 
 /*
  마켓 별로 price, shipping 담을 변수 생성
@@ -43,7 +72,6 @@ for(var i = 0; i < document.querySelectorAll(".market-name").length; i++){
 $("table input[type=checkbox]").click(function(){
 	var div = $(this).parents("div")[0];
 	var sequence = div.className.split("_")[1];
-	console.log(sequence);
 	const total = $(this).parents("."+div.className).find(".total-price")[0];
 	var strPrice;
 	var strShipping;
