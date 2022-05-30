@@ -88,12 +88,6 @@ public class BorrowController {
 		
 		borrow.setBorrower(borrower);
 		
-		System.out.println(borrow.getBorrowDate());
-		System.out.println(borrow.getReturnDate());
-		System.out.println(borrow.getLender().getId());
-		System.out.println(borrow.getBorrower().getId());
-		System.out.println(borrow.getShareThing().getItem().getId());
-		
 		ShareThing tempShareThing = borrow.getShareThing();
 		tempShareThing.setIsBorrowed(1);
 		borrow.setShareThing(tempShareThing);
