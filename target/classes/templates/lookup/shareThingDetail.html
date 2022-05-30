@@ -56,9 +56,8 @@
 	            <img src="/images/waiting.svg" />
 	            <div class="waiting" th:text="${borrow.shareThing.reservationNumber}"></div>
 	          </div>
-			  <input type="hidden" name="shareThing.item.id" th:value="${borrow.shareThing.item.id}"/>
+			  		<input type="hidden" name="shareThing.item.id" th:value="${borrow.shareThing.item.id}"/>
 	          <div id="itemName" th:text=${borrow.shareThing.item.name}></div>
-	
 	          <div id="itemInfo" th:text=${borrow.shareThing.item.description}></div>
 	
 	          <table>
@@ -79,11 +78,13 @@
 	
 	            <tr>
 	              <td>대여 기간</td>
-	              <td><input type="text" placeholder="1" id="shipping" name="date"/> 일</td>
-	              <td><div class="invalid-feedback" th:errors="*"> </div></td>
+	              <td>
+		              	<input type="text" placeholder="1" id="shipping" name="date"/> 일 
+	              </td>
 	            </tr>
 	          </table>
 	          <input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
+	          <div class="invalid-feedback" th:errors="*"> </div>
 	          <div id="btnWrap">
 	            <button id="rentalBtn" type="submit">대여하기</button>
 	            <button id="cancelBtn" onclick="location.href='/lookup/shareThingList'">취소</button>

@@ -30,7 +30,7 @@
 }
 
 #itemName {
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   font-size: 24px;
   font-weight: medium;
 }
@@ -74,7 +74,7 @@
 
 td {
   width: 200px;
-  height: 34px;
+  height: 50px;
   font-size: 14px;
 }
 
@@ -139,4 +139,9 @@ td {
   display: block;
  	width: 596px;
   object-fit: cover;
+}
+
+.invalid-feedback {
+	margin-top: 40px;
+	color: #DBAFAE;
 }
