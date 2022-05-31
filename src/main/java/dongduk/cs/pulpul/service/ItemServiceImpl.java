@@ -102,9 +102,6 @@ public class ItemServiceImpl implements ItemService {
 		// 상품 레코드 수정
 		successed = itemDao.changeGoodsInfo(goods);
 		if (!successed) return false;
-//		// 상품 판매수량 수정
-//		successed = itemDao.changeSalesQuantity(goods);
-//		if (!successed) return false;
 		
 		// 공유물품 이미지 삭제, 이미지 레코드 삭제
 		String itemId = goods.getItem().getId();

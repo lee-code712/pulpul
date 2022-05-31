@@ -39,7 +39,6 @@ public class MarketServiceImpl implements MarketService {
 	public boolean makeMarket(Market market, FileCommand uploadFile) {
 		int marketId = marketDao.createMarket(market);
 		if (marketId > 0) { // 정상적으로 레코드를 생성했다면
-			market.setId(marketId);
 			if (!uploadFile.getFile().isEmpty()) {
 				String filename = uploadFile(uploadFile, market.getId());
 				market.setImageUrl("/upload/" + filename);

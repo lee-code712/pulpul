@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.service.ItemService;
-import dongduk.cs.pulpul.service.MemberService;
 
 @Controller
 public class HomeController {

@@ -53,6 +53,13 @@
 		WHERE member_id = #{memberId}
 	</select>
 	
+	<!-- 특정 상품이 장바구니에 존재하는지 확인 -->
+	<select id="selectCartCountBygoodsId" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM cart c
+		WHERE member_id = #{memberId} AND goods_id = #{goodsId} 
+	</select>
+	
 	<!-- 장바구니 내역 생성 -->
 	<insert id="insertCart">
 		INSERT INTO cart (member_id, goods_id, quantity, price)

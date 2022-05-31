@@ -59,11 +59,13 @@
           <td th:errors="*{tags}"></td>
         </tr>
         <tr th:if="*{#strings.isEmpty(item.id)}">
-          <td class="text-name">수량</td>
+          <td class="text-name">총 판매 수량</td>
           <td><input type="text" placeholder="예) 2" th:field="*{salesQuantity}" /></td>
         </tr>
         <tr th:unless="*{#strings.isEmpty(item.id)}">
-          <div><input type="hidden" th:field="*{salesQuantity}"/></div>
+        	<td class="text-name">남은 수량</td>
+          <td><input type="text" th:field="*{remainQuantity}" />
+          		<input type="hidden" th:field="*{salesQuantity}" /></td>
         </tr>
         <tr th:if="*{#strings.isEmpty(item.id)}">
           <td></td>

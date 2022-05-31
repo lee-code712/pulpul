@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import dongduk.cs.pulpul.controller.FileCommand;
 import dongduk.cs.pulpul.dao.ReviewDao;
+import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.Review;
 
 @Service
@@ -35,13 +36,14 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public boolean addReview(Review review, FileCommand uploadFile) {
+	public boolean addReview(Review review, FileCommand uploadFile, String memberId) {
 		int reviewId = reviewDao.createReview(review);
 		if (reviewId > 0) {
-			// review.setId(reviewId);
 			if (!uploadFile.getFile().isEmpty()) {
 				String filename = uploadFile(uploadFile, review.getId());
 				review.setImageUrl("/upload/" + filename);
+				review.getOrder().setBuyer(new Member());
+				review.getOrder().getBuyer().setId(memberId);
 				return reviewDao.createReviewImage(review);
 			}
 			return true;

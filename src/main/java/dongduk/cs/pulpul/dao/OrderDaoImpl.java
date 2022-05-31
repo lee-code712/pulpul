@@ -25,6 +25,13 @@ public class OrderDaoImpl implements OrderDao {
 	public int findNumberOfCartItemByMember(String memberId) {
 		return orderMapper.selectNumberOfCart(memberId);
 	}
+	
+	@Override
+	public boolean isExistItem(String memberId, String goodsId) {
+		int ck = orderMapper.selectCartCountBygoodsId(memberId, goodsId);
+		if (ck > 0) return true;
+		return false;
+	}
 
 	@Override
 	public boolean createCartItem(String memberId, CartItem cartItem) {

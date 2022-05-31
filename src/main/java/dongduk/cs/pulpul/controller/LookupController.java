@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,13 +40,6 @@ public class LookupController {
 		this.reviewSvc = reviewSvc;
 		this.marketSvc = marketSvc;
 	}
-	
-	@ModelAttribute("cartItem")
-	public CartItem formbacking() {
-		CartItem cartItem = new CartItem();
-		cartItem.setQuantity(1);
-		return cartItem;
-	}
 
 	/*
 	 * 식물 검색 
@@ -68,9 +60,11 @@ public class LookupController {
 	public String goodsDetail(@RequestParam("itemId") String itemId, 
 			HttpSession session, Model model) {
 		
+		// 상품 상세정보 반환
 		Goods goods = itemSvc.getGoods(itemId);
 		model.addAttribute("goods", goods);
 		
+		// 상품에 대한 리뷰 목록 반환
 		List<Review> reviewList = reviewSvc.getReviewByItem(itemId);
 		if (reviewList != null) {
 			model.addAttribute("reviewList", reviewList);
@@ -84,6 +78,11 @@ public class LookupController {
 				model.addAttribute("orderId", orderId);
 			}
 		}
+		
+		// cartItem 내용을 담을 객체 생성 후 반환
+		CartItem cartItem = new CartItem();
+		cartItem.setQuantity(1);
+		model.addAttribute("cartItem", cartItem);
 		
 		return "lookup/goodsDetail";
 	}

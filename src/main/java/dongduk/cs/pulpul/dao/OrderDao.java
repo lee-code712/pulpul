@@ -14,6 +14,9 @@ public interface OrderDao {
 	// 회원 카트 상품 수 조회
 	int findNumberOfCartItemByMember(String memberId);
 	
+	// 회원 장바구니에 특정 상품이 있는지 확인
+	boolean isExistItem(String memberId, String goodsId);
+	
 	// 카트 상품 생성
 	boolean createCartItem(String memberId, CartItem cartItem);
 	

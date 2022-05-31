@@ -28,6 +28,7 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.findCartByMember(memberId);
 	}
 	
+	// 회원의 장바구니 상품 수 조회
 	public int getNumberOfCartItemByMember(String memberId) {
 		return orderDao.findNumberOfCartItemByMember(memberId);
 	}
@@ -35,8 +36,9 @@ public class OrderServiceImpl implements OrderService {
 	// 장바구니 목록 추가
 	public boolean addCartItem(String memberId, CartItem cartItem) throws AddCartException {
 		
-		// 장바구니에 넣기 전 남은 수량 한번 더 확인
-		int remainQuantity = itemDao.findRemainQuantityByGoods(cartItem.getGoods().getItem().getId());
+		String goodsId = cartItem.getGoods().getItem().getId();
+
+		int remainQuantity = itemDao.findRemainQuantityByGoods(goodsId);
 		if (remainQuantity == 0) {
 			System.out.println("남은 수량 없음");
 			throw new AddCartException("남은 상품이 모두 팔렸습니다.");
@@ -44,6 +46,10 @@ public class OrderServiceImpl implements OrderService {
 		else if (cartItem.getQuantity() > remainQuantity) {
 			System.out.println("남은 수량 초과");
 			throw new AddCartException("남은 상품보다 많은 수량을 선택했습니다. 수량을 다시 선택해주세요.");
+		}
+		else if (orderDao.isExistItem(memberId, goodsId)) {
+			System.out.println("장바구니에 존재하는 항목");
+			throw new AddCartException("이미 장바구니에 존재하는 상품입니다.");
 		}
 		
 		return orderDao.createCartItem(memberId, cartItem);
@@ -65,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.findOrderByMember(memberId, identity);
 	}
 
-// 주문 상세정보 조회
+	// 주문 상세정보 조회
 	public Order getOrder(int orderId) {
 		return orderDao.findOrder(orderId);
 	}
@@ -82,9 +88,9 @@ public class OrderServiceImpl implements OrderService {
 			if (!success) return false;
 		} */
 		return true;
-}
+	}
 
-// 운송장번호 입력
+	// 운송장번호 입력
 	public boolean changeTrackingNumber(Order order) {
 		/* boolean success = orderDao.changeTrackingNumber(orderId, trackingNumber);
 		if (!success)
@@ -94,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
 		return false;
 	}
 
-// 주문 취소
+	// 주문 취소
 	public boolean cancelOrder(Order order) {
 		/* boolean success = orderDao.changeOrderStatus(orderId, 0);
 		Order order = getOrder(orderId);

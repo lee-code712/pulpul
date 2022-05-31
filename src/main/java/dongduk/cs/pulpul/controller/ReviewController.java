@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.Review;
 import dongduk.cs.pulpul.service.ReviewService;
 
@@ -43,9 +42,7 @@ public class ReviewController implements ApplicationContextAware {
 			HttpSession session, RedirectAttributes rttr) {
 		
 		uploadFile.setPath(uploadDir);
-		review.getOrder().setBuyer(new Member());
-		review.getOrder().getBuyer().setId((String) session.getAttribute("id"));
-		boolean successed = reviewSvc.addReview(review, uploadFile);
+		boolean successed = reviewSvc.addReview(review, uploadFile, (String)session.getAttribute("id"));
 		if (!successed) {
 			rttr.addFlashAttribute("uplaodFalid", true);
 		}

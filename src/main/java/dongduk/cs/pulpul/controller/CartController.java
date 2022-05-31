@@ -39,18 +39,21 @@ public class CartController {
 			HttpSession session, RedirectAttributes rttr) {
 
 		String memberId = (String) session.getAttribute("id");
-				
+		
+		// 회원이 아니라면 redirect
 		if(memberId == null) {
 			rttr.addFlashAttribute("isNotLogined", true);
 			return "redirect:/lookup/goodsDetail?itemId=" + cartItem.getGoods().getItem().getId();
 		}
 		
+		// 수량이 1 미만이면 redirect
 		if (result.hasErrors()) {
 			rttr.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX +  "cartItem", result);
 			rttr.addFlashAttribute("cartItem", cartItem);
 			return "redirect:/lookup/goodsDetail?itemId=" + cartItem.getGoods().getItem().getId();
 		}
 		
+		// 장바구니에 item 추가
 		try {
 			boolean successed = orderSvc.addCartItem(memberId, cartItem);
 			if (!successed) {
@@ -76,10 +79,12 @@ public class CartController {
 		
 		String memberId = (String) session.getAttribute("id");
 		
+		// 회원이 아니라면 redirect
 		if(memberId == null) {
 			return "redirect:/home";
 		}
 		
+		// 장바구니 목록 조회
 		Cart cart = orderSvc.getCart(memberId);
 		if (cart != null) {
 			System.out.println(cart.getCartItemList().size());
@@ -96,10 +101,13 @@ public class CartController {
 			RedirectAttributes rttr) {
 		
 		String memberId = (String) session.getAttribute("id");
+		
+		// 회원이 아니라면 redirect
 		if(memberId == null) {
 			return "redirect:/home";
 		}
 		
+		// 장바구니 item 삭제
 		boolean successed = orderSvc.deleteCartItem(memberId, itemId);
 		if (!successed) {
 			rttr.addFlashAttribute("deleteFailed", true);
@@ -120,10 +128,13 @@ public class CartController {
 			RedirectAttributes rttr) {
 		
 		String memberId = (String) session.getAttribute("id");
+		
+		// 회원이 아니라면 redirect
 		if(memberId == null) {
 			return "redirect:/home";
 		}
 		
+		// 장바구니 market item 삭제
 		int deleteCnt = orderSvc.deleteCartItemByMarket(memberId, marketId);
 		if (deleteCnt <= 0) {
 			rttr.addFlashAttribute("deleteFailed", true);
