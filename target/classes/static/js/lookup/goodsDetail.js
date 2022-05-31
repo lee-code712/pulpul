@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function() {    
 	totalPrice(); // 상품상세 페이지로 처음 이동했을 때 total price 정보를 가져옴
 });
@@ -34,9 +35,11 @@ function cancel(itemId){
 	encodeUri(uri);
 }
 
+/* 버튼 클릭 시 이동 막음 */
 $("#soldoutBtn").click(function(event){
 	event.preventDefault();
 })
+
 /*Total Price*/
 function totalPrice(){
 	var quantity = document.querySelector("#itemNumInput").value;

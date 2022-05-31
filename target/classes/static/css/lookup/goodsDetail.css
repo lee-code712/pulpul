@@ -31,6 +31,7 @@
   color: #93c0b5;
 }
 
+/*품절 표시*/
 #itemWrap {
 	display: flex;
 }

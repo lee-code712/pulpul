@@ -160,12 +160,14 @@
           </div>
         </div>
 
-        <div id="review"></div>
+        <div id="review" th:text="${review.content}"></div>
 
         <hr class="hr-dotted" />
       </div>
-      <form action="/review">
+      <form method="post" action="/review" enctype="multipart/form-data">
       <div id="reviewBox" th:if="${not #strings.isEmpty(orderId)}">
+      <input type="hidden" name="order.id" th:value="${orderId}">
+      <input type="hidden" name="item.id" th:value="${goods.item.id}">
         <div id="reviewContent">
           <div id="reviewWrap">
             <img src="/images/reviewer.svg" />
@@ -175,17 +177,17 @@
                 <div class="review-rating">
 		            <img src="/images/star.svg" />
 			         <select name='rating'>
-					  <option value='5.0' selected>5.0</option>
-					  <option value='4.0'>4.0</option>
-					  <option value='3.0'>3.0</option>
-					  <option value='2.0'>2.0</option>
-					  <option value='1.0'>1.0</option>
+					  <option value='5' selected>5.0</option>
+					  <option value='4'>4.0</option>
+					  <option value='3'>3.0</option>
+					  <option value='2'>2.0</option>
+					  <option value='1'>1.0</option>
 					</select>
 		        </div>
               </div>
             </div>
           </div>
-          <textarea id="writeReview" maxlength="200" placeholder="리뷰를 작성해주세요. (최소 20자, 최대 200자입니다.)"></textarea>
+          <textarea id="writeReview" maxlength="200" placeholder="리뷰를 작성해주세요. (최소 20자, 최대 200자입니다.)" name="content"></textarea>
           <div id="imgBox">
               <div class="imgTit">상품 사진</div>
 	          <input class="upload" type="file" id="fileWrap" accept=".jpg" multiple="multiple" name="file" style="display:none;">
@@ -194,7 +196,7 @@
           </div>
          </div>
         <div id="reviewBtnWrap">
-           <button type="submit" id="writeReviewBtn" th:onclick="uploadReview([[${orderId}]],[[${goods.item.id}]])">리뷰 작성</button>
+           <button type="submit" id="writeReviewBtn">리뷰 작성</button>
         </div>
         </div>
         </form>
