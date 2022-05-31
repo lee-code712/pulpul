@@ -48,7 +48,11 @@
           <div id="tagWrap">
             <div th:each="tag : ${#strings.arraySplit(goods.tags, ',')}" th:text="|#${tag}|" class="tag"></div>
           </div>
-          <div id="itemName" th:text="${goods.item.name}">
+          <div id="itemWrap">
+          <div id="itemName" th:text="${goods.item.name}"></div>
+          <div th:if="${goods.remainQuantity == 0}" class="remain-div">
+            <span class="soldout">품절</span>
+          </div>
           </div>
 
           <div id="itemInfo" th:text="${goods.item.description}"></div>
@@ -99,7 +103,7 @@
 
             <div id="totalPrice">원</div>
           </div>
-          <div id="btnWrap">
+          <div id="btnWrap" th:unless="${goods.remainQuantity == 0}">
             <button id="cartBtn" onclick="javascript: form.action='/cart/addItem';">장바구니</button>
              <script th:inline="javascript">
 		    	  var failed = [[${addFailed}]];
@@ -117,6 +121,9 @@
 				  		}
 				  </script>
             <button id="cancelBtn" type="button" onclick="location.href='/lookup/goodsList'">목록 이동</button>
+          </div>
+           <div id="btnWrap" th:if="${goods.remainQuantity == 0}">
+            <button id="soldoutBtn" type="button">품절</button>
           </div>
 		</form>
           <a th:href="@{/lookup/market(marketId=${goods.item.market.id})}" id="marketLink">
@@ -157,10 +164,8 @@
 
         <hr class="hr-dotted" />
       </div>
-      <form method="post" action="/review" enctype="multipart/form-data">
+      <form action="/review">
       <div id="reviewBox" th:if="${not #strings.isEmpty(orderId)}">
-      <input type="hidden" name="order.id" th:value="${orderId}">
-      <input type="hidden" name="item.id" th:value="${goods.item.id}">
         <div id="reviewContent">
           <div id="reviewWrap">
             <img src="/images/reviewer.svg" />
@@ -170,17 +175,17 @@
                 <div class="review-rating">
 		            <img src="/images/star.svg" />
 			         <select name='rating'>
-					  <option value='5' selected>5.0</option>
-					  <option value='4'>4.0</option>
-					  <option value='3'>3.0</option>
-					  <option value='2'>2.0</option>
-					  <option value='1'>1.0</option>
+					  <option value='5.0' selected>5.0</option>
+					  <option value='4.0'>4.0</option>
+					  <option value='3.0'>3.0</option>
+					  <option value='2.0'>2.0</option>
+					  <option value='1.0'>1.0</option>
 					</select>
 		        </div>
               </div>
             </div>
           </div>
-          <textarea id="writeReview" maxlength="200" placeholder="리뷰를 작성해주세요. (최소 20자, 최대 200자입니다.)" name="content"></textarea>
+          <textarea id="writeReview" maxlength="200" placeholder="리뷰를 작성해주세요. (최소 20자, 최대 200자입니다.)"></textarea>
           <div id="imgBox">
               <div class="imgTit">상품 사진</div>
 	          <input class="upload" type="file" id="fileWrap" accept=".jpg" multiple="multiple" name="file" style="display:none;">
@@ -189,7 +194,7 @@
           </div>
          </div>
         <div id="reviewBtnWrap">
-           <button type="submit" id="writeReviewBtn">리뷰 작성</button>
+           <button type="submit" id="writeReviewBtn" th:onclick="uploadReview([[${orderId}]],[[${goods.item.id}]])">리뷰 작성</button>
         </div>
         </div>
         </form>

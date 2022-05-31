@@ -24,28 +24,19 @@ document.addEventListener("DOMContentLoaded", function() {
 	const encoded = encodeURI(uri);
 	location.href = encoded;
 }
+ function uploadReview(orderId, itemId){
+	const uri = '/review?orderId=' + orderId + '&itemId=' + itemId;
+	encodeUri(uri);
+}
 
 function cancel(itemId){
 	const uri = '/lookup/goodsDetail?itemId=' + itemId;
 	encodeUri(uri);
 }
-/*Swal.fire({
-			title: '상품이 등록되었습니다!',
-                    text: "장바구니로 이동하시겠습니까?",
-                    showCancelButton: true,
-                    confirmButtonColor: '#93c0b5',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: '확인',
-                    cancelButtonText: '취소'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                       window.location.href="/cart/addItem";
-                    }else{
-						const uri ="/lookup/goodsDetail?itemId=" + itemId;
-						encodeUri(uri);
-					}
-                })*/
 
+$("#soldoutBtn").click(function(event){
+	event.preventDefault();
+})
 /*Total Price*/
 function totalPrice(){
 	var quantity = document.querySelector("#itemNumInput").value;
