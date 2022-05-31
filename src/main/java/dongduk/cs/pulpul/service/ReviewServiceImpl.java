@@ -38,7 +38,7 @@ public class ReviewServiceImpl implements ReviewService {
 	public boolean addReview(Review review, FileCommand uploadFile) {
 		int reviewId = reviewDao.createReview(review);
 		if (reviewId > 0) {
-			review.setId(reviewId);
+			// review.setId(reviewId);
 			if (!uploadFile.getFile().isEmpty()) {
 				String filename = uploadFile(uploadFile, review.getId());
 				review.setImageUrl("/upload/" + filename);

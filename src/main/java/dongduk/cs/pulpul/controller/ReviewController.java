@@ -1,5 +1,7 @@
 package dongduk.cs.pulpul.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.Review;
 import dongduk.cs.pulpul.service.ReviewService;
 
@@ -37,9 +40,11 @@ public class ReviewController implements ApplicationContextAware {
 	 */
 	@PostMapping("/review")
 	public String upload(Review review, FileCommand uploadFile, Model model,
-			RedirectAttributes rttr) {
+			HttpSession session, RedirectAttributes rttr) {
 		
 		uploadFile.setPath(uploadDir);
+		review.getOrder().setBuyer(new Member());
+		review.getOrder().getBuyer().setId((String) session.getAttribute("id"));
 		boolean successed = reviewSvc.addReview(review, uploadFile);
 		if (!successed) {
 			rttr.addFlashAttribute("uplaodFalid", true);
