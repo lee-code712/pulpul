@@ -16,6 +16,17 @@ function deleteItemByMarket(marketId){
 	location.href='/cart/deleteItemByMarket?marketId=' + marketId;
 }
 
+/* 상품 판매가 */
+$("td.price").each(function(){
+	
+	var quantity = Number($(this).prev().text());
+	var shipping = Number($(this).next().text());
+	var total = Number($(this).text());
+	
+	var price = (total - shipping) / quantity;
+	$(this).text(price);
+})
+
 /* 
 페이지 첫 로드할 때 div와 table, checkbox에 class명 추가
 체크할 때마다 가격 보여주기 위해 필요한 함수
@@ -58,38 +69,37 @@ for(let k = 0; k < marketName.length; k++){
 }
 
 /*
- 마켓 별로 price, shipping 담을 변수 생성
+ 카트에 담긴 마켓 별로 총 상품 금액(price * quantity), 배송비(shipping) 담을 변수 생성
 */
 let object = {};
 for(var i = 0; i < document.querySelectorAll(".market-name").length; i++){
-  object[`price${i}`] = 0;
+  object[`price${i}`] = 0; //마켓 수만큼 동적으로 변수 생성 price0, price1, price2..
   object[`shipping${i}`] = 0;
 }
 
 /*
- 체크할 때마다 상품 금액과 배송비 계산
+ 체크할 때마다 상품 금액과 배송비 계산 - 총 결제 금액 보여주기 위해
 */
 $("table input[type=checkbox]").click(function(){
 	var div = $(this).parents("div")[0];
-	var sequence = div.className.split("_")[1];
-	const total = $(this).parents("."+div.className).find(".total-price")[0];
-	var strPrice;
-	var strShipping;
+	var sequence = div.className.split("_")[1]; //div 번호로 해당 객체(object) 받아옴
+	const total = $(this).parents("."+div.className).find(".total-price");
+	
+	var price = $(this).parent().siblings(".price").text();
+	var shipping = $(this).parent().siblings(".shipping").text();
+	var quantity = Number($(this).parent().siblings(".item-num").text());
+	
 	//체크 true
 	if($(this).is(":checked") == true){
-			strPrice = $(this).parent().siblings(".price")[0].innerHTML.split("원");
-			strShipping = $(this).parent().siblings(".shipping")[0].innerHTML.split("원");
-			object[`price${sequence}`] += Number(strPrice[0]);
-			object[`shipping${sequence}`] += Number(strShipping[0]);
+			object[`price${sequence}`] += Number(price) * quantity; //총 상품 금액 저장
+			object[`shipping${sequence}`] += Number(shipping); //배송비 저장
 	 }else{ //체크 false
-			strPrice = $(this).parent().siblings(".price")[0].innerHTML.split("원");
-			strShipping = $(this).parent().siblings(".shipping")[0].innerHTML.split("원");
-			object[`price${sequence}`] -= Number(strPrice[0]);
-			object[`shipping${sequence}`] -= Number(strShipping[0]);
+			object[`price${sequence}`] -= Number(price) * quantity; 
+			object[`shipping${sequence}`] -= Number(shipping);
 	}
 	
-	var totalPrice = object[`price${sequence}`] + object[`shipping${sequence}`];
-	total.innerHTML = "상품 금액 <b>" + object[`price${sequence}`].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-	 + "</b>원<br>배송비 <b>" + object[`shipping${sequence}`].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</b>원<br>총 금액 <b>"
-	+  totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</b>원";
+	var totalPrice = object[`price${sequence}`] + object[`shipping${sequence}`]; //총 결제 금액
+	$(this).parents("."+div.className).find(".total-price-item").text(object[`price${sequence}`].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+	$(this).parents("."+div.className).find(".total-shipping").text(object[`shipping${sequence}`].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+	total.text(totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 })
