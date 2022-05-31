@@ -129,8 +129,8 @@ td {
 }
 
 .noCartItem {
-	display:flex;
-	justify-content:center;
+	display: flex;
+	justify-content: center;
 	align-items: center;
 	min-height: 50vh;
 	flex-direction: column;

@@ -54,7 +54,7 @@ function cartCheck(){
 /*
 마켓별로 담은 상품 보여주기 위해
 마켓 이름이 같으면 해당 item을 마켓 이름이 같은 table에 append 후,
-item을 담고 있던 div 삭제 -> div class명 다시 정의 (class명 형태-div_0, div_1 ..)
+item을 담고 있던 div 삭제 -> div class명 다시 정의 (class명 형태-div_0, div_1)
 */
 var marketName = document.querySelectorAll(".market-name");
 for(let k = 0; k < marketName.length; k++){
