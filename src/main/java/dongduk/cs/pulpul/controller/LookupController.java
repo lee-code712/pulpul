@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import dongduk.cs.pulpul.domain.Borrow;
+import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.domain.Market;
 import dongduk.cs.pulpul.domain.Review;
@@ -38,6 +40,13 @@ public class LookupController {
 		this.itemSvc = itemSvc;
 		this.reviewSvc = reviewSvc;
 		this.marketSvc = marketSvc;
+	}
+	
+	@ModelAttribute("cartItem")
+	public CartItem formbacking() {
+		CartItem cartItem = new CartItem();
+		cartItem.setQuantity(1);
+		return cartItem;
 	}
 
 	/*

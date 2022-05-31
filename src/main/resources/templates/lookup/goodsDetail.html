@@ -52,7 +52,7 @@
           </div>
 
           <div id="itemInfo" th:text="${goods.item.description}"></div>
-          <form method="post">
+          <form method="post" th:object="${cartItem}">
           <div id="priceWrap">
             <div id="priceTit">판매 가격</div>
             <div id="price" th:text="|${#numbers.formatInteger(goods.price, 0, 'COMMA')}원|"></div>
@@ -62,7 +62,9 @@
 
           <div id="itemNumWrap">
             <div id="itemNumTit">수량</div>
-            <input type="number" min="1" placeholder="0" id="itemNumInput" name="quantity" th:onclick="totalPrice()"/>
+            <input type="number" th:if="${goods.remainQuantity} == 0" min="0" max="0" placeholder="0" id="itemNumInput" name="quantity" value="0"/>
+            <input type="number" th:unless="${goods.remainQuantity} == 0" min="1" th:max="|${goods.remainQuantity}|" placeholder="0" id="itemNumInput" th:field="*{quantity}" th:onclick="totalPrice()"/>
+            <div th:errors="*{quantity}"></div>
           </div>
           <div id="itemSizeWrap">
             <div id="itemSizeTit">식물 크기</div>

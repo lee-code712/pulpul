@@ -45,7 +45,7 @@ public class ReviewController implements ApplicationContextAware {
 			rttr.addFlashAttribute("uplaodFalid", true);
 		}
 		
-		return "redirect:/lookup/goodsDetail";
+		return "redirect:/lookup/goodsDetail?itemId=" + review.getItem().getId();
 	}
 	
 }
