@@ -1,8 +1,6 @@
 package dongduk.cs.pulpul.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +18,11 @@ public class ReviewDaoImpl implements ReviewDao {
 	public List<Review> findReviewByListItem(String itemId) {
 		return reviewMapper.selectReviewByItem(itemId);
 	}
+	
+	@Override
+	public String findReviewImage(int reviewId) {
+		return reviewMapper.selectReviewImage(reviewId);
+	}
 
 	@Override
 	public int findOrderIdByNotReview(String itemId, String memberId) {
@@ -35,13 +38,10 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 
 	@Override
-	public boolean createReviewImages(List<String> imageUrlList, String memberId) {
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("memberId", memberId);
-		param.put("imageUrlList", imageUrlList);
-		int ck = reviewMapper.insertReviewImages(param);
-		if (ck < 0) return false;
-		return true;
+	public boolean createReviewImage(Review review) {
+		int ck = reviewMapper.insertReviewImage(review);
+		if (ck > 0) return true;
+		return false;
 	}
 
 }

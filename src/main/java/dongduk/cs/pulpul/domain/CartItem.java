@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter @Setter
 public class CartItem {
 	
+	private String goodsId;
 	private Goods goods; /*상품 정보*/
 	@Min(1)
 	private int quantity; /*담은 수량*/

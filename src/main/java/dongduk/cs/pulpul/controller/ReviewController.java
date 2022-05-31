@@ -36,11 +36,11 @@ public class ReviewController implements ApplicationContextAware {
 	 * 리뷰 작성 
 	 */
 	@PostMapping("/review")
-	public String upload(Review review, FileCommand uploadFiles, Model model,
+	public String upload(Review review, FileCommand uploadFile, Model model,
 			RedirectAttributes rttr) {
 		
-		uploadFiles.setPath(uploadDir);
-		boolean successed = reviewSvc.addReview(review, uploadFiles);
+		uploadFile.setPath(uploadDir);
+		boolean successed = reviewSvc.addReview(review, uploadFile);
 		if (!successed) {
 			rttr.addFlashAttribute("uplaodFalid", true);
 		}

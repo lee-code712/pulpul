@@ -10,6 +10,7 @@
 	<resultMap id="cartMap" type="Cart">
 		<id column="member_id" jdbcType="VARCHAR" property="memberId" javaType="string" />
 		<collection property="cartItemList" ofType="CartItem">
+			<id column="goods_id" jdbcType="VARCHAR" property="goodsId" javaType="String" />
 			<result column="quantity" jdbcType="INTEGER" property="quantity" javaType="int" />
 			<result column="total_price" jdbcType="INTEGER" property="price" javaType="int" />
 			<association property="goods" column="goods_id" javaType="Goods">

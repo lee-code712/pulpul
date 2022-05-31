@@ -24,10 +24,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	const encoded = encodeURI(uri);
 	location.href = encoded;
 }
- function uploadReview(orderId, itemId){
-	const uri = '/review?orderId=' + orderId + '&itemId=' + itemId;
-	encodeUri(uri);
-}
 
 function cancel(itemId){
 	const uri = '/lookup/goodsDetail?itemId=' + itemId;

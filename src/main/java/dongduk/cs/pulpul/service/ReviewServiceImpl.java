@@ -1,12 +1,10 @@
 package dongduk.cs.pulpul.service;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import dongduk.cs.pulpul.controller.FileCommand;
 import dongduk.cs.pulpul.dao.ReviewDao;
@@ -23,7 +21,12 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public List<Review> getReviewByItem(String itemId) {
-		return reviewDao.findReviewByListItem(itemId);
+		List<Review> reviewList = reviewDao.findReviewByListItem(itemId);
+		for (Review review : reviewList) {
+			System.out.println(review.getId());
+			review.setImageUrl(reviewDao.findReviewImage(review.getId()));
+		}
+		return reviewList;
 	}
 
 	@Override
@@ -32,38 +35,32 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public boolean addReview(Review review, FileCommand uploadFiles) {
+	public boolean addReview(Review review, FileCommand uploadFile) {
 		int reviewId = reviewDao.createReview(review);
 		if (reviewId > 0) {
 			review.setId(reviewId);
-			List<String> imageUrlList = new ArrayList<String>();
-			int cnt = 1;
-			for (MultipartFile uploadFile : uploadFiles.getFiles()) {
-				if (!uploadFile.isEmpty()) {
-					uploadFiles.setFile(uploadFile);
-					String filename = uploadFile(uploadFiles, review.getId(), cnt);
-					imageUrlList.add("/upload/" + filename);
-					cnt++;
-				}
+			if (!uploadFile.getFile().isEmpty()) {
+				String filename = uploadFile(uploadFile, review.getId());
+				review.setImageUrl("/upload/" + filename);
+				return reviewDao.createReviewImage(review);
 			}
-			String memberId = review.getOrder().getBuyer().getId();
-			return reviewDao.createReviewImages(imageUrlList, memberId);
+			return true;
 		}
 		return false;
 	}
 	
 	// 파일 업로드 메소드
-	public String uploadFile(FileCommand uploadFiles, int reviewId, int cnt) {
+	public String uploadFile(FileCommand uploadFile, int reviewId) {
 		String newFilename = "";
 		// System.out.println(path);
 		try {       
 			// 확장자를 jpg로 제한
-            newFilename = reviewId + "-" + cnt + ".jpg";
+            newFilename = "RIMG-" + reviewId + ".jpg";
             
-            File newFile = new File(uploadFiles.getPath(), newFilename);
+            File newFile = new File(uploadFile.getPath() + newFilename);
             if (newFile.exists())
             	newFile.delete();
-            uploadFiles.getFile().transferTo(newFile);
+            uploadFile.getFile().transferTo(newFile);
 
         }catch(Exception e) {            
             e.printStackTrace();
@@ -71,4 +68,5 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		return newFilename;
 	}
+
 }

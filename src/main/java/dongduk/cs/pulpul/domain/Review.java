@@ -1,7 +1,5 @@
 package dongduk.cs.pulpul.domain;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +12,5 @@ public class Review {
 	private int rating; 
 	private Order order; /*주문 정보*/
 	private Item item; /*주문 품목*/
-	private List<String> imageUrlList; /*후기 이미지 경로*/
+	private String imageUrl; /*후기 이미지 경로*/
 }
