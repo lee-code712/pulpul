@@ -47,7 +47,7 @@
 		      <td class="item-delete"></td>
 		    </tr>
 		
-		    <tr th:each="goods : ${goodsList}">
+		    <tr th:each="goods : ${goodsList}" th:style="${goods.item.openStatus == 0 ? 'background-color: #f3f3f4;' : ''}">
 		      <td>
 		       <div class="thumbnail-item">
 		         <img class="thumbnail-item-img" th:src="${goods.item.thumbnailUrl}"/>
