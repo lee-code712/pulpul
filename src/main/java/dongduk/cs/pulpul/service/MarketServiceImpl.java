@@ -22,6 +22,8 @@ public class MarketServiceImpl implements MarketService {
 	@Override
 	public Market getMarket(int marketId) {
 		Market market = marketDao.findMarket(marketId);
+		String[] marketAddress = market.getMember().getAddress().split(" ");
+		market.getMember().setAddress(marketAddress[0] + " " + marketAddress[1]);
 		if (market != null)
 			market.setImageUrl(marketDao.findMarketImage(market.getMember().getId()));
 		return market;
