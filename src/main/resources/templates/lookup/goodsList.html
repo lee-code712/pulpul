@@ -56,6 +56,11 @@
             <span class="tag-name" th:text="|#${tag}|"></span>
            </div>
           </div>
+          <div th:if="${goods.remainQuantity == 0}" class="remain-div">
+            <span class="soldout">품절</span>
+          </div>
+          <div th:unless="${goods.remainQuantity == 0}" class="y_remain">
+          </div>
           <div class="item-price" th:text="|${#numbers.formatInteger(goods.price, 0, 'COMMA')}원|"></div>
         </div>
        </div>

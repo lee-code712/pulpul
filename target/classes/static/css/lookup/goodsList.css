@@ -86,7 +86,7 @@
 }
 
 .item-tags {
-	margin: 5px 0px 10px 0px;
+	margin: 5px 0px 5px 0px;
 	font-size: 15px;
 	display:flex;
 	justify-content:center;
@@ -113,16 +113,29 @@
 .search-tag {
 	cursor:pointer;
 	border-radius: 30px;
-	color: white;
 	height: 20px;
 	padding: 5px 10px;
 	margin: 10px 8px;
-	background-color:  #93c0b5;
+	color: #93c0b5;
+	background-color: white;
+	border:1px solid #93c0b5;
 	
 }
 
 .search-tag:hover {
-	color: #93c0b5;
-	background-color: white;
-	border:1px solid #93c0b5
+	color: white;
+	background-color:  #93c0b5;
+	border:1px solid #93c0b5;
+}
+
+.remain-div {
+	text-align: center;
+	margin-bottom: 5px;
+}
+.soldout {
+	font-size: 14px;
+	background-color:  #93c0b5;
+	color: white;
+	width: 60px;
+	padding: 2px 3px;
 }
