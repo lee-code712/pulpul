@@ -50,7 +50,6 @@
             
           </div>
           <div class="item-name" th:text="${goods.item.name}"></div>
-          <!-- <div class="item-tag" th:text="${goods.tags}"></div> -->
           <div class="item-tags">
            <div class="item-tag" th:each="tag : ${#strings.arraySplit(goods.tags, ',')}">
             <span class="tag-name" th:text="|#${tag}|"></span>

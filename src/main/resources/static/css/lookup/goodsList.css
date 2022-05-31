@@ -111,21 +111,21 @@
 }
 
 .search-tag {
-	cursor:pointer;
+	cursor: pointer;
 	border-radius: 30px;
 	height: 20px;
 	padding: 5px 10px;
 	margin: 10px 8px;
 	color: #93c0b5;
 	background-color: white;
-	border:1px solid #93c0b5;
+	border: 1px solid #93c0b5;
 	
 }
 
 .search-tag:hover {
 	color: white;
 	background-color:  #93c0b5;
-	border:1px solid #93c0b5;
+	border: 1px solid #93c0b5;
 }
 
 .remain-div {
