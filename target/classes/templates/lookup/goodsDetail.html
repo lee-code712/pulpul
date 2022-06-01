@@ -142,28 +142,28 @@
       </div>
 
       <div id="reviewBox" th:each="review : ${reviewList}">
-        <div id="reviewContent">
-          <div id="reviewWrap">
-            <img src="/images/reviewer.svg" />
-
-            <div id="reviewerBox">
-              <div id="ratingWrap">
-                <img src="/images/star.svg" />
-                <div id="rating" th:text="${review.rating}"></div>
-              </div>
-
-              <div id="reviewerWrap">
-                <div id="reviewer" th:text="${review.order.buyer.id}"></div>
+      <div id="reviewWrap">
+      	<div id="reviewInfoWrap">
+            <img src="/images/reviewer.svg" id="reviewerImg" />
+            <div id="reviewInfo">
+            	<div id="ratingWrap">
+	            	<img src="/images/star.svg" />
+	            	<div id="rating" th:text="${review.rating}"></div>
+            	</div>
+            	<div id="reviewerWrap">
+            		<div id="reviewer" th:text="${review.order.buyer.id}"></div>
                 <div id="reviewDate" th:text="${review.writeDate}"></div>
-              </div>
+            	</div>
             </div>
-          </div>
-        </div>
-
-        <div id="review" th:text="${review.content}"></div>
-
-        <hr class="hr-dotted" />
+      	</div>
       </div>
+      	<div id="review" th:text="${review.content}"></div>
+        <img th:src="${review.imageUrl}" id="reviewImg" />
+      </div>
+      
+      
+     	<hr class="hr-dotted" />
+     
       <form method="post" action="/review" enctype="multipart/form-data">
       <div id="reviewBox" th:if="${not #strings.isEmpty(orderId)}">
       <input type="hidden" name="order.id" th:value="${orderId}">
