@@ -16,7 +16,7 @@ public interface ReviewDao {
 	int findOrderIdByNotReview(String itemId, String memberId);
 	
 	// 리뷰 생성
-	int createReview(Review review);
+	boolean createReview(Review review);
 	
 	// 리뷰 이미지 생성
 	boolean createReviewImage(Review review);

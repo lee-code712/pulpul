@@ -109,7 +109,6 @@ public class GoodsController implements ApplicationContextAware {
 		}
 		
 		return "redirect:/market/goods/list";
-
 	}
 
 	/*

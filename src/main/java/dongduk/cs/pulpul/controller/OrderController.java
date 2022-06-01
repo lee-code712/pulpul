@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,13 +74,19 @@ public class OrderController {
 	}
 	
 	@PostMapping("/purchase")
-	public void purchase() {
-		/*
-		 //성공
-		 return "redirect:/order/orderDetail";
-		 //실패 - 결제 페이지
-		 return "order/purchase";
-		 */
+	public String purchase(@Valid @ModelAttribute("order") Order order, BindingResult result,
+			Model model) {
+		
+		if (result.hasErrors())
+			return "order/purchase";
+		
+		boolean successed = orderSvc.order(order);
+		if (!successed) {
+			model.addAttribute("orderFalid", true);
+			return "market/goodsForm";
+		}
+		
+		return "redirect:/order/orderDetail";
 	}
 
 	/*

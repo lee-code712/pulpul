@@ -1,11 +1,15 @@
 package dongduk.cs.pulpul.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dongduk.cs.pulpul.dao.ItemDao;
+import dongduk.cs.pulpul.dao.MemberDao;
 import dongduk.cs.pulpul.dao.OrderDao;
 import dongduk.cs.pulpul.domain.Cart;
 import dongduk.cs.pulpul.domain.CartItem;
@@ -16,11 +20,14 @@ import dongduk.cs.pulpul.service.exception.AddCartException;
 public class OrderServiceImpl implements OrderService {
 	private final OrderDao orderDao;
 	private final ItemDao itemDao;
+	private final MemberDao memberDao;
 
 	@Autowired
-	public OrderServiceImpl(OrderDao orderDao, ItemDao itemDao) {
+	public OrderServiceImpl(OrderDao orderDao, ItemDao itemDao,
+			MemberDao memberDao) {
 		this.orderDao = orderDao;
 		this.itemDao = itemDao;
+		this.memberDao = memberDao;
 	}
 
 	// 회원의 장바구니 목록 조회
@@ -78,15 +85,35 @@ public class OrderServiceImpl implements OrderService {
 
 	// 주문 생성
 	public boolean order(Order order) {
-		// 주문 레코드 생성에 필요한 데이터 가공
-		/* int orderId = orderDao.createOrder(order);
-		if (orderId == 0) return false;
-		boolean success = orderDao.createOrderGoods(orderId, order.getGoodsList())
-		if (!success) return false;
-		for (CartItem item : order.getGoodsList()) {
-			success = itemDao.changeRemainQuantityByOrder(orderId, item.getQuantity(), 1);
-			if (!success) return false;
-		} */
+		// 주문 정보 저장
+		boolean successed = orderDao.createOrder(order);
+		if (!successed) return false;
+		
+		// 주문 상품 저장
+		int quantity = 0;
+		List<Map<String, Object>> orderGoodsList = new ArrayList<Map<String, Object>>();
+		for (CartItem cartItem : order.getGoodsList()) {
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("orderId", order.getId());
+			param.put("cartItem", cartItem);
+			orderGoodsList.add(param);
+			
+			// 수량 합계 계산
+			quantity += cartItem.getQuantity();
+			// 장바구니에서 해당 상품 삭제
+			successed = deleteCartItem(order.getBuyer().getId(), cartItem.getGoodsId());
+			if (!successed) return false;
+		}
+		successed = orderDao.createOrderGoods(orderGoodsList);
+		if (!successed) return false;
+
+		// 회원 포인트 변경
+		successed = memberDao.changePoint(order.getBuyer().getId(), -1, order.getUsedPoint());
+		if (!successed) return false;
+		
+		// 남은 수량 변경
+		successed = itemDao.changeRemainQuantityByOrderStatus(order.getId(), 1, quantity);
+		if (!successed) return false;
 		return true;
 	}
 

@@ -1,6 +1,7 @@
 package dongduk.cs.pulpul.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import dongduk.cs.pulpul.domain.Cart;
 import dongduk.cs.pulpul.domain.CartItem;
@@ -33,10 +34,10 @@ public interface OrderDao {
 	List<Order> findOrderByMember(String memberId, String identity);
 	
 	// 주문 생성
-	int createOrder(Order orders);
+	boolean createOrder(Order order);
 	
 	// 주문 상품 목록 생성
-	boolean createOrderGoods(Cart cart);
+	boolean createOrderGoods(List<Map<String, Object>> orderGoodsList);
 	
 	// 주문 운송장번호 입력
 	boolean changeTrackingNumber(int orderId, String trackingNumber);

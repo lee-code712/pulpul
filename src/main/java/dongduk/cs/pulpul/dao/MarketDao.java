@@ -14,7 +14,7 @@ public interface MarketDao {
 	String findMarketImage(String memberId);
 	
 	// 마켓 생성
-	int createMarket(Market market);
+	boolean createMarket(Market market);
 	
 	// 마켓 이미지 생성
 	boolean createMarketImage(Market market);

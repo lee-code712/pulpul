@@ -1,6 +1,7 @@
 package dongduk.cs.pulpul.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -64,15 +65,17 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	@Override
-	public int createOrder(Order orders) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean createOrder(Order order) {
+		int ck = orderMapper.insertOrder(order);
+		if (ck > 0) return true;
+		return false;
 	}
 
 	@Override
-	public boolean createOrderGoods(Cart cart) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean createOrderGoods(List<Map<String, Object>> orderGoodsList) {
+		int ck = orderMapper.insertOrderGoods(orderGoodsList);
+		if (ck > 0) return false;
+		return true;
 	}
 
 	@Override

@@ -33,8 +33,10 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 
 	@Override
-	public int createReview(Review review) {
-		return reviewMapper.insertReview(review);
+	public boolean createReview(Review review) {
+		int ck = reviewMapper.insertReview(review);
+		if (ck > 0) return true;
+		return false;
 	}
 
 	@Override

@@ -28,8 +28,10 @@ public class MarketDaoImpl implements MarketDao {
 	}
 
 	@Override
-	public int createMarket(Market market) {
-		return marketMapper.insertMarket(market);
+	public boolean createMarket(Market market) {
+		int ck = marketMapper.insertMarket(market);
+		if (ck > 0) return true;
+		return false;
 	}
 
 	@Override
