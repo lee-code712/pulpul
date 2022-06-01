@@ -28,7 +28,7 @@
 	<!-- 회원 id로 회원 정보 조회, 
 	로그인할 때 회원정보 확인하는 함수(id 세션에 저장) -->
 	<select id="selectMemberById" parameterType="String" resultType="Member">
-		SELECT password, name, birth, address, address_detail AS addressDetail, 
+		SELECT member_id AS id, password, name, birth, address, address_detail AS addressDetail, 
 			zip, phone, email, point
 		FROM member
 		WHERE member_id = #{memberId}

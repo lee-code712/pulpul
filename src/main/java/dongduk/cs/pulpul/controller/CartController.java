@@ -87,9 +87,9 @@ public class CartController {
 		// 장바구니 목록 조회
 		Cart cart = orderSvc.getCart(memberId);
 		if (cart != null) {
-			System.out.println(cart.getCartItemList().size());
 			model.addAttribute(cart);
-		}	
+			session.setAttribute("cart", cart);
+		}
 		return "cart/cart";
 	}
 	

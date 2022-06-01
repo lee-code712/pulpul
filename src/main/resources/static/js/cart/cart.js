@@ -16,7 +16,7 @@ function deleteItemByMarket(marketId){
 	location.href='/cart/deleteItemByMarket?marketId=' + marketId;
 }
 
-/* 상품 판매가 */
+/* 상품 판매가
 $("td.price").each(function(){
 	
 	var quantity = Number($(this).prev().text());
@@ -25,7 +25,7 @@ $("td.price").each(function(){
 	
 	var price = (total - shipping) / quantity;
 	$(this).text(price);
-})
+}) */
 
 /* 
 페이지 첫 로드할 때 div와 table, checkbox에 class명 추가
