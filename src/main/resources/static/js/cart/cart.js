@@ -39,17 +39,52 @@ function cartCheck(){
 	
 	$(".market-name").each(function(){
 
-	var checkOfCartItem = $(this).parent().find("input[type=checkbox]");
-	checkOfCartItem.attr('class', 'check' + i); //상품들의 checkbox에 class명 추가
 	var tableName = $(this).parent().find("table");
 	tableName.attr('class', 'marketTable' + i); //cartItem들을 보여주는 Table에 class명 추가
 	var divName = $(this).parent();
 	divName.attr('class', 'marketDiv_' + i); //cartItemList들이 포함된 div에 class명 추가
-
+	
+	var orderBtn = $(this).siblings(".bottom-btn-wrap").find(".check-item-order");
+	orderBtn.addClass("check-order_" + i);
+	
 	i++;
 })
 	
 }
+
+/*
+ 같은 마켓의 상품만 주문 가능
+ */
+$(".check-item-order").each(function(){
+	$(this).click(function(event){
+		
+		event.preventDefault();
+		
+		var sequence = $(this).attr('class').split(" ")[1].split("_")[1]; //table class sequence
+		var table = "marketTable" + sequence;
+	
+		var checkLength = $("." + table  + " input[type=checkbox]:checked").length; //해당 마켓에서 선택한 상품 개수
+		var otherMarket = $("table input[type=checkbox]:checked"); //다른 마켓의 checkbox
+		var otherMarketCheck = otherMarket.not("." + table  + " input[type=checkbox]:checked").length;
+		
+		if(otherMarketCheck > 0){ //다른 마켓의 상품도 선택했을 경우
+			 Swal.fire({
+			      text: '같은 마켓의 상품만 주문 가능합니다.',
+			      confirmButtonColor: '#93c0b5',
+			      confirmButtonText: '확인',
+			    })
+		}
+	    else if(checkLength == 0){ //선택한 상품이 없는 경우
+			 Swal.fire({
+			      text: '해당 마켓에 선택하신 상품이 없습니다.',
+			      confirmButtonColor: '#93c0b5',
+			      confirmButtonText: '확인',
+			    })
+		}else{
+			$("form").submit();
+		}
+	})
+})
 
 /*
 마켓별로 담은 상품 보여주기 위해
@@ -103,3 +138,4 @@ $("table input[type=checkbox]").click(function(){
 	$(this).parents("."+div.className).find(".total-shipping").text(object[`shipping${sequence}`].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 	total.text(totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 })
+

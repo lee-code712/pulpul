@@ -67,7 +67,7 @@
 
       <div class="bottom-btn-wrap">
       	<button type="button" class="continue-shopping" onclick="location.href='/lookup/goodsList'">쇼핑 계속하기</button>
-        <button type="submit" class="check-item-order">선택 상품 주문</button>
+        <button class="check-item-order">선택 상품 주문</button>
         <button type="button" class="all-item-delete" th:onclick="deleteItemByMarket([[${cartItem.goods.item.market.id}]])">전체 항목 삭제</button>
       </div>
       </div>
@@ -76,6 +76,7 @@
     <th:block layout:fragment="script">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script th:src="@{/js/cart/cart.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   </th:block>
 	</div>
 </html>
