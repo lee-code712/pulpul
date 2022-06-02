@@ -46,7 +46,7 @@
           <td class="item-num"  th:text="${cartItem.quantity}"></td>
           <td class="price" th:text="${cartItem.goods.price}"></td>
           <td class="shipping" th:text="${cartItem.goods.shippingFee}"></td>
-          <td class="btn-wrap"><button class="cancel-btn" th:onclick="deleteItem([[${cartItem.goods.item.id}]])">삭제</button></td>
+          <td class="btn-wrap"><button type="button" class="cancel-btn" th:onclick="deleteItem([[${cartItem.goods.item.id}]])">삭제</button></td>
         </tr>
 
       </table>

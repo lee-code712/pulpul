@@ -44,13 +44,11 @@ function cartCheck(){
 	var divName = $(this).parent();
 	divName.attr('class', 'marketDiv_' + i); //cartItemList들이 포함된 div에 class명 추가
 	
-	var orderBtn = $(this).siblings(".bottom-btn-wrap").find(".check-item-order");
-	orderBtn.addClass("check-order_" + i);
-	
 	i++;
 })
 	
 }
+
 
 /*
  같은 마켓의 상품만 주문 가능
@@ -59,8 +57,8 @@ $(".check-item-order").each(function(){
 	$(this).click(function(event){
 		
 		event.preventDefault();
-		
-		var sequence = $(this).attr('class').split(" ")[1].split("_")[1]; //table class sequence
+		var sequence = $(this).parents("div")[1].classList[0].split("_")[1] //table class sequence
+		console.log(sequence);
 		var table = "marketTable" + sequence;
 	
 		var checkLength = $("." + table  + " input[type=checkbox]:checked").length; //해당 마켓에서 선택한 상품 개수
