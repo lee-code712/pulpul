@@ -2,10 +2,14 @@ package dongduk.cs.pulpul.domain;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class Order {
 
 	private int id; /*주문 식별번호*/

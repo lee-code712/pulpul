@@ -41,6 +41,11 @@ public class OrderController {
 		return new Order();
 	}
 	
+	@ModelAttribute("cardCompanyList")
+	public String[] createCardType() {
+		return new String[]{"KB 국민", "비씨(페이북)", "신한카드", "NH농협", "1QPay(하나)", "씨티카드", "롯데카드", "UnionPay"};
+	}
+	
 	/*
 	 * 식물 구매 
 	 */
@@ -55,6 +60,9 @@ public class OrderController {
 		}
 		
 		Cart cart = (Cart) session.getAttribute("cart");
+		if (cart == null) {
+			return "redirect:/cart/cartList";
+		}
 		
 		List<CartItem> goodsList = new ArrayList<CartItem>();
 		for (CartItem cartItem : cart.getCartItemList()) {
@@ -75,16 +83,20 @@ public class OrderController {
 	
 	@PostMapping("/purchase")
 	public String purchase(@Valid @ModelAttribute("order") Order order, BindingResult result,
-			Model model) {
+			Model model, HttpSession session) {
 		
 		if (result.hasErrors())
 			return "order/purchase";
 		
-		boolean successed = orderSvc.order(order);
-		if (!successed) {
-			model.addAttribute("orderFalid", true);
-			return "market/goodsForm";
-		}
+		System.out.println(order.toString());
+		
+//		boolean successed = orderSvc.order(order);
+//		if (!successed) {
+//			model.addAttribute("orderFalid", true);
+//			return "market/goodsForm";
+//		}
+//		
+//		session.removeAttribute("cart");
 		
 		return "redirect:/order/orderDetail";
 	}

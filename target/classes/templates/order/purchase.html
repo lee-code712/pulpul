@@ -22,7 +22,7 @@
   		var order = [[${order}]];
   		console.log(order);
    </script>
-   <form method="post" action="/order/purchase">
+   <form method="post" action="/order/purchase" th:object="${order}">
 		<div id="pageWrap">
       <div id="pageTit">결제화면</div>
       <div id="pageSubTit">Payment</div>
@@ -66,8 +66,8 @@
           <div class="price-info-wrap">
             <div class="price-info-tit">포인트</div>
             <div id="pointWrap">
-              <div><input type="number" placeholder="100" id="point"/>원</div>
-              <div id="leftover" th:text="|잔여 ${#numbers.formatInteger(order.buyer.point, 0, 'COMMA')}원|"></div>
+              <div><input type="number" placeholder="100" id="point" th:field="*{usedPoint}"/></div>
+              <div id="leftover" th:text="|잔여 포인트 ${#numbers.formatInteger(order.buyer.point, 0, 'COMMA')}|"></div>
             </div>
           </div>
 
@@ -76,7 +76,6 @@
           <div class="price-info-wrap">
             <div class="price-info-tit">총 결제 금액</div>
             <div class="price-info" id="total-price" th:text="|${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]), 0 , 'COMMA')}원|"></div>
-
           </div>
 
           <div id="paymentBtnWrap">
@@ -87,7 +86,7 @@
       </div>
 
       <div class="user-info-tit">주문자 정보</div>
-
+			<input type="hidden" th:field="*{buyer}"/>
       <div class="user-info-box" th:object="${order.buyer}">
         <div class="user-info-wrap">
           <div class="user-info-subtit">주문하신 분</div>
@@ -109,15 +108,9 @@
         <div class="user-info-wrap">
           <div class="user-info-subtit">카드사</div>
           <div class="user-info">
-            <select name="card">
-              <option value="KB">KB 국민</option>
-              <option value="BC">비씨(페이북)</option>
-              <option value="SH">신한카드</option>
-              <option value="NH">NH농협</option>
-              <option value="hana">1QPay(하나)</option>
-              <option value="city">씨티카드</option>
-              <option value="rotte">롯데카드</option>
-              <option value="union">UnionPay</option>
+            <select th:field="*{cardCompany}">
+            <option th:each="cardCompany : ${cardCompanyList}" th:value="${cardCompany}" 
+            	th:text="${cardCompany}"></option>
             </select>
           </div>
         </div>
@@ -127,14 +120,15 @@
             <input
               type="text"
               placeholder="카드 번호를 입력해주세요."
-              id="cardNum" required maxlength="19"
+              id="cardNum" required maxlength="19" th:field="*{cardNumber}"
             />
           </div>
         </div>
         <div class="user-info-wrap">
           <div class="user-info-subtit">유효기간</div>
           <div class="user-info">
-            <input type="text" placeholder="예) 0922" id="validDate" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required/>
+            <input type="text" placeholder="예) 0922" id="validDate"  th:field="*{expiryDate}" maxlength="4" 
+            	oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required/>
           </div>
         </div>
       </div>
