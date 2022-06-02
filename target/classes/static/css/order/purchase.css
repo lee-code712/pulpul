@@ -104,6 +104,10 @@ td {
   flex-direction: column;
 }
 
+#point-input{
+	display: flex;
+	justify-content: flex-end;
+}
 #point {
   width: 60px;
   height: 24px;

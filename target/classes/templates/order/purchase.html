@@ -66,7 +66,7 @@
           <div class="price-info-wrap">
             <div class="price-info-tit">포인트</div>
             <div id="pointWrap">
-              <div><input type="number" placeholder="100" id="point" th:field="*{usedPoint}"/></div>
+              <div id="point-input"><input type="number" placeholder="100" id="point" th:field="*{usedPoint}"/></div>
               <div id="leftover" th:text="|잔여 포인트 ${#numbers.formatInteger(order.buyer.point, 0, 'COMMA')}|"></div>
             </div>
           </div>
@@ -74,6 +74,7 @@
           <hr class="hr-solid" />
 
           <div class="price-info-wrap">
+            <input type="hidden" id="total-input" name="totalPrice"/>
             <div class="price-info-tit">총 결제 금액</div>
             <div class="price-info" id="total-price" th:text="|${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]), 0 , 'COMMA')}원|"></div>
           </div>
