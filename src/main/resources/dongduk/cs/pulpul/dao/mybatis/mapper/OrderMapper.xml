@@ -212,7 +212,7 @@
 	<insert id="insertOrderGoods" parameterType="hashMap">
   	<foreach collection="list" item="map" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" >
 	   	INTO order_goods (order_id, goods_id, order_quantity, price)
-	  	VALUES (#{map.orderId}, #{map.cartItem.goodsId}, #{map.cartItem.quantity}, #{map.cartItem.goods.price})	
+	  	VALUES (#{map.orderId}, #{map.cartItem.goodsId}, #{map.cartItem.quantity}, #{map.cartItem.price})	
 		</foreach>
 	</insert>
 	
