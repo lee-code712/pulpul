@@ -84,37 +84,38 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	// 주문 생성
-	public boolean order(Order order) {
+	public int order(Order order) {
 		// 주문 정보 저장
 		boolean successed = orderDao.createOrder(order);
-		if (!successed) return false;
+		if (!successed) return 0;
 		
 		// 주문 상품 저장
-		int quantity = 0;
+		int orderId = order.getId();
 		List<Map<String, Object>> orderGoodsList = new ArrayList<Map<String, Object>>();
 		for (CartItem cartItem : order.getGoodsList()) {
 			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("orderId", order.getId());
+			param.put("orderId", orderId);
 			param.put("cartItem", cartItem);
 			orderGoodsList.add(param);
-			
-			// 수량 합계 계산
-			quantity += cartItem.getQuantity();
-			// 장바구니에서 해당 상품 삭제
-			successed = deleteCartItem(order.getBuyer().getId(), cartItem.getGoodsId());
-			if (!successed) return false;
 		}
 		successed = orderDao.createOrderGoods(orderGoodsList);
-		if (!successed) return false;
+		if (!successed) return 0;
 
 		// 회원 포인트 변경
 		successed = memberDao.changePoint(order.getBuyer().getId(), -1, order.getUsedPoint());
-		if (!successed) return false;
+		if (!successed) return 0;
 		
-		// 남은 수량 변경
-		successed = itemDao.changeRemainQuantityByOrderStatus(order.getId(), 1, quantity);
-		if (!successed) return false;
-		return true;
+		for (CartItem cartItem : order.getGoodsList()) {
+			// 상품의 남은 수량 변경
+			successed = itemDao.changeRemainQuantityByOrderStatus(cartItem.getGoodsId(), 1, cartItem.getQuantity());
+			if (!successed) return 0;
+			
+			// 장바구니에서 해당 상품 삭제
+			successed = deleteCartItem(order.getBuyer().getId(), cartItem.getGoodsId());
+			if (!successed) return 0;
+		}
+		
+		return orderId;
 	}
 
 	// 운송장번호 입력

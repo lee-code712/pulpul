@@ -31,7 +31,7 @@ public interface OrderService {
 	Order getOrder(int orderId);
 	
 	// 주문
-	boolean order(Order order);
+	int order(Order order);
 	
 	// 주문에 대한 운송장번호 입력
 	boolean changeTrackingNumber(Order order);

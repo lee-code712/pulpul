@@ -78,8 +78,9 @@ public class ItemDaoImpl implements ItemDao {
 	}
 
 	@Override
-	public boolean changeRemainQuantityByOrderStatus(int orderId, int orderStatus, int quantity) {
-		// TODO Auto-generated method stub
+	public boolean changeRemainQuantityByOrderStatus(String itemId, int orderStatus, int quantity) {
+		int ck = itemMapper.updateRemainQuantity(itemId, orderStatus, quantity);
+		if (ck > 0) return true;
 		return false;
 	}
 

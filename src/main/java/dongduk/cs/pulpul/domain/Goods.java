@@ -26,6 +26,5 @@ public class Goods {
 	private int salesQuantity; /*총 판매 수량*/
 	private int remainQuantity; /*남은 수량*/
 	private int shippingFee; /*배송비*/
-	private int avgRating; /*평균 별점*/
 	
 }

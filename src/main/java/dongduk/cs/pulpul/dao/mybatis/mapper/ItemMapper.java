@@ -33,7 +33,7 @@ public interface ItemMapper {
 	
 	int updateSalesQuantity(Goods goods);
 	
-	int updateRemainQuantity(@Param("orderId") int orderId, 
+	int updateRemainQuantity(@Param("itemId") String itemId, 
 			@Param("orderStatus") int orderStatus, 
 			@Param("quantity") int quantity);
 	

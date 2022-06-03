@@ -46,8 +46,8 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public boolean changePoint(String memberId, int status, int point) {
 		int ck = memberMapper.updatePoint(memberId, status, point);
-		if (ck < 0) return false;
-		return true;
+		if (ck > 0) return true;
+		return false;
 	}
 
 }

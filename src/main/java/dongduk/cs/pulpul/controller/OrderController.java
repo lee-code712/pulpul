@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import dongduk.cs.pulpul.domain.Cart;
 import dongduk.cs.pulpul.domain.CartItem;
@@ -85,22 +86,25 @@ public class OrderController {
 	
 	@PostMapping("/purchase")
 	public String purchase(@Valid @ModelAttribute("order") Order order, BindingResult result,
-			Model model, HttpSession session) {
+			Model model, HttpSession session, SessionStatus status) {
 		
 		if (result.hasErrors())
 			return "order/purchase";
 		
-		System.out.println(order.toString());
+//		System.out.println(order.toString());
 		
-//		boolean successed = orderSvc.order(order);
-//		if (!successed) {
-//			model.addAttribute("orderFalid", true);
-//			return "market/goodsForm";
-//		}
-//		
-//		session.removeAttribute("cart");
+		int orderId = orderSvc.order(order);
+		if (orderId == 0) {
+			model.addAttribute("orderFalid", true);
+			return "order/purchase";
+		}
 		
-		return "redirect:/order/orderDetail";
+		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - order.getGoodsList().size();
+		session.setAttribute("cartItemCnt", newCartItemCnt);
+		session.removeAttribute("cart"); // cart session attribute 삭제
+		status.setComplete(); // order 객체 참조 삭제
+		
+		return "redirect:/order/orderDetail?orderId=" + orderId;
 	}
 
 	/*

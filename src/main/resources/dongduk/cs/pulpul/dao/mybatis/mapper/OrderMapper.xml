@@ -185,15 +185,15 @@
 	<insert id="insertOrder" parameterType="Order">		
 		<selectKey keyProperty="id" resultType="int" order="BEFORE">SELECT order_seq.NEXTVAL FROM DUAL</selectKey>
 		INSERT INTO orders (order_id, order_date, total_price, used_point, card_company, card_number, expiry_date, buyer_id, seller_id)
-		VALUES (#{id}, SYSDATE, #{totalPrice}, #{usedPoint}, #{cardCompany}, #{cardNumber}, #{expiryDate}, #{buyer_id}, 
-			(SELECT member_id FROM item JOIN market USING (market_id) WHERE item_id = #{goodsList[0].item.id}))
+		VALUES (#{id}, SYSDATE, #{totalPrice}, #{usedPoint}, #{cardCompany}, #{cardNumber}, #{expiryDate}, #{buyer.id}, 
+			(SELECT member_id FROM market WHERE market_id = #{goodsList[0].goods.item.market.id}))
 	</insert>
 	
 	<!-- 주문 상품 생성 -->
 	<insert id="insertOrderGoods" parameterType="hashMap">
-    	<foreach collection="list" item="map" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" >
-	    	INTO order_goods (order_id, goods_id, quantity)
-	    	VALUES (#{map.order}, #{map.goods}, #{map.quantity})	
+  	<foreach collection="list" item="map" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" >
+	   	INTO order_goods (order_id, goods_id, order_quantity, price)
+	  	VALUES (#{map.orderId}, #{map.cartItem.goodsId}, #{map.cartItem.quantity}, #{map.cartItem.goods.price})	
 		</foreach>
 	</insert>
 	

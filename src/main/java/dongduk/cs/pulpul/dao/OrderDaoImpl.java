@@ -74,8 +74,8 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public boolean createOrderGoods(List<Map<String, Object>> orderGoodsList) {
 		int ck = orderMapper.insertOrderGoods(orderGoodsList);
-		if (ck > 0) return false;
-		return true;
+		if (ck > 0) return true;
+		return false;
 	}
 
 	@Override
