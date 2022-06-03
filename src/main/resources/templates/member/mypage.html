@@ -57,7 +57,7 @@
 	        </tr>
 	
 	      	<tr th:each="order : ${orderList}" th:if="${order.orderStatus} == 0">
-		      	<td class="order-id"><a href="/order/orderDetail" class="order-num-hover" th:text="${order.id}"></a></td>
+		      	<td class="order-id"><a th:href="@{/order/orderDetail(orderId=${order.id})}" class="order-num-hover" th:text="${order.id}"></a></td>
 		      	<td class="order-date" th:text="${order.orderDate}"></td>
 		      	<td class="order-market" th:text="${order.goodsList[0].goods.item.market.name}"></td>
 		      	<td class="traking-number" th:text="${order.trakingNumber}"></td>

@@ -48,8 +48,9 @@ function totalPrice(){
 	
 	document.querySelector("#itemQuantity").innerHTML = quantity;
 	
-	var total = Number(price.replace(',',"")) * Number(quantity) + Number(shippingFee.replace(',',""));
-	$("#inputTotal").val(total);
+	var itemPrice = Number(price.replace(',',"")) * Number(quantity);
+	var total = itemPrice + Number(shippingFee.replace(',',""));
+	$("#inputTotal").val(itemPrice); // cartItem price에는 단가 * 수량이 저장됨
 	document.querySelector("#totalPrice").innerHTML = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
 }
 

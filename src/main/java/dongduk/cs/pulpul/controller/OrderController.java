@@ -111,8 +111,11 @@ public class OrderController {
 	 * 구매 상세내역 조회
 	 */
 	@GetMapping("/orderDetail")
-	public String orderDetail() {
-		//주문 상세 정보 조회 페이지
+	public String orderDetail(@RequestParam("orderId") int orderId, Model model) {
+		
+		Order order = orderSvc.getOrder(orderId);
+		model.addAttribute(order);
+
 		return "order/orderDetail";
 	}
 	

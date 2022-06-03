@@ -55,8 +55,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public Order findOrder(int orderId) {
-		// TODO Auto-generated method stub
-		return null;
+		return orderMapper.selectOrder(orderId);
 	}
 
 	@Override
