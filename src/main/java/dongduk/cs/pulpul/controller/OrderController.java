@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import dongduk.cs.pulpul.domain.Cart;
 import dongduk.cs.pulpul.domain.CartItem;
@@ -24,6 +25,7 @@ import dongduk.cs.pulpul.service.MemberService;
 import dongduk.cs.pulpul.service.OrderService;
 
 @Controller
+@SessionAttributes("order")
 @RequestMapping("/order")
 public class OrderController {
 
