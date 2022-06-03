@@ -102,8 +102,10 @@ public class OrderServiceImpl implements OrderService {
 		if (!successed) return 0;
 
 		// 회원 포인트 변경
-		successed = memberDao.changePoint(order.getBuyer().getId(), -1, order.getUsedPoint());
-		if (!successed) return 0;
+		if (order.getUsedPoint() > 0) {
+			successed = memberDao.changePoint(order.getBuyer().getId(), -1, order.getUsedPoint());
+			if (!successed) return 0;
+		}
 		
 		for (CartItem cartItem : order.getGoodsList()) {
 			// 상품의 남은 수량 변경
