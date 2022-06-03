@@ -55,7 +55,7 @@
 
           <div class="price-info-wrap">
             <div class="price-info-tit">총 상품가격</div>
-            <div class="price-info" id="total-item"></div>
+            <div class="price-info" th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]), 0 , 'COMMA')} + '원'"></div>
           </div>
 
           <div class="price-info-wrap">
@@ -76,7 +76,8 @@
           <div class="price-info-wrap">
             <input type="hidden" id="total-input" name="totalPrice"/>
             <div class="price-info-tit">총 결제 금액</div>
-            <div class="price-info" id="total-price" th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]), 0 , 'COMMA')} + '원'"></div>
+            <div class="price-info" id="total-price" th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]) 
+            	+ #aggregates.sum(order.goodsList.![goods?.shippingFee]), 0 , 'COMMA')} + '원'"></div>
           </div>
 
           <div id="paymentBtnWrap">

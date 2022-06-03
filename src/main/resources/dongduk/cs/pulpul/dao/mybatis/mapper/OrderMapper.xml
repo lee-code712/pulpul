@@ -135,6 +135,7 @@
 		WHERE tracking_number = #{trackingNumber}
 	</select>
 	
+	<!-- 주문 상세정보 조회 -->
 	<resultMap id="OrderDetailMap" type="Order">
 		<id column="order_id" jdbcType="INTEGER" property="id" javaType="int" />
 		<result column="order_date" jdbcType="DATE" property="orderDate" javaType="string" />
@@ -178,7 +179,6 @@
 		</collection>
 	</resultMap>
 
-	<!-- 주문 상세정보 조회 -->
 	<select id="selectOrder" parameterType="int" resultMap="OrderDetailMap">
 		SELECT o.order_id, order_date, total_price, used_point, card_company, card_number,
 			og.goods_id, og.order_quantity AS goodsList_quantity, og.price AS item_total_price,
