@@ -15,6 +15,9 @@ public interface ReviewDao {
 	// 리뷰할 주문 id 1개 조회
 	int findOrderIdByNotReview(String itemId, String memberId);
 	
+	// 주문내역의 상품에 리뷰한 내역이 있는지 확인
+	boolean isExistReview(String itemId, int orderId);
+	
 	// 리뷰 생성
 	boolean createReview(Review review);
 	

@@ -26,5 +26,6 @@ public class Goods {
 	private int salesQuantity; /*총 판매 수량*/
 	private int remainQuantity; /*남은 수량*/
 	private int shippingFee; /*배송비*/
+	private boolean existReview; // 리뷰 여부 확인하는 변수 추가
 	
 }

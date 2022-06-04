@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import dongduk.cs.pulpul.dao.ItemDao;
 import dongduk.cs.pulpul.dao.MemberDao;
 import dongduk.cs.pulpul.dao.OrderDao;
+import dongduk.cs.pulpul.dao.ReviewDao;
 import dongduk.cs.pulpul.domain.Cart;
 import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Order;
@@ -21,13 +22,15 @@ public class OrderServiceImpl implements OrderService {
 	private final OrderDao orderDao;
 	private final ItemDao itemDao;
 	private final MemberDao memberDao;
+	private final ReviewDao reviewDao;
 
 	@Autowired
 	public OrderServiceImpl(OrderDao orderDao, ItemDao itemDao,
-			MemberDao memberDao) {
+			MemberDao memberDao, ReviewDao reviewDao) {
 		this.orderDao = orderDao;
 		this.itemDao = itemDao;
 		this.memberDao = memberDao;
+		this.reviewDao = reviewDao;
 	}
 
 	// 회원의 장바구니 목록 조회
@@ -80,7 +83,11 @@ public class OrderServiceImpl implements OrderService {
 
 	// 주문 상세정보 조회
 	public Order getOrder(int orderId) {
-		return orderDao.findOrder(orderId);
+		Order order = orderDao.findOrder(orderId);
+		for (CartItem cartItem : order.getGoodsList()) {
+			cartItem.getGoods().setExistReview(reviewDao.isExistReview(cartItem.getGoodsId(), orderId));
+		}
+		return order;
 	}
 
 	// 주문 생성

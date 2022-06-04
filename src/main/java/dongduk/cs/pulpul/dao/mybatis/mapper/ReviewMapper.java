@@ -17,6 +17,9 @@ public interface ReviewMapper {
 	String selectOrderIdByNotReview(@Param("itemId") String itemId, 
 			@Param("memberId") String memberId);
 	
+	int selectReviewCountByItemId(@Param("itemId") String itemId,
+			@Param("orderId") int orderId);
+	
 	int insertReview(Review review);
 	
 	int insertReviewImage(Review review);

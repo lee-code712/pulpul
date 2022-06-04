@@ -31,6 +31,13 @@ public class ReviewDaoImpl implements ReviewDao {
 			return 0;
 		return Integer.parseInt(orderId);
 	}
+	
+	@Override
+	public boolean isExistReview(String itemId, int orderId) {
+		int ck = reviewMapper.selectReviewCountByItemId(itemId, orderId);
+		if (ck > 0) return true;
+		return false;
+	}
 
 	@Override
 	public boolean createReview(Review review) {
