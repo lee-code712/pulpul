@@ -16,17 +16,6 @@ function deleteItemByMarket(marketId){
 	location.href='/cart/deleteItemByMarket?marketId=' + marketId;
 }
 
-/* 상품 판매가
-$("td.price").each(function(){
-	
-	var quantity = Number($(this).prev().text());
-	var shipping = Number($(this).next().text());
-	var total = Number($(this).text());
-	
-	var price = (total - shipping) / quantity;
-	$(this).text(price);
-}) */
-
 /* 
 페이지 첫 로드할 때 div와 table, checkbox에 class명 추가
 체크할 때마다 가격 보여주기 위해 필요한 함수
@@ -125,10 +114,26 @@ $("table input[type=checkbox]").click(function(){
 	//체크 true
 	if($(this).is(":checked") == true){
 			object[`price${sequence}`] += Number(price) * quantity; //총 상품 금액 저장
-			object[`shipping${sequence}`] += Number(shipping); //배송비 저장
+			console.log(object[`shipping${sequence}`]);
+			if(object[`shipping${sequence}`] < Number(shipping)){
+				object[`shipping${sequence}`] = Number(shipping); //배송비 저장
+			}
 	 }else{ //체크 false
-			object[`price${sequence}`] -= Number(price) * quantity; 
-			object[`shipping${sequence}`] -= Number(shipping);
+			object[`price${sequence}`] -= Number(price) * quantity;
+			var table = "marketTable" + sequence;
+			var checkLength = $("." + table  + " input[type=checkbox]:checked").length; //해당 마켓에서 선택한 상품 개수
+			
+			if(checkLength == 0){ //선택한 상품 없을 때
+				object[`shipping${sequence}`] = 0;
+			}else{
+				var arr = [];
+				$("." + table  + " input[type=checkbox]:checked").each(function(){
+					var checkShipping = $(this).parent().siblings(".shipping").text();
+					arr.push(checkShipping);
+				})
+				var maxShipping = Math.max.apply(null, arr); //가장 큰 배송비 선택
+				object[`shipping${sequence}`] = maxShipping;
+			}
 	}
 	
 	var totalPrice = object[`price${sequence}`] + object[`shipping${sequence}`]; //총 결제 금액
