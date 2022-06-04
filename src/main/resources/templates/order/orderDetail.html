@@ -42,7 +42,7 @@
               <div class="item-market" th:text="${goodsList.goods.item.market.name}"></div>
             </div>
           </td>
-          <td class="item-num" th:text="${#lists.size(order.goodsList)}"></td>
+          <td class="item-num"></td>
           <td class="seller" th:text="|${order.seller.name}님|"></td>
           <td class="pay-id" th:text="${order.id}"></td>
           <td class="pay-date" th:text="${#strings.arraySplit(order.orderDate, ' ')[0]}"></td>
