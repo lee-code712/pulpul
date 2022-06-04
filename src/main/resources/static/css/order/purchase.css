@@ -182,6 +182,10 @@ td {
   font-size: 14px;
 }
 
+.user-info-error {
+	margin-left: 8px;
+	width: 450px;
+}
 select {
   display: flex;
   justify-content: center;

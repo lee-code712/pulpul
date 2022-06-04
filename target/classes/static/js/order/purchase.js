@@ -5,17 +5,11 @@
 
  var totalPrice = Number($("#total-price").text().replace(",", "").split("원")[0]); //총 결제 금액
  $("#total-input").attr("value", totalPrice.toString()); //total-price input hidden
- var totalShipping = Number($("#total-shipping").text().replace(",", "").split("원")[0]); //배송비
- var itemPrice;
  var point = Number($("#point").text());
  
 if(point > 0) {
-	$("#total-price").text(totalPrice - point);
-	itemPrice = totalPrice - totalShipping + point;
-}else{
-	itemPrice = totalPrice - totalShipping;
+	$("#total-price").text(totalPrice - point).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
 }
- $("#total-item").text(itemPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원");
  
  //잔여 포인트
  var leftover = $("#leftover").text().replace(",", "").replace("잔여 포인트", "").split("원")[0];

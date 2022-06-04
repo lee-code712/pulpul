@@ -43,9 +43,9 @@
               <img th:src="${goodsList.goods.item.thumbnailUrl}" class="item-img" />
             </td>
             <td class="item-info" th:text="${goodsList.goods.item.name}"></td>
-            <td class="item-num" th:text="${goodsList.quantity}">1</td>
+            <td class="item-num" th:text="${goodsList.quantity}"></td>
             <td class="price" th:text="${goodsList.goods.price}"></td>
-            <td class="shipping" th:text="${goodsList.goods.shippingFee}">2250원</td>
+            <td class="shipping" th:text="${goodsList.goods.shippingFee}"></td>
             <td class="seller" th:text="${goodsList.goods.item.market.name}"></td>
           </tr>
         </table>
@@ -99,7 +99,8 @@
         </div>
         <div class="user-info-wrap">
           <div class="user-info-subtit">휴대폰</div>
-          <div class="user-info" th:text="*{phone}"></div>
+          <div class="user-info" th:text="*{#strings.substring(phone, 0, 3) + '-' +
+          #strings.substring(phone, 3, 7) + '-' + #strings.substring(phone, 7)}"></div>
         </div>
       </div>
 
@@ -123,16 +124,16 @@
               placeholder="카드 번호를 입력해주세요."
               id="cardNum" required maxlength="19" th:field="*{cardNumber}"
             />
+            <div th:errors="*{cardNumber}" class="user-info-error"></div>
           </div>
-          <div th:errors="*{cardNumber}"></div>
         </div>
         <div class="user-info-wrap">
           <div class="user-info-subtit">유효기간</div>
           <div class="user-info">
             <input type="text" placeholder="예) 0922" id="validDate"  th:field="*{expiryDate}" maxlength="4" 
             	oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required/>
+            <div th:errors="*{expiryDate}" class="user-info-error"></div>
           </div>
-          <div th:errors="*{expiryDate}"></div>
         </div>
       </div>
     </div>
