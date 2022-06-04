@@ -45,7 +45,7 @@
             <td class="item-info" th:text="${goodsList.goods.item.name}"></td>
             <td class="item-num" th:text="${goodsList.quantity}"></td>
             <td class="price" th:text="${goodsList.goods.price}"></td>
-            <td class="shipping" th:text="${goodsList.goods.shippingFee}"></td>
+            <td class="shipping shippingFee" th:text="${goodsList.goods.shippingFee}"></td>
             <td class="seller" th:text="${goodsList.goods.item.market.name}"></td>
           </tr>
         </table>
@@ -55,12 +55,12 @@
 
           <div class="price-info-wrap">
             <div class="price-info-tit">총 상품가격</div>
-            <div class="price-info" th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]), 0 , 'COMMA')} + '원'"></div>
+            <div class="price-info" id="total-item" th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]), 0 , 'COMMA')} + '원'"></div>
           </div>
 
           <div class="price-info-wrap">
             <div class="price-info-tit">배송비</div>
-            <div class="price-info" id="total-shipping" th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![goods?.shippingFee]), 0 , 'COMMA')} + '원'"></div>
+            <div class="price-info" id="total-shipping"></div>
           </div>
 
           <div class="price-info-wrap">

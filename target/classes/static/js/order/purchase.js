@@ -1,25 +1,35 @@
 /**
  * 
  */
- //총 상품 금액 계산
+ //배송비 상품들 중 배송비 가장 큰 값
+ var shippings = document.querySelectorAll(".shippingFee");
+ var shippingArr = [];
+ for(var i = 0; i < shippings.length; i++){
+	shippingArr.push(shippings[i].innerHTML);
+}
+var maxShipping = Math.max.apply(null, shippingArr);
 
- var totalPrice = Number($("#total-price").text().replace(",", "").split("원")[0]); //총 결제 금액
- $("#total-input").attr("value", totalPrice.toString()); //total-price input hidden
+$("#total-shipping").text(maxShipping.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원");
+ 
+ //총 결제 금액 계산
+ var totalItem = Number($("#total-item").text().replace(",", "").split("원")[0]); //결제 상품 금액
  var point = Number($("#point").text());
  
 if(point > 0) {
-	$("#total-price").text(totalPrice - point).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
+	$("#total-price").text((totalItem + maxShipping - point).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원");
+}else{
+	$("#total-price").text((totalItem + maxShipping).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원");
 }
+$("#total-input").attr("value", $("#total-price").text()); //total-price input hidden
  
  //잔여 포인트
  var leftover = $("#leftover").text().replace(",", "").replace("잔여 포인트", "").split("원")[0];
- 
+ var totalPrice = $("#total-price").text().replace(",", "").split("원")[0];
  $("#point").keyup(function(){
 	
 	var point = Number($(this).val());
 	var total;
 	if(point > Number(leftover)){ //잔여 포인트보다 큰 값 입력시
-	
 		$(this).val("");
 		total = totalPrice;
 		$("#leftover").css("color", "red");
