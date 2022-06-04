@@ -159,7 +159,7 @@
 		</association>
 		<collection property="goodsList" ofType="CartItem">
 			<id column="goods_id" jdbcType="VARCHAR" property="goodsId" javaType="String" />
-			<result column="quantity" jdbcType="INTEGER" property="quantity" javaType="int" />
+			<result column="goodsList_quantity" jdbcType="INTEGER" property="quantity" javaType="int" />
 			<result column="item_total_price" jdbcType="INTEGER" property="price" javaType="int" />
 			<association property="goods" column="goods_id" javaType="Goods">
 				<result column="item_price" jdbcType="INTEGER" property="price" javaType="int" />

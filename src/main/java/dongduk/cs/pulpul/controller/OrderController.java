@@ -86,7 +86,7 @@ public class OrderController {
 	
 	@PostMapping("/purchase")
 	public String purchase(@Valid @ModelAttribute("order") Order order, BindingResult result,
-			Model model, HttpSession session, SessionStatus status) {
+			Model model, HttpSession session) {
 		
 		if (result.hasErrors())
 			return "order/purchase";
@@ -102,7 +102,6 @@ public class OrderController {
 		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - order.getGoodsList().size();
 		session.setAttribute("cartItemCnt", newCartItemCnt);
 		session.removeAttribute("cart"); // cart session attribute 삭제
-		status.setComplete(); // order 객체 참조 삭제
 		
 		return "redirect:/order/orderDetail?orderId=" + orderId;
 	}
@@ -111,10 +110,14 @@ public class OrderController {
 	 * 구매 상세내역 조회
 	 */
 	@GetMapping("/orderDetail")
-	public String orderDetail(@RequestParam("orderId") int orderId, Model model) {
+	public String orderDetail(@RequestParam("orderId") int orderId, Model model, SessionStatus status) {
 		
 		Order order = orderSvc.getOrder(orderId);
 		model.addAttribute(order);
+		
+		if (!status.isComplete()) {
+			status.setComplete(); // order 객체 참조 삭제
+		}
 
 		return "order/orderDetail";
 	}
