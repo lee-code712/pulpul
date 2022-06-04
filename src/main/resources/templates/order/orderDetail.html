@@ -80,6 +80,11 @@
           <div class="pay-info-tit">배송비</div>
           <div class="pay-info"  th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![goods?.shippingFee]), 0 , 'COMMA')} + '원'"></div>
         </div>
+        
+         <div class="pay-info-inner">
+          <div class="pay-info-tit">포인트</div>
+          <div class="pay-info" th:text="|${#numbers.formatInteger(order.usedPoint, 0, 'COMMA')}원|"></div>
+        </div>
 
         <div class="pay-info-inner">
           <div class="pay-info-tit">최종 결제 금액</div>
