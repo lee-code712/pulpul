@@ -32,41 +32,22 @@
           <th class="review"></th>
         </tr>
 
-        <tr>
-          <td class="item-img">
-            <img src="/images/smallItemImg.svg" class="item-image" />
+        <tr th:each="goodsList : ${order.goodsList}">
+          <td class="item-img-wrap">
+            <img th:src="${goodsList.goods.item.thumbnailUrl}" class="item-img" />
           </td>
           <td class="item-info">
             <div class="info">
-              <div class="item-name">### 식물</div>
-              <div class="item-market">풀풀마켓</div>
+              <div class="item-name" th:text="${goodsList.goods.item.name}"></div>
+              <div class="item-market" th:text="${goodsList.goods.item.market.name}"></div>
             </div>
           </td>
-          <td class="item-num">2</td>
-          <td class="seller">###님</td>
-          <td class="pay-id">(결제 ID)</td>
-          <td class="pay-date">2022-05-09</td>
+          <td class="item-num" th:text="${#lists.size(order.goodsList)}"></td>
+          <td class="seller" th:text="|${order.seller.name}님|"></td>
+          <td class="pay-id" th:text="${order.id}"></td>
+          <td class="pay-date" th:text="${#strings.arraySplit(order.orderDate, ' ')[0]}"></td>
           <td class="review">
-            <button class="review-btn">리뷰 쓰기</button>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="item-img">
-            <img src="/images/smallItemImg.svg" class="item-image" />
-          </td>
-          <td class="item-info">
-            <div class="info">
-              <div class="item-name">### 식물</div>
-              <div class="item-market">풀풀마켓</div>
-            </div>
-          </td>
-          <td class="item-num">2</td>
-          <td class="seller">###님</td>
-          <td class="pay-id">(결제 ID)</td>
-          <td class="pay-date">2022-05-09</td>
-          <td class="review">
-            <button class="review-btn">리뷰 쓰기</button>
+            <button class="review-btn" onclick="location.href='/lookup/goodsDetail'">리뷰 쓰기</button>
           </td>
         </tr>
       </table>
@@ -75,35 +56,35 @@
       <div id="shippingInfoWrap">
         <div class="shipping-info-inner">
           <div class="shipping-info-tit">수령인</div>
-          <div class="shipping-info">(수령인)</div>
+          <div class="shipping-info" th:text="${order.buyer.name}"></div>
         </div>
-
         <div class="shipping-info-inner">
-          <div class="shipping-info-tit">수령인</div>
-          <div class="shipping-info">(수령인)</div>
+          <div class="shipping-info-tit">휴대폰</div>
+          <div class="shipping-info" th:text="${#strings.substring(order.buyer.phone, 0, 3) + '-' + 
+          #strings.substring(order.buyer.phone, 3, 7) + '-' + #strings.substring(order.buyer.phone, 7)}"></div>
         </div>
-
-        <div class="shipping-info-inner">
-          <div class="shipping-info-tit">수령인</div>
-          <div class="shipping-info">(수령인)</div>
+         <div class="shipping-info-inner">
+          <div class="shipping-info-tit">주소지</div>
+          <div class="shipping-info" th:text="|${order.buyer.address} ${order.buyer.addressDetail}|"></div>
         </div>
       </div>
 
       <div id="payInfoTit">결제 정보</div>
       <div id="payInfoWrap">
         <div class="pay-info-inner">
-          <div class="pay-info-tit">상품 금액</div>
-          <div class="pay-info">18000원</div>
+          <div class="pay-info-tit" >상품 금액</div>
+          <div class="pay-info" th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]), 0 , 'COMMA')} + '원'"></div>
         </div>
 
         <div class="pay-info-inner">
           <div class="pay-info-tit">배송비</div>
-          <div class="pay-info">2000원</div>
+          <div class="pay-info"  th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![goods?.shippingFee]), 0 , 'COMMA')} + '원'"></div>
         </div>
 
         <div class="pay-info-inner">
           <div class="pay-info-tit">최종 결제 금액</div>
-          <div id="totalPrice">20000원</div>
+          <div id="totalPrice" th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]) 
+            	+ #aggregates.sum(order.goodsList.![goods?.shippingFee]), 0 , 'COMMA')} + '원'"></div>
         </div>
       </div>
     </div>

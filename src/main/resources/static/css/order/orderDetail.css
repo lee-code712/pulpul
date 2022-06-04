@@ -34,13 +34,20 @@ td {
   padding: 10px;
 }
 
-.item-img {
+.item-img-wrap {
   width: 100px;
   text-align: center;
 }
 
+.item-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+}
+
 .item-info {
   width: 280px;
+  text-align: center;
 }
 
 .item-num {
