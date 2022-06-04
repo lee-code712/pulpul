@@ -10,6 +10,11 @@
 	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
   	<link rel="stylesheet" th:href="@{/css/order/orderDetail.css}" >
   </th:block>
+  
+  <th:block layout:fragment="script">
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	  	<script th:src="@{/js/order/orderDetail.js}" defer></script>
+	  </th:block>
 
 	<div layout:fragment="content">
 	<script th:inline="javascript">
@@ -42,12 +47,12 @@
               <div class="item-market" th:text="${goodsList.goods.item.market.name}"></div>
             </div>
           </td>
-          <td class="item-num"></td>
+          <td class="item-num" th:text="${goodsList.quantity}"></td>
           <td class="seller" th:text="|${order.seller.name}님|"></td>
           <td class="pay-id" th:text="${order.id}"></td>
           <td class="pay-date" th:text="${#strings.arraySplit(order.orderDate, ' ')[0]}"></td>
           <td class="review">
-            <button class="review-btn" onclick="location.href='/lookup/goodsDetail'">리뷰 쓰기</button>
+            <button th:unless="${goodsList.goods.existReview}" class="review-btn" th:onclick="moveToGoodsDetail([[${goodsList.goodsId}]])">리뷰 쓰기</button>
           </td>
         </tr>
       </table>
@@ -73,23 +78,22 @@
       <div id="payInfoWrap">
         <div class="pay-info-inner">
           <div class="pay-info-tit" >상품 금액</div>
-          <div class="pay-info" th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]), 0 , 'COMMA')} + '원'"></div>
+          <div class="pay-info" id="total-item" th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]), 0 , 'COMMA')} + '원'"></div>
         </div>
 
         <div class="pay-info-inner">
           <div class="pay-info-tit">배송비</div>
-          <div class="pay-info"  th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![goods?.shippingFee]), 0 , 'COMMA')} + '원'"></div>
+          <div class="pay-info" id="total-shippingFee"></div>
         </div>
         
-         <div class="pay-info-inner">
+         <div class="pay-info-inner" th:if="${order.usedPoint != 0}">
           <div class="pay-info-tit">포인트</div>
-          <div class="pay-info" th:text="|${#numbers.formatInteger(order.usedPoint, 0, 'COMMA')}원|"></div>
+          <div class="pay-info" id="point" th:text="|${#numbers.formatInteger(order.usedPoint, 0, 'COMMA')}원|"></div>
         </div>
 
         <div class="pay-info-inner">
           <div class="pay-info-tit">최종 결제 금액</div>
-          <div id="totalPrice" th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]) 
-            	+ #aggregates.sum(order.goodsList.![goods?.shippingFee]), 0 , 'COMMA')} + '원'"></div>
+          <div id="totalPrice" th:text="${#numbers.formatInteger(order.totalPrice, 0 , 'COMMA')} + '원'"></div>
         </div>
       </div>
     </div>
