@@ -104,7 +104,7 @@
             <div id="totalPrice">원</div>
           </div>
           <div id="btnWrap" th:unless="${goods.remainQuantity == 0}">
-            <button id="cartBtn" onclick="javascript: form.action='/cart/addItem';">장바구니</button>
+            <button id="cartBtn" th:if="${session.id} != ${goods.item.market.member.id}" onclick="javascript: form.action='/cart/addItem';">장바구니</button>
              <script th:inline="javascript">
 		    	  var failed = [[${addFailed}]];
 				  		if(failed == true){
@@ -120,6 +120,7 @@
 						  	});
 				  		}
 				  </script>
+			<button id="cartBtn" th:if="${session.id} == ${goods.item.market.member.id}" type="button" th:onclick="updateGoods([[${goods.item.id}]])">상품 수정</button>
             <button id="cancelBtn" type="button" onclick="location.href='/lookup/goodsList'">목록 이동</button>
           </div>
            <div id="btnWrap" th:if="${goods.remainQuantity == 0}">
@@ -158,7 +159,7 @@
       	</div>
       </div>
       	<div id="review" th:text="${review.content}"></div>
-        <img th:src="${review.imageUrl}" id="reviewImg" />
+        <img th:unless="${#strings.isEmpty(review.imageUrl)}" th:src="${review.imageUrl}" id="reviewImg" />  
       </div>
       
       

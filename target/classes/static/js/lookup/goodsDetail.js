@@ -35,6 +35,11 @@ function cancel(itemId){
 	encodeUri(uri);
 }
 
+ function updateGoods(id){
+	const uri = '/market/goods/update?itemId=' + id;
+	encodeUri(uri);
+}
+
 /* 버튼 클릭 시 이동 막음 */
 $("#soldoutBtn").click(function(event){
 	event.preventDefault();
