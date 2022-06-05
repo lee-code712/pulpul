@@ -212,6 +212,7 @@
 			<result column="upload_date" jdbcType="DATE" property="uploadDate" javaType="string" />
 			<result column="description" jdbcType="VARCHAR" property="description" javaType="string" />
 			<result column="open_status" jdbcType="INTEGER" property="openStatus" javaType="int" />
+			<result column="image_src" jdbcType="VARCHAR" property="thumbnailUrl" javaType="string" />
 			<association property="market" column="market_id" javaType="Market">
 				<id column="market_id" jdbcType="INTEGER" property="id" javaType="int" />
 				<result column="market_name" jdbcType="VARCHAR" property="name" javaType="string" />
@@ -219,9 +220,6 @@
 					<id column="member_id" jdbcType="VARCHAR" property="id" javaType="string" />
 				</association>
 			</association>
-			<collection property="imageUrlList" ofType="string" javaType="java.util.List">
-        <result column="image_src" />
-    	</collection>
 		</association>
 	</resultMap>
 	
