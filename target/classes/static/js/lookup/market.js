@@ -86,7 +86,7 @@ function shareThingJson(marketId) {
 			contentType: "application/json",
 			processData: false,
 			success: function(responseJson){	// responseJson: JS object parsed from JSON text			
-			   //	alert(JSON.stringify(responseJson));
+			   console.log(responseJson);
 			   	// 이 부분에서 공유물품 리스트를 출력하는 코드를 짜야 함
 			   	$("#itemWrap").each(function(){
 					$(this).children(".item").remove();

@@ -155,7 +155,7 @@ public class LookupController {
 	@ResponseBody
 	public List<ShareThing> marketShareThingList(@PathVariable("marketId") int marketId,
 			HttpServletResponse response) throws IOException {
-
+		
 		List<ShareThing> shareThingList = itemSvc.getShareThingListByMarket(marketId);
 		if (shareThingList == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);

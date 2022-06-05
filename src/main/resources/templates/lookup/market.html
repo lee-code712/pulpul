@@ -32,9 +32,9 @@
 	      <div id="pageSubTit">personal market</div>
 	
 	      <div id="menu">
-	        <div id="goods-menu" class="list" th:onclick="goodsJson([[*{id}]])">상품</div>
+	        <div id="goods-menu" class="list" th:onclick="goodsJson([[${market.id}]])">상품</div>
 	        |
-	        <div id="shareThing-menu" class="list" th:onclick="shareThingJson([[*{id}]])">공유물품</div>
+	        <div id="shareThing-menu" class="list" th:onclick="shareThingJson([[${market.id}]])">공유물품</div>
 	      </div>
 	      
 	     <div id="itemWrap">
@@ -43,13 +43,18 @@
 	      <hr class="hr-dotted" />
 	      <table class="marketTable">
 	        <tr>
-	          <td>마켓 설명</td>
+	          <td>마켓 소개</td>
 	          <td th:text="*{intro}"></td>
+	        </tr>
+	        
+	        <tr>
+	          <td>지역</td>
+	          <td th:text="*{member.address}"></td>
 	        </tr>
 	
 	        <tr>
 	          <td>문의</td>
-	          <td th:text="*{member.phone}"></td>
+	          <td th:text="*{member.email}"></td>
 	        </tr>
 	
 	        <tr>
@@ -63,7 +68,7 @@
 	        </tr>
 	
 	        <tr>
-	          <td>구매 전 유의사항</td>
+	          <td>유의사항</td>
 	          <td th:text="*{precaution}"></td>
 	        </tr>
 	      </table>
