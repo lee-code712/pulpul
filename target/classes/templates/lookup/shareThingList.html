@@ -36,7 +36,7 @@
 
       <div id="itemWrap">
 			<div class="item" th:onclick="moveToShareThingDetail([[${shareThing.item.id}]])" th:each="shareThing : ${shareThingList}">
-	        <div class="item-img-size" th:src="${shareThing.item.thumbnailUrl}"></div>
+	        <img th:src="${shareThing.item.thumbnailUrl}" class="item-img-size"/>
 	        
 	        <div class="itemWaitingWrap">
 		      	<div class="item-name"  th:text="${shareThing.item.name}"></div>
