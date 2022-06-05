@@ -40,4 +40,7 @@ public interface OrderService {
 	// 주문 취소
 	boolean cancelOrder(int orderId) throws CancelOrderException;
 	
+	// 주문 확정
+	boolean finalizeOrder(int orderId);
+	
 }

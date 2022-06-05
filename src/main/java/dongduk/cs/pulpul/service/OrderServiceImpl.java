@@ -167,4 +167,10 @@ public class OrderServiceImpl implements OrderService {
 		return false;
 	}
 
+	@Override
+	public boolean finalizeOrder(int orderId) {
+		return orderDao.changeOrderStatus(orderId, 3);
+	}
+	
+
 }

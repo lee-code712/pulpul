@@ -128,8 +128,7 @@ public class OrderController {
 	 * 구매 취소
 	 */
 	@GetMapping("/orderCancel")
-	public String cancel(@RequestParam("orderId") int orderId, HttpSession session,
-			RedirectAttributes rttr) {
+	public String cancel(@RequestParam("orderId") int orderId, RedirectAttributes rttr) {
 		
 		try {
 			boolean successed = orderSvc.cancelOrder(orderId);
@@ -144,7 +143,19 @@ public class OrderController {
 		return "redirect:/member/mypage";
 	}
 	
-	
+	/*
+	 * 구매 확정
+	 */
+	@GetMapping("/finalizeOrder")
+	public String finalize(@RequestParam("orderId") int orderId, RedirectAttributes rttr) {
+		
+		boolean successed = orderSvc.finalizeOrder(orderId);
+		if (!successed) {
+			rttr.addFlashAttribute("finalizeFailed", true);
+		}
+			
+		return "redirect:/member/mypage";
+	}
 
 
 	/*

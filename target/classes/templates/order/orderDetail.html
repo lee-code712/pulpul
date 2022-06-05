@@ -52,8 +52,8 @@
           <td class="pay-id" th:text="${order.id}"></td>
           <td class="pay-date" th:text="${#strings.arraySplit(order.orderDate, ' ')[0]}"></td>
           <td class="review">
-          	<span th:if="${order.orderStatus == 0}"> 취소됨</span>
-            <button th:unless="${goodsList.goods.existReview}" class="review-btn" th:onclick="moveToGoodsDetail([[${goodsList.goodsId}]])">리뷰 쓰기</button>
+          	<span th:if="${order.orderStatus == 0}">취소됨</span>
+            <button th:if="${!goodsList.goods.existReview && order.orderStatus == 3}" class="review-btn" th:onclick="moveToGoodsDetail([[${goodsList.goodsId}]])">리뷰 쓰기</button>
           </td>
         </tr>
       </table>

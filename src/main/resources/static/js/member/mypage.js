@@ -114,15 +114,22 @@ function orderListJson() {
 					td_05.innerHTML = "결제 완료";
 				else if (order.orderStatus == 2)
 					td_05.innerHTML = "배송 시작";
+				else if (order.orderStatus == 3)
+					td_05.innerHTML = "주문 확정";
 				
 				const td_06 = document.createElement("td");
 				td_06.setAttribute("class", "traking-number");
 				td_06.innerHTML = order.trackingNumber;
 				
 				const td_07 = document.createElement("td");
-				if (order.trackingNumber == null && order.orderStatus != 0) {
+				if (order.trackingNumber == null && order.orderStatus == 1) {
 					td_07.setAttribute("class", "cancel-btn");
 					td_07.innerHTML += "<button class='cancelBtn-noton' onclick=\"location.href='/order/orderCancel?orderId=" + order.id + "'\">주문 취소</button>";
+					
+				}
+				if (order.orderStatus == 2) {
+					td_07.setAttribute("class", "cancel-btn");
+					td_07.innerHTML += "<button class='cancelBtn-noton' onclick=\"location.href='/order/finalizeOrder?orderId=" + order.id + "'\">주문 확정</button>";
 					
 				}
 				
