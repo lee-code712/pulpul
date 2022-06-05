@@ -45,7 +45,9 @@
 		            <div class="waiting" th:text="${shareThing.reservationNumber}"></div>
 		        </div>
 	        </div>
-	
+					
+					<div class="address" th:text="${shareThing.item.market.member.address}"></div>
+	        
 	        <div class="rental-ok" th:if="${shareThing.isBorrowed} == 0">대여 가능</div>
 	        <div class="rental-notok" th:if="${shareThing.isBorrowed} == 1">대여 불가</div>       
         </div> 

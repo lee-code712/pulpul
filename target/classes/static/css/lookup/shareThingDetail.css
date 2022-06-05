@@ -20,19 +20,33 @@
   width: 518px;
 }
 
+#itemNameWrap {
+	display: flex;
+	align-items: center;
+}
+
 .waitingWrap {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 14px 0px 20px 0px;
+  margin-left: 10px;
   font-size: 14px;
   color: #c09693;
 }
 
 #itemName {
-  margin-bottom: 14px;
   font-size: 24px;
   font-weight: medium;
+}
+
+.address {
+	margin: 4px 0px 20px 0px;
+	color: #535353;
+}
+
+.hr-dotted {
+	margin-bottom: 20px;
+	border: 1px dotted #EAEAEA;
 }
 
 #itemInfo {
