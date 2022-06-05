@@ -20,4 +20,7 @@ public interface MemberService {
 	// 회원탈퇴
 	boolean resign(Member member);
 	
+	// 포인트 수정
+	boolean changePoint(Member member, int status, int point);
+	
 }

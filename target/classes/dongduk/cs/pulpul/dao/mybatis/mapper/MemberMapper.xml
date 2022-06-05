@@ -38,10 +38,10 @@
 	<update id="updatePoint">
 		UPDATE member
 	 	<set>
-			<if test='status eq 1'>
+			<if test="status eq 1">
 				point = point + #{point}
 			</if>
-			<if test='status eq -1'>
+			<if test="status eq -1">
 				point = point - #{point}
 			</if>
 		</set>

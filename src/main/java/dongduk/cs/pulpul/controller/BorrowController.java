@@ -20,6 +20,7 @@ import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.ShareThing;
 import dongduk.cs.pulpul.service.BorrowService;
 import dongduk.cs.pulpul.service.ItemService;
+import dongduk.cs.pulpul.service.MemberService;
 import dongduk.cs.pulpul.validator.BorrowValidator;
 
 @Controller
@@ -28,11 +29,13 @@ public class BorrowController {
 	
 	private final BorrowService borrowService;
 	private final ItemService itemService;
+	private final MemberService memberService;
 	
 	@Autowired 
-	public BorrowController(BorrowService borrowService, ItemService itemService) {
+	public BorrowController(BorrowService borrowService, ItemService itemService, MemberService memberService) {
 		this.borrowService = borrowService;
 		this.itemService = itemService;
+		this.memberService = memberService;
 	}
 	
 	@Autowired
@@ -90,6 +93,9 @@ public class BorrowController {
 		boolean success = borrowService.borrow(borrow);
 		
 		if(success) {
+			// lender에게 포인트 지급
+			Member lender = memberService.getMember(borrow.getLender().getId());
+			memberService.changePoint(lender, 1, 1000);
 			return "redirect:/member/mypage/borrowList";
 		}
 		else {
