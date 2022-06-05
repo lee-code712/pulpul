@@ -36,6 +36,11 @@
       <img src="/images/infoBtn.svg" id="infoBtn" onclick="location.href='/member/view'" />
       <div id="memberName">회원 이름</div>
       <div id="point">p 1000</div>
+      <div id="menu">
+	        <div><a href="/member/mypage/orderList" class="list-on">구매 목록</a></div>
+	        |
+	        <div><a href="/member/mypage/borrowList" class="list">대여 목록</a></div>
+	      </div>
 
 			<!-- member/mypage/orderlist -->
 			<th:block th:if="${#httpServletRequest.requestURI} == '/member/mypage/orderList'">
