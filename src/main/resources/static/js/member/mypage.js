@@ -124,12 +124,12 @@ function orderListJson() {
 				const td_07 = document.createElement("td");
 				if (order.trackingNumber == null && order.orderStatus == 1) {
 					td_07.setAttribute("class", "cancel-btn");
-					td_07.innerHTML += "<button class='cancelBtn-noton' onclick=\"location.href='/order/orderCancel?orderId=" + order.id + "'\">주문 취소</button>";
+					td_07.innerHTML += "<button class='cancelBtn-noton' onclick=\"location.href='/order/cancel?orderId=" + order.id + "'\">주문 취소</button>";
 					
 				}
 				if (order.orderStatus == 2) {
 					td_07.setAttribute("class", "cancel-btn");
-					td_07.innerHTML += "<button class='cancelBtn-on' onclick=\"location.href='/order/finalizeOrder?orderId=" + order.id + "'\">주문 확정</button>";
+					td_07.innerHTML += "<button class='cancelBtn-on' onclick=\"location.href='/order/finalize?orderId=" + order.id + "'\">주문 확정</button>";
 					
 				}
 				

@@ -127,7 +127,7 @@ public class OrderController {
 	/*
 	 * 구매 취소
 	 */
-	@GetMapping("/orderCancel")
+	@GetMapping("/cancel")
 	public String cancel(@RequestParam("orderId") int orderId, RedirectAttributes rttr) {
 		
 		try {
@@ -146,7 +146,7 @@ public class OrderController {
 	/*
 	 * 구매 확정
 	 */
-	@GetMapping("/finalizeOrder")
+	@GetMapping("/finalize")
 	public String finalize(@RequestParam("orderId") int orderId, RedirectAttributes rttr) {
 		
 		boolean successed = orderSvc.finalizeOrder(orderId);
