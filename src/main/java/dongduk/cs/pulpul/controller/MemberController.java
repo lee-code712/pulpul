@@ -148,6 +148,12 @@ public class MemberController {
 	/*
 	 * 회원 정보 수정
 	 */
+	@GetMapping("/passwordCheck")
+	public String passwordCheck(HttpServletRequest req, ModelAndView mav) {
+		// 패스워드 확인 
+		return "member/passwordCheck";
+	}
+	
 	@GetMapping("/view")
 	public ModelAndView view(HttpServletRequest req, ModelAndView mav) {
 		//회원 정보 수정 폼
