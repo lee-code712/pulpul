@@ -129,7 +129,7 @@ function orderListJson() {
 				}
 				if (order.orderStatus == 2) {
 					td_07.setAttribute("class", "cancel-btn");
-					td_07.innerHTML += "<button class='cancelBtn-noton' onclick=\"location.href='/order/finalizeOrder?orderId=" + order.id + "'\">주문 확정</button>";
+					td_07.innerHTML += "<button class='cancelBtn-on' onclick=\"location.href='/order/finalizeOrder?orderId=" + order.id + "'\">주문 확정</button>";
 					
 				}
 				

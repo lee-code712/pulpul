@@ -19,7 +19,7 @@
 	      <li>
 	        <div id="basketIconWrap" onclick="location.href='/cart/cartList'">
 	        	<th:block th:if="${session.cartItemCnt == null}">
-	        		<img th:src="@{/images/basketNullIcon.svg}" />
+	        		<img th:src="@{/images/cartIcon.svg}" id="cartNullIcon" />
 	        	</th:block>
 	        	<th:block th:unless="${session.cartItemCnt == null}">
 	        		<img th:src="@{/images/basketIcon.svg}" />

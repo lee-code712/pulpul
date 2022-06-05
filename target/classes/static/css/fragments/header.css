@@ -43,6 +43,11 @@ header {
   color: white;
 }
 
+
+#cartNullIcon {
+	margin-top: 4px;	
+}
+
 #alertCnt {
   position: absolute;
   top: -1px;
