@@ -95,7 +95,7 @@ public class ShareThingController implements ApplicationContextAware {
 	}
 
 	@PostMapping("/upload")
-	public String upload(@Valid @ModelAttribute("shareThing") ShareThing shareThing, BindingResult result,
+	public String upload(@Valid @ModelAttribute("shareThing") ShareThing shareThing, BindingResult result, 
 			FileCommand uploadFiles, Model model) {
 		
 		if (result.hasErrors())
@@ -133,7 +133,7 @@ public class ShareThingController implements ApplicationContextAware {
 	
 	@PostMapping("/update")
 	public String update(@Valid @ModelAttribute("shareThing") ShareThing shareThing, String[] deleteImages,
-			BindingResult result,
+			BindingResult result, 
 			FileCommand updateFiles, Model model) {
 		
 		if (result.hasErrors())

@@ -52,7 +52,7 @@
           <td th:errors="*{precaution}"></td>
         </tr>
         <tr th:unless="*{#lists.isEmpty(item.imageUrlList)}">
-          <td class="text-name">식물 사진</td>
+          <td class="text-name">물품 사진</td>
           <td class="putFilename">
             <div class="putFilenameDiv">
               <span class="updateImage" th:each="image : *{item.imageUrlList}" th:text="${image}">
@@ -61,7 +61,7 @@
           </td>
         </tr>
         <tr th:if="*{#lists.isEmpty(item.imageUrlList)}">
-          <td class="text-name">식물 사진</td>
+          <td class="text-name">물품 사진</td>
           <td class="putFilename">
             <div class="putFilenameDiv"></div>
           </td>
