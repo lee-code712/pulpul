@@ -37,123 +37,12 @@
       <div id="memberName">회원 이름</div>
       <div id="point">p 1000</div>
       <div id="menu">
-	        <div><a href="/member/mypage/orderList" class="list-on">구매 목록</a></div>
+	        <div id="orderList" th:onclick="orderListJson()">구매 목록</div>
 	        |
-	        <div><a href="/member/mypage/borrowList" class="list">대여 목록</a></div>
+	        <div id="shareThingList" th:onclick="shareThingListJson()">대여 목록</div>
 	      </div>
-
-			<!-- member/mypage/orderlist -->
-			<th:block th:if="${#httpServletRequest.requestURI} == '/member/mypage/orderList'">
-	      <div id="menu">
-	        <div><a href="/member/mypage/orderList" class="list-on">구매 목록</a></div>
-	        |
-	        <div><a href="/member/mypage/borrowList" class="list">대여 목록</a></div>
-	      </div>
-	
-	      <table>
-	        <tr>
-	          <th class="order-id">주문 번호</th>
-	          <th class="order-date">주문일</th>
-	          <th class="order-market">주문한 상품상점</th>
-	          <th class="traking-number">운송장 번호</th>
-	          <th class="total-price">총 가격</th>
-	          <th class="order-status">주문 상태</th>
-	          <th class="cancel-btn"></th>
-	        </tr>
-	
-	      	<tr th:each="order : ${orderList}" th:if="${order.orderStatus} == 0">
-		      	<td class="order-id"><a th:href="@{/order/orderDetail(orderId=${order.id})}" class="order-num-hover" th:text="${order.id}"></a></td>
-		      	<td class="order-date" th:text="${order.orderDate}"></td>
-		      	<td class="order-market" th:text="${order.goodsList[0].goods.item.market.name}"></td>
-		      	<td class="traking-number" th:text="${order.trakingNumber}"></td>
-		      	<td class="total-price" th:text="${order.totalPrice}"></td>
-		      	<td class="order-status">주문 취소</td>
-		      	<td class="cancel-btn">
-		          <button class="cancelBtn-noton">주문 취소</button>	  
-		        </td>    	 	 	 	
-	      	</tr>
-	      	
-	      	<tr th:each="order : ${orderList}" th:unless="${order.orderStatus} == 0">
-		      	<td class="order-id"><a href="/order/orderDetail" class="order-num-hover" th:text="${order.id}"></a></td>
-		      	<td class="order-date" th:text="${order.orderDate}"></td>
-		      	<td class="order-market" th:text="${order.goodsList[0].goods.item.market.name}"></td>
-		      	<td class="traking-number" th:text="${order.trakingNumber}"></td>
-		      	<td class="total-price" th:text="${order.totalPrice}"></td>
-		      	<td class="order-status" th:if="${order.orderStatus} == 1">결제 완료</td>
-	          <td class="order-status" th:if="${order.orderStatus} == 2">배송 시작</td>
-		      	<td class="cancel-btn">
-		          <button class="cancelBtn-on">주문 취소</button>	  
-		        </td>    	 	 	 	
-	      	</tr>
-	      </table>
-		  
-	      <button id="shoppingBtn" onclick="location.href='/lookup/goodsList'">쇼핑 계속하기</button>
-      </th:block>
-      
-      <!-- member/mypage/borrowList -->
-      <th:block th:if="${#httpServletRequest.requestURI} == '/member/mypage/borrowList'">
-
-	      <div id="menu">
-	        <div><a href="/member/mypage/orderList" class="list">구매 목록</a></div>
-	        |
-	        <div><a href="/member/mypage/borrowList" class="list-on">대여 목록</a></div>
-	      </div>
-	
-	      <table>
-	        <tr>
-	          <th class="sharething-img"></th>
-	          <th class="sharething-info">상품 정보</th>
-	          <th class="sharething-status">대여 상태</th>
-	          <th class="sharething-waybill">운송자 번호</th>
-	          <th class="sharething-date">대여 기간</th>
-	          <th class="sharething-btn"></th>
-	        </tr>
-	
-					<!-- 대여 -->
-					<tr th:each="borrow : ${borrowList}" th:if="${borrow.id}">
-	          <td class="sharething-img">
-	            <img src="/images/smallShareThing.svg" />
-	          </td>
-	          
-	          <td class="sharething-info" th:text="${borrow.shareThing.item.name}"></td>
-	           
-	          <td class="sharething-status" th:if="${borrow.id}">대여</td>
-	       
-	          <td class="sharething-waybill" th:text="${borrow.trackingNumber}"></td>
-	          <td class="sharething-date">
-	          	<input type="text" th:value="${borrow.borrowDate}" class="datepicker" /> ~ <input type="text" th:value="${borrow.returnDate}" class="datepicker"/>
-	          </td>
-	          
-	          <td class="sharething-btn">          
-           		<button class="extension-btn">연장하기</button>
-	          </td>
-	        </tr>
-	        
-					<!-- 예약 -->
-	        <tr th:each="borrow : ${reservationList}" th:unless="${borrow.id}">
-	          <td class="sharething-img">
-	            <img src="/images/smallShareThing.svg" />
-	          </td>
-	          <td class="sharething-info" th:text="${borrow.shareThing.item.name}"></td>
-	           
-	          <td class="sharething-status">예약</td>
-	          
-	          <td class="sharething-waybill" th:text="${borrow.trackingNumber}"></td>
-	          
-	          <td class="sharething-date">x</td>
-	          
-	          <td class="sharething-btn">
-	    
-            <!-- 대여 신청 가능 -->
-           	<button th:if="${borrow.isFirstBooker} == 1" class="extension-btn">대여 신청</button>
-           	<!-- 대여 신청 불가능 -->
-           	<button th:if="${borrow.isFirstBooker} == 0" class="not-extension-btn" disabled>대여 신청</button>       
-	          </td>
-	        </tr>
-	      </table>
-	
-	      <button id="shoppingBtn" onclick="location.href='/lookup/goodsList'">쇼핑 계속하기</button>
-	    </div>
-    </th:block>
+	      
+	      <div id="content"></div>
+	   </div>
 	</div>
 </html>
