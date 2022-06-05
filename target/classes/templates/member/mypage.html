@@ -18,24 +18,13 @@
   </th:block>
   
 	<div layout:fragment="content">
-		<script th:inline="javascript">
-	  		console.log('orderList 확인');
-	  		var orderList = [[${orderList}]];
-	  		console.log(orderList);
-	  		console.log('borrowList 확인');
-	  		var borrowList = [[${borrowList}]];
-			console.log(borrowList);
-			console.log('reservationList 확인');
-			var reservationList = [[${reservationList}]];
-			console.log(reservationList);
-		 </script>
 		<div id="pageWrap">
       <div id="pageTit">마이페이지</div>
       <div id="pageSubTit">Mypage</div>
 
       <img src="/images/infoBtn.svg" id="infoBtn" onclick="location.href='/member/passwordCheck'" />
-      <div id="memberName">회원 이름</div>
-      <div id="point">p 1000</div>
+      <div id="memberName" th:text="${member.name}">회원 이름</div>
+      <div id="point" th:text="'p ' + ${member.point}">p 1000</div>
       <div id="menu">
 	        <div id="orderList" th:onclick="orderListJson()">구매 목록</div>
 	        |

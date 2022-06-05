@@ -26,14 +26,15 @@
 		<div id="pageWrap" th:object="${market}">
 			<!-- /lookup/market/goodsList -->
 		<th:block th:if="${#httpServletRequest.requestURI} == '/lookup/market'">
-	      <img src="/images/marketImg.svg" id="marketImg" />
+	      <img th:if="${#strings.isEmpty(market.imageUrl)}" src="/images/marketImg.svg" id="marketImg" />
+	      <img th:unless="${#strings.isEmpty(market.imageUrl)}" th:src="*{imageUrl}" id="marketImg" />
 	      <div id="pageTit" th:text="*{name}"></div>
 	      <div id="pageSubTit">personal market</div>
 	
 	      <div id="menu">
-	        <div id="goods-menu" class="list" th:onclick="goodsJson([[${market.id}]])">상품</div>
+	        <div id="goods-menu" class="list" th:onclick="goodsJson([[*{id}]])">상품</div>
 	        |
-	        <div id="shareThing-menu" class="list" th:onclick="shareThingJson([[${market.id}]])">공유물품</div>
+	        <div id="shareThing-menu" class="list" th:onclick="shareThingJson([[*{id}]])">공유물품</div>
 	      </div>
 	      
 	     <div id="itemWrap">

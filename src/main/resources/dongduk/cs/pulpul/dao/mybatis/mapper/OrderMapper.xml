@@ -90,6 +90,7 @@
 		<result column="order_date" jdbcType="DATE" property="orderDate" javaType="string" />
 		<result column="total_price" jdbcType="INTEGER" property="totalPrice" javaType="int" />
 		<result column="tracking_number" jdbcType="VARCHAR" property="trackingNumber" javaType="string" />
+		<result column="order_status" jdbcType="INTEGER" property="orderStatus" javaType="int" />
 		<association property="seller" column="seller_id" javaType="Member">
 			<id column="seller_id" jdbcType="VARCHAR" property="id" javaType="string" />
 		</association>
@@ -112,7 +113,7 @@
 	</resultMap>
 	
 	<select id="selectOrderByMemberId" parameterType="string" resultMap="OrderInfoMap">
-		SELECT o.order_id, order_date, total_price, tracking_number, seller_id, buyer_id,
+		SELECT o.order_id, order_date, total_price, tracking_number, order_status, seller_id, buyer_id,
 			og.goods_id, it.open_status AS item_open_status,
 			m.market_id, m.name, m.open_status AS market_open_status
 		FROM orders o
@@ -125,6 +126,7 @@
 		<if test='identity eq "seller"'>
 			WHERE seller_id = #{memberId}
 		</if>
+		ORDER BY order_date DESC
 	</select>
 	
 	<!-- 회원 id 및 운송장번호로 주문내역 조회 -->

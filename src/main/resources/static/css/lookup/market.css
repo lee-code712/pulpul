@@ -6,6 +6,9 @@
 #marketImg {
   display: block;
   margin: 0 auto;
+  width: 50px;
+  height: 50px;
+  border-radius: 70%;
 }
 
 #pageTit {

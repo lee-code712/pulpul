@@ -27,7 +27,7 @@ public class Order {
 	private String cardNumber; /*카드 번호*/
 	@Pattern(regexp="\\d{2}/\\d{2}")
 	private String expiryDate; /*카드 만료일*/
-	private String trakingNumber; /*운송장 번호*/
+	private String trackingNumber; /*운송장 번호*/
 	private int orderStatus; /*주문 상태*/
 	private Member seller; /*판매자 정보*/
 	private Member buyer; /*구매자 정보*/

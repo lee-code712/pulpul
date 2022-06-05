@@ -77,8 +77,9 @@ td {
   text-align: center;
 }
 
-.order-id-hover:hover {
+.order-id:hover {
 	color: #93c0b5;
+	font-weight: bold;
 	cursor: pointer;
 }
 

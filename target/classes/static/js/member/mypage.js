@@ -28,6 +28,7 @@ function orderListJson() {
 		type : "get",
 		datatype : "json",
 		success : function(data) {
+			console.log(data);
 			$("#orderList").addClass('list-on');
 			$("#shareThingList").removeClass('list-on');
 			$("#shareThingList").addClass('list');
@@ -66,7 +67,7 @@ function orderListJson() {
 					
 			const th_05 = document.createElement("th");
 			th_05.setAttribute("class", "total-price");
-			th_05.innerHTML = "총 가격";
+			th_05.innerHTML = "결제 금액";
 					
 			const th_06 = document.createElement("th");
 			th_06.setAttribute("class", "order-status");
@@ -91,7 +92,7 @@ function orderListJson() {
 				
 				const td_01 = document.createElement("td");
 				td_01.setAttribute("class", "order-id");
-				td_01.innerHTML = order.id;
+				td_01.innerHTML = "<a href='/order/orderDetail?orderId=" + order.id + "'>" + order.id + "</a>";
 				
 				const td_02 = document.createElement("td");
 				td_02.setAttribute("class", "order-date");
@@ -103,24 +104,27 @@ function orderListJson() {
 				
 				const td_04 = document.createElement("td");
 				td_04.setAttribute("class", "traking-number");
-				td_04.innerHTML = order.trakingNumber;
+				td_04.innerHTML = order.trackingNumber;
 				
 				const td_05 = document.createElement("td");
 				td_05.setAttribute("class", "total-price");
-				td_05.innerHTML = order.totalPrice;
+				td_05.innerHTML = order.totalPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원";
 				
 				const td_06 = document.createElement("td");
 				td_06.setAttribute("class", "order-status");
 				if (order.orderStatus == 0)
-					td_06.innerHTML = "배송 완료";
+					td_06.innerHTML = "주문 취소";
 				else if (order.orderStatus == 1)
 					td_06.innerHTML = "결제 완료";
 				else if (order.orderStatus == 2)
 					td_06.innerHTML = "배송 시작";
 					
 				const td_07 = document.createElement("td");
-				td_07.setAttribute("class", "cancel-btn");
-				td_07.innerHTML += "<button class='cancelBtn-noton'>주문 취소</button>";
+				if (order.trackingNumber == null) {
+					td_07.setAttribute("class", "cancel-btn");
+					td_07.innerHTML += "<button class='cancelBtn-noton' onclick=\"location.href='/order/orderCancel?orderId=" + order.id + "'\">주문 취소</button>";
+					
+				}
 				
 				tb_row.appendChild(td_01);
 				tb_row.appendChild(td_02);

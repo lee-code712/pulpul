@@ -267,6 +267,10 @@ public class MemberController {
 			return "redirect:/home";
 		}
 		
+		// 내정보 반환
+		Member member = memberService.getMember(id);
+		model.addAttribute(member);
+		
 		return "member/mypage";
 	}
 	
