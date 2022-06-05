@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dongduk.cs.pulpul.domain.Cart;
 import dongduk.cs.pulpul.domain.CartItem;
@@ -24,6 +25,7 @@ import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.Order;
 import dongduk.cs.pulpul.service.MemberService;
 import dongduk.cs.pulpul.service.OrderService;
+import dongduk.cs.pulpul.service.exception.CancelOrderException;
 
 @Controller
 @SessionAttributes("order")
@@ -126,7 +128,19 @@ public class OrderController {
 	 * 구매 취소
 	 */
 	@GetMapping("/orderCancel")
-	public String cancel() {
+	public String cancel(@RequestParam("orderId") int orderId, HttpSession session,
+			RedirectAttributes rttr) {
+		
+		try {
+			boolean successed = orderSvc.cancelOrder(orderId);
+			if (!successed) {
+				rttr.addFlashAttribute("cancelFailed", true);
+			}
+		} catch (CancelOrderException e) {
+			rttr.addFlashAttribute("cancelFailed", true);
+			rttr.addFlashAttribute("exception", e.getMessage());
+		}
+			
 		return "redirect:/member/mypage";
 	}
 	

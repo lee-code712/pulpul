@@ -85,7 +85,8 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public boolean changeOrderStatus(int orderId, int orderStatus) {
-		// TODO Auto-generated method stub
+		int ck = orderMapper.updateOrderStatus(orderId, orderStatus);
+		if (ck > 0) return true;
 		return false;
 	}
 

@@ -120,7 +120,7 @@ function orderListJson() {
 				td_06.innerHTML = order.trackingNumber;
 				
 				const td_07 = document.createElement("td");
-				if (order.trackingNumber == null) {
+				if (order.trackingNumber == null && order.orderStatus != 0) {
 					td_07.setAttribute("class", "cancel-btn");
 					td_07.innerHTML += "<button class='cancelBtn-noton' onclick=\"location.href='/order/orderCancel?orderId=" + order.id + "'\">주문 취소</button>";
 					

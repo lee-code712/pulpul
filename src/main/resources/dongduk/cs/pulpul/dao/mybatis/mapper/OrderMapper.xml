@@ -145,6 +145,7 @@
 		<result column="used_point" jdbcType="INTEGER" property="usedPoint" javaType="int" />
 		<result column="card_company" jdbcType="VARCHAR" property="cardCompany" javaType="string" />
 		<result column="card_number" jdbcType="VARCHAR" property="cardNumber" javaType="string" />
+		<result column="order_status" jdbcType="INTEGER" property="orderStatus" javaType="int" />
 		<association property="seller" column="seller_id" javaType="Member">
 			<id column="seller_id" jdbcType="VARCHAR" property="id" javaType="string" />
 			<result column="seller_name" jdbcType="VARCHAR" property="name" javaType="string" />
@@ -182,7 +183,7 @@
 	</resultMap>
 
 	<select id="selectOrder" parameterType="int" resultMap="OrderDetailMap">
-		SELECT o.order_id, order_date, total_price, used_point, card_company, card_number,
+		SELECT o.order_id, order_date, total_price, used_point, card_company, card_number, order_status,
 			og.goods_id, og.order_quantity AS goodsList_quantity, og.price AS item_total_price,
 			it.name AS item_name, it.open_status AS item_open_status, it.market_id,
 			g.price AS item_price, g.shipping_fee,

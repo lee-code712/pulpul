@@ -16,6 +16,7 @@ import dongduk.cs.pulpul.domain.Cart;
 import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Order;
 import dongduk.cs.pulpul.service.exception.AddCartException;
+import dongduk.cs.pulpul.service.exception.CancelOrderException;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -138,17 +139,32 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	// 주문 취소
-	public boolean cancelOrder(Order order) {
-		/* boolean success = orderDao.changeOrderStatus(orderId, 0);
+	public boolean cancelOrder(int orderId) throws CancelOrderException {
 		Order order = getOrder(orderId);
 		if (order != null) {
-			for (CartItem item : order.getGoodsList()) {
-				success = itemDao.changeRemainQuantityByOrder(orderId, item.getQuantity(), 0);
-				if (!success)
-					return false;
+			if (order.getTrackingNumber() != null) {
+				System.out.println("배송 시작됨");
+				throw new CancelOrderException("배송이 시작되어 취소할 수 없습니다. 마켓에 문의하시기 바랍니다.");
 			}
-		} */
-		return true;
+			
+			// 주문 상태 변경
+			boolean successed = orderDao.changeOrderStatus(orderId, 0);
+			if (!successed) return false;
+			
+			// 주문한 상품들의 남은 수량 변경
+			for (CartItem item : order.getGoodsList()) {
+				successed = itemDao.changeRemainQuantityByOrderStatus(item.getGoodsId(), 0, item.getQuantity());
+				if (!successed) return false;
+			}
+			
+			// 사용자 포인트 환급
+			if (order.getUsedPoint() > 0) {
+				successed = memberDao.changePoint(order.getBuyer().getId(), 1, order.getUsedPoint());
+				if (!successed) return false;
+			}
+			return true;
+		}
+		return false;
 	}
 
 }
