@@ -30,6 +30,7 @@ import dongduk.cs.pulpul.service.OrderService;
 import dongduk.cs.pulpul.service.exception.LoginException;
 import dongduk.cs.pulpul.validator.ChangeMemberInfoValidator;
 import dongduk.cs.pulpul.validator.LoginValidator;
+import dongduk.cs.pulpul.validator.PasswordCheckValidator;
 import dongduk.cs.pulpul.validator.RegisterValidator;
 
 @Controller
@@ -63,6 +64,12 @@ public class MemberController {
 	private ChangeMemberInfoValidator changeMemberInfoValidator;
 	public void setValidator(ChangeMemberInfoValidator changeMemberInfoValidator) {
 		this.changeMemberInfoValidator = changeMemberInfoValidator;
+	}
+	
+	@Autowired
+	private PasswordCheckValidator passwordCheckValidator;
+	public void setValidator(PasswordCheckValidator passwordCheckValidator) {
+		this.passwordCheckValidator = passwordCheckValidator;
 	}
 	
 	@ModelAttribute("member")
@@ -151,6 +158,31 @@ public class MemberController {
 	@GetMapping("/passwordCheck")
 	public String passwordCheck(HttpServletRequest req, ModelAndView mav) {
 		// 패스워드 확인 
+		return "member/passwordCheck";
+	}
+	
+	@PostMapping("/passwordCheck")
+	public String passwordCheck(@ModelAttribute("member") Member member, Errors result, Model model, HttpServletRequest req) {
+		/*
+		 //성공
+		 return "member/view";
+		 //실패
+		 return "member/passwordCheck";
+		 */
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("id");
+		Member memberInfo = memberService.getMember(id);
+		if (memberInfo != null) {
+			member.setPassword(memberInfo.getPassword());
+			model.addAttribute("member", member);
+			passwordCheckValidator.validate(member, result);
+			if(result.hasErrors()) {
+				return "member/passwordCheck";
+			}
+			else {
+				return "redirect:/member/view";
+			}
+		}
 		return "member/passwordCheck";
 	}
 	
