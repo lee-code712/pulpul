@@ -13,7 +13,10 @@ import dongduk.cs.pulpul.dao.BorrowDao;
 import dongduk.cs.pulpul.dao.ItemDao;
 import dongduk.cs.pulpul.dao.MemberDao;
 import dongduk.cs.pulpul.domain.Goods;
+import dongduk.cs.pulpul.domain.Market;
+import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.ShareThing;
+import dongduk.cs.pulpul.domain.Item;
 import dongduk.cs.pulpul.service.exception.DeleteItemException;
 
 @Service
@@ -133,6 +136,17 @@ public class ItemServiceImpl implements ItemService {
 			for (ShareThing shareThing : shareThingList) {
 				String itemId = shareThing.getItem().getId();
 				shareThing.setReservationNumber(borrowDao.checkNumberBorrowReservation(itemId));
+				
+				Member lenderInfo = memberDao.findMember(shareThing.getItem().getMarket().getMember().getId());
+				String[] addressSplit = lenderInfo.getAddress().split(" ");
+				String addressInfo = addressSplit[0] + " " + addressSplit[1];
+				Item item = shareThing.getItem();
+				Market market = item.getMarket();
+				Member lender = market.getMember();
+				lender.setAddress(addressInfo);
+				market.setMember(lender);
+				item.setMarket(market);
+				shareThing.setItem(item);
 			}
 		}
 		return shareThingList;
@@ -145,6 +159,17 @@ public class ItemServiceImpl implements ItemService {
 			for (ShareThing shareThing : shareThingList) {
 				String itemId = shareThing.getItem().getId();
 				shareThing.setReservationNumber(borrowDao.checkNumberBorrowReservation(itemId));
+				
+				Member lenderInfo = memberDao.findMember(memberId);
+				String[] addressSplit = lenderInfo.getAddress().split(" ");
+				String addressInfo = addressSplit[0] + " " + addressSplit[1];
+				Item item = shareThing.getItem();
+				Market market = item.getMarket();
+				Member lender = market.getMember();
+				lender.setAddress(addressInfo);
+				market.setMember(lender);
+				item.setMarket(market);
+				shareThing.setItem(item);
 			}
 		}
 		return shareThingList;
@@ -160,6 +185,17 @@ public class ItemServiceImpl implements ItemService {
 		ShareThing shareThing = itemDao.findShareThingByItem(itemId);
 		if (shareThing != null) {
 			shareThing.setReservationNumber(borrowDao.checkNumberBorrowReservation(itemId));
+			
+			Member lenderInfo = memberDao.findMember(shareThing.getItem().getMarket().getMember().getId());
+			String[] addressSplit = lenderInfo.getAddress().split(" ");
+			String addressInfo = addressSplit[0] + " " + addressSplit[1];
+			Item item = shareThing.getItem();
+			Market market = item.getMarket();
+			Member lender = market.getMember();
+			lender.setAddress(addressInfo);
+			market.setMember(lender);
+			item.setMarket(market);
+			shareThing.setItem(item);
 		}
 		return shareThing;
 	}

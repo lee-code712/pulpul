@@ -19,10 +19,12 @@ import dongduk.cs.pulpul.domain.Borrow;
 import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.domain.Market;
+import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.Review;
 import dongduk.cs.pulpul.domain.ShareThing;
 import dongduk.cs.pulpul.service.ItemService;
 import dongduk.cs.pulpul.service.MarketService;
+import dongduk.cs.pulpul.service.MemberService;
 import dongduk.cs.pulpul.service.ReviewService;
 
 @Controller
@@ -32,13 +34,15 @@ public class LookupController {
 	private final ItemService itemSvc;
 	private final ReviewService reviewSvc;
 	private final MarketService marketSvc;
+	private final MemberService memberSvc;
 	
 	@Autowired
 	public LookupController(ItemService itemSvc, ReviewService reviewSvc,
-			MarketService marketSvc) {
+			MarketService marketSvc, MemberService memberSvc) {
 		this.itemSvc = itemSvc;
 		this.reviewSvc = reviewSvc;
 		this.marketSvc = marketSvc;
+		this.memberSvc = memberSvc;
 	}
 
 	/*
