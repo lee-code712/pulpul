@@ -59,19 +59,19 @@ function orderListJson() {
 					
 			const th_03 = document.createElement("th");
 			th_03.setAttribute("class", "order-market");
-			th_03.innerHTML = "주문한 상품상점";
+			th_03.innerHTML = "주문 마켓";
 					
 			const th_04 = document.createElement("th");
-			th_04.setAttribute("class", "traking-number");
-			th_04.innerHTML = "운송장 번호";
+			th_04.setAttribute("class", "total-price");
+			th_04.innerHTML = "결제 금액";
 					
 			const th_05 = document.createElement("th");
-			th_05.setAttribute("class", "total-price");
-			th_05.innerHTML = "결제 금액";
+			th_05.setAttribute("class", "order-status");
+			th_05.innerHTML = "주문 상태";
 					
 			const th_06 = document.createElement("th");
-			th_06.setAttribute("class", "order-status");
-			th_06.innerHTML = "주문 상태";
+			th_06.setAttribute("class", "traking-number");
+			th_06.innerHTML = "운송장 번호";
 					
 			const th_07 = document.createElement("th");
 			th_07.setAttribute("class", "cancel-btn");
@@ -103,22 +103,22 @@ function orderListJson() {
 				td_03.innerHTML = order.goodsList[0].goods.item.market.name;
 				
 				const td_04 = document.createElement("td");
-				td_04.setAttribute("class", "traking-number");
-				td_04.innerHTML = order.trackingNumber;
+				td_04.setAttribute("class", "total-price");
+				td_04.innerHTML = order.totalPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원";
 				
 				const td_05 = document.createElement("td");
-				td_05.setAttribute("class", "total-price");
-				td_05.innerHTML = order.totalPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + "원";
+				td_05.setAttribute("class", "order-status");
+				if (order.orderStatus == 0)
+					td_05.innerHTML = "주문 취소";
+				else if (order.orderStatus == 1)
+					td_05.innerHTML = "결제 완료";
+				else if (order.orderStatus == 2)
+					td_05.innerHTML = "배송 시작";
 				
 				const td_06 = document.createElement("td");
-				td_06.setAttribute("class", "order-status");
-				if (order.orderStatus == 0)
-					td_06.innerHTML = "주문 취소";
-				else if (order.orderStatus == 1)
-					td_06.innerHTML = "결제 완료";
-				else if (order.orderStatus == 2)
-					td_06.innerHTML = "배송 시작";
-					
+				td_06.setAttribute("class", "traking-number");
+				td_06.innerHTML = order.trackingNumber;
+				
 				const td_07 = document.createElement("td");
 				if (order.trackingNumber == null) {
 					td_07.setAttribute("class", "cancel-btn");
