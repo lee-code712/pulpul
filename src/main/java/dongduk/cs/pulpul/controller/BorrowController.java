@@ -118,14 +118,14 @@ public class BorrowController {
 	 * 공유물품 예약
 	 */
 	@PostMapping("/reservation")
-	public void makeReservation(){
+	public String makeReservation(){
 		/*
 		//성공
-		return "redirect:/member/mypage/borrowList";
+		return "redirect:/member/mypage";
 		//오류
 		return "lookup/sharedThingDetail";
 		*/
-		
+		return "redirect:/member/mypage";
 		
 	}
 

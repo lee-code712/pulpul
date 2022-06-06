@@ -110,6 +110,9 @@
 	      </div>
       </th:block>
       
+    </form>
+      
+      <form action="/borrow/reservation" method="post" th:object="${borrow}">
       <th:block  th:if="${borrow.shareThing.isBorrowed} == 1">
 	      <div id="infoCover">
 	        <div class="swiper-container mySwiper">
@@ -136,6 +139,7 @@
 			    </div>
 	
 	        <div id="info">
+	        <input type="hidden" name="shareThing.item.id" th:value="${borrow.shareThing.item.id}"/>
 	          <div id="itemNameWrap">
 		          <div id="itemName" th:text=${borrow.shareThing.item.name}></div>
 		          <div class="waitingWrap">
@@ -166,7 +170,7 @@
 	          </table>
 						<input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
 	          <div id="btnWrap">
-	            <button id="rezBtn">예약하기</button>
+	            <button id="rezBtn" type="submit">예약하기</button>
 	            <button id="cancelBtn">목록으로 이동</button>
 	          </div>
 	
@@ -177,7 +181,7 @@
 	        </div>
 	      </div>
     </th:block>
-    </div>
     </form>
+    </div>
 	</div>
 </html>
