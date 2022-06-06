@@ -21,6 +21,12 @@ function moveToShareThingList(){
 	encodeUri(uri);
 }
 
+/* 대여신청 클릭 시, 해당 상품의 상세정보 페이지로 이동 */
+function moveToShareThingDetail(id){
+	const uri = '/lookup/shareThingDetail?itemId=' + id;
+	encodeUri(uri);
+}
+
 /* 구매 목록 */
 function orderListJson() {
 	$.ajax({
@@ -143,7 +149,7 @@ function orderListJson() {
 				
 				tbody.appendChild(tb_row);
 			});
-			
+				
 			const cartBtn = document.createElement("button");
 			cartBtn.setAttribute("id", "shoppingBtn");
 			cartBtn.innerHTML = "쇼핑 계속하기";
@@ -228,7 +234,7 @@ function shareThingListJson() {
 				const td_01 = document.createElement("td");
 				td_01.setAttribute("class", "sharething-img");
 				const item_img = document.createElement("img");
-				item_img.src = "/images/smallShareThing.svg";
+				item_img.src = borrow.shareThing.item.thumbnailUrl;
 				td_01.appendChild(item_img);
 				
 				const td_02 = document.createElement("td");
@@ -273,10 +279,18 @@ function shareThingListJson() {
 					
 				const td_06 = document.createElement("td");
 				td_06.setAttribute("class", "sharething-btn");
-				if (borrow.isFirstBooker == 1)
+				if (borrow.shareThing.isBorrowed == 1) {
+					td_06.innerHTML += "<button class='not-extension-btn' disabled>대여 신청</button>";
+				}
+				else if (borrow.shareThing.isBorrowed == 0 && borrowStatus == 1) {
+					td_06.innerHTML += "<button class='extension-btn' onclick=\"location.href='/borrow/extend?borrowId=" + borrow.id + "'\">연장하기</button>";	
+				}
+				else if (borrow.shareThing.isBorrowed == 0) {
 					td_06.innerHTML += "<button class='extension-btn'>대여 신청</button>";	
-				else
-					td_06.innerHTML += "<button class='not-extension-btn' disabled>대여 신청</button>";	
+					$(td_06).click(function(){
+							moveToShareThingDetail(borrow.shareThing.item.id);
+					})
+				}
 				
 				tb_row.appendChild(td_01);
 				tb_row.appendChild(td_02);				

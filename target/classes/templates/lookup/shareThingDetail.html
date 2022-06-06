@@ -19,103 +19,101 @@
 
 	<div layout:fragment="content">
 		<script th:inline="javascript">
-	  		console.log('borrow 확인');
-	  		var borrow = [[${borrow}]];
-	  		console.log(borrow);
-  		</script>
-  		<form action="/borrow/borrow" method="post" th:object="${borrow}">
- 
-		<div id="pageWrap"> 
-			<th:block  th:if="${borrow.shareThing.isBorrowed} == 0">
-	      <div id="infoCover">
-	        <div class="swiper-container mySwiper">
-			      <div class="swiper-wrapper">
-			        <div class="swiper-slide">
-			          <img src="https://placeimg.com/596/398/any" />
-			        </div>
-			        <div class="swiper-slide">
-			          <img src="https://placeimg.com/596/398/animals" />
-			        </div>
-			        <div class="swiper-slide">
-			          <img src="https://placeimg.com/596/398/nature" />
-			        </div>
-			        <div class="swiper-slide">
-			          <img src="https://placeimg.com/596/398/people" />
-			        </div>
-			        <div class="swiper-slide">
-			          <img src="https://placeimg.com/596/398/tech" />
-			        </div>
-			      </div>
-			      <div class="swiper-button-next"></div>
-			      <div class="swiper-button-prev"></div>
-			      <div class="swiper-pagination"></div>
-			    </div>
-	
-	        <div id="info">
-			  		<input type="hidden" name="shareThing.item.id" th:value="${borrow.shareThing.item.id}"/>
+			console.log('borrow 확인');
+		  var borrow = [[${borrow}]];
+		  console.log(borrow);
+	  </script>
+	  
+	  <form action="/borrow/borrow" method="post" th:object="${borrow}">
+	  	<div id="pageWrap">
+	  		<th:block  th:if="${borrow.shareThing.isBorrowed} == 0">
+	  			<div id="infoCover">
+		  			<div class="swiper-container mySwiper">
+				      <div class="swiper-wrapper">
+				        <div class="swiper-slide">
+				          <img src="https://placeimg.com/596/398/any" />
+				        </div>
+				        <div class="swiper-slide">
+				          <img src="https://placeimg.com/596/398/animals" />
+				        </div>
+				        <div class="swiper-slide">
+				          <img src="https://placeimg.com/596/398/nature" />
+				        </div>
+				        <div class="swiper-slide">
+				          <img src="https://placeimg.com/596/398/people" />
+				        </div>
+				        <div class="swiper-slide">
+				          <img src="https://placeimg.com/596/398/tech" />
+				        </div>
+				      </div>
+				      <div class="swiper-button-next"></div>
+				      <div class="swiper-button-prev"></div>
+				      <div class="swiper-pagination"></div>
+				    </div>
+				    
+				    <div id="info">
+				    	<input type="hidden" name="shareThing.item.id" th:value="${borrow.shareThing.item.id}"/>
+				    	
+				    	<div id="itemNameWrap">
+		          	<div id="itemName" th:text=${borrow.shareThing.item.name}></div>
+		          	<div class="waitingWrap">
+		            	<img src="/images/waiting.svg" />
+		            	<div class="waiting" th:text="${borrow.shareThing.reservationNumber}"></div>
+		          	</div>
+	          	</div>
+	          	
+	          	<div class="address" th:text="${borrow.shareThing.item.market.member.address}"></div>
+	          	
+	          	<hr class="hr-dotted" />
 	          
-	          <div id="itemNameWrap">
-		          <div id="itemName" th:text=${borrow.shareThing.item.name}></div>
-		          <div class="waitingWrap">
-		            <img src="/images/waiting.svg" />
-		            <div class="waiting" th:text="${borrow.shareThing.reservationNumber}"></div>
-		          </div>
-	          </div>
-	          <div class="address" th:text="${borrow.shareThing.item.market.member.address}"></div>
-	          
-	          <hr class="hr-dotted" />
-	          
-	          <div id="itemInfo" th:text=${borrow.shareThing.item.description}></div>
-	
-	          <table>
-	            <tr>
-	              <td>대여 상태</td>
-	              <td><div id="rentalOk">대여 가능</div></td>
-	            </tr>
-	
-	            <tr>
-	              <td>대여 시 유의사항</td>
-	              <td class="precaution-wrap"><th:block th:text="${borrow.shareThing.precaution}"></th:block></td>
-	            </tr>
-	
-	            <tr>
-	              <td>배송비</td>
-	              <td>(배송비)</td>
-	            </tr>
-	
-	            <tr>
-	              <td>대여 기간</td>
-	              <td>
+	          	<div id="itemInfo" th:text=${borrow.shareThing.item.description}></div>
+	          	
+	          	<table>
+	          		<tr>
+	              	<td>대여 상태</td>
+	              	<td><div id="rentalOk">대여 가능</div></td>
+	            	</tr>
+	            	
+	            	<tr>
+	              	<td>대여 시 유의사항</td>
+	              	<td class="precaution-wrap"><th:block th:text="${borrow.shareThing.precaution}"></th:block></td>
+	            	</tr>
+	            	
+	            	<tr>
+	              	<td>대여 기간</td>
+	              	<td>
 		              	<input type="text" placeholder="1" id="shipping" name="date"/> 일 
-	              </td>
-	            </tr>
-	          </table>
-	          <input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
-	          <div class="invalid-feedback" th:errors="*"> </div>
-	          <div id="btnWrap">
-	          	<th:block th:if="${session.id} == ${borrow.shareThing.item.market.member.id}">
-	            	<button id="rentalBtn" type="submit" onclick="location.href='/market/shareThingForm'">수정하기</button>
-	            </th:block>
-	            <th:block th:unless="${session.id} == ${borrow.shareThing.item.market.member.id}">
-	            	<button id="rentalBtn" type="submit">대여하기</button>
-	            </th:block>
-	            <button id="cancelBtn" onclick="location.href='/lookup/shareThingList'">목록으로 이동</button>
-	          </div>
-	
-	          <a th:href="@{/lookup/market(marketId=${borrow.shareThing.item.market.id})}" id="marketLink">
-            	<img src="/images/smallShopIcon.svg" />
-            	<span th:text="|${borrow.shareThing.item.market.name} 마켓으로 이동하기|"></span>
-	          </a>
-	        </div>
-	      </div>
-      </th:block>
-      
-    </form>
-      
-      <form action="/borrow/reservation" method="post" th:object="${borrow}">
-      <th:block  th:if="${borrow.shareThing.isBorrowed} == 1">
-	      <div id="infoCover">
-	        <div class="swiper-container mySwiper">
+	              	</td>
+	            	</tr>
+	          	</table>
+	          	
+	          	<input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
+	          	
+	          	<div id="btnWrap">
+	          		<th:block th:if="${session.id} == ${borrow.shareThing.item.market.member.id}">
+	          			<button id="rentalBtn" type="submit" th:onclick="updateShareThing([[${borrow.shareThing.item.id}]])">수정하기</button>
+	          		</th:block>
+	          		<th:block th:unless="${session.id} == ${borrow.shareThing.item.market.member.id}">
+	            		<button id="rentalBtn" type="submit" onclick="location.href='/mypage/orderList'">대여하기</button>
+	            	</th:block>
+	            	
+	            	<button id="cancelBtn" onclick="location.href='/lookup/shareThingList'">목록으로 이동</button>
+	          	</div>
+	          	
+	          	<a th:href="@{/lookup/market(marketId=${borrow.shareThing.item.market.id})}" id="marketLink">
+            		<img src="/images/smallShopIcon.svg" />
+            		<span th:text="|${borrow.shareThing.item.market.name} 마켓으로 이동하기|"></span>
+	          	</a>
+				    </div>
+	  			</div>
+	  		</th:block>
+	  	</div>
+	  </form>
+	  
+	  <form action="/borrow/reservation" method="post" th:object="${borrow}">
+	  	<th:block  th:if="${borrow.shareThing.isBorrowed} == 1">
+	  		<div id="infoCover">
+	  			<div class="swiper-container mySwiper">
 			      <div class="swiper-wrapper">
 			        <div class="swiper-slide">
 			          <img src="https://placeimg.com/596/398/any" />
@@ -137,51 +135,56 @@
 			      <div class="swiper-button-prev"></div>
 			      <div class="swiper-pagination"></div>
 			    </div>
-	
-	        <div id="info">
-	        <input type="hidden" name="shareThing.item.id" th:value="${borrow.shareThing.item.id}"/>
-	          <div id="itemNameWrap">
+			    
+			    <div id="info">
+			    	<input type="hidden" name="shareThing.item.id" th:value="${borrow.shareThing.item.id}"/>
+			    	
+			    	<div id="itemNameWrap">
 		          <div id="itemName" th:text=${borrow.shareThing.item.name}></div>
 		          <div class="waitingWrap">
 		            <img src="/images/waiting.svg" />
 		            <div class="waiting" th:text="${borrow.shareThing.reservationNumber}"></div>
 		          </div>
 	          </div>
+  
 	          <div class="address" th:text="${borrow.shareThing.item.market.member.address}"></div>
 	          
 	          <hr class="hr-dotted" />
+	          
 	          <div id="itemInfo" th:text=${borrow.shareThing.item.description}></div>
-	
+	          
 	          <table>
-	            <tr>
+	          	<tr>
 	              <td>대여 상태</td>
 	              <td><div id="rentalNotOk">대여 불가</div></td>
 	            </tr>
-	
+	            
 	            <tr>
 	              <td>대여 시 유의사항</td>
 	              <td class="precaution-wrap"><th:block th:text="${borrow.shareThing.precaution}"></th:block></td>
 	            </tr>
-	
-	            <tr>
-	              <td>배송비</td>
-	              <td>(배송비)</td>
-	            </tr>
 	          </table>
-						<input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
+	          
+	          <input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
+	          
 	          <div id="btnWrap">
-	            <button id="rezBtn" type="submit">예약하기</button>
-	            <button id="cancelBtn">목록으로 이동</button>
+	          	<th:block th:if="${session.id} == ${borrow.shareThing.item.market.member.id}">
+	          			<button id="rentalBtn" type="submit" th:onclick="updateShareThing([[${borrow.shareThing.item.id}]])">수정하기</button>
+	          		</th:block>
+	          		<th:block th:unless="${session.id} == ${borrow.shareThing.item.market.member.id}">
+	            		<button id="rezBtn" type="submit" onclick="location.href='/mypage/orderList'">예약하기</button>
+	            	</th:block>
+	            	
+	            	<button id="cancelBtn" onclick="location.href='/lookup/shareThingList'">목록으로 이동</button>
 	          </div>
-	
+	          
 	          <a th:href="@{/lookup/market(marketId=${borrow.shareThing.item.market.id})}" id="marketLink">
             	<img src="/images/smallShopIcon.svg" />
             	<span th:text="|${borrow.shareThing.item.market.name} 마켓으로 이동하기|"></span>
 	          </a>
-	        </div>
-	      </div>
-    </th:block>
-    </form>
-    </div>
-	</div>
+			    </div>
+	  		</div>
+	  	</th:block>
+	  </form>
+  </div>
 </html>
