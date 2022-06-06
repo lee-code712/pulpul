@@ -98,7 +98,7 @@
 	<update id="updateIsFirstBooker" parameterType="Borrow">
 		UPDATE borrow_reservation
 		SET is_first_booker = 1
-		WHERE share_thing_id = #{shareThing.item.id} AND member_id = #{borrower.id}
+		WHERE share_thing_id = #{shareThing.item.id}
 	</update>
 	
 	<!--  ====================================================================  -->

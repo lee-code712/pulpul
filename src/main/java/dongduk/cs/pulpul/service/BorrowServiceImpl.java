@@ -96,6 +96,11 @@ public class BorrowServiceImpl implements BorrowService {
 		boolean success = borrowDao.createBorrow(borrow);
 		
 		if (success) {
+			// 예약자가 대여 시 isFirstBooker 수정
+			if (borrow.getIsFirstBooker() == 1) {
+				cancelBorrowReservation(borrow);
+				changeIsFirstBooker(borrow);
+			}
 			return borrowDao.changeIsBorrowed(borrow.getShareThing());
 		}
 		return false;
@@ -117,8 +122,8 @@ public class BorrowServiceImpl implements BorrowService {
 		else {
 			shareThing.setIsBorrowed(1);
 		}
-		// return borrowDao.changeIsBorrowed(shareThing);
-		return false;
+		return borrowDao.changeIsBorrowed(shareThing);
+		// return false;
 	}
 	
 	// 연장하기 borrow_status가 대여 상태면, 연장 하기 버튼

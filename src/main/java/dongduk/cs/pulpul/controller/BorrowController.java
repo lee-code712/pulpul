@@ -96,6 +96,7 @@ public class BorrowController {
 			// lender에게 포인트 지급
 			Member lender = memberService.getMember(borrow.getLender().getId());
 			memberService.changePoint(lender, 1, 1000);
+			
 			return "redirect:/member/mypage";
 		}
 		else {
