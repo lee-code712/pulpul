@@ -127,6 +127,11 @@ public class BorrowController {
 		return "lookup/sharedThingDetail";
 		*/
 
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("id");
+		Member member = new Member();
+		member.setId(id);
+		borrow.setBorrower(member);
 		boolean success = borrowService.makeBorrowReservation(borrow);
 		
 		if (success) {

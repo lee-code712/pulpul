@@ -71,7 +71,7 @@
 	<!-- 예약 생성 -->
 	<insert id="insertBorrowReservation" parameterType="Borrow">
     	INSERT INTO borrow_reservation (share_thing_id, member_id, is_first_booker)
-    	VALUES (#{ShareThing.item.id}, #{borrower.id}, #{isFirstBooker})	
+    	VALUES (#{shareThing.item.id}, #{borrower.id}, #{isFirstBooker})	
 	</insert>
 	
 	<!-- 예약 삭제 -->
