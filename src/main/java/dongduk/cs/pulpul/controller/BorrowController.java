@@ -118,14 +118,22 @@ public class BorrowController {
 	 * 공유물품 예약
 	 */
 	@PostMapping("/reservation")
-	public String makeReservation(){
+	public String makeReservation(@ModelAttribute("borrow") Borrow borrow, Model model, Errors result, HttpServletRequest req){
 		/*
 		//성공
 		return "redirect:/member/mypage";
 		//오류
 		return "lookup/sharedThingDetail";
 		*/
-		return "redirect:/member/mypage";
+
+		boolean success = borrowService.makeBorrowReservation(borrow);
+		
+		if (success) {
+			return "redirect:/member/mypage";
+		}
+		
+		result.reject("fullBooked", new Object[] {borrow.getShareThing().getItem().getName()}, null);
+		return "lookup/sharedThingDetail";
 		
 	}
 

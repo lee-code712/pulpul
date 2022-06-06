@@ -30,19 +30,17 @@ public class BorrowServiceImpl implements BorrowService {
 	
 	// 예약 생성
 	public boolean makeBorrowReservation(Borrow borrow) {
-		boolean result = borrowDao.createBorrowReservation(borrow);
-		if (result) {
-			// 알림 생성 -> 대여 가능할 때만 알림 생성되는거 아니었나?
-			Alert alert = new Alert();
-			Calendar cal = Calendar.getInstance();
-			alert.setAlertDate(cal.getTime().toString());
-			alert.setContent("물품 대여가 예약되었습니다.");
-			alert.setMemberId(borrow.getBorrower().getId());
-			alert.setShareThingId(borrow.getShareThing().getItem().getId());
-			alert.setPageUrl("some url");
-			addAlert(alert);
+		int borrowReservationNum = borrowDao.checkNumberBorrowReservation(borrow.getShareThing().getItem().getId());
+		if (borrowReservationNum == 0) {
+			borrow.setIsFirstBooker(1);
 		}
-		return result;
+		else if (borrowReservationNum == 1){
+			borrow.setIsFirstBooker(0);
+		}
+		else {
+			return false;
+		}
+		return borrowDao.createBorrowReservation(borrow);
 	}
 	
 	// 예약 취소 - 예약 취소 또는 대여 시작할 때 예약 삭제, 알림 있으면 같이 삭제

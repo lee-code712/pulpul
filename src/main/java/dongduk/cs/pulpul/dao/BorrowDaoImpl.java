@@ -24,8 +24,9 @@ public class BorrowDaoImpl implements BorrowDao {
 
 	@Override
 	public boolean createBorrowReservation(Borrow borrow) {
-		// TODO Auto-generated method stub
-		return false;
+		int ck = borrowMapper.insertBorrowReservation(borrow);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override
