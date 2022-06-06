@@ -89,12 +89,14 @@
 	          	
 	          	<input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
 	          	
+	          	<div class="invalid-feedback" th:errors="*"> </div>
+	          	
 	          	<div id="btnWrap">
 	          		<th:block th:if="${session.id} == ${borrow.shareThing.item.market.member.id}">
 	          			<button id="rentalBtn" type="submit" th:onclick="updateShareThing([[${borrow.shareThing.item.id}]])">수정하기</button>
 	          		</th:block>
 	          		<th:block th:unless="${session.id} == ${borrow.shareThing.item.market.member.id}">
-	            		<button id="rentalBtn" type="submit" onclick="location.href='/mypage/orderList'">대여하기</button>
+	            		<button id="rentalBtn" type="submit" onclick="location.href='/mypage/shareThingList'">대여하기</button>
 	            	</th:block>
 	            	
 	            	<button id="cancelBtn" onclick="location.href='/lookup/shareThingList'">목록으로 이동</button>
@@ -167,12 +169,14 @@
 	          
 	          <input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
 	          
+	          <div class="invalid-feedback" th:errors="*"> </div>
+	          
 	          <div id="btnWrap">
 	          	<th:block th:if="${session.id} == ${borrow.shareThing.item.market.member.id}">
 	          			<button id="rentalBtn" type="submit" th:onclick="updateShareThing([[${borrow.shareThing.item.id}]])">수정하기</button>
 	          		</th:block>
 	          		<th:block th:unless="${session.id} == ${borrow.shareThing.item.market.member.id}">
-	            		<button id="rezBtn" type="submit" onclick="location.href='/mypage/orderList'">예약하기</button>
+	            		<button id="rezBtn" type="submit" onclick="location.href='/mypage/shareThingList'">예약하기</button>
 	            	</th:block>
 	            	
 	            	<button id="cancelBtn" onclick="location.href='/lookup/shareThingList'">목록으로 이동</button>

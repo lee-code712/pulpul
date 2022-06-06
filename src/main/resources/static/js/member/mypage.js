@@ -282,7 +282,7 @@ function shareThingListJson() {
 				if (borrow.shareThing.isBorrowed == 1) {
 					td_06.innerHTML += "<button class='not-extension-btn' disabled>대여 신청</button>";
 				}
-				else if (borrow.shareThing.isBorrowed == 0 && borrowStatus == 1) {
+				else if (borrow.shareThing.isBorrowed == 1 && borrowStatus == 1) {
 					td_06.innerHTML += "<button class='extension-btn' onclick=\"location.href='/borrow/extend?borrowId=" + borrow.id + "'\">연장하기</button>";	
 				}
 				else if (borrow.shareThing.isBorrowed == 0) {
