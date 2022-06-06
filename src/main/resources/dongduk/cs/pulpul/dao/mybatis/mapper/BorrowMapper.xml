@@ -131,6 +131,26 @@
 		</if>
 	</select>
 	
+	<select id="selectBorrowById" parameterType="Integer" resultMap="BorrowInfoMap">
+		SELECT b.borrow_id, b.borrow_date, b.return_date, b.tracking_number, b.borrow_status, b.is_extended, b.lender_id, b.borrower_id, b.share_thing_id,
+				br.is_first_booker,
+				lm.member_id AS lender_id, lm.name AS lender_name, lm.address AS lender_address, lm.phone AS lender_phone,
+				bm.member_id AS borrower_id, bm.name AS borrower_name, bm.address AS borrower_address, 
+				bm.address_detail AS borrower_address_detail, bm.zip AS borrower_zip, bm.phone AS borrower_phone,
+				it.item_id, it.name, it.upload_date, it.description, it.market_id,
+				st.precaution, st.is_borrowed,
+				i.image_src
+		FROM borrow b
+			FULL OUTER JOIN borrow_reservation br ON b.share_thing_id = br.share_thing_id AND b.borrower_id = br.member_id
+			FULL OUTER JOIN member lm ON b.lender_id = lm.member_id
+			FULL OUTER JOIN member bm ON b.borrower_id = bm.member_id
+			FULL OUTER JOIN item it ON b.share_thing_id = it.item_id
+			FULL OUTER JOIN share_thing st ON b.share_thing_id = st.item_id
+            FULL OUTER JOIN market m ON it.market_id = m.market_id
+			FULL OUTER JOIN image i ON lm.member_id = i.member_id
+		WHERE borrow_id = #{borrowId}
+	</select>
+	
 	<!-- 특정 회원의 대여 예약 목록 -->
 	<select id="selectBorrowReservationByMemberId" parameterType="String" resultMap="BorrowInfoMap">		
 		SELECT br.share_thing_id, br.member_id AS borrower_id, br.is_first_booker,

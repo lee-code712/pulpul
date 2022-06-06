@@ -185,4 +185,9 @@ public class BorrowServiceImpl implements BorrowService {
 		}
 	}
 
+	@Override
+	public Borrow getBorrowById(int borrowId) {
+		return borrowDao.findBorrowById(borrowId);
+	}
+
 }

@@ -28,6 +28,9 @@ public interface BorrowService {
 	// 품목 id로 대여 목록 조회
 	List<Borrow> getBorrowByItem(String itemId);
 	
+	// 대여 id로 대여 조회
+	Borrow getBorrowById(int borrowId);
+	
 	// 대여
 	boolean borrow(Borrow borrow);
 	

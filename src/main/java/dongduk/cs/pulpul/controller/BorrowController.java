@@ -125,6 +125,8 @@ public class BorrowController {
 		//오류
 		return "lookup/sharedThingDetail";
 		*/
+		
+		
 	}
 
 	/*
@@ -138,9 +140,18 @@ public class BorrowController {
 	/*
 	 * 대여 연장
 	 */
-	@PostMapping("/extend")
-	public String extend(){
-		return "redirect:/member/mypage/borrowList";
+	@GetMapping("/extend")
+	public String extend(HttpServletRequest req, Model model, Errors result){
+		Borrow borrow = borrowService.getBorrowById((Integer)req.getAttribute("borrowId"));
+		
+		if (borrow.getIsExtended() == 0) {
+			result.reject("alreadyExtended", new Object[] {borrow.getShareThing().getItem().getName()}, null);
+		}
+		else {
+			borrowService.extendBorrow(borrow);
+		}
+		
+		return "redirect:/member/mypage";
 	}	
 
 	/*

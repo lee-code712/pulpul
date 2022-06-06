@@ -126,5 +126,10 @@ public class BorrowDaoImpl implements BorrowDao {
 		return true;
 	}
 
+	@Override
+	public Borrow findBorrowById(int borrowId) {
+		return borrowMapper.selectBorrowById(borrowId);
+	}
+
 	
 }

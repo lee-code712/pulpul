@@ -168,6 +168,7 @@ function shareThingListJson() {
 		type : "get",
 		datatype : "json",
 		success : function(data) {
+			console.log(data);
 			$("#shareThingList").addClass('list-on');
 			$("#orderList").removeClass('list-on');
 			$("#orderList").addClass('list');

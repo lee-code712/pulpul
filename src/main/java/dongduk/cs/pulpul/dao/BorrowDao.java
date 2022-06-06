@@ -47,6 +47,8 @@ public interface BorrowDao {
 	// 품목 id로 대여 목록 조회
 	List<Borrow> findBorrowByItem(String itemId);
 	
+	Borrow findBorrowById(int borrowId);
+	
 	// 대여 생성
 	boolean createBorrow(Borrow borrow);
 	

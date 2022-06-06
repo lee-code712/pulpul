@@ -49,4 +49,5 @@ public interface BorrowMapper {
 
 	int updateIsBorrowed(ShareThing shareThing);
 
+	Borrow selectBorrowById(int borrowId);
 }
