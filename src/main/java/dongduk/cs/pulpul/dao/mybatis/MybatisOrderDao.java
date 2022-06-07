@@ -80,7 +80,8 @@ public class MybatisOrderDao implements OrderDao {
 
 	@Override
 	public boolean changeTrackingNumber(int orderId, String trackingNumber) {
-		// TODO Auto-generated method stub
+		int ck = orderMapper.updateTrackingNumber(orderId, trackingNumber);
+		if (ck > 0) return true;
 		return false;
 	}
 

@@ -130,12 +130,9 @@ public class OrderServiceImpl implements OrderService {
 
 	// 운송장번호 입력
 	public boolean changeTrackingNumber(Order order) {
-		/* boolean success = orderDao.changeTrackingNumber(orderId, trackingNumber);
-		if (!success)
-			return false;
-		return orderDao.changeOrderStatus(orderId, 2); */
-		
-		return false;
+		boolean successed = orderDao.changeTrackingNumber(order.getId(), order.getTrackingNumber());
+		if (!successed) return false;
+		return orderDao.changeOrderStatus(order.getId(), 2);
 	}
 
 	// 주문 취소

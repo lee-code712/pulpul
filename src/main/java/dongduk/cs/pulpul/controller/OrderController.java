@@ -162,7 +162,13 @@ public class OrderController {
 	 * 특정 상품 주문 내역에 운송장 번호 입력
 	 */
 	@PostMapping("/startDeliver")
-	public String startDeliver() {
+	public String startDeliver(Order order, RedirectAttributes rttr) {
+		
+		boolean successed = orderSvc.changeTrackingNumber(order);
+		if (!successed) {
+			rttr.addFlashAttribute("changeFailed", true);
+		}
+		
 		return "redirect:/market/orderListManage";
 	}
 

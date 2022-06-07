@@ -37,7 +37,7 @@ public interface OrderMapper {
 	int insertOrderGoods(List<Map<String, Object>> orderGoods);
 	
 	int updateTrackingNumber(@Param("orderId") int orderId, 
-			@Param("trackingNumber") int trackingNumber);
+			@Param("trackingNumber") String trackingNumber);
 	
 	int updateOrderStatus(@Param("orderId") int orderId, 
 			@Param("orderStatus") int orderStatus);
