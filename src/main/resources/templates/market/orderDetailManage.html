@@ -31,49 +31,19 @@
           <th class="item-waybill">운송장 번호</th>
         </tr>
 
-        <tr>
-          <td><img src="/images/smallItemImg.svg" class="plant-img" /></td>
+        <tr th:each="orderItem : ${order.goodsList}">
+          <td><img th:src="${orderItem.goods.item.thumbnailUrl}" class="plant-img" /></td>
           <td class="plant-info">
-            <div class="market-name">풀풀마켓</div>
+            <div class="market-name" th:text="${orderItem.goods.item.market.name}"></div>
             <div class="plant-info-inner">
-              <div class="plant-name">### 식물</div>
-              <div class="plant-price">/ 8000원</div>
+              <div class="plant-name" th:text="${orderItem.goods.item.name}"></div>
+              <div class="plant-price" th:text="|${#numbers.formatInteger(orderItem.goods.price, 0, 'COMMA')}원|">/ 8000원</div>
             </div>
           </td>
-          <td>1</td>
-          <td>###님</td>
-          <td>2000원</td>
-          <td>121212-434943-00</td>
-        </tr>
-
-        <tr>
-          <td><img src="/images/smallItemImg.svg" class="plant-img" /></td>
-          <td class="plant-info">
-            <div class="market-name">풀풀마켓</div>
-            <div class="plant-info-inner">
-              <div class="plant-name">### 식물</div>
-              <div class="plant-price">/ 8000원</div>
-            </div>
-          </td>
-          <td>1</td>
-          <td>###님</td>
-          <td>2000원</td>
-          <td>121212-434943-00</td>
-        </tr>
-
-        <tr>
-          <td><img src="/images/smallItemImg.svg" class="plant-img" /></td>
-          <td class="plant-info">
-            <div class="market-name">풀풀마켓</div>
-            <div class="plant-info-inner">
-              <div class="plant-name">### 식물</div>
-              <div class="plant-price">/ 8000원</div>
-            </div>
-          </td>
-          <td>1</td>
-          <td>###님</td>
-          <td>2000원</td>
-          <td>121212-434943-00</td>
+          <td th:text="${orderItem.quantity}"></td>
+          <td th:text="|${order.buyer.name}님|"></td>
+          <td th:text="|${#numbers.formatInteger(orderItem.goods.shippingFee, 0, 'COMMA')}원|"></td>
+          <td th:text="${order.trackingNumber}"></td>
         </tr>
       </table>
       
