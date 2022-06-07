@@ -3,9 +3,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	totalPrice(); // 상품상세 페이지로 처음 이동했을 때 total price 정보를 가져옴
 });
 
-if($(".soldout")){
-	$(".item-img").addClass("soldout-img");
-}
  var swiper = new Swiper(".mySwiper", {
   spaceBetween: 30,
   centeredSlides: true,
