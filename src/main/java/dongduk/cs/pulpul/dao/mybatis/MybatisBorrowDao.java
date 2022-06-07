@@ -43,8 +43,9 @@ public class MybatisBorrowDao implements BorrowDao {
 
 	@Override
 	public boolean changeIsFirstBooker(Borrow borrow) {
-		// TODO Auto-generated method stub
-		return false;
+		int ck = borrowMapper.updateFirstBooker(borrow);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override
@@ -117,8 +118,9 @@ public class MybatisBorrowDao implements BorrowDao {
 
 	@Override
 	public boolean changeReturnDate(Borrow borrow) {
-		// TODO Auto-generated method stub
-		return false;
+		int ck = borrowMapper.updateReturnDate(borrow);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override

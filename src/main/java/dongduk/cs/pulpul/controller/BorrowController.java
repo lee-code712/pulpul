@@ -155,14 +155,16 @@ public class BorrowController {
 	 * 대여 연장
 	 */
 	@GetMapping("/extend")
-	public String extend(HttpServletRequest req, Model model, Errors result){
-		Borrow borrow = borrowService.getBorrowById((Integer)req.getAttribute("borrowId"));
+	public String extend(@ModelAttribute("borrow") Borrow borrow, Errors result, HttpServletRequest req, Model model){
+		Borrow borrowInfo = borrowService.getBorrowById(borrow.getId());
 		
-		if (borrow.getIsExtended() == 0) {
-			result.reject("alreadyExtended", new Object[] {borrow.getShareThing().getItem().getName()}, null);
+		if (borrowInfo.getIsExtended() == 1) {
+			result.reject("alreadyExtended", new Object[] {borrowInfo.getShareThing().getItem().getName()}, null);
+			System.out.println("연장 실패");
 		}
 		else {
-			borrowService.extendBorrow(borrow);
+			borrowService.extendBorrow(borrowInfo);
+			System.out.println("연장 성공");
 		}
 		
 		return "redirect:/member/mypage";

@@ -284,7 +284,7 @@ function shareThingListJson() {
 				}
 				
 				if (borrow.shareThing.isBorrowed == 1 && borrow.borrowStatus == 1) {
-					td_06.innerHTML += "<button class='extension-btn' onclick=\"location.href='/borrow/extend?borrowId=" + borrow.id + "'\">연장하기</button>";	
+					td_06.innerHTML += "<button class='extension-btn' onclick=\"location.href='/borrow/extend?id=" + borrow.id + "'\">연장하기</button>";	
 				}
 				
 				if (borrow.shareThing.isBorrowed == 0) {

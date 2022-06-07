@@ -209,7 +209,7 @@
 	<!-- 대여 연장 -->
 	<update id="updateReturnDate" parameterType="Borrow">
 		UPDATE borrow
-		SET is_extended = 1, return_date = ${returnDate}
+		SET is_extended = 1, return_date =  TO_DATE(#{returnDate}, 'YYYYMMDD')
 		WHERE borrow_id = #{id}
 	</update>
 	

@@ -148,7 +148,10 @@ public class BorrowServiceImpl implements BorrowService {
 		cal.setTime(date); // 시간 설정
 		cal.add(Calendar.DATE, 14); // 일 연산
 		
-		borrow.setReturnDate(date.toString());
+		SimpleDateFormat transFormat2 = new SimpleDateFormat("yyyyMMdd");
+		returnDate = transFormat2.format(cal.getTime());
+		
+		borrow.setReturnDate(returnDate);
 		
 		return borrowDao.changeReturnDate(borrow);
 	}
