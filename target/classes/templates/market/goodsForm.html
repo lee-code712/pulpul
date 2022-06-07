@@ -105,7 +105,7 @@
         <tr>
           <td></td>
           <td>
-            <input type="file" id="fileWrap" accept=".jpg" multiple="multiple" name="files"/>
+            <input type="file" id="fileWrap" accept=".jpg" multiple="multiple" onchange="previewFiles()" name="files"/>
           </td>
         </tr>
         <tr th:if="*{#lists.isEmpty(item.imageUrlList)}">
