@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 
 import dongduk.cs.pulpul.domain.Market;
@@ -135,7 +136,11 @@ public class MarketController implements ApplicationContextAware {
      * 판매 상세 내역 조회
 	 */
 	@GetMapping("/orderDetailManage")
-	public String orderDetailManage() {
+	public String orderDetailManage(@RequestParam("orderId") int orderId, Model model) {
+		
+		Order order = orderSvc.getOrder(orderId);
+		model.addAttribute("order", order);
+		
 		//구매 현황 상세내역 조회 페이지
 		return "market/orderDetailManage";
 	}
