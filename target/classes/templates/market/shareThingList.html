@@ -53,7 +53,7 @@
            </td>
           <td th:text="${shareThing.item.name}"></td>
           <td>
-            <div class="rental-status-on" th:style="${shareThing.isBorrowed == 0 ? 'color: #c4c4c4;' : ''}" th:text="${shareThing.isBorrowed == 0 ? '대여 불가' : '대여 가능'}"></div>
+            <div class="rental-status-on" th:style="${shareThing.isBorrowed == 0 ? 'color: #c4c4c4;' : ''}" th:text="${shareThing.isBorrowed == 0 ? '대여 가능' : '대여 불가'}"></div>
           </td>
           <td th:text="${shareThing.reservationNumber}">대기자</td>
           <td>

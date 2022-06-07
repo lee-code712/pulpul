@@ -30,16 +30,16 @@ public interface ItemDao {
 	int findRemainQuantityByGoods(String itemId);
 	
 	// 상품 생성
-	boolean createGoods(Goods goods);
+	void createGoods(Goods goods);
 	
 	// 상품 정보 수정
-	boolean changeGoodsInfo(Goods goods);
+	void changeGoodsInfo(Goods goods);
 	
 	// 상품 판매 수량 변경
-	boolean changeSalesQuantity(Goods goods);
+	void changeSalesQuantity(Goods goods);
 	
 	// 주문 상태에 따라 남은 상품 수량 변경
-	boolean changeRemainQuantityByOrderStatus(String itemId, int orderStatus, int quantity);
+	void changeRemainQuantityByOrderStatus(String itemId, int orderStatus, int quantity);
 	
 	// 상품에 대한 주문 내역 존재여부 확인
 	boolean isExistOrder(String itemId);
@@ -57,25 +57,25 @@ public interface ItemDao {
 	ShareThing findShareThingByItem(String itemId);
 	
 	// 공유 물품 생성
-	boolean createShareThing(ShareThing shareThing);
+	void createShareThing(ShareThing shareThing);
 	
 	// 공유 물품 정보 수정
-	boolean changeShareThingInfo(ShareThing shareThing);
+	void changeShareThingInfo(ShareThing shareThing);
 	
 	// 공유 물품의 대여 여부 변경
-	boolean changeIsBorrowed(ShareThing shareThing);
+	void changeIsBorrowed(ShareThing shareThing);
 	
 	// 공유 물품에 대한 대여 내역 존재여부 확인
 	boolean isExistBorrow(String itemId);
 	
 	// 품목 정보 수정
-	boolean chageItemInfo(Item item);
+	void chageItemInfo(Item item);
 	
 	// 품목 삭제
-	boolean deleteItem(String itemId);
+	void deleteItem(String itemId);
 	
 	// 품목 이미지 목록 생성
-	boolean createItemImages(List<String> imageUrlList, String memberId);
+	void createItemImages(List<String> imageUrlList, String memberId);
 	
 	// 품목 이미지 목록 삭제(삭제 개수 반환)
 	int deleteItemImages(String itemId, String memberId);

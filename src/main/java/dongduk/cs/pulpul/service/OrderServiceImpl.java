@@ -117,8 +117,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		for (CartItem cartItem : order.getGoodsList()) {
 			// 상품의 남은 수량 변경
-			successed = itemDao.changeRemainQuantityByOrderStatus(cartItem.getGoodsId(), 1, cartItem.getQuantity());
-			if (!successed) return 0;
+			itemDao.changeRemainQuantityByOrderStatus(cartItem.getGoodsId(), 1, cartItem.getQuantity());
 			
 			// 장바구니에서 해당 상품 삭제
 			successed = deleteCartItem(order.getBuyer().getId(), cartItem.getGoodsId());
@@ -150,8 +149,7 @@ public class OrderServiceImpl implements OrderService {
 			
 			// 주문한 상품들의 남은 수량 변경
 			for (CartItem item : order.getGoodsList()) {
-				successed = itemDao.changeRemainQuantityByOrderStatus(item.getGoodsId(), 0, item.getQuantity());
-				if (!successed) return false;
+				itemDao.changeRemainQuantityByOrderStatus(item.getGoodsId(), 0, item.getQuantity());
 			}
 			
 			// 사용자 포인트 환급

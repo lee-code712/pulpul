@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import dongduk.cs.pulpul.domain.Item;
-import dongduk.cs.pulpul.domain.Market;
-import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.ShareThing;
 import dongduk.cs.pulpul.service.ItemService;
 import dongduk.cs.pulpul.service.exception.DeleteItemException;
@@ -50,15 +47,7 @@ public class ShareThingController implements ApplicationContextAware {
 	
 	@ModelAttribute("shareThing")
 	public ShareThing formBacking(HttpSession session) {
-		Member member = new Member();
-		member.setId((String) session.getAttribute("id"));
-		Market market = new Market();
-		market.setMember(member);
-		Item item = new Item();
-		item.setMarket(market);
-		ShareThing shareThing = new ShareThing();
-		shareThing.setItem(item);
-		return shareThing;
+		return new ShareThing();
 	}
 	
 	/*
@@ -68,7 +57,6 @@ public class ShareThingController implements ApplicationContextAware {
 	public String shareThingList(HttpSession session, Model model) {
 		
 		String memberId = (String) session.getAttribute("id");
-		
 		if(memberId == null) {
 			return "redirect:/home";
 		}
@@ -83,10 +71,9 @@ public class ShareThingController implements ApplicationContextAware {
 	 * 공유물품 등록 
 	 */
 	@GetMapping("/upload")
-	public String uploadForm(@ModelAttribute("shareThing") ShareThing shareThing) {
+	public String uploadForm(@ModelAttribute("shareThing") ShareThing shareThing, HttpSession session) {
 		
-		String memberId = shareThing.getItem().getMarket().getMember().getId();
-		
+		String memberId = (String) session.getAttribute("id");
 		if(memberId == null) {
 			return "redirect:/home";
 		}
@@ -102,11 +89,7 @@ public class ShareThingController implements ApplicationContextAware {
 			return "market/shareThingForm";
 		
 		uploadFiles.setPath(uploadDir);
-		boolean successed = itemSvc.uploadShareThing(shareThing, uploadFiles);
-		if (!successed) {
-			model.addAttribute("uplaodFalid", true);
-			return "market/shareThingForm";
-		}
+		itemSvc.uploadShareThing(shareThing, uploadFiles);
 
 		return "redirect:/market/shareThing/list";
 	}
@@ -116,36 +99,30 @@ public class ShareThingController implements ApplicationContextAware {
 	 */
 	@GetMapping("/update")
 	public String updateForm(@ModelAttribute("shareThing") ShareThing shareThing,
-			@RequestParam("itemId") String id) {
+			@RequestParam("itemId") String id, HttpSession session) {
 		
-		String memberId = shareThing.getItem().getMarket().getMember().getId();
-		
+		String memberId = (String) session.getAttribute("id");
 		if(memberId == null) {
 			return "redirect:/home";
 		}
 		
 		ShareThing findShareThing = itemSvc.getShareThing(id);
-		if (findShareThing != null)
+		if (findShareThing != null) {
 			BeanUtils.copyProperties(findShareThing, shareThing);
+		}
 		
 		return "market/shareThingForm";
 	}
 	
 	@PostMapping("/update")
 	public String update(@Valid @ModelAttribute("shareThing") ShareThing shareThing, String[] deleteImages,
-			BindingResult result, 
-			FileCommand updateFiles, Model model) {
+			BindingResult result, FileCommand updateFiles, Model model) {
 		
 		if (result.hasErrors())
 			return "market/shareThingForm";
 		
 		updateFiles.setPath(uploadDir);
-		boolean successed = itemSvc.changeShareThingInfo(shareThing, updateFiles, deleteImages);
-		
-		if (!successed) {
-			model.addAttribute("updateFalid", true);
-			return "market/shareThingForm";
-		}
+		itemSvc.changeShareThingInfo(shareThing, updateFiles, deleteImages);
 
 		return "redirect:/market/shareThing/list";
 	}
@@ -158,10 +135,7 @@ public class ShareThingController implements ApplicationContextAware {
 			RedirectAttributes rttr) {
 		
 		try {
-			boolean successed = itemSvc.deleteItem(id, (String)session.getAttribute("id"), uploadDir);
-			if (!successed) {
-				rttr.addFlashAttribute("deleteFailed", true);
-			}
+			itemSvc.deleteItem(id, (String)session.getAttribute("id"), uploadDir);
 			
 		} catch (DeleteItemException e) {
 			rttr.addFlashAttribute("deleteFailed", true);

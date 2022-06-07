@@ -58,37 +58,29 @@ public class MybatisItemDao implements ItemDao {
 	}
 
 	@Override
-	public boolean createGoods(Goods goods) {
-		int ck = itemMapper.insertGoods(goods);
-		if (ck < 0) return false;
-		return true;
+	public void createGoods(Goods goods) {
+		itemMapper.insertGoods(goods);
 	}
 
 	@Override
-	public boolean changeGoodsInfo(Goods goods) {
-		int ck = itemMapper.updateGoods(goods);
-		if (ck < 0) return false;
-		return true;
+	public void changeGoodsInfo(Goods goods) {
+		itemMapper.updateGoods(goods);
 	}
 
 	@Override
-	public boolean changeSalesQuantity(Goods goods) {
-		int ck = itemMapper.updateSalesQuantity(goods);
-		if (ck < 0) return false;
-		return true;
+	public void changeSalesQuantity(Goods goods) {
+		itemMapper.updateSalesQuantity(goods);
 	}
 
 	@Override
-	public boolean changeRemainQuantityByOrderStatus(String itemId, int orderStatus, int quantity) {
-		int ck = itemMapper.updateRemainQuantity(itemId, orderStatus, quantity);
-		if (ck > 0) return true;
-		return false;
+	public void changeRemainQuantityByOrderStatus(String itemId, int orderStatus, int quantity) {
+		itemMapper.updateRemainQuantity(itemId, orderStatus, quantity);
 	}
 
 	@Override
 	public boolean isExistOrder(String itemId) {
-		int cnt = itemMapper.selectOrderCountByItemId(itemId);
-		if (cnt > 0) return true;
+		int ck = itemMapper.selectOrderCountByItemId(itemId);
+		if (ck > 0) return true;
 		return false;
 	}
 
@@ -113,54 +105,43 @@ public class MybatisItemDao implements ItemDao {
 	}
 
 	@Override
-	public boolean createShareThing(ShareThing shareThing) {
-		int ck = itemMapper.insertShareThing(shareThing);
-		if (ck < 0) return false;
-		return true;
+	public void createShareThing(ShareThing shareThing) {
+		itemMapper.insertShareThing(shareThing);
 	}
 
 	@Override
-	public boolean changeShareThingInfo(ShareThing shareThing) {
-		int ck = itemMapper.updateShareThing(shareThing);
-		if (ck < 0) return false;
-		return true;
+	public void changeShareThingInfo(ShareThing shareThing) {
+		itemMapper.updateShareThing(shareThing);
 	}
 
 	@Override
-	public boolean changeIsBorrowed(ShareThing shareThing) {
-		// TODO Auto-generated method stub
-		return false;
+	public void changeIsBorrowed(ShareThing shareThing) {
+		itemMapper.updateIsBorrowed(shareThing);
 	}
 
 	@Override
 	public boolean isExistBorrow(String itemId) {
-		int cnt = itemMapper.selectBorrowCountByItemId(itemId);
-		if (cnt > 0) return true;
+		int ck = itemMapper.selectBorrowCountByItemId(itemId);
+		if (ck > 0) return true;
 		return false;
 	}
 	
 	@Override
-	public boolean chageItemInfo(Item item) {
-		int ck = itemMapper.updateItem(item);
-		if (ck < 0) return false;
-		return true;
+	public void chageItemInfo(Item item) {
+		itemMapper.updateItem(item);
 	}
 
 	@Override
-	public boolean deleteItem(String itemId) {
-		int ck = itemMapper.deleteItem(itemId);
-		if (ck < 0) return false;
-		return true;
+	public void deleteItem(String itemId) {
+		itemMapper.deleteItem(itemId);
 	}
 
 	@Override
-	public boolean createItemImages(List<String> imageUrlList, String memberId) {
+	public void createItemImages(List<String> imageUrlList, String memberId) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("memberId", memberId);
 		param.put("imageUrlList", imageUrlList);
-		int ck = itemMapper.insertItemImages(param);
-		if (ck < 0) return false;
-		return true;
+		itemMapper.insertItemImages(param);
 	}
 
 	@Override

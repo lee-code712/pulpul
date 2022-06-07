@@ -17,11 +17,17 @@
   </th:block>
 
 	<div layout:fragment="content">
+	<script th:inline="javascript">
+  		console.log('데이터 확인');
+  		var shareThing = [[${shareThing}]];
+  		console.log(shareThing);
+  </script>
 	  <div id="pageWrap">
       <div id="pageTit">공유 물품 관리</div>
 	  <div id="pageSubTit">공유 물품 등록</div>	
      <form method="post" enctype="multipart/form-data" th:object="${shareThing}">
      <input type="hidden" th:field="*{item.id}" />
+     <input type="hidden" th:field="*{item.market.member.id}" th:value="${session.id}" />
       <table>
         <tr>
           <td class="text-name">공유 물품명</td>

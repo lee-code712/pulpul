@@ -22,9 +22,6 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dongduk.cs.pulpul.domain.Goods;
-import dongduk.cs.pulpul.domain.Item;
-import dongduk.cs.pulpul.domain.Market;
-import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.service.ItemService;
 import dongduk.cs.pulpul.service.exception.DeleteItemException;
 
@@ -49,16 +46,8 @@ public class GoodsController implements ApplicationContextAware {
 	}
 	
 	@ModelAttribute("goods")
-	public Goods formBacking(HttpSession session) {
-		Member member = new Member();
-		member.setId((String) session.getAttribute("id"));
-		Market market = new Market();
-		market.setMember(member);
-		Item item = new Item();
-		item.setMarket(market);
-		Goods goods = new Goods();
-		goods.setItem(item);
-		return goods;
+	public Goods formBacking() {
+		return new Goods();
 	}
 	
 	/*
@@ -68,7 +57,6 @@ public class GoodsController implements ApplicationContextAware {
 	public String goodsList(HttpSession session, Model model) {
 		
 		String memberId = (String) session.getAttribute("id");
-		
 		if(memberId == null) {
 			return "redirect:/home";
 		}
@@ -83,10 +71,9 @@ public class GoodsController implements ApplicationContextAware {
 	 * 판매 식물 등록
 	 */
 	@GetMapping("/upload")
-	public String uploadForm(@ModelAttribute("goods") Goods goods) {
+	public String uploadForm(@ModelAttribute("goods") Goods goods, HttpSession session) {
 		
-		String memberId = goods.getItem().getMarket().getMember().getId();
-		
+		String memberId = (String) session.getAttribute("id");
 		if(memberId == null) {
 			return "redirect:/home";
 		}
@@ -100,13 +87,9 @@ public class GoodsController implements ApplicationContextAware {
 
 		if (result.hasErrors())
 			return "market/goodsForm";
-
+		
 		uploadFiles.setPath(uploadDir);
-		boolean successed = itemSvc.uploadGoods(goods, uploadFiles);
-		if (!successed) {
-			model.addAttribute("uplaodFalid", true);
-			return "market/goodsForm";
-		}
+		itemSvc.uploadGoods(goods, uploadFiles);
 		
 		return "redirect:/market/goods/list";
 	}
@@ -116,35 +99,30 @@ public class GoodsController implements ApplicationContextAware {
 	 */
 	@GetMapping("/update")
 	public String updateForm(@ModelAttribute("goods") Goods goods, 
-			@RequestParam("itemId") String id) {
+			@RequestParam("itemId") String id, HttpSession session) {
 		
-		String memberId = goods.getItem().getMarket().getMember().getId();
-		
+		String memberId = (String) session.getAttribute("id");
 		if(memberId == null) {
 			return "redirect:/home";
 		}
 		
 		Goods findGoods = itemSvc.getGoods(id);
-		if (findGoods != null)
+		if (findGoods != null) {
 			BeanUtils.copyProperties(findGoods, goods);
+		}
 		
 		return "market/goodsForm";
 	}
 	
 	@PostMapping("/update")
 	public String update(@Valid @ModelAttribute("goods") Goods goods, String[] deleteImages,
-			BindingResult result,
-			FileCommand updateFiles, Model model) {
+			BindingResult result, FileCommand updateFiles, Model model) {
 
 		if (result.hasErrors())
 			return "market/goodsForm";
 		
 		updateFiles.setPath(uploadDir);
-		boolean successed = itemSvc.changeGoodsInfo(goods, updateFiles, deleteImages);
-		if (!successed) {
-			model.addAttribute("updateFalid", true);
-			return "market/goodsForm";
-		}
+		itemSvc.changeGoodsInfo(goods, updateFiles, deleteImages);
 
 		return "redirect:/market/goods/list";
 	}
@@ -157,10 +135,7 @@ public class GoodsController implements ApplicationContextAware {
 			RedirectAttributes rttr) {
 
 		try {
-			boolean successed = itemSvc.deleteItem(id, (String)session.getAttribute("id"), uploadDir);
-			if (!successed) {
-				rttr.addFlashAttribute("deleteFailed", true);
-			}
+			itemSvc.deleteItem(id, (String)session.getAttribute("id"), uploadDir);
 			
 		} catch (DeleteItemException e) {
 			rttr.addFlashAttribute("deleteFailed", true);
