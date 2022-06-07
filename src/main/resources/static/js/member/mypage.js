@@ -279,13 +279,15 @@ function shareThingListJson() {
 					
 				const td_06 = document.createElement("td");
 				td_06.setAttribute("class", "sharething-btn");
-				if (borrow.shareThing.isBorrowed == 1) {
+				if (borrow.shareThing.isBorrowed == 1 && borrow.borrowStatus == null) {
 					td_06.innerHTML += "<button class='not-extension-btn' disabled>대여 신청</button>";
 				}
-				else if (borrow.shareThing.isBorrowed == 1 && borrowStatus == 1) {
+				
+				if (borrow.shareThing.isBorrowed == 1 && borrow.borrowStatus == 1) {
 					td_06.innerHTML += "<button class='extension-btn' onclick=\"location.href='/borrow/extend?borrowId=" + borrow.id + "'\">연장하기</button>";	
 				}
-				else if (borrow.shareThing.isBorrowed == 0) {
+				
+				if (borrow.shareThing.isBorrowed == 0) {
 					td_06.innerHTML += "<button class='extension-btn'>대여 신청</button>";	
 					$(td_06).click(function(){
 							moveToShareThingDetail(borrow.shareThing.item.id);
