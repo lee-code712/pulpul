@@ -1,13 +1,14 @@
-package dongduk.cs.pulpul.dao;
+package dongduk.cs.pulpul.dao.mybatis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import dongduk.cs.pulpul.dao.MemberDao;
 import dongduk.cs.pulpul.dao.mybatis.mapper.MemberMapper;
 import dongduk.cs.pulpul.domain.Member;
 
-@Component
-public class MemberDaoImpl implements MemberDao {
+@Repository
+public class MybatisMemberDao implements MemberDao {
 
 	@Autowired
     private MemberMapper memberMapper;

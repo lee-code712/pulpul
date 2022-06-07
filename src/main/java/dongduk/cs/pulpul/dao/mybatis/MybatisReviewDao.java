@@ -1,15 +1,16 @@
-package dongduk.cs.pulpul.dao;
+package dongduk.cs.pulpul.dao.mybatis;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import dongduk.cs.pulpul.dao.ReviewDao;
 import dongduk.cs.pulpul.dao.mybatis.mapper.ReviewMapper;
 import dongduk.cs.pulpul.domain.Review;
 
-@Component
-public class ReviewDaoImpl implements ReviewDao {
+@Repository
+public class MybatisReviewDao implements ReviewDao {
 
 	@Autowired
 	private ReviewMapper reviewMapper;

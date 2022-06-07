@@ -1,19 +1,20 @@
-package dongduk.cs.pulpul.dao;
+package dongduk.cs.pulpul.dao.mybatis;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import dongduk.cs.pulpul.dao.ItemDao;
 import dongduk.cs.pulpul.dao.mybatis.mapper.ItemMapper;
 import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.domain.Item;
 import dongduk.cs.pulpul.domain.ShareThing;
 
-@Component
-public class ItemDaoImpl implements ItemDao {
+@Repository
+public class MybatisItemDao implements ItemDao {
 
 	@Autowired
     private ItemMapper itemMapper;

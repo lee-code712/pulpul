@@ -1,13 +1,14 @@
-package dongduk.cs.pulpul.dao;
+package dongduk.cs.pulpul.dao.mybatis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import dongduk.cs.pulpul.dao.MarketDao;
 import dongduk.cs.pulpul.dao.mybatis.mapper.MarketMapper;
 import dongduk.cs.pulpul.domain.Market;
 
-@Component
-public class MarketDaoImpl implements MarketDao {
+@Repository
+public class MybatisMarketDao implements MarketDao {
 
 	@Autowired
 	private MarketMapper marketMapper;

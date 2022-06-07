@@ -1,18 +1,19 @@
-package dongduk.cs.pulpul.dao;
+package dongduk.cs.pulpul.dao.mybatis;
 
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import dongduk.cs.pulpul.dao.OrderDao;
 import dongduk.cs.pulpul.dao.mybatis.mapper.OrderMapper;
 import dongduk.cs.pulpul.domain.Cart;
 import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Order;
 
-@Component
-public class OrderDaoImpl implements OrderDao {
+@Repository
+public class MybatisOrderDao implements OrderDao {
 	
 	@Autowired
     private OrderMapper orderMapper;

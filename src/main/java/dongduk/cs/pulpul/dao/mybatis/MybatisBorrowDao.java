@@ -1,17 +1,18 @@
-package dongduk.cs.pulpul.dao;
+package dongduk.cs.pulpul.dao.mybatis;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import dongduk.cs.pulpul.dao.BorrowDao;
 import dongduk.cs.pulpul.dao.mybatis.mapper.BorrowMapper;
 import dongduk.cs.pulpul.domain.Alert;
 import dongduk.cs.pulpul.domain.Borrow;
 import dongduk.cs.pulpul.domain.ShareThing;
 
-@Component
-public class BorrowDaoImpl implements BorrowDao {
+@Repository
+public class MybatisBorrowDao implements BorrowDao {
 
 	@Autowired
 	private BorrowMapper borrowMapper;
