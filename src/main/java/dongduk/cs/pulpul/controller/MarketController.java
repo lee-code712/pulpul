@@ -1,5 +1,7 @@
 package dongduk.cs.pulpul.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -19,7 +21,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import dongduk.cs.pulpul.domain.Market;
 import dongduk.cs.pulpul.domain.Member;
+import dongduk.cs.pulpul.domain.Order;
 import dongduk.cs.pulpul.service.MarketService;
+import dongduk.cs.pulpul.service.OrderService;
 
 @Controller
 @RequestMapping("/market")
@@ -28,10 +32,12 @@ public class MarketController implements ApplicationContextAware {
 	private WebApplicationContext context;	
 	private String uploadDir;
 	private final MarketService marketSvc;
+	private final OrderService orderSvc;
 	
 	@Autowired
-	public MarketController(MarketService marketSvc) {
+	public MarketController(MarketService marketSvc, OrderService orderSvc) {
 		this.marketSvc = marketSvc;
+		this.orderSvc = orderSvc;
 	}
 	
 	@Override
@@ -113,7 +119,14 @@ public class MarketController implements ApplicationContextAware {
 	 * 판매 현황 조회
 	 */
 	@GetMapping("/orderListManage")
-	public String orderListManage() {
+	public String orderListManage(HttpSession session, Model model) {
+		
+		String memberId = (String) session.getAttribute("id");
+		
+		List<Order> orderList = orderSvc.getOrderListByMember(memberId, "seller");
+		if (orderList != null) {
+			model.addAttribute("orderList", orderList);
+		}
 		//전체 구매 현황 페이지
 		return "market/orderListManage";
 	}
