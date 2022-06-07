@@ -143,3 +143,9 @@ td {
   font-size: 14px;
   color: #93c0b5;
 }
+
+.pay-info, #totalPrice {
+	width: 60px;
+	display:flex;
+	justify-content: flex-end;
+}

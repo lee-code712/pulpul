@@ -15,9 +15,9 @@ function encodeUri(uri){
  var totalItem = $("#total-item").text().replace(",", "").split("원")[0];
  var totalPrice = Number($("#totalPrice").text().replace(",", "").split("원")[0]);
  var shipping = $("#total-shippingFee");
- if($("#point")){
-	shipping.text((totalPrice - totalItem).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원");
+ if(!$("#point")){
+	shipping.text("+" + (totalPrice - totalItem).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원");
 	}else{
 		var point = Number($("#point").text().replace(",", "").split("원")[0]);
-		shipping.text((totalPrice - totalItem + point).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원");	
+		shipping.text("+" + (totalPrice - totalItem + point).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원");	
 }

@@ -57,6 +57,19 @@
           </td>
         </tr>
       </table>
+      
+        <div id="shippingInfoTit">발송지 정보</div>
+      <div id="shippingInfoWrap">
+        <div class="shipping-info-inner">
+          <div class="shipping-info-tit">발송인</div>
+          <div class="shipping-info" th:text="${order.seller.name}"></div>
+        </div>
+        <div class="shipping-info-inner">
+          <div class="shipping-info-tit">휴대폰</div>
+          <div class="shipping-info" th:text="${#strings.substring(order.seller.phone, 0, 3) + '-' + 
+          #strings.substring(order.seller.phone, 3, 7) + '-' + #strings.substring(order.seller.phone, 7)}"></div>
+        </div>
+      </div>
 
       <div id="shippingInfoTit">배송지 정보</div>
       <div id="shippingInfoWrap">
@@ -89,7 +102,7 @@
         
          <div class="pay-info-inner" th:if="${order.usedPoint != 0}">
           <div class="pay-info-tit">포인트</div>
-          <div class="pay-info" id="point" th:text="|${#numbers.formatInteger(order.usedPoint, 0, 'COMMA')}원|"></div>
+          <div class="pay-info" id="point" th:text="|-${#numbers.formatInteger(order.usedPoint, 0, 'COMMA')}원|"></div>
         </div>
 
         <div class="pay-info-inner">
