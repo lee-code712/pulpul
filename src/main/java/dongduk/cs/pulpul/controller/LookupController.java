@@ -21,6 +21,7 @@ import dongduk.cs.pulpul.domain.Goods;
 import dongduk.cs.pulpul.domain.Market;
 import dongduk.cs.pulpul.domain.Review;
 import dongduk.cs.pulpul.domain.ShareThing;
+import dongduk.cs.pulpul.service.BorrowService;
 import dongduk.cs.pulpul.service.ItemService;
 import dongduk.cs.pulpul.service.MarketService;
 import dongduk.cs.pulpul.service.ReviewService;
@@ -32,13 +33,15 @@ public class LookupController {
 	private final ItemService itemSvc;
 	private final ReviewService reviewSvc;
 	private final MarketService marketSvc;
+	private final BorrowService borrowSvc;
 	
 	@Autowired
 	public LookupController(ItemService itemSvc, ReviewService reviewSvc,
-			MarketService marketSvc) {
+			MarketService marketSvc, BorrowService borrowSvc) {
 		this.itemSvc = itemSvc;
 		this.reviewSvc = reviewSvc;
 		this.marketSvc = marketSvc;
+		this.borrowSvc = borrowSvc;
 	}
 
 	/*
@@ -108,7 +111,10 @@ public class LookupController {
 		//공유물품 상세 정보 조회 페이지
 		
 		ShareThing shareThing = itemSvc.getShareThing(itemId);
-		Borrow borrow = new Borrow();
+		Borrow borrow = borrowSvc.getCurrBorrowByItem(itemId);
+		if (borrow == null) {
+			borrow = new Borrow();
+		}
 		borrow.setShareThing(shareThing);
 		model.addAttribute("borrow", borrow);
 		

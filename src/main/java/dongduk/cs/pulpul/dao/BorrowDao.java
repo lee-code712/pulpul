@@ -63,5 +63,7 @@ public interface BorrowDao {
 	
 	// 대여 반납일, 연장 여부 변경
 	boolean changeReturnDate(Borrow borrow);
+
+	Borrow findCurrBorrowByItem(String itemId);
 	
 }

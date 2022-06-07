@@ -90,6 +90,11 @@ public class BorrowServiceImpl implements BorrowService {
 	public List<Borrow> getBorrowByItem(String itemId) {
 		return borrowDao.findBorrowByItem(itemId);
 	}
+	
+	// 현재 대여 중인 품목 대여 현황 조회
+	public Borrow getCurrBorrowByItem(String itemId) {
+		return borrowDao.findCurrBorrowByItem(itemId);
+	}
 
 	// 대여 생성
 	public boolean borrow(Borrow borrow) {

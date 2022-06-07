@@ -132,5 +132,11 @@ public class BorrowDaoImpl implements BorrowDao {
 		return borrowMapper.selectBorrowById(borrowId);
 	}
 
+	@Override
+	public Borrow findCurrBorrowByItem(String itemId) {
+		// TODO Auto-generated method stub
+		return borrowMapper.selectCurrBorrowByItem(itemId);
+	}
+
 	
 }
