@@ -15,7 +15,7 @@
   	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   	<script th:src="@{/js/market/marketForm.js}"></script>
   </th:block>
-  
+
 	<div layout:fragment="content">
 		<!-- <script th:inline="javascript">
   		console.log('데이터 확인');
@@ -35,70 +35,63 @@
 		    <div>|</div>
 		    <div><a href="/market/shareThing/list" class="list">공유 물품 관리</a></div>
 		  </div>
+		  
 		  <form th:object="${market}" method="post" enctype="multipart/form-data"> 
 		    <input type="hidden" th:field="*{id}">
 		  <table>
 		    <tr>
 		      <td class="text-name">마켓명</td>
-		      <td><input type="text" placeholder="마켓명을 입력하세요." th:field="*{name}" /></td>
+		      <td>
+		      	<input type="text" placeholder="마켓명을 입력하세요." th:field="*{name}" />
+		      	<th:block th:errors="*{name}" class="invalid"></th:block>
+		      </td>
 		    </tr>
-		    <tr>
-		      <td></td>
-		      <td th:errors="*{name}"></td>
-		    </tr>
+		 
 		    <tr>
 		      <td class="text-name">마켓 소개</td>
-		      <td><textarea placeholder="마켓 소개를 작성해주세요." th:field="*{intro}"></textarea></td>
-		    </tr>
-		    <tr>
-		      <td></td>
-		      <td th:errors="*{intro}"></td>
+		      <td>
+		      	<textarea placeholder="마켓 소개를 작성해주세요." th:field="*{intro}"></textarea>
+		      	<th:block th:errors="*{intro}"></th:block>
+		      </td>
 		    </tr>
 		    <tr id="isMarketImage">
 		      <td class="text-name">마켓 사진</td>
-		      <td class="imgUrl" th:text="${not #strings.isEmpty(market.imageUrl)} ? ${market.imageUrl} : '마켓 이미지가 없습니다.'">
-		      </td>
-		    </tr>
-		    <tr>
-		      <td></td>
-		      <td><input type="file" id="fileWrap" accept=".jpg" onchange="previewFile()" name="file"></td>
-		    </tr>
-		    <tr>
-		        <td><input type="hidden" th:field="*{imageUrl}"></td>
-		    	<td th:if="${not #strings.isEmpty(market.imageUrl)}">
-		    	  <img class="marketImage" th:src="${market.imageUrl}">
-		    	</td>
-				<td th:if="${#strings.isEmpty(market.imageUrl)}">
-				  <img class="marketImage" src="" alt="사진을 추가해주세요.">
-				</td>
+		      <td>
+		      	<input type="file" id="fileWrap" accept=".jpg" onchange="previewFile()" name="file" />
+			      
+			      <div class="file-img-wrap">
+			      	<input type="hidden" th:field="*{imageUrl}">
+				    	<div th:if="${not #strings.isEmpty(market.imageUrl)}">
+				    	  <img class="marketImage" th:src="${market.imageUrl}">
+				    	</div>
+							<div th:if="${#strings.isEmpty(market.imageUrl)}">
+							  <img class="marketImage" src="" alt="사진을 추가해주세요.">
+							</div>
+				      <div class="imgUrl" th:text="${not #strings.isEmpty(market.imageUrl)} ? ${market.imageUrl} : '마켓 이미지가 없습니다.'"></div>
+						</div>
+					</td>
 		  	</tr>
+		    
 		    <tr>
 		      <td class="text-name">연락 가능 시간</td>
-		      <td><input type="text" placeholder="예) 오후 1:00 ~ 오후 3:00" th:field="*{contactableTime}"  /></td>
-		    </tr>
-		    <tr>
-		      <td></td>
-		      <td th:errors="*{contactableTime}"></td>
+		      <td>
+		      	<input type="text" placeholder="예) 오후 1:00 ~ 오후 3:00" th:field="*{contactableTime}"  />
+		      	<th:block th:errors="*{contactableTime}"></th:block>
+		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">교환/반품/환불 정책</td>
 		      <td>
 		        <input type="text" placeholder="교환/반품/환불 정책을 입력해주세요." th:field="*{policy}" />
+		        <th:block th:errors="*{policy}"></th:block>
 		      </td>
-		    </tr>
-		    <tr>
-		      <td></td>
-		      <td th:errors="*{policy}"></td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">구매 전 유의사항</td>
 		      <td>
 		        <input type="text" placeholder="구매 전 유의사항을 입력해주세요." th:field="*{precaution}" />
+		        <th:block th:erros="*{precaution}"></th:block>
 		      </td>
-		    </tr>
-		    <tr>
-		      <td></td>
-		      <td th:erros="*{precaution}"></td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">마켓 공개</td>

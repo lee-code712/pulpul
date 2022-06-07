@@ -18,12 +18,10 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  margin-bottom: 60px;
-  padding-left: 20px;
+  margin: 60px 0px;
   width: 1174px;
   height: 40px;
   font-size: 16px;
-  background-color: #f6f6f6;
 }
 
 .list-on {
@@ -72,9 +70,21 @@ textarea {
 	border: 1px solid #eaeaea;
 }
 
- #fileWrap {
+#fileWrap {
   padding: 0px;
   border: none;
+}
+
+.invalid {
+	margin-top: 40px;
+	color: #DBAFAE;
+	font-size: 14px;
+}
+
+.file-img-wrap {
+	display: flex;
+	gap: 10px;
+	margin-top: 20px;
 }
 
 form {
@@ -132,7 +142,7 @@ input[type="radio"]:checked + span:before {
   cursor: pointer;
 }
 
-/*input file img Å©±â º¯°æ, ¹öÆ° À§Ä¡ Á¤·Ä*/
+/*input file img Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Æ° ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½*/
 .marketBtn {
 	width: 100%;
 	justify-content: flex-end;
@@ -141,9 +151,11 @@ input[type="radio"]:checked + span:before {
 .marketImage {
 	width: 100px;
 	height: 100px;
+	object-fit: cover;
+	border-radius: 10px;
 }
 
-/*form radio Å¸ÀÔ À§Ä¡ Á¤·Ä*/
+/*form radio Å¸ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½*/
 .radio {
 	display:flex;
 }
