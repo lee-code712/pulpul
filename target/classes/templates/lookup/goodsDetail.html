@@ -106,6 +106,19 @@
           <div id="btnWrap" th:unless="${goods.remainQuantity == 0}">
             <button id="cartBtn" th:if="${session.id} != ${goods.item.market.member.id}" onclick="javascript: form.action='/cart/addItem';">장바구니</button>
              <script th:inline="javascript">
+                  var notLogin = [[${isNotLogined}]];
+                  if(notLogin){
+				  			Swal.fire({
+				  			  text: "로그인이 필요한 서비스입니다.",
+				  			  icon: "error",
+				  			  confirmButtonColor: '#93c0b5',
+				  			  confirmButtonText: '확인',
+				  			}).then((result) => {
+							  if (result.isConfirmed) { 
+								location.href="/member/login";
+							  }
+						  	});
+                  }
 		    	  var failed = [[${addFailed}]];
 				  		if(failed == true){
 				  			Swal.fire({
