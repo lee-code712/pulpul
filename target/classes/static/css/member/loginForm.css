@@ -1,39 +1,28 @@
 #loginWrap {
-  margin: 200px auto;
-  width: 500px;
-  min-height: 100vh;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-#loginTit {
-  margin-bottom: 60px;
-  font-size: 24px;
-  font-weight: medium;
-  text-align: center;
-}
-
-#loginTit:after {
-  content: "";
-  display: block;
-  margin: 20px auto;
-  width: 50px;
-  border-bottom: 4px solid #93c0b5;
-}
-
-.text-label {
-  font-size: 14px;
-  color: #535353;
+.login-tit {
+	margin-bottom: 60px;
+	font-size: 48px;
+	font-family: 'Russo One', sans-serif;
+	color: #93c0b5;
+	cursor: pointer;
 }
 
 #loginId,
 #loginPwd {
-  margin: 14px 0px 20px 0px;
   padding: 0px 20px;
-  width: 460px;
-  height: 40px;
-  border-radius: 10px;
-  background-color: #f3f3f4;
+  width: 380px;
+  height: 44px;
+  border-radius: 5px;
   font-size: 14px;
-  border: none;
+  border: 1px solid #ECECEC;;
+  background-color: #FAFAFA;
 }
 
 #loginId:focus,
@@ -42,18 +31,19 @@
 }
 
 #loginBtn {
-  margin: 40px 0px;
-  width: 500px;
-  height: 40px;
-  border-radius: 10px;
+	margin: 10px 0px 50px 0px;
+  width: 420px;
+  height: 44px;
+  border-radius: 5px;
   background-color: #93c0b5;
-  font-size: 14px;
+  font-size: 18px;
   border: none;
   color: white;
   cursor: pointer;
 }
 
 #askJoin {
+	width: 400px;
   font-size: 12px;
   color: #535353;
 }
