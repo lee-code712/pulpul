@@ -43,7 +43,7 @@
 				    	<input type="hidden" name="shareThing.item.id" th:value="${borrow.shareThing.item.id}"/>
 				    	
 				    	<div id="itemNameWrap">
-		          	<div id="itemName" th:text=${borrow.borrower.name}></div>
+		          	<div id="itemName" th:text=${borrow.shareThing.item.name}></div>
 		          	<div class="waitingWrap">
 		            	<img src="/images/waiting.svg" />
 		            	<div class="waiting" th:text="${borrow.shareThing.reservationNumber}"></div>
