@@ -20,7 +20,7 @@
 	
 	<!-- 알림 조회 -->
 	<select id="selectAlertByMemberId" parameterType="String" resultType="Alert">
-		SELECT share_thing_id AS shareThingId, member_id AS memberId, alert_date AS alertDate, content 
+		SELECT share_thing_id AS shareThingId, member_id AS memberId, alert_date AS alertDate, is_read AS isRead
 		FROM alert
 		WHERE member_id = #{memberId}
 		ORDER BY alert_date DESC

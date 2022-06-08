@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import dongduk.cs.pulpul.domain.Alert;
 import dongduk.cs.pulpul.domain.Borrow;
 import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Goods;
@@ -170,7 +171,12 @@ public class LookupController {
 	 * 알림 조회
 	 */
 	@GetMapping("/alertList")
-	public String alertList(){
+	public String alertList(HttpSession session, Model model){
+		String memberId = (String) session.getAttribute("id");
+		if (memberId != null) {
+			List<Alert> alertList = borrowSvc.getAlertByMember(memberId);
+			model.addAttribute("alertList", alertList);
+		}
 		return "lookup/alert";
 	}
 

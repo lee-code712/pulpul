@@ -15,6 +15,11 @@
   </th:block>
 
 	<div layout:fragment="content">
+		<script th:inline="javascript">
+  		console.log('alertList 확인');
+  		var alertList = [[${alertList}]];
+  		console.log(alertList);
+  	</script>
 		<div id="alertHeader">
       <div id="alertTit">알림</div>
       <img src="/images/alertClose.svg" />

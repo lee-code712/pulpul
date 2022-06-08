@@ -57,7 +57,7 @@ public class MybatisBorrowDao implements BorrowDao {
 	@Override
 	public List<Alert> findAlertByMember(String memberId) {
 		// TODO Auto-generated method stub
-		return null;
+		return borrowMapper.selectAlertByMemberId(memberId);
 	}
 
 	@Override
