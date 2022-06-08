@@ -30,20 +30,8 @@
 	  			<div id="infoCover">
 		  			<div class="swiper-container mySwiper">
 				      <div class="swiper-wrapper">
-				        <div class="swiper-slide">
-				          <img src="https://placeimg.com/596/398/any" />
-				        </div>
-				        <div class="swiper-slide">
-				          <img src="https://placeimg.com/596/398/animals" />
-				        </div>
-				        <div class="swiper-slide">
-				          <img src="https://placeimg.com/596/398/nature" />
-				        </div>
-				        <div class="swiper-slide">
-				          <img src="https://placeimg.com/596/398/people" />
-				        </div>
-				        <div class="swiper-slide">
-				          <img src="https://placeimg.com/596/398/tech" />
+				        <div class="swiper-slide" th:each="img : $borrow.shareThing.item.imageUrlList}">
+				          <img th:src="${img}" class="item-img"/>
 				        </div>
 				      </div>
 				      <div class="swiper-button-next"></div>
@@ -111,27 +99,15 @@
 	  	<th:block  th:if="${borrow.shareThing.isBorrowed} == 1">
 	  		<div id="infoCover">
 	  			<div class="swiper-container mySwiper">
-			      <div class="swiper-wrapper">
-			        <div class="swiper-slide">
-			          <img src="https://placeimg.com/596/398/any" />
-			        </div>
-			        <div class="swiper-slide">
-			          <img src="https://placeimg.com/596/398/animals" />
-			        </div>
-			        <div class="swiper-slide">
-			          <img src="https://placeimg.com/596/398/nature" />
-			        </div>
-			        <div class="swiper-slide">
-			          <img src="https://placeimg.com/596/398/people" />
-			        </div>
-			        <div class="swiper-slide">
-			          <img src="https://placeimg.com/596/398/tech" />
-			        </div>
-			      </div>
-			      <div class="swiper-button-next"></div>
-			      <div class="swiper-button-prev"></div>
-			      <div class="swiper-pagination"></div>
-			    </div>
+				  	<div class="swiper-wrapper">
+				    	<div class="swiper-slide" th:each="img : ${borrow.shareThing.item.imageUrlList}">
+				      	<img th:src="${img}" class="item-img"/>
+				     	</div>
+				   	</div>
+					  <div class="swiper-button-next"></div>
+						<div class="swiper-button-prev"></div>
+					  <div class="swiper-pagination"></div>
+				  </div>    
 			    
 			    <div id="info">
 			    	<input type="hidden" name="shareThing.item.id" th:value="${borrow.shareThing.item.id}"/>

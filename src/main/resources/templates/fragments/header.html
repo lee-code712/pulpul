@@ -10,8 +10,7 @@
 	    <img th:src="@{/images/logo.svg}" id="logo"  onclick="location.href='/home'" />
 	    
 	    <ul id="gnb">
-	    	<li th:if="${isNotLogined}" onclick="alert('로그인이 필요한 서비스입니다.'); return false;">마켓관리</li>
-	    	<li th:unless="${isNotLogined}"><a href="/market/view">마켓관리</a></li>
+	    	<li><a href="/market/view">마켓관리</a></li>
 	      <li><a href="/lookup/goodsList">식물조회</a></li>
 	      <li><a href="/lookup/shareThingList">물품대여</a></li>
 	      <li><a href="/member/mypage">마이페이지</a></li>
