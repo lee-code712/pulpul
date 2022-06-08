@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 
+import dongduk.cs.pulpul.domain.Borrow;
 import dongduk.cs.pulpul.domain.Market;
 import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.Order;
+import dongduk.cs.pulpul.service.BorrowService;
 import dongduk.cs.pulpul.service.MarketService;
 import dongduk.cs.pulpul.service.OrderService;
 
@@ -34,11 +36,13 @@ public class MarketController implements ApplicationContextAware {
 	private String uploadDir;
 	private final MarketService marketSvc;
 	private final OrderService orderSvc;
+	private final BorrowService borrowSvc;
 	
 	@Autowired
-	public MarketController(MarketService marketSvc, OrderService orderSvc) {
+	public MarketController(MarketService marketSvc, OrderService orderSvc, BorrowService borrowSvc) {
 		this.marketSvc = marketSvc;
 		this.orderSvc = orderSvc;
+		this.borrowSvc = borrowSvc;
 	}
 	
 	@Override
@@ -138,8 +142,10 @@ public class MarketController implements ApplicationContextAware {
      * 특정 공유 물품 대여 현황 조회
 	 */
 	@GetMapping("/shareThingBorrowManage")
-	public String shareThingBorrowManage() {
+	public String shareThingBorrowManage(@RequestParam("itemId") String itemId, Model model) {
 		//공유물품 대여 상세 정보 페이지
+		List<Borrow> borrowList = borrowSvc.getBorrowByItem(itemId);
+		model.addAttribute("borrowList", borrowList);
 		return "market/shareThingBorrowManage";
 	}
 

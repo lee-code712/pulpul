@@ -247,18 +247,18 @@
 				br.is_first_booker,
 				lm.member_id AS lender_id, lm.name AS lender_name, lm.address AS lender_address, lm.phone AS lender_phone,
 				bm.member_id AS borrower_id, bm.name AS borrower_name, bm.address AS borrower_address, 
-				bm.address_detail AS borrower_address_detail, bm.zip AS borrower_zip, bm.phone AS borrower_phone
-				it.item_id, i.name, i.upload_date, i.description, i.market_id,
+				bm.address_detail AS borrower_address_detail, bm.zip AS borrower_zip, bm.phone AS borrower_phone,
+				it.item_id, it.name, it.upload_date, it.description, it.market_id,
 				st.precaution, st.is_borrowed,
-				i.img_src,
-				(SELECT COUNT(*) FROM borrow_reservation WHERE it.item_id) AS reservation_number
+				i.image_src
 		FROM borrow b
-			JOIN borrow_reservation br b.share_thing_id = br.share_thing_id AND b.borrower_id = br.member_id
-			JOIN member lm b.lender_id = lm.member_id
-			JOIN member bm b.borrower_id = bm.member_id
-			JOIN item it b.share_thing_id = it.item_id
-			JOIN share_thing st b.share_thing_id = st.item_id
-			JOIN image i b.borrower_id = i.member_id
-		WHERE share_thing_id = #{itemId} AND INSTR(i.image_src, it.item_id) <![CDATA[>]]> 0
+			FULL OUTER JOIN borrow_reservation br ON b.share_thing_id = br.share_thing_id AND b.borrower_id = br.member_id
+			FULL OUTER JOIN member lm ON b.lender_id = lm.member_id
+			FULL OUTER JOIN member bm ON b.borrower_id = bm.member_id
+			FULL OUTER JOIN item it ON b.share_thing_id = it.item_id
+			FULL OUTER JOIN share_thing st ON b.share_thing_id = st.item_id
+            FULL OUTER JOIN market m ON it.market_id = m.market_id
+			FULL OUTER JOIN image i ON lm.member_id = i.member_id
+		WHERE b.share_thing_id = #{itemId} AND INSTR(i.image_src, it.item_id || '-1') <![CDATA[>]]> 0
 	</select>
 </mapper>

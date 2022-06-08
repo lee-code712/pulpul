@@ -93,7 +93,7 @@ public class MybatisBorrowDao implements BorrowDao {
 	@Override
 	public List<Borrow> findBorrowByItem(String itemId) {
 		// TODO Auto-generated method stub
-		return null;
+		return borrowMapper.selectBorrowByItemId(itemId);
 	}
 
 	@Override
