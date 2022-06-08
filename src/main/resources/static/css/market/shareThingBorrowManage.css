@@ -82,6 +82,16 @@ td {
   cursor: pointer;
 }
 
+.not-rental-btn {
+	width: 80px;
+  height: 40px;
+  border: 1px solid #c4c4c4;
+  color: #C4C4C4;
+  background-color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 #wayBillBox {
   display: flex;
   justify-content: center;

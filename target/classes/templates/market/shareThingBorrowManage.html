@@ -72,7 +72,10 @@
               </button>
             </div>
           </td>
-          <td><button class="rental-btn" th:onclick="returnShareThing([[${borrow.id}]])">반납</button></td>
+          <td>
+          	<button class="rental-btn" th:onclick="returnShareThing([[${borrow.id}]])" th:if="${borrow.isBorrowed} == 1">반납</button>
+          	<button class="not-rental-btn" th:onclick="returnShareThing([[${borrow.id}]])" th:unless="${borrow.isBorrowed} == 1">반납</button>
+          </td>
         </tr>
       </table>
       

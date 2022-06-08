@@ -288,7 +288,7 @@ function shareThingListJson() {
 					td_06.innerHTML += "<button class='extension-btn' onclick=\"location.href='/borrow/extend?id=" + borrow.id + "'\">연장하기</button>";	
 				}
 				
-				if (borrow.isExtended == 1) {
+				if (borrow.shareThing.isBorrowed == 1 && borrow.borrowStatus == 1 && borrow.isExtended == 1) {
 					td_06.innerHTML += "<button class='not-extension-btn' disabled>연장하기</button>";	
 				}
 				
