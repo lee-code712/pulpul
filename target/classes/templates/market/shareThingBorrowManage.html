@@ -48,46 +48,19 @@
           <th class="sharething-return"></th>
         </tr>
 
-        <tr>
-          <td><img src="/images/smallShareThing.svg" class="img-size" /></td>
-          <td>### 공유 물품</td>
-          <td>###님</td>
-          <td>2022-03-20 ~ 2022-03-21</td>
+       <tr th:each="borrow : ${borrowList}">
+          <td><img th:src=${borrow.shareThing.item.thumbnailUrl} class="img-size" /></td>
+          <td th:text=${borrow.shareThing.item.name}></td>
+          <td th:text=${borrow.shareThing.item.market.member.name}></td>
+          <td><th:block th:text=${borrow.borrowDate}></th:block> ~ <th:block th:text=${borrow.returnDate}></th:block></td>
           <td>
             <div id="wayBillBox">
-              <input type="text" id="perWayBill" />
-              <button id="wayBillBtn">
-                <img src="/images/checkBtn.svg" />
-              </button>
-            </div>
-          </td>
-          <td><button class="rental-btn">반납</button></td>
-        </tr>
-
-        <tr>
-          <td><img src="/images/smallShareThing.svg" class="img-size" /></td>
-          <td>### 공유 물품</td>
-          <td>###님</td>
-          <td>2022-03-20 ~ 2022-03-21</td>
-          <td>
-            <div id="wayBillBox">
-              <input type="text" id="perWayBill" />
-              <button id="wayBillBtn">
-                <img src="/images/checkBtn.svg" />
-              </button>
-            </div>
-          </td>
-          <td><button class="rental-btn">반납</button></td>
-        </tr>
-
-        <tr>
-          <td><img src="/images/smallShareThing.svg" class="img-size" /></td>
-          <td>### 공유 물품</td>
-          <td>###님</td>
-          <td>2022-03-20 ~ 2022-03-21</td>
-          <td>
-            <div id="wayBillBox">
-              <input type="text" id="perWayBill" />
+            	<th:block th:if=${#strings.isEmpty(borrow.trackingNumber)}>
+            		<input type="text" id="perWayBill" />
+            	</th:block>
+            	<th:block th:unless=${borrow.trackingNumber}>
+            		<th:block th:text=${borrow.trackingNumber}></th:block>
+            	</th:block>
               <button id="wayBillBtn">
                 <img src="/images/checkBtn.svg" />
               </button>
