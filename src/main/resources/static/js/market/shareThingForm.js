@@ -1,9 +1,11 @@
-//goodsForm.js
-$("#saveBtn").click(function(event){
+/**
+ * 
+ */
+ $("#saveBtn").click(function(event){
 	event.preventDefault();
 	 if($(".putFilenameDiv").text() == "" || $("#putItemImg").children().length == 0){
 		 Swal.fire({
-				   text: '상품 이미지를 등록해주세요!',
+				   text: '공유물품 이미지를 등록해주세요!',
 				   confirmButtonColor: '#93c0b5',
 				   confirmButtonText: '확인',
 				});
