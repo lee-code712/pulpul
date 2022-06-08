@@ -38,31 +38,24 @@ public class CartController {
 	public String addCartItem(@Valid @ModelAttribute("cartItem") CartItem cartItem, BindingResult result,
 			HttpSession session, RedirectAttributes rttr) {
 
-		String memberId = (String) session.getAttribute("id");
+		String memberId = (String) session.getAttribute("id");	
+//		if(memberId == null) {
+//			rttr.addFlashAttribute("isNotLogined", true);
+//			return "redirect:/lookup/goodsDetail?itemId=" + cartItem.getGoods().getItem().getId();
+//		}
 		
-		// 회원이 아니라면 redirect
-		if(memberId == null) {
-			rttr.addFlashAttribute("isNotLogined", true);
-			return "redirect:/lookup/goodsDetail?itemId=" + cartItem.getGoods().getItem().getId();
-		}
-		
-		// 수량이 1 미만이면 redirect
 		if (result.hasErrors()) {
 			rttr.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX +  "cartItem", result);
 			rttr.addFlashAttribute("cartItem", cartItem);
 			return "redirect:/lookup/goodsDetail?itemId=" + cartItem.getGoods().getItem().getId();
 		}
 		
-		// 장바구니에 item 추가
 		try {
-			boolean successed = orderSvc.addCartItem(memberId, cartItem);
-			if (!successed) {
-				rttr.addFlashAttribute("addFailed", true);
-			}
-			else {
-				int newCartItemCnt = (int) session.getAttribute("cartItemCnt") + 1;
-				session.setAttribute("cartItemCnt", newCartItemCnt);
-			}
+			orderSvc.addCartItem(memberId, cartItem);
+
+			int newCartItemCnt = (int) session.getAttribute("cartItemCnt") + 1;	// 장바구니 상품 수 +1
+			session.setAttribute("cartItemCnt", newCartItemCnt);
+
 		} catch(AddCartException e) {
 			rttr.addFlashAttribute("addFailed", true);
 			rttr.addFlashAttribute("exception", e.getMessage());
@@ -79,17 +72,12 @@ public class CartController {
 		
 		String memberId = (String) session.getAttribute("id");
 		
-		// 회원이 아니라면 redirect
-		if(memberId == null) {
-			return "redirect:/home";
-		}
-		
-		// 장바구니 목록 조회
 		Cart cart = orderSvc.getCart(memberId);
 		if (cart != null) {
 			model.addAttribute(cart);
-			session.setAttribute("cart", cart);
+			session.setAttribute("cart", cart);	// cart 객체를 세션에 저장
 		}
+		
 		return "cart/cart";
 	}
 	
@@ -101,21 +89,11 @@ public class CartController {
 			RedirectAttributes rttr) {
 		
 		String memberId = (String) session.getAttribute("id");
-		
-		// 회원이 아니라면 redirect
-		if(memberId == null) {
-			return "redirect:/home";
-		}
-		
-		// 장바구니 item 삭제
-		boolean successed = orderSvc.deleteCartItem(memberId, itemId);
-		if (!successed) {
-			rttr.addFlashAttribute("deleteFailed", true);
-		}
-		else {
-			int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - 1;
-			session.setAttribute("cartItemCnt", newCartItemCnt);
-		}
+
+		orderSvc.deleteCartItem(memberId, itemId);
+
+		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - 1;	// 장바구니 상품 수 -1
+		session.setAttribute("cartItemCnt", newCartItemCnt);
 		
 		return "redirect:/cart/cartList";
 	}
@@ -128,21 +106,15 @@ public class CartController {
 			RedirectAttributes rttr) {
 		
 		String memberId = (String) session.getAttribute("id");
-		
-		// 회원이 아니라면 redirect
 		if(memberId == null) {
 			return "redirect:/home";
 		}
 		
-		// 장바구니 market item 삭제
 		int deleteCnt = orderSvc.deleteCartItemByMarket(memberId, marketId);
-		if (deleteCnt <= 0) {
-			rttr.addFlashAttribute("deleteFailed", true);
-		}
-		else {
-			int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - deleteCnt;
-			session.setAttribute("cartItemCnt", newCartItemCnt);
-		}
+		
+		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - deleteCnt;	// 장바구니 상품 수 -deleteCnt
+		session.setAttribute("cartItemCnt", newCartItemCnt);
+		
 		return "redirect:/cart/cartList";
 	}
 

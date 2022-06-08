@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dongduk.cs.pulpul.dao.ItemDao;
 import dongduk.cs.pulpul.dao.MemberDao;
@@ -20,151 +22,140 @@ import dongduk.cs.pulpul.service.exception.CancelOrderException;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-	private final OrderDao orderDao;
-	private final ItemDao itemDao;
-	private final MemberDao memberDao;
-	private final ReviewDao reviewDao;
-
+	
 	@Autowired
-	public OrderServiceImpl(OrderDao orderDao, ItemDao itemDao,
-			MemberDao memberDao, ReviewDao reviewDao) {
-		this.orderDao = orderDao;
-		this.itemDao = itemDao;
-		this.memberDao = memberDao;
-		this.reviewDao = reviewDao;
-	}
+	private OrderDao orderDao;
+	@Autowired
+	private ItemDao itemDao;
+	@Autowired
+	private MemberDao memberDao;
+	@Autowired
+	private ReviewDao reviewDao;
 
-	// 회원의 장바구니 목록 조회
+	@Override
 	public Cart getCart(String memberId) {
 		return orderDao.findCartByMember(memberId);
 	}
 	
-	// 회원의 장바구니 상품 수 조회
+	@Override
 	public int getNumberOfCartItemByMember(String memberId) {
 		return orderDao.findNumberOfCartItemByMember(memberId);
 	}
 
-	// 장바구니 목록 추가
-	public boolean addCartItem(String memberId, CartItem cartItem) throws AddCartException {
+	@Override
+	@Transactional
+	public void addCartItem(String memberId, CartItem cartItem) 
+			throws DataAccessException, AddCartException {
 		
 		String goodsId = cartItem.getGoods().getItem().getId();
 
 		int remainQuantity = itemDao.findRemainQuantityByGoods(goodsId);
-		if (remainQuantity == 0) {
+		if (remainQuantity == 0) {	// 남은 수량이 없으면 에러 메시지 전달
 			System.out.println("남은 수량 없음");
 			throw new AddCartException("남은 상품이 모두 팔렸습니다.");
 		}
-		else if (cartItem.getQuantity() > remainQuantity) {
+		else if (cartItem.getQuantity() > remainQuantity) {	// 선택한 수량보다 남은 수량을 초과하면 에러 메시지 전달
 			System.out.println("남은 수량 초과");
 			throw new AddCartException("남은 상품보다 많은 수량을 선택했습니다. 수량을 다시 선택해주세요.");
 		}
-		else if (orderDao.isExistItem(memberId, goodsId)) {
+		else if (orderDao.isExistItem(memberId, goodsId)) {	// 이미 장바구니에 해당 상품이 존재하면 에러 메시지 전달
 			System.out.println("장바구니에 존재하는 항목");
 			throw new AddCartException("이미 장바구니에 존재하는 상품입니다.");
 		}
 		
-		return orderDao.createCartItem(memberId, cartItem);
+		orderDao.createCartItem(memberId, cartItem);	// 장바구니 레코드 생성
 		
 	}
 
-	// 장바구니 특정 상품 삭제
-	public boolean deleteCartItem(String memberId, String itemId) {
-		return orderDao.deleteOneCartItem(memberId, itemId);
+	@Override
+	public void deleteCartItem(String memberId, String itemId) {
+		orderDao.deleteOneCartItem(memberId, itemId);
 	}
 
-	// 장바구니 특정 마켓의 상품 삭제(삭제 개수 반환)
+	@Override
 	public int deleteCartItemByMarket(String memberId, int marketId) {
 		return orderDao.deleteCartItemByMarket(memberId, marketId);
 	}
 
-	// 회원의 주문목록 조회
+	@Override
 	public List<Order> getOrderListByMember(String memberId, String identity) {
 		return orderDao.findOrderByMember(memberId, identity);
 	}
 
-	// 주문 상세정보 조회
+	@Override
 	public Order getOrder(int orderId) {
+		
 		Order order = orderDao.findOrder(orderId);
-		for (CartItem cartItem : order.getGoodsList()) {
-			cartItem.getGoods().setExistReview(reviewDao.isExistReview(cartItem.getGoodsId(), orderId));
+		if (order != null) {
+			for (CartItem cartItem : order.getGoodsList()) {	// 주문 상품별 리뷰 존재 여부 확인해서 저장
+				cartItem.getGoods().setExistReview(reviewDao.isExistReview(cartItem.getGoodsId(), orderId));
+			}
 		}
 		return order;
 	}
 
-	// 주문 생성
-	public int order(Order order) {
-		// 주문 정보 저장
-		boolean successed = orderDao.createOrder(order);
-		if (!successed) return 0;
+	@Override
+	@Transactional
+	public int order(Order order) throws DataAccessException {
 		
-		// 주문 상품 저장
+		orderDao.createOrder(order);	// 주문 레코드 생성
+		
 		int orderId = order.getId();
 		List<Map<String, Object>> orderGoodsList = new ArrayList<Map<String, Object>>();
 		for (CartItem cartItem : order.getGoodsList()) {
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("orderId", orderId);
 			param.put("cartItem", cartItem);
-			orderGoodsList.add(param);
+			orderGoodsList.add(param);	
 		}
-		successed = orderDao.createOrderGoods(orderGoodsList);
-		if (!successed) return 0;
+		orderDao.createOrderGoods(orderGoodsList);	// 주문 상품 레코드 생성
 
-		// 회원 포인트 변경
 		if (order.getUsedPoint() > 0) {
-			successed = memberDao.changePoint(order.getBuyer().getId(), -1, order.getUsedPoint());
-			if (!successed) return 0;
+			memberDao.changePoint(order.getBuyer().getId(), -1, order.getUsedPoint());	// -사용 포인트
 		}
 		
 		for (CartItem cartItem : order.getGoodsList()) {
-			// 상품의 남은 수량 변경
-			itemDao.changeRemainQuantityByOrderStatus(cartItem.getGoodsId(), 1, cartItem.getQuantity());
-			
-			// 장바구니에서 해당 상품 삭제
-			successed = deleteCartItem(order.getBuyer().getId(), cartItem.getGoodsId());
-			if (!successed) return 0;
+			itemDao.changeRemainQuantityByOrderStatus(cartItem.getGoodsId(), 1, cartItem.getQuantity());	// 주문 상품별 남은 수량 컬럼 수정
+			deleteCartItem(order.getBuyer().getId(), cartItem.getGoodsId());	// 상품에 대한 장바구니 레코드 삭제
 		}
 		
 		return orderId;
 	}
 
-	// 운송장번호 입력
-	public boolean changeTrackingNumber(Order order) {
-		boolean successed = orderDao.changeTrackingNumber(order.getId(), order.getTrackingNumber());
-		if (!successed) return false;
-		return orderDao.changeOrderStatus(order.getId(), 2);
+	@Override
+	@Transactional
+	public void changeTrackingNumber(Order order) throws DataAccessException {
+		
+		orderDao.changeTrackingNumber(order.getId(), order.getTrackingNumber());	// 운송장번호 컬럼 수정
+		orderDao.changeOrderStatus(order.getId(), 2);	// 주문상태 컬럼을 2(배송시작)으로 변경
 	}
 
-	// 주문 취소
-	public boolean cancelOrder(int orderId) throws CancelOrderException {
-		Order order = getOrder(orderId);
+	@Override
+	@Transactional
+	public void cancelOrder(int orderId) throws DataAccessException, CancelOrderException {
+		
+		Order order = getOrder(orderId);	// 주문 조회 메소드 호출
 		if (order != null) {
-			if (order.getTrackingNumber() != null) {
+			if (order.getTrackingNumber() != null) {	// 운송장 번호가 존재하면 에러 메시지 전달
 				System.out.println("배송 시작됨");
 				throw new CancelOrderException("배송이 시작되어 취소할 수 없습니다. 마켓에 문의하시기 바랍니다.");
 			}
 			
-			// 주문 상태 변경
-			boolean successed = orderDao.changeOrderStatus(orderId, 0);
-			if (!successed) return false;
+			orderDao.changeOrderStatus(orderId, 0);	// 주문상태 컬럼을 0(주문취소)으로 변경
 			
-			// 주문한 상품들의 남은 수량 변경
 			for (CartItem item : order.getGoodsList()) {
-				itemDao.changeRemainQuantityByOrderStatus(item.getGoodsId(), 0, item.getQuantity());
+				itemDao.changeRemainQuantityByOrderStatus(item.getGoodsId(), 0, item.getQuantity());	// 주문 상품별 남은 수량 컬럼 수정
 			}
 			
-			// 사용자 포인트 환급
 			if (order.getUsedPoint() > 0) {
-				successed = memberDao.changePoint(order.getBuyer().getId(), 1, order.getUsedPoint());
-				if (!successed) return false;
+				memberDao.changePoint(order.getBuyer().getId(), 1, order.getUsedPoint());	// +사용 포인트
 			}
-			return true;
 		}
-		return false;
 	}
 
 	@Override
-	public boolean finalizeOrder(int orderId) {
-		return orderDao.changeOrderStatus(orderId, 3);
+	public void finalizeOrder(int orderId) {
+		orderDao.changeOrderStatus(orderId, 3);
 	}
 	
 

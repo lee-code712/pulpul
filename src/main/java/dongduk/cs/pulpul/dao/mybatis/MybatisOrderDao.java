@@ -36,17 +36,13 @@ public class MybatisOrderDao implements OrderDao {
 	}
 
 	@Override
-	public boolean createCartItem(String memberId, CartItem cartItem) {
-		int ck = orderMapper.insertCart(memberId, cartItem);
-		if (ck > 0) return true;
-		return false;
+	public void createCartItem(String memberId, CartItem cartItem) {
+		orderMapper.insertCart(memberId, cartItem);
 	}
 
 	@Override
-	public boolean deleteOneCartItem(String memberId, String itemId) {
-		int ck = orderMapper.deleteOneCartByItemId(memberId, itemId);
-		if (ck > 0) return true;
-		return false;
+	public void deleteOneCartItem(String memberId, String itemId) {
+		orderMapper.deleteOneCartByItemId(memberId, itemId);
 	}
 
 	@Override
@@ -65,31 +61,23 @@ public class MybatisOrderDao implements OrderDao {
 	}
 
 	@Override
-	public boolean createOrder(Order order) {
-		int ck = orderMapper.insertOrder(order);
-		if (ck > 0) return true;
-		return false;
+	public void createOrder(Order order) {
+		orderMapper.insertOrder(order);
 	}
 
 	@Override
-	public boolean createOrderGoods(List<Map<String, Object>> orderGoodsList) {
-		int ck = orderMapper.insertOrderGoods(orderGoodsList);
-		if (ck > 0) return true;
-		return false;
+	public void createOrderGoods(List<Map<String, Object>> orderGoodsList) {
+		orderMapper.insertOrderGoods(orderGoodsList);
 	}
 
 	@Override
-	public boolean changeTrackingNumber(int orderId, String trackingNumber) {
-		int ck = orderMapper.updateTrackingNumber(orderId, trackingNumber);
-		if (ck > 0) return true;
-		return false;
+	public void changeTrackingNumber(int orderId, String trackingNumber) {
+		orderMapper.updateTrackingNumber(orderId, trackingNumber);
 	}
 
 	@Override
-	public boolean changeOrderStatus(int orderId, int orderStatus) {
-		int ck = orderMapper.updateOrderStatus(orderId, orderStatus);
-		if (ck > 0) return true;
-		return false;
+	public void changeOrderStatus(int orderId, int orderStatus) {
+		orderMapper.updateOrderStatus(orderId, orderStatus);
 	}
 
 }

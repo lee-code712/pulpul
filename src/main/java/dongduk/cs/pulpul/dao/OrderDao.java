@@ -19,10 +19,10 @@ public interface OrderDao {
 	boolean isExistItem(String memberId, String goodsId);
 	
 	// 카트 상품 생성
-	boolean createCartItem(String memberId, CartItem cartItem);
+	void createCartItem(String memberId, CartItem cartItem);
 	
 	// 품목 id로 카트 상품 삭제
-	boolean deleteOneCartItem(String memberId, String itemId);
+	void deleteOneCartItem(String memberId, String itemId);
 	
 	// 마켓 id로 카트 상품 목록 삭제
 	int deleteCartItemByMarket(String memberId, int marketId);
@@ -34,15 +34,15 @@ public interface OrderDao {
 	List<Order> findOrderByMember(String memberId, String identity);
 	
 	// 주문 생성
-	boolean createOrder(Order order);
+	void createOrder(Order order);
 	
 	// 주문 상품 목록 생성
-	boolean createOrderGoods(List<Map<String, Object>> orderGoodsList);
+	void createOrderGoods(List<Map<String, Object>> orderGoodsList);
 	
 	// 주문 운송장번호 입력
-	boolean changeTrackingNumber(int orderId, String trackingNumber);
+	void changeTrackingNumber(int orderId, String trackingNumber);
 	
 	// 주문 상태 변경
-	boolean changeOrderStatus(int orderId, int orderStatus);
+	void changeOrderStatus(int orderId, int orderStatus);
 	
 }

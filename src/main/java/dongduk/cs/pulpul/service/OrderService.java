@@ -17,10 +17,10 @@ public interface OrderService {
 	int getNumberOfCartItemByMember(String memberId);
 	
 	// 장바구니에 상품 추가
-	boolean addCartItem(String memberId, CartItem cartitem) throws AddCartException;
+	void addCartItem(String memberId, CartItem cartitem) throws AddCartException;
 	
 	// 장바구니에서 상품 삭제
-	boolean deleteCartItem(String memberId, String itemId);
+	void deleteCartItem(String memberId, String itemId);
 	
 	// 장바구니에서 특정 마켓의 상품 목록 삭제
 	int deleteCartItemByMarket(String memberId, int marketId);
@@ -35,12 +35,12 @@ public interface OrderService {
 	int order(Order order);
 	
 	// 주문에 대한 운송장번호 입력
-	boolean changeTrackingNumber(Order order);
+	void changeTrackingNumber(Order order);
 	
 	// 주문 취소
-	boolean cancelOrder(int orderId) throws CancelOrderException;
+	void cancelOrder(int orderId) throws CancelOrderException;
 	
 	// 주문 확정
-	boolean finalizeOrder(int orderId);
+	void finalizeOrder(int orderId);
 	
 }

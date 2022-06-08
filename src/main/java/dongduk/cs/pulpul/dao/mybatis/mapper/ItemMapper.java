@@ -25,11 +25,11 @@ public interface ItemMapper {
 	
 	String selectRemainQuantityByGoodsId(String itemId);
 	
-	int insertGoods(Goods goods);
+	void insertGoods(Goods goods);
 	
-	int updateGoods(Goods goods);
+	void updateGoods(Goods goods);
 	
-	int updateRemainQuantity(@Param("itemId") String itemId, 
+	void updateRemainQuantity(@Param("itemId") String itemId, 
 			@Param("orderStatus") int orderStatus, 
 			@Param("quantity") int quantity);
 	
@@ -43,19 +43,19 @@ public interface ItemMapper {
 	
 	ShareThing selectShareThingByItem(String itemId);
 	
-	int insertShareThing(ShareThing shareThing);
+	void insertShareThing(ShareThing shareThing);
 	
-	int updateShareThing(ShareThing shareThing);
+	void updateShareThing(ShareThing shareThing);
 	
-	int updateIsBorrowed(ShareThing shareThing);
+	void updateIsBorrowed(ShareThing shareThing);
 	
 	int selectBorrowCountByItemId(String itemId);
 	
-	int updateItem(Item item);
+	void updateItem(Item item);
 	
-	int deleteItem(String itemId);
+	void deleteItem(String itemId);
 	
-	int insertItemImages(Map<String, Object> itemImages);
+	void insertItemImages(Map<String, Object> itemImages);
 	
 	int deleteItemImages(@Param("memberId") String memberId, 
 			@Param("itemId") String itemId);

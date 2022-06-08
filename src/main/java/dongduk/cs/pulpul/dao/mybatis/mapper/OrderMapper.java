@@ -19,10 +19,10 @@ public interface OrderMapper {
 	
 	int selectCartCountBygoodsId(String memberId, String goodsId);
 	
-	int insertCart(@Param("memberId") String memberId,
+	void insertCart(@Param("memberId") String memberId,
 			@Param("cartItem") CartItem cartItem);
 	
-	int deleteOneCartByItemId(@Param("memberId") String memberId, 
+	void deleteOneCartByItemId(@Param("memberId") String memberId, 
 			@Param("itemId") String itemId);
 	
 	int deleteCartByMarketId(@Param("memberId") String memberId,
@@ -32,14 +32,14 @@ public interface OrderMapper {
 	
 	List<Order> selectOrderByMemberId(String memberId, String identity);
 	
-	int insertOrder(Order order);
+	void insertOrder(Order order);
 	
-	int insertOrderGoods(List<Map<String, Object>> orderGoods);
+	void insertOrderGoods(List<Map<String, Object>> orderGoods);
 	
-	int updateTrackingNumber(@Param("orderId") int orderId, 
+	void updateTrackingNumber(@Param("orderId") int orderId, 
 			@Param("trackingNumber") String trackingNumber);
 	
-	int updateOrderStatus(@Param("orderId") int orderId, 
+	void updateOrderStatus(@Param("orderId") int orderId, 
 			@Param("orderStatus") int orderStatus);
 	
 }

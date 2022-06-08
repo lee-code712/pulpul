@@ -5,6 +5,7 @@ import java.io.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dongduk.cs.pulpul.controller.FileCommand;
 import dongduk.cs.pulpul.dao.MarketDao;
@@ -37,6 +38,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
+	@Transactional
 	public void makeMarket(Market market, FileCommand uploadFile) throws DataAccessException {
 		
 		marketDao.createMarket(market);	// 마켓 레코드 생성
@@ -49,6 +51,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 
 	@Override
+	@Transactional
 	public void changeMarketInfo(Market market, FileCommand updateFile) throws DataAccessException {
 		
 		marketDao.changeMarketInfo(market);	// 마켓 레코드 수정

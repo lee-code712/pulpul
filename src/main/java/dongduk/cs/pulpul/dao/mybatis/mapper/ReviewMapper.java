@@ -20,8 +20,8 @@ public interface ReviewMapper {
 	int selectReviewCountByItemId(@Param("itemId") String itemId,
 			@Param("orderId") int orderId);
 	
-	int insertReview(Review review);
+	void insertReview(Review review);
 	
-	int insertReviewImage(Review review);
+	void insertReviewImage(Review review);
 	
 }

@@ -13,10 +13,10 @@ public interface MarketMapper {
 	
 	String selectMarketImage(String memberId);
 	
-	int insertMarket(Market market);
+	void insertMarket(Market market);
 	
-	int insertMarketImage(Market market);
+	void insertMarketImage(Market market);
 	
-	int updateMarket(Market market);
+	void updateMarket(Market market);
 	
 }

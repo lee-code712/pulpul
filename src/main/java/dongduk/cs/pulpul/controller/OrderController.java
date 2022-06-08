@@ -59,7 +59,6 @@ public class OrderController {
 			@ModelAttribute("order") Order order, HttpSession session) {
 		
 		String memberId = (String) session.getAttribute("id");
-		
 		if (memberId == null) {
 			return "redirect:/home";
 		}
@@ -82,7 +81,6 @@ public class OrderController {
 		Member member = memberSvc.getMember(memberId);
 		order.setBuyer(member);
 		
-		//결제 페이지
 		return "order/purchase";
 	}
 	
@@ -93,17 +91,13 @@ public class OrderController {
 		if (result.hasErrors())
 			return "order/purchase";
 		
-//		System.out.println(order.toString());
-		
 		int orderId = orderSvc.order(order);
-		if (orderId == 0) {
-			model.addAttribute("orderFalid", true);
-			return "order/purchase";
-		}
 		
-		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - order.getGoodsList().size();
-		session.setAttribute("cartItemCnt", newCartItemCnt);
-		session.removeAttribute("cart"); // cart session attribute 삭제
+		if (orderId > 0) {
+			int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - order.getGoodsList().size();	// 장바구니 상품 수 -주문 상품 수
+			session.setAttribute("cartItemCnt", newCartItemCnt);
+		}
+		session.removeAttribute("cart"); // cart객체를 세션에서 삭제
 		
 		return "redirect:/order/orderDetail?orderId=" + orderId;
 	}
@@ -131,10 +125,8 @@ public class OrderController {
 	public String cancel(@RequestParam("orderId") int orderId, RedirectAttributes rttr) {
 		
 		try {
-			boolean successed = orderSvc.cancelOrder(orderId);
-			if (!successed) {
-				rttr.addFlashAttribute("cancelFailed", true);
-			}
+			orderSvc.cancelOrder(orderId);
+
 		} catch (CancelOrderException e) {
 			rttr.addFlashAttribute("cancelFailed", true);
 			rttr.addFlashAttribute("exception", e.getMessage());
@@ -149,10 +141,7 @@ public class OrderController {
 	@GetMapping("/finalize")
 	public String finalize(@RequestParam("orderId") int orderId, RedirectAttributes rttr) {
 		
-		boolean successed = orderSvc.finalizeOrder(orderId);
-		if (!successed) {
-			rttr.addFlashAttribute("finalizeFailed", true);
-		}
+		orderSvc.finalizeOrder(orderId);
 			
 		return "redirect:/member/mypage";
 	}
@@ -164,10 +153,7 @@ public class OrderController {
 	@PostMapping("/startDeliver")
 	public String startDeliver(Order order, RedirectAttributes rttr) {
 		
-		boolean successed = orderSvc.changeTrackingNumber(order);
-		if (!successed) {
-			rttr.addFlashAttribute("changeFailed", true);
-		}
+		orderSvc.changeTrackingNumber(order);
 		
 		return "redirect:/market/orderListManage";
 	}
