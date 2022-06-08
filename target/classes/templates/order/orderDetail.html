@@ -84,6 +84,10 @@
         </div>
          <div class="shipping-info-inner">
           <div class="shipping-info-tit">주소지</div>
+          <div class="shipping-info" th:text="${order.buyer.zip}"></div>
+        </div>
+        <div class="shipping-info-inner">
+          <div class="shipping-info-tit"></div>
           <div class="shipping-info" th:text="|${order.buyer.address} ${order.buyer.addressDetail}|"></div>
         </div>
       </div>
@@ -108,6 +112,17 @@
         <div class="pay-info-inner">
           <div class="pay-info-tit">최종 결제 금액</div>
           <div id="totalPrice" th:text="${#numbers.formatInteger(order.totalPrice, 0 , 'COMMA')} + '원'"></div>
+        </div>
+      </div>
+      
+      <div id="cardInfoWrap">
+        <div class="pay-info-inner">
+          <div class="pay-info-tit">카드 간편 결제</div>
+        </div>
+        <div class="pay-info-inner">
+          <div class="card-info-tit" th:text="|${order.cardCompany}(${#strings.substring(order.cardNumber, 0, 4) + '-' 
+           + '****-****-****'})|"></div>
+          <div class="card-info">일시불</div>
         </div>
       </div>
     </div>

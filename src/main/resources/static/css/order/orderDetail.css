@@ -139,6 +139,23 @@ td {
   color: #c4c4c4;
 }
 
+.card-info {
+	font-size: 14px;
+    color: #c4c4c4;
+}
+
+.card-info-tit {
+  padding-left: 20px;
+  width: 200px;
+  font-size: 14px;
+}
+
+#cardInfoWrap {
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+  margin-top: 10px;
+}
+
 #totalPrice {
   font-size: 14px;
   color: #93c0b5;
