@@ -30,7 +30,7 @@
 	  			<div id="infoCover">
 		  			<div class="swiper-container mySwiper">
 				      <div class="swiper-wrapper">
-				        <div class="swiper-slide" th:each="img : $borrow.shareThing.item.imageUrlList}">
+				        <div class="swiper-slide" th:each="img : ${borrow.shareThing.item.imageUrlList}">
 				          <img th:src="${img}" class="item-img"/>
 				        </div>
 				      </div>
