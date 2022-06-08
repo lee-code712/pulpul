@@ -39,12 +39,12 @@
 		
 		  <table>
 		    <tr>
-		      <td class="item-img"></td>
-		      <td class="item-info">상품 정보</td>
-		      <td class="item-num">남은 수량</td>
-		      <td class="item-shipping">배송비</td>
-		      <td class="item-price">판매가격</td>
-		      <td class="item-delete"></td>
+		      <th class="item-img"></th>
+		      <th class="item-info">상품 정보</th>
+		      <th class="item-num">남은 수량</th>
+		      <th class="item-shipping">배송비</th>
+		      <th class="item-price">판매가격</th>
+		      <th class="item-delete"></th>
 		    </tr>
 		
 		    <tr th:each="goods : ${goodsList}" th:style="${goods.item.openStatus == 0 ? 'background-color: #f3f3f4;' : ''}">

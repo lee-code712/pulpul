@@ -234,6 +234,7 @@ function shareThingListJson() {
 				const td_01 = document.createElement("td");
 				td_01.setAttribute("class", "sharething-img");
 				const item_img = document.createElement("img");
+				item_img.setAttribute("class", "img-size");
 				item_img.src = borrow.shareThing.item.thumbnailUrl;
 				td_01.appendChild(item_img);
 				

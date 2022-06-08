@@ -38,11 +38,11 @@
 
       <table>
         <tr>
-          <td class="item-img"></td>
-          <td class="item-info">상품 정보</td>
-          <td class="item-rental">대여 상태</td>
-          <td class="item-waiting">대기자</td>
-          <td class="item-btn"></td>
+          <th class="item-img"></th>
+          <th class="item-info">상품 정보</th>
+          <th class="item-rental">대여 상태</th>
+          <th class="item-waiting">대기자</th>
+          <th class="item-btn"></th>
         </tr>
 
         <tr th:each="shareThing : ${shareThingList}" th:style="${shareThing.item.openStatus == 0 ? 'background-color: #f3f3f4;' : ''}">

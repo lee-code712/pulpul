@@ -57,19 +57,20 @@
 
 table {
   width: 100%;
-  border-top: 1px solid #eaeaea;
   border-collapse: collapse;
 }
 
 th {
-  border-top: 1px solid black;
+	padding: 10px;
+	height: 30px;
+  background-color: #FAFAFA;
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
 }
 
-th,
 td {
-  height: 48px;
-  border-bottom: 1px solid #eaeaea;
   padding: 10px;
+  height: 48px;
 }
 
 .order-id {
@@ -211,6 +212,12 @@ td.order-id:hover {
   background-color: white;
   color: #c4c4c4;
   cursor: pointer;
+}
+
+.img-size {
+	width: 70px;
+	height: 70px;
+	object-fit: cover;
 }
 
 /* datepicker ui */
