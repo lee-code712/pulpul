@@ -42,10 +42,7 @@ public class ReviewController implements ApplicationContextAware {
 			HttpSession session, RedirectAttributes rttr) {
 		
 		uploadFile.setPath(uploadDir);
-		boolean successed = reviewSvc.addReview(review, uploadFile, (String)session.getAttribute("id"));
-		if (!successed) {
-			rttr.addFlashAttribute("uplaodFalid", true);
-		}
+		reviewSvc.addReview(review, uploadFile, (String)session.getAttribute("id"));
 		
 		return "redirect:/lookup/goodsDetail?itemId=" + review.getItem().getId();
 	}

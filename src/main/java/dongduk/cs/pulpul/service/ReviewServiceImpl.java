@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dongduk.cs.pulpul.controller.FileCommand;
 import dongduk.cs.pulpul.dao.ReviewDao;
@@ -13,12 +15,9 @@ import dongduk.cs.pulpul.domain.Review;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
-	private final ReviewDao reviewDao;
 	
 	@Autowired
-	public ReviewServiceImpl(ReviewDao reviewDao) {
-		this.reviewDao = reviewDao;
-	}
+	private ReviewDao reviewDao;
 
 	@Override
 	public List<Review> getReviewByItem(String itemId) {
@@ -36,27 +35,24 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public boolean addReview(Review review, FileCommand uploadFile, String memberId) {
-		boolean successed = reviewDao.createReview(review);
-		if (successed) {
-			if (!uploadFile.getFile().isEmpty()) {
-				String filename = uploadFile(uploadFile, review.getId());
-				review.setImageUrl("/upload/" + filename);
-				review.getOrder().setBuyer(new Member());
-				review.getOrder().getBuyer().setId(memberId);
-				return reviewDao.createReviewImage(review);
-			}
-			return true;
+	@Transactional
+	public void addReview(Review review, FileCommand uploadFile, String memberId) throws DataAccessException {
+		
+		reviewDao.createReview(review);	// 리뷰 레코드 생성
+		
+		if (!uploadFile.getFile().isEmpty()) {
+			String filename = uploadFile(uploadFile, review.getId());	// 리뷰 이미지 저장
+			review.setImageUrl("/upload/" + filename);
+			review.getOrder().setBuyer(new Member());
+			review.getOrder().getBuyer().setId(memberId);
+			reviewDao.createReviewImage(review);	// 리뷰 이미지 레코드 생성
 		}
-		return false;
 	}
 	
-	// 파일 업로드 메소드
+	// 이미지 파일 업로드 메소드
 	public String uploadFile(FileCommand uploadFile, int reviewId) {
 		String newFilename = "";
-		// System.out.println(path);
 		try {       
-			// 확장자를 jpg로 제한
             newFilename = "RIMG-" + reviewId + ".jpg";
             
             File newFile = new File(uploadFile.getPath() + newFilename);

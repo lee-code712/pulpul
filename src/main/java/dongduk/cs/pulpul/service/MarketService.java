@@ -12,9 +12,9 @@ public interface MarketService {
 	Market getMarketByMember(String memberId);
 	
 	// 마켓 생성
-	boolean makeMarket(Market market, FileCommand uploadFile);
+	void makeMarket(Market market, FileCommand uploadFile);
 	
 	// 마켓 정보 수정
-	boolean changeMarketInfo(Market market, FileCommand updateFile);
+	void changeMarketInfo(Market market, FileCommand updateFile);
 	
 }

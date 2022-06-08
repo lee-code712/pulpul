@@ -14,6 +14,6 @@ public interface ReviewService {
 	int getOrderIdByNotReview(String itemId, String memberId);
 	
 	// 리뷰 작성
-	boolean addReview(Review review, FileCommand uploadFiles, String memberId);
+	void addReview(Review review, FileCommand uploadFiles, String memberId);
 	
 }

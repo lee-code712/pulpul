@@ -29,24 +29,18 @@ public class MybatisMarketDao implements MarketDao {
 	}
 
 	@Override
-	public boolean createMarket(Market market) {
-		int ck = marketMapper.insertMarket(market);
-		if (ck > 0) return true;
-		return false;
+	public void createMarket(Market market) {
+		marketMapper.insertMarket(market);
 	}
 
 	@Override
-	public boolean createMarketImage(Market market) {
-		int ck = marketMapper.insertMarketImage(market);
-		if (ck > 0) return true;
-		return false;
+	public void createMarketImage(Market market) {
+		marketMapper.insertMarketImage(market);
 	}
 
 	@Override
-	public boolean changeMarketInfo(Market market) {
-		int ck = marketMapper.updateMarket(market);
-		if (ck > 0) return true;
-		return false;
+	public void changeMarketInfo(Market market) {
+		marketMapper.updateMarket(market);
 	}
 	
 }

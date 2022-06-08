@@ -14,12 +14,12 @@ public interface MarketDao {
 	String findMarketImage(String memberId);
 	
 	// 마켓 생성
-	boolean createMarket(Market market);
+	void createMarket(Market market);
 	
 	// 마켓 이미지 생성
-	boolean createMarketImage(Market market);
+	void createMarketImage(Market market);
 	
 	// 마켓 정보 수정
-	boolean changeMarketInfo(Market market);
+	void changeMarketInfo(Market market);
 
 }

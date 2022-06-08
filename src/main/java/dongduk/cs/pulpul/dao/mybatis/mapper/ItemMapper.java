@@ -21,8 +21,6 @@ public interface ItemMapper {
 	
 	List<Goods> selectNewGoods();
 	
-	List<Goods> selectGoodsByKeyword(String keyword);
-	
 	Goods selectGoodsByItemId(String itemId);
 	
 	String selectRemainQuantityByGoodsId(String itemId);
@@ -30,8 +28,6 @@ public interface ItemMapper {
 	int insertGoods(Goods goods);
 	
 	int updateGoods(Goods goods);
-	
-	int updateSalesQuantity(Goods goods);
 	
 	int updateRemainQuantity(@Param("itemId") String itemId, 
 			@Param("orderStatus") int orderStatus, 

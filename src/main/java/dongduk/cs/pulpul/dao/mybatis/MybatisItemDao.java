@@ -40,11 +40,6 @@ public class MybatisItemDao implements ItemDao {
 	}
 
 	@Override
-	public List<Goods> findGoodsByKeyword(String keyword) {
-		return itemMapper.selectGoodsByKeyword(keyword);
-	}
-
-	@Override
 	public Goods findGoodsByItem(String itemId) {
 		return itemMapper.selectGoodsByItemId(itemId);
 	}
@@ -65,11 +60,6 @@ public class MybatisItemDao implements ItemDao {
 	@Override
 	public void changeGoodsInfo(Goods goods) {
 		itemMapper.updateGoods(goods);
-	}
-
-	@Override
-	public void changeSalesQuantity(Goods goods) {
-		itemMapper.updateSalesQuantity(goods);
 	}
 
 	@Override
@@ -127,7 +117,7 @@ public class MybatisItemDao implements ItemDao {
 	}
 	
 	@Override
-	public void chageItemInfo(Item item) {
+	public void changeItemInfo(Item item) {
 		itemMapper.updateItem(item);
 	}
 

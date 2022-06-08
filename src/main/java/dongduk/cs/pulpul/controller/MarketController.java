@@ -51,10 +51,10 @@ public class MarketController implements ApplicationContextAware {
 	@ModelAttribute("market")
 	public Market formBacking(HttpSession session) {
 		Member member = new Member();
-		member.setId((String) session.getAttribute("id"));	// market class에 memberId 저장
+		member.setId((String) session.getAttribute("id"));	// memberId 저장
 		Market market = new Market();
 		market.setMember(member);
-		market.setOpenStatus("0"); //openStatus 초기화
+		market.setOpenStatus("0"); //openStatus를 0으로 초기화
 		return market;
 	}
 	
@@ -65,7 +65,6 @@ public class MarketController implements ApplicationContextAware {
 	public String view(@ModelAttribute("market") Market market) {
 		
 		String memberId = market.getMember().getId();
-		
 		if(memberId == null) {
 			return "redirect:/home";
 		}
@@ -88,11 +87,8 @@ public class MarketController implements ApplicationContextAware {
 			return "market/marketForm";
 		
 		uploadFile.setPath(uploadDir);
-		boolean successed = marketSvc.makeMarket(market, uploadFile); 
-		if (!successed) {
-			model.addAttribute("createFailed", true); 
-			return "market/marketForm"; 
-		}
+		marketSvc.makeMarket(market, uploadFile); 
+
 		return "redirect:/market/view";
 		
 	}
@@ -108,11 +104,8 @@ public class MarketController implements ApplicationContextAware {
 			return "market/marketForm";
 		
 		updateFile.setPath(uploadDir);
-		boolean successed = marketSvc.changeMarketInfo(market, updateFile); 
-		if (!successed) { 
-			model.addAttribute("updateFailed", true); 
-			return "market/marketForm"; 
-		}
+		marketSvc.changeMarketInfo(market, updateFile); 
+
 		return "redirect:/market/view";
 	}
 	
@@ -128,7 +121,7 @@ public class MarketController implements ApplicationContextAware {
 		if (orderList != null) {
 			model.addAttribute("orderList", orderList);
 		}
-		//전체 구매 현황 페이지
+
 		return "market/orderListManage";
 	}
 	
@@ -141,7 +134,6 @@ public class MarketController implements ApplicationContextAware {
 		Order order = orderSvc.getOrder(orderId);
 		model.addAttribute("order", order);
 		
-		//구매 현황 상세내역 조회 페이지
 		return "market/orderDetailManage";
 	}
 

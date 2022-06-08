@@ -41,17 +41,13 @@ public class MybatisReviewDao implements ReviewDao {
 	}
 
 	@Override
-	public boolean createReview(Review review) {
-		int ck = reviewMapper.insertReview(review);
-		if (ck > 0) return true;
-		return false;
+	public void createReview(Review review) {
+		reviewMapper.insertReview(review);
 	}
 
 	@Override
-	public boolean createReviewImage(Review review) {
-		int ck = reviewMapper.insertReviewImage(review);
-		if (ck > 0) return true;
-		return false;
+	public void createReviewImage(Review review) {
+		reviewMapper.insertReviewImage(review);
 	}
 
 }

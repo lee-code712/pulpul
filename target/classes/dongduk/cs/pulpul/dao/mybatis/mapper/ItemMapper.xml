@@ -17,7 +17,7 @@
 		WHERE member_id = #{memberId} AND INSTR(image_src, #{itemId}) <![CDATA[>]]> 0
 	</delete>
 	
-	<!-- 물품정보 수정 -->
+	<!-- 물품 정보 수정 -->
 	<update id="updateItem" parameterType="Item">
 		UPDATE item
 		SET name = #{name}, description = #{description}, open_status = #{openStatus}
@@ -148,17 +148,6 @@
 	<update id="updateGoods" parameterType="Goods">
 		UPDATE goods
 		SET tags = #{tags}, price = #{price}, shipping_fee = #{shippingFee}, goods_size = #{size}, remain_quantity = #{remainQuantity}
-		WHERE item_id = #{item.id}
-	</update>
-	
-	<!-- 상품 판매수량 수정 -->
-	<update id="updateSalesQuantity" parameterType="Goods">
-		UPDATE goods
-		SET sales_quantity = #{salesQuantity}, 
-			remain_quantity = (CASE 
-				WHEN sales_quantity <![CDATA[>]]> #{salesQuantity} THEN (remain_quantity + (#{salesQuantity} - sales_quantity))
-				ELSE (remain_quantity - (sales_quantity - #{salesQuantity}))
-				END)
 		WHERE item_id = #{item.id}
 	</update>
 	

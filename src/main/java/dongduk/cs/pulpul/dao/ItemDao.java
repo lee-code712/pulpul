@@ -20,9 +20,6 @@ public interface ItemDao {
 	// 새 상품 목록 조회
 	List<Goods> findNewGoods();
 	
-	// 키워드로 상품 목록 조회
-	List<Goods> findGoodsByKeyword(String keyword);
-	
 	// 품목 id로 상품 목록 조회
 	Goods findGoodsByItem(String itemId);
 	
@@ -34,9 +31,6 @@ public interface ItemDao {
 	
 	// 상품 정보 수정
 	void changeGoodsInfo(Goods goods);
-	
-	// 상품 판매 수량 변경
-	void changeSalesQuantity(Goods goods);
 	
 	// 주문 상태에 따라 남은 상품 수량 변경
 	void changeRemainQuantityByOrderStatus(String itemId, int orderStatus, int quantity);
@@ -69,7 +63,7 @@ public interface ItemDao {
 	boolean isExistBorrow(String itemId);
 	
 	// 품목 정보 수정
-	void chageItemInfo(Item item);
+	void changeItemInfo(Item item);
 	
 	// 품목 삭제
 	void deleteItem(String itemId);

@@ -19,9 +19,9 @@ public interface ReviewDao {
 	boolean isExistReview(String itemId, int orderId);
 	
 	// 리뷰 생성
-	boolean createReview(Review review);
+	void createReview(Review review);
 	
 	// 리뷰 이미지 생성
-	boolean createReviewImage(Review review);
+	void createReviewImage(Review review);
 	
 }

@@ -32,37 +32,36 @@ public class ItemServiceImpl implements ItemService {
 	private BorrowDao borrowDao;
 
 	@Override
-	public List<Goods> getGoodsList() {	// 전체 상품 목록 조회
+	public List<Goods> getGoodsList() {
 		return itemDao.findAllGoods();
 	}
 
 	@Override
-	public List<Goods> getGoodsListByMember(String memberId) {	// 회원이 업로드한 상품목록 조회
+	public List<Goods> getGoodsListByMember(String memberId) {
 		return itemDao.findGoodsByMember(memberId);
 	}
 
 	@Override
-	public List<Goods> getGoodsListByMarket(int marketId) {	// 마켓의 상품목록 조회
+	public List<Goods> getGoodsListByMarket(int marketId) {
 		return itemDao.findGoodsByMarket(marketId);
 	}
 
 	@Override
-	public List<Goods> getNewGoodsList() {	// 최근 업로드된 상품 3개 조회
+	public List<Goods> getNewGoodsList() {
 		return itemDao.findNewGoods();
 	}
 
 	@Override
-	public Goods getGoods(String itemId) {	// 상품 상세정보 조회
+	public Goods getGoods(String itemId) {
 		return itemDao.findGoodsByItem(itemId);
 	}
 
 	@Override
 	@Transactional
-	public void uploadGoods(Goods goods, FileCommand uploadFiles) throws DataAccessException {	// 상품 등록
+	public void uploadGoods(Goods goods, FileCommand uploadFiles) throws DataAccessException {
 		
 		itemDao.createGoods(goods);	// 상품 레코드 생성
 		
-		// 상품 이미지 저장, 이미지 레코드 생성
 		String itemId = goods.getItem().getId();
 		if (itemId != null) {
 			goods.getItem().setId(itemId);
@@ -71,14 +70,13 @@ public class ItemServiceImpl implements ItemService {
 			for (MultipartFile uploadFile : uploadFiles.getFiles()) {
 				if (!uploadFile.isEmpty()) {
 					uploadFiles.setFile(uploadFile);
-					String filename = uploadFile(uploadFiles, goods.getItem().getId(), cnt);
+					String filename = uploadFile(uploadFiles, goods.getItem().getId(), cnt);	// 상품 이미지 저장
 					imageUrlList.add("/upload/" + filename);
 					cnt++;
 				}
 			}
 			String memberId = goods.getItem().getMarket().getMember().getId();
-			itemDao.createItemImages(imageUrlList, memberId); // 상품 이미지 레코드 생성
-			
+			itemDao.createItemImages(imageUrlList, memberId);	// 상품 이미지 레코드 생성		
 			memberDao.changePoint(memberId, 1, 500);	// 포인트 +500
 		}
 	}
@@ -86,34 +84,32 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	@Transactional
 	public void changeGoodsInfo(Goods goods, FileCommand updateFiles, String[] deleteImages)
-			 throws DataAccessException {	// 상품 정보 수정
+			 throws DataAccessException {
 		
-		itemDao.chageItemInfo(goods.getItem());	// 품목 레코드 수정
+		itemDao.changeItemInfo(goods.getItem());	// 품목 레코드 수정
 		itemDao.changeGoodsInfo(goods);	// 상품 레코드 수정
 		
-		// 상품 이미지 삭제, 이미지 레코드 삭제
 		String itemId = goods.getItem().getId();
 		String memberId = goods.getItem().getMarket().getMember().getId();
 		itemDao.deleteItemImages(itemId, memberId); // 상품 이미지 레코드 삭제
 		if (deleteImages != null)
-			deleteFileByImages(updateFiles.getPath(), deleteImages);
+			deleteFileByImages(updateFiles.getPath(), deleteImages);	// 상품 이미지 삭제
 		
-		// 새로운 상품 이미지 저장, 이미지 레코드 생성
-		List<String> imageUrlList = updateFileByItem(updateFiles.getPath(), itemId);
+		List<String> imageUrlList = updateFileByItem(updateFiles.getPath(), itemId);	// 기존에 있던 상품 이미지 이름 변경
 		int newCnt = imageUrlList.size() + 1;
 		for (MultipartFile updateFile : updateFiles.getFiles()) {
 			if (!updateFile.isEmpty()) {
 				updateFiles.setFile(updateFile);
-				String filename = uploadFile(updateFiles, itemId, newCnt);
+				String filename = uploadFile(updateFiles, itemId, newCnt);	// 새로운 상품 이미지 저장
 				imageUrlList.add("/upload/" + filename);
 				newCnt++;
 			}
 		}
-		itemDao.createItemImages(imageUrlList, memberId); // 상품 이미지 레코드 생성
+		itemDao.createItemImages(imageUrlList, memberId); // 새로운 상품 이미지 레코드 생성
 	}
 
 	@Override
-	public List<ShareThing> getShareThingList() {	// 공유물품 목록 조회
+	public List<ShareThing> getShareThingList() {
 		List<ShareThing> shareThingList = itemDao.findAllShareThing();
 		if (shareThingList != null) {
 			for (ShareThing shareThing : shareThingList) {
@@ -136,7 +132,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 	
 	@Override
-	public List<ShareThing> getShareThingListByMember(String memberId) {	// 회원이 업로드한 공유물품 목록 조회
+	public List<ShareThing> getShareThingListByMember(String memberId) {
 		List<ShareThing> shareThingList = itemDao.findShareThingByMember(memberId);
 		if (shareThingList != null) {
 			for (ShareThing shareThing : shareThingList) {
@@ -159,12 +155,12 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public List<ShareThing> getShareThingListByMarket(int marketId) {	// 마켓의 공유물품 조회
+	public List<ShareThing> getShareThingListByMarket(int marketId) {
 		return itemDao.findShareThingByMarket(marketId);
 	}
 
 	@Override
-	public ShareThing getShareThing(String itemId) {	// 공유물품 상세정보 조회
+	public ShareThing getShareThing(String itemId) {
 		ShareThing shareThing = itemDao.findShareThingByItem(itemId);
 		if (shareThing != null) {
 			shareThing.setReservationNumber(borrowDao.checkNumberBorrowReservation(itemId));
@@ -185,11 +181,10 @@ public class ItemServiceImpl implements ItemService {
 	
 	@Override
 	@Transactional
-	public void uploadShareThing(ShareThing shareThing, FileCommand uploadFiles) throws DataAccessException {	// 공유물품 등록
+	public void uploadShareThing(ShareThing shareThing, FileCommand uploadFiles) throws DataAccessException {
 		
 		itemDao.createShareThing(shareThing);	// 공유물품 레코드 생성
 		
-		// 공유물품 이미지 저장, 이미지 레코드 생성
 		String itemId = shareThing.getItem().getId();
 		if (itemId != null) {
 			shareThing.getItem().setId(itemId);
@@ -198,7 +193,7 @@ public class ItemServiceImpl implements ItemService {
 			for (MultipartFile uploadFile : uploadFiles.getFiles()) {
 				if (!uploadFile.isEmpty()) {
 					uploadFiles.setFile(uploadFile);
-					String filename = uploadFile(uploadFiles, shareThing.getItem().getId(), cnt);
+					String filename = uploadFile(uploadFiles, shareThing.getItem().getId(), cnt);	// 공유물품 이미지 저장
 					imageUrlList.add("/upload/" + filename);
 					cnt++;
 				}
@@ -211,43 +206,40 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	@Transactional
 	public void changeShareThingInfo(ShareThing shareThing, FileCommand updateFiles, String[] deleteImages) 
-			 throws DataAccessException {	// 공유물품 정보 수정
+			 throws DataAccessException {
 		
-		itemDao.chageItemInfo(shareThing.getItem());	// 품목 레코드 수정
+		itemDao.changeItemInfo(shareThing.getItem());	// 품목 레코드 수정
 		itemDao.changeShareThingInfo(shareThing);	// 공유물품 레코드 수정	
 		
-		// 공유물품 이미지 삭제, 이미지 레코드 삭제
 		String itemId = shareThing.getItem().getId();
 		String memberId = shareThing.getItem().getMarket().getMember().getId();
-		itemDao.deleteItemImages(itemId, memberId); // 공유물품 이미지 레코드 삭제
+		itemDao.deleteItemImages(itemId, memberId);	// 공유물품 이미지 레코드 삭제
 		if (deleteImages != null)
-			deleteFileByImages(updateFiles.getPath(), deleteImages);
+			deleteFileByImages(updateFiles.getPath(), deleteImages);	// 공유물품 이미지 삭제
 		
-		// 새로운 공유물품 이미지 저장, 이미지 레코드 생성
-		List<String> imageUrlList = updateFileByItem(updateFiles.getPath(), itemId);
+		List<String> imageUrlList = updateFileByItem(updateFiles.getPath(), itemId);	// 기존에 있던 공유물품 이미지 이름 변경
 		int newCnt = imageUrlList.size() + 1;
 		for (MultipartFile updateFile : updateFiles.getFiles()) {
 			if (!updateFile.isEmpty()) {
 				updateFiles.setFile(updateFile);
-				String filename = uploadFile(updateFiles, itemId, newCnt);
+				String filename = uploadFile(updateFiles, itemId, newCnt);	// 새로운 공유물품 이미지 저장
 				imageUrlList.add("/upload/" + filename);
 				newCnt++;
 			}
 		}
-		itemDao.createItemImages(imageUrlList, memberId); // 공유물품 이미지 레코드 생성
+		itemDao.createItemImages(imageUrlList, memberId); // 새로운	공유물품 이미지 레코드 생성
 	}
 
 	@Override
 	@Transactional
 	public void deleteItem(String itemId, String memberId, String uploadDir) 
-			throws DataAccessException, DeleteItemException {	// 업로드한 물품 삭제
+			throws DataAccessException, DeleteItemException {
 		
-		// 주문 내역 또는 대여 내역이 존재하는지 확인
-		if (itemId.substring(0, 1).equals("G") && itemDao.isExistOrder(itemId)) { // 품목이 상품이면
+		if (itemId.substring(0, 1).equals("G") && itemDao.isExistOrder(itemId)) { // 품목이 상품이면 주문내역 존재여부 확인
 			System.out.println("주문내역 있음");
 			throw new DeleteItemException("주문내역이 존재하여 삭제할 수 없습니다. 비공개로 돌려주시기 바랍니다.");
 		}
-		else if (itemId.substring(0, 1).equals("S") && itemDao.isExistBorrow(itemId)) { // 품목이 공유물품이면
+		else if (itemId.substring(0, 1).equals("S") && itemDao.isExistBorrow(itemId)) { // 품목이 공유물품이면 대여내역 존재여부 확인
 			System.out.println("대여내역 있음");
 			throw new DeleteItemException("대여내역이 존재하여 삭제할 수 없습니다. 비공개로 돌려주시기 바랍니다.");
 		}
@@ -258,7 +250,8 @@ public class ItemServiceImpl implements ItemService {
 		deleteFileByItem(itemId, uploadDir, cnt); // 품목 이미지 삭제
 	}
 	
-	public String uploadFile(FileCommand uploadFiles, String itemId, int cnt) {	// 이미지 파일 업로드 메소드
+	// 이미지 파일 업로드 메소드
+	public String uploadFile(FileCommand uploadFiles, String itemId, int cnt) {
 		String newFilename = "";
 
 		try {       
@@ -276,7 +269,8 @@ public class ItemServiceImpl implements ItemService {
 		return newFilename;
 	}
 	
-	public ArrayList<String> updateFileByItem(String path, String itemId) {	// 특정 상품에 대한 이미지 파일 이름 변경 메소드
+	// 특정 상품에 대한 이미지 파일 이름 변경 메소드
+	public ArrayList<String> updateFileByItem(String path, String itemId) {	
 		ArrayList<String> imageUrlList = new ArrayList<String>();
 		try {
 			File f = new File(path);
@@ -302,7 +296,8 @@ public class ItemServiceImpl implements ItemService {
 		return imageUrlList;
 	}
 	
-	public void deleteFileByImages(String uploadDir, String[] deleteImages) {	// 특정 이미지에 대한 이미지 파일 삭제 메소드
+	// 특정 이미지와 동일한 이름의 이미지 파일 삭제 메소드
+	public void deleteFileByImages(String uploadDir, String[] deleteImages) {	
 		try {       
 			for (String deleteImage : deleteImages) {
 				File file = new File(uploadDir, deleteImage.substring(8));
@@ -314,7 +309,8 @@ public class ItemServiceImpl implements ItemService {
 		}
 	}
 	
-	public void deleteFileByItem(String itemId, String uploadDir, int cnt) {	// 특정 상품에 대한 이미지 파일 삭제 메소드
+	// 특정 상품에 대한 모든 이미지 파일 삭제 메소드
+	public void deleteFileByItem(String itemId, String uploadDir, int cnt) {	
 		try {       
 			for (int i = 1; i <= cnt; i++) {
 				String filename = itemId + "-" + cnt + ".jpg"; 
