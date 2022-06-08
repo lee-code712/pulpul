@@ -1,5 +1,7 @@
 package dongduk.cs.pulpul.domain;
 
+import java.io.Serializable;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -8,11 +10,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
+@Getter @Setter @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Goods {
+@SuppressWarnings("serial")
+public class Goods implements Serializable {
 
 	@Valid
 	private Item item; /*상품 품목 정보*/

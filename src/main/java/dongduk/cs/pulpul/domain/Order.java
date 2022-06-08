@@ -1,5 +1,6 @@
 package dongduk.cs.pulpul.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
@@ -15,7 +16,8 @@ import lombok.ToString;
 @Getter @Setter @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+@SuppressWarnings("serial")
+public class Order implements Serializable {
 
 	private int id; /*주문 식별번호*/
 	private String orderDate; /*주문일*/

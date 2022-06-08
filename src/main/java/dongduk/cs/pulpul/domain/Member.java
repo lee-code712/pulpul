@@ -1,10 +1,14 @@
 package dongduk.cs.pulpul.domain;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
-public class Member {
+@Getter @Setter @ToString
+@SuppressWarnings("serial")
+public class Member implements Serializable {
 
 	private String id;
 	private String password;

@@ -199,6 +199,7 @@ public class ItemServiceImpl implements ItemService {
 				}
 			}
 			String memberId = shareThing.getItem().getMarket().getMember().getId();
+			System.out.println(memberId);
 			itemDao.createItemImages(imageUrlList, memberId);	// 공유물품 이미지 레코드 생성
 		}
 	}
@@ -313,7 +314,7 @@ public class ItemServiceImpl implements ItemService {
 	public void deleteFileByItem(String itemId, String uploadDir, int cnt) {	
 		try {       
 			for (int i = 1; i <= cnt; i++) {
-				String filename = itemId + "-" + cnt + ".jpg"; 
+				String filename = itemId + "-" + i + ".jpg"; 
 				File file = new File(uploadDir, filename);
 				if (file.exists())
 					file.delete();

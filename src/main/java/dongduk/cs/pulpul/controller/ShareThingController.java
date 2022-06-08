@@ -46,7 +46,7 @@ public class ShareThingController implements ApplicationContextAware {
 	}
 	
 	@ModelAttribute("shareThing")
-	public ShareThing formBacking(HttpSession session) {
+	public ShareThing formBacking() {
 		return new ShareThing();
 	}
 	
@@ -73,12 +73,12 @@ public class ShareThingController implements ApplicationContextAware {
 	}
 
 	@PostMapping("/upload")
-	public String upload(@Valid @ModelAttribute("shareThing") ShareThing shareThing, BindingResult result, 
-			FileCommand uploadFiles, Model model) {
+	public String upload(@Valid @ModelAttribute("shareThing") ShareThing shareThing, 
+			BindingResult result, FileCommand uploadFiles) {
 		
 		if (result.hasErrors())
 			return "market/shareThingForm";
-		
+		System.out.println(shareThing.toString());
 		uploadFiles.setPath(uploadDir);
 		itemSvc.uploadShareThing(shareThing, uploadFiles);
 

@@ -1,14 +1,17 @@
 package dongduk.cs.pulpul.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
-public class Item {
+@Getter @Setter @ToString
+@SuppressWarnings("serial")
+public class Item implements Serializable {
 
 	private String id; /*품목 식별번호*/
 	@NotBlank
