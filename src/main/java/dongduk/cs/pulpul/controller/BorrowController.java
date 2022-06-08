@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import dongduk.cs.pulpul.domain.Borrow;
 import dongduk.cs.pulpul.domain.Member;
@@ -110,9 +111,10 @@ public class BorrowController {
 	 * 반납 처리
 	 */
 	@GetMapping("/return")
-	public String returnItem() {
-		
-		return "redirect:/market/shareThingManage";
+	public String returnItem(@RequestParam("borrowId") int borrowId, Model model) {
+		Borrow borrow = borrowService.getBorrowById(borrowId);
+		borrowService.returnShareThing(borrow);
+		return "redirect:/market/shareThingBorrowManage?itemId=" + borrow.getShareThing().getItem().getId();
 	}
 
 	/*

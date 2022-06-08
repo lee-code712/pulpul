@@ -59,7 +59,7 @@ public interface BorrowDao {
 	boolean changeTrackingNumber(Borrow borrow);
 	
 	// 대여 상태 변경
-	boolean changeBorrowStatus(int orderId, int borrowStatus);
+	boolean changeBorrowStatus(Borrow borrow);
 	
 	// 대여 반납일, 연장 여부 변경
 	boolean changeReturnDate(Borrow borrow);

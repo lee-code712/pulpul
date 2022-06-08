@@ -10,6 +10,12 @@
 	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
   	<link rel="stylesheet" th:href="@{/css/market/shareThingBorrowManage.css}" >
   </th:block>
+  
+   <th:block layout:fragment="script">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  	<script th:src="@{/js/market/shareThingBorrowManage.js}"></script>
+  	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  </th:block>
 
 	<div layout:fragment="content">
 		<script th:inline="javascript">
@@ -62,11 +68,11 @@
             		<th:block th:text=${borrow.trackingNumber}></th:block>
             	</th:block>
               <button id="wayBillBtn">
-                <img src="/images/checkBtn.svg" />
+                <img src="/images/checkBtn.svg"/>
               </button>
             </div>
           </td>
-          <td><button class="rental-btn">반납</button></td>
+          <td><button class="rental-btn" th:onclick="returnShareThing([[${borrow.id}]])">반납</button></td>
         </tr>
       </table>
       

@@ -159,7 +159,14 @@ public class BorrowServiceImpl implements BorrowService {
 	// 공유 물품 대여 상태 변경 - 반납이 되면 대여한 물품 대여 상태 변경
 	// *borrow_status = 1:대여 0:반납
 	public boolean returnShareThing(Borrow borrow) { // -> 반납 시 사용하므로 returnShareThings 으로 함수명 변경
-		return borrowDao.changeBorrowStatus(borrow.getId(), 0);
+		// 예약자가 없는 경우에는 공유 물품 대여 가능 상태 변경
+		if (checkNumberBorrowReservation(borrow.getShareThing().getItem().getId()) == 0) {
+			ShareThing shareThing = borrow.getShareThing();
+			shareThing.setIsBorrowed(0);
+			borrowDao.changeIsBorrowed(shareThing);
+		}
+		borrow.setBorrowStatus("0");
+		return borrowDao.changeBorrowStatus(borrow);
 	}
 
 	// 공유물품 대기자 수 확인 -> 대기자가 꽉 차면 예약 못하니까 대기자가 없거나 한 명만 있으면 예약 가능 -> 예약 시 확인

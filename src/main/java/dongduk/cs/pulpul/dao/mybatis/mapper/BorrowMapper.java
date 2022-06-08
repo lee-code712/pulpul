@@ -42,8 +42,7 @@ public interface BorrowMapper {
 	
 	int updateTrackingNumber(Borrow borrow);
 	
-	int updateBorrowStatus(@Param("shareThingId") String shareThingId, 
-			@Param("borrowStatus") int borrowStatus);
+	int updateBorrowStatus(Borrow borrow);
 	
 	int updateReturnDate(Borrow borrow);
 

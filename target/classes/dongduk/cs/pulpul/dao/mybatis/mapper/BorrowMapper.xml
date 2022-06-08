@@ -200,10 +200,10 @@
 	</update>
 	
 	<!-- 공유 물품 반납 -->
-	<update id="updateBorrowStatus" parameterType="String">
+	<update id="updateBorrowStatus" parameterType="Borrow">
 		UPDATE borrow
-		SET borrow_status = 0
-		WHERE share_thing_id = #{shareThingId}
+		SET borrow_status = #{borrowStatus}
+		WHERE borrow_id = #{id}
 	</update>
 	
 	<!-- 대여 연장 -->

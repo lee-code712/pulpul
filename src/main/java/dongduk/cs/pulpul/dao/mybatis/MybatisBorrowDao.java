@@ -111,9 +111,11 @@ public class MybatisBorrowDao implements BorrowDao {
 	}
 
 	@Override
-	public boolean changeBorrowStatus(int orderId, int borrowStatus) {
+	public boolean changeBorrowStatus(Borrow borrow) {
 		// TODO Auto-generated method stub
-		return false;
+		int ck = borrowMapper.updateBorrowStatus(borrow);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override
