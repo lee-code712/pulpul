@@ -1,14 +1,56 @@
 
- /*
+
+/*사진 업로드*/
+const upload = document.querySelector('.upload');
+
+const uploadBox = document.querySelector('.upload-img-icon-box');
+
+uploadBox.addEventListener('click', () => upload.click());
+upload.addEventListener('change', getImageFiles);
+
+function getImageFiles() {
+  var imgs = document.querySelectorAll(".market-upload-image");
+  
+  if(imgs.length > 0){
+	 Swal.fire({
+				   text: '이미지는 1개까지 업로드가 가능합니다.',
+				   confirmButtonColor: '#93c0b5',
+				   confirmButtonText: '확인',
+				});
+      return;
+ }else{
+	previewFile();
+ }
+}
+/*
 * input file에서 이미지 선택 시 선택한 이미지 보여줌.
 */
  function previewFile() {
-  var preview = document.querySelector('.marketImage');
-  var file    = document.querySelector('input[type=file]').files[0];
+  var preview = document.querySelector('.upload-img');
+  
+  if(preview.childNodes.length > 2){
+	$(".upload-img").children().remove();
+  }
+  var file  = document.querySelector('input[type=file]').files[0];
   var reader  = new FileReader();
 
   reader.onloadend = function () {
-    preview.src = reader.result;
+	var img = document.createElement("img");
+	img.classList.add("market-upload-image");
+    img.src = reader.result;
+    preview.appendChild(img);
+    
+      //삭제 버튼 <button></button>
+        const button = document.createElement("button");
+        
+        button.innerText = "X";
+        button.classList.add("deleteBtn");
+        button.type = "button";
+       
+        preview.appendChild(button);
+        // 이미지 삭제 버튼 눌렀을 때
+        button.addEventListener("click", deleteImg);
+    
   }
   
   if (file) {
@@ -16,30 +58,28 @@
   } else {
     preview.src = "";
   }
-  
-   isImage();
- 
 }
 
-//input type="file"에서 file 선택하면 이미지 보여짐.
-function isImage(){
-	//input type="file"
-	var inputImg = document.getElementById('fileWrap').value;
-	//이미지 경로 나타날 자리
-	var marketImgPath = document.getElementById("isMarketImage").getElementsByTagName("td")[1];
-	//var isMarketImg = document.getElementsByTagName('td')[7].childNodes[0].nodeValue;
+function deleteImg(event){
+	     event.preventDefault();
 	
-	if(inputImg != null){ //사용자가 이미지 선택한 경우
-
-		//이미지를 추가했다면 바꾼 이미지 경로 보여줌 - fakePath ex) c:\fakepath\test.html 로컬 경로에 접근 불가
-		marketImgPath.innerHTML = inputImg;
-		
-		//fake 경로를 '\'로 분할 후 실제 이미지 이름 추출.
-		var a = marketImgPath.innerHTML;
-		var filePathSplit = a.split('\\'); 
-		var fileName = filePathSplit[filePathSplit.length - 1];
-
-		marketImgPath.innerHTML = fileName;
-		
+		  /*<span> 버튼의 부모 element span 삭제
+		       <button ..></button>
+		    </span>
+		  */
+		  $(".upload-img").children().remove();
+		  $("#saveBtn").disabled = true;
+  }
+  
+  $("#saveBtn").click(function(event){
+	event.preventDefault();
+	 if($(".market-upload-image").length == 0){
+		 Swal.fire({
+				   text: '마켓 이미지를 등록해주세요!',
+				   confirmButtonColor: '#93c0b5',
+				   confirmButtonText: '확인',
+				});
+	}else{
+		$('form').submit();
 	}
-} 
+})
