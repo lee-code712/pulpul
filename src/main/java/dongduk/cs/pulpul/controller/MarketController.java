@@ -65,10 +65,7 @@ public class MarketController implements ApplicationContextAware {
 	public String view(@ModelAttribute("market") Market market) {
 		
 		String memberId = market.getMember().getId();
-		if(memberId == null) {
-			return "redirect:/home";
-		}
-		
+
 		Market findMarket = marketSvc.getMarketByMember(memberId);
 		if (findMarket != null)
 			BeanUtils.copyProperties(findMarket, market);

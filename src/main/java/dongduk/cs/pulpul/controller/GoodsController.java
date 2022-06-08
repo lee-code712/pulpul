@@ -57,9 +57,6 @@ public class GoodsController implements ApplicationContextAware {
 	public String goodsList(HttpSession session, Model model) {
 		
 		String memberId = (String) session.getAttribute("id");
-		if(memberId == null) {
-			return "redirect:/home";
-		}
 		
 		ArrayList<Goods> goodsList = (ArrayList<Goods>) itemSvc.getGoodsListByMember(memberId);
 		model.addAttribute("goodsList", goodsList);
@@ -71,13 +68,7 @@ public class GoodsController implements ApplicationContextAware {
 	 * 판매 식물 등록
 	 */
 	@GetMapping("/upload")
-	public String uploadForm(@ModelAttribute("goods") Goods goods, HttpSession session) {
-		
-		String memberId = (String) session.getAttribute("id");
-		if(memberId == null) {
-			return "redirect:/home";
-		}
-		
+	public String uploadForm(@ModelAttribute("goods") Goods goods) {
 		return "market/goodsForm";
 	}
 
@@ -99,12 +90,7 @@ public class GoodsController implements ApplicationContextAware {
 	 */
 	@GetMapping("/update")
 	public String updateForm(@ModelAttribute("goods") Goods goods, 
-			@RequestParam("itemId") String id, HttpSession session) {
-		
-		String memberId = (String) session.getAttribute("id");
-		if(memberId == null) {
-			return "redirect:/home";
-		}
+			@RequestParam("itemId") String id) {
 		
 		Goods findGoods = itemSvc.getGoods(id);
 		if (findGoods != null) {

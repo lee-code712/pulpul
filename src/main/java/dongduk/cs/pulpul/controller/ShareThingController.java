@@ -57,9 +57,6 @@ public class ShareThingController implements ApplicationContextAware {
 	public String shareThingList(HttpSession session, Model model) {
 		
 		String memberId = (String) session.getAttribute("id");
-		if(memberId == null) {
-			return "redirect:/home";
-		}
 		
 		ArrayList<ShareThing> shareThingList = (ArrayList<ShareThing>) itemSvc.getShareThingListByMember(memberId);
 		model.addAttribute("shareThingList", shareThingList);
@@ -71,13 +68,7 @@ public class ShareThingController implements ApplicationContextAware {
 	 * 공유물품 등록 
 	 */
 	@GetMapping("/upload")
-	public String uploadForm(@ModelAttribute("shareThing") ShareThing shareThing, HttpSession session) {
-		
-		String memberId = (String) session.getAttribute("id");
-		if(memberId == null) {
-			return "redirect:/home";
-		}
-
+	public String uploadForm(@ModelAttribute("shareThing") ShareThing shareThing) {
 		return "market/shareThingForm";
 	}
 
@@ -99,12 +90,7 @@ public class ShareThingController implements ApplicationContextAware {
 	 */
 	@GetMapping("/update")
 	public String updateForm(@ModelAttribute("shareThing") ShareThing shareThing,
-			@RequestParam("itemId") String id, HttpSession session) {
-		
-		String memberId = (String) session.getAttribute("id");
-		if(memberId == null) {
-			return "redirect:/home";
-		}
+			@RequestParam("itemId") String id) {
 		
 		ShareThing findShareThing = itemSvc.getShareThing(id);
 		if (findShareThing != null) {

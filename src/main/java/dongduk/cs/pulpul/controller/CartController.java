@@ -39,10 +39,6 @@ public class CartController {
 			HttpSession session, RedirectAttributes rttr) {
 
 		String memberId = (String) session.getAttribute("id");	
-//		if(memberId == null) {
-//			rttr.addFlashAttribute("isNotLogined", true);
-//			return "redirect:/lookup/goodsDetail?itemId=" + cartItem.getGoods().getItem().getId();
-//		}
 		
 		if (result.hasErrors()) {
 			rttr.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX +  "cartItem", result);
@@ -106,10 +102,7 @@ public class CartController {
 			RedirectAttributes rttr) {
 		
 		String memberId = (String) session.getAttribute("id");
-		if(memberId == null) {
-			return "redirect:/home";
-		}
-		
+
 		int deleteCnt = orderSvc.deleteCartItemByMarket(memberId, marketId);
 		
 		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - deleteCnt;	// 장바구니 상품 수 -deleteCnt

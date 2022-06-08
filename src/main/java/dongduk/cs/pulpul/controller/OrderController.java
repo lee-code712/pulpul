@@ -59,10 +59,7 @@ public class OrderController {
 			@ModelAttribute("order") Order order, HttpSession session) {
 		
 		String memberId = (String) session.getAttribute("id");
-		if (memberId == null) {
-			return "redirect:/home";
-		}
-		
+
 		Cart cart = (Cart) session.getAttribute("cart");
 		if (cart == null) {
 			return "redirect:/cart/cartList";
