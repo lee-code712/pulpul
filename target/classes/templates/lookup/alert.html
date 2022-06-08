@@ -22,16 +22,19 @@
   	</script>
 		<div id="alertHeader">
       <div id="alertTit">알림</div>
-      <img src="/images/alertClose.svg" />
+      <img src="/images/alertClose.svg" onclick="window.close()" />
     </div>
-
-    <div id="alertBox">
-      <div id="alertBtnWrap">
-        <div id="alertType">알림 제목</div>
-        <div class="link">바로가기</div>
-      </div>
-      <div id="alertContent">알림 내용</div>
-      <div id="alertDate">2022-05-07</div>
-    </div>
+	
+		<th:block th:each="alert : ${alertList}">
+			<div id="alertBox" th:if=${alert.isRead}>
+			<div id="newAlertBox" th:unless=${alert.isRead}>
+				 <div id="alertBtnWrap">
+		        <div id="alertType">알림</div>
+		        <div class="link" onclick="location.href='${alert.pageUrl}'">바로가기</div>
+		      </div>
+		      <div id="alertContent" th:text=${alert.content}></div>
+		      <div id="alertDate"  th:text=${alert.alertDate}></div>
+			</div>
+		</th:block>
 	</div>
 </html>

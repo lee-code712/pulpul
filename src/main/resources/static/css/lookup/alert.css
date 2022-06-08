@@ -1,3 +1,8 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
 body {
   background-color: #f3f5f7;
 }
@@ -30,6 +35,13 @@ body {
   background-color: white;
 }
 
+#newAlertBox {
+	margin-bottom: 4px;
+  padding: 10px 20px;
+  height: 80px;
+  background-color: #FFFBF1;
+}
+
 #alertBtnWrap {
   display: flex;
   justify-content: space-between;
@@ -38,7 +50,7 @@ body {
 
 #alertType {
   font-size: 14px;
-  color: #1abc9c;
+  color: #93C0B5;
 }
 
 .link {
@@ -48,8 +60,8 @@ body {
   width: 70px;
   height: 24px;
   border-radius: 100px;
-  border: 1px solid #1abc9c;
-  color: #1abc9c;
+  border: 1px solid #93C0B5;
+  color: #93C0B5;
   font-size: 12px;
   background-color: white;
   cursor: pointer;
@@ -66,3 +78,5 @@ body {
   font-size: 9px;
   color: #939393;
 }
+
+
