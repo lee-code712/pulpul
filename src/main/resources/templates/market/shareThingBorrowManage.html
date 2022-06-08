@@ -51,7 +51,7 @@
        <tr th:each="borrow : ${borrowList}">
           <td><img th:src=${borrow.shareThing.item.thumbnailUrl} class="img-size" /></td>
           <td th:text=${borrow.shareThing.item.name}></td>
-          <td th:text=${borrow.shareThing.item.market.member.name}></td>
+          <td th:text=${borrow.borrower.name}></td>
           <td><th:block th:text=${borrow.borrowDate}></th:block> ~ <th:block th:text=${borrow.returnDate}></th:block></td>
           <td>
             <div id="wayBillBox">
