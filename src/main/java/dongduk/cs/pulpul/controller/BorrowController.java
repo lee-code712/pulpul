@@ -113,7 +113,14 @@ public class BorrowController {
 	@GetMapping("/return")
 	public String returnItem(@RequestParam("borrowId") int borrowId, Model model) {
 		Borrow borrow = borrowService.getBorrowById(borrowId);
+		
+		// 반납
 		borrowService.returnShareThing(borrow);
+		
+		// borrower에게 포인트 지급
+		Member borrower = memberService.getMember(borrow.getBorrower().getId());
+		memberService.changePoint(borrower, 1, 1000);
+		
 		return "redirect:/market/shareThingBorrowManage?itemId=" + borrow.getShareThing().getItem().getId();
 	}
 
@@ -137,6 +144,7 @@ public class BorrowController {
 		boolean success = borrowService.makeBorrowReservation(borrow);
 		
 		if (success) {
+			
 			return "redirect:/member/mypage";
 		}
 		
@@ -149,8 +157,10 @@ public class BorrowController {
 	 * 공유물품 예약 취소
 	 */
 	@GetMapping("/reservation/cancel")
-	public String cancel() {
-		return "redirect:/member/mypage/borrowList";
+	public String cancel(@RequestParam("borrowId") int borrowId, Model model) {
+		Borrow borrow = borrowService.getBorrowById(borrowId);
+		borrowService.cancelBorrowReservation(borrow);
+		return "redirect:/member/mypage";
 	}
 
 	/*

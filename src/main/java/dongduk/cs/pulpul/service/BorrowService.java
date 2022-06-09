@@ -1,5 +1,6 @@
 package dongduk.cs.pulpul.service;
 
+import java.util.Date;
 import java.util.List;
 
 import dongduk.cs.pulpul.domain.Alert;
@@ -7,6 +8,8 @@ import dongduk.cs.pulpul.domain.Borrow;
 import dongduk.cs.pulpul.domain.ShareThing;
 
 public interface BorrowService {
+	// 예약 자동 취소
+	public void reservationCancelScheduler(Date closingTime);
 	
 	// 회원 id로 대여 예약 목록 조회
 	List<Borrow> getBorrowReservationByMember(String memberId);
@@ -19,6 +22,9 @@ public interface BorrowService {
 	
 	// 알림이 생성되고 3일이 지난 대여 예약 삭제
 	boolean removeReservationByNotBorrowed();
+	
+	// 전체 알림 목록 조회
+	List<Alert> getAllAlert();
 	
 	// 회원 id로 알림 목록 조회
 	List<Alert> getAlertByMember(String memberId);

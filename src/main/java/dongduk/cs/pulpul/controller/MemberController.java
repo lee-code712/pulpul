@@ -1,6 +1,9 @@
 package dongduk.cs.pulpul.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -121,6 +124,10 @@ public class MemberController {
 		 //실패 - 로그인 폼
 		 return "member/loginForm";
 		 */
+		
+		// 스케줄러 실행
+		borrowService.reservationCancelScheduler(new Date());
+		
 		model.addAttribute("member", member);
 		loginValidator.validate(member, result);
 		if(result.hasErrors()) {

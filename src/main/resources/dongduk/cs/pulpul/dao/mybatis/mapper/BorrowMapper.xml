@@ -8,8 +8,8 @@
 	
 	<!-- 알림 생성 -->
 	<insert id="insertAlert" parameterType="Alert">
-    	INSERT INTO alert (share_thing_id, member_id, alert_date, content)
-    	VALUES (#{shareThingId}, #{memberId}, SYSDATE, #{content})	
+    	INSERT INTO alert (share_thing_id, member_id, alert_date, is_read)
+    	VALUES (#{shareThingId}, #{memberId}, SYSDATE, 0)	
 	</insert>
 	
 	<!-- 알림 삭제 -->
@@ -24,6 +24,12 @@
 		FROM alert
 		WHERE member_id = #{memberId}
 		ORDER BY alert_date DESC
+	</select>
+	
+	<!-- 전체 알림 조회 -->
+	<select id="selectAllAlert" resultType="Alert">
+		SELECT share_thing_id AS shareThingId, member_id AS memberId, alert_date AS alertDate, is_read AS isRead
+		FROM alert
 	</select>
 	
 	<!--  ====================================================================  -->
@@ -77,7 +83,7 @@
 	<!-- 예약 삭제 -->
 	<delete id="deleteBorrowReservation" parameterType="Borrow">
 		DELETE FROM borrow_reservation
-		WHERE share_thing_id = #{ShareThing.item.id} AND member_id = #{borrower.id}
+		WHERE share_thing_id = #{shareThing.item.id} AND member_id = #{borrower.id}
 	</delete>
 	
 	<!-- 특정 공유 물품의 예약 조회 -->
@@ -85,6 +91,13 @@
 		SELECT share_thing_id, member_id AS borrower_id, is_first_booker
 		FROM borrow_reservation
 		WHERE share_thing_id = #{itemId}
+	</select>
+	
+	<!-- 첫 번째 예약자의 예약 조회 -->
+	<select id="selectFirstBookersBorrowReservation" parameterType="Borrow" resultMap="BorrowInfoMap">
+		SELECT share_thing_id, member_id AS borrower_id, is_first_booker
+		FROM borrow_reservation
+		WHERE share_thing_id = #{shareThing.item.id} AND is_first_booker = 1
 	</select>
 	
 	<!-- 특정 공유 물품의 예약자 수 조회 -->
@@ -170,6 +183,7 @@
             FULL OUTER JOIN market m ON it.market_id = m.market_id
 			FULL OUTER JOIN image i ON lm.member_id = i.member_id
 		WHERE borrow_id = #{borrowId}
+		ORDER BY b.return_date DESC
 	</select>
 	
 	<!-- 특정 회원의 대여 예약 목록 -->
@@ -209,7 +223,7 @@
 	<!-- 대여 연장 -->
 	<update id="updateReturnDate" parameterType="Borrow">
 		UPDATE borrow
-		SET is_extended = 1, return_date =  TO_DATE(#{returnDate}, 'YYYYMMDD')
+		SET is_extended = 1, return_date = TO_DATE(#{returnDate}, 'YYYYMMDD')
 		WHERE borrow_id = #{id}
 	</update>
 	

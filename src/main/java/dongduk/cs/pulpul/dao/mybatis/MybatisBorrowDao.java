@@ -32,8 +32,9 @@ public class MybatisBorrowDao implements BorrowDao {
 
 	@Override
 	public boolean deleteBorrowReservation(Borrow borrow) {
-		// TODO Auto-generated method stub
-		return false;
+		int ck = borrowMapper.deleteBorrowReservation(borrow);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override
@@ -69,7 +70,9 @@ public class MybatisBorrowDao implements BorrowDao {
 	@Override
 	public boolean createAlert(Alert alert) {
 		// TODO Auto-generated method stub
-		return false;
+		int ck = borrowMapper.insertAlert(alert);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override
@@ -141,6 +144,17 @@ public class MybatisBorrowDao implements BorrowDao {
 	public Borrow findCurrBorrowByItem(String itemId) {
 		// TODO Auto-generated method stub
 		return borrowMapper.selectCurrBorrowByItem(itemId);
+	}
+
+	@Override
+	public List<Alert> findAllAlert() {
+		// TODO Auto-generated method stub
+		return borrowMapper.selectAllAlert();
+	}
+
+	@Override
+	public Borrow findFirstBookersBorrowReservation(Borrow borrow) {
+		return borrowMapper.selectFirstBookersBorrowReservation(borrow);
 	}
 
 	

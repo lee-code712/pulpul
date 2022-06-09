@@ -65,5 +65,9 @@ public interface BorrowDao {
 	boolean changeReturnDate(Borrow borrow);
 
 	Borrow findCurrBorrowByItem(String itemId);
+
+	List<Alert> findAllAlert();
+
+	Borrow findFirstBookersBorrowReservation(Borrow borrow);
 	
 }
