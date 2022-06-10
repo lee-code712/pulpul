@@ -33,31 +33,23 @@
       <table>
         <tr>
           <td class="text-name">공유 물품명</td>
-          <td><input type="text" placeholder="물품명을 입력하세요." th:field="*{item.name}"/></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td th:errors="*{item.name}"></td>
+          <td>
+            <input type="text" placeholder="물품명을 입력하세요." th:field="*{item.name}"/>
+            <div class="invalid-feedback" th:errors="*{item.name}"></div>
+          </td>
         </tr>
         <tr>
           <td class="text-name">물품 설명</td>
           <td>
             <textarea placeholder="물품 설명을 작성해주세요." th:field="*{item.description}"></textarea>
+            <div class="invalid-feedback" th:errors="*{item.description}"></div>
           </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td th:errors="*{item.description}"></td>
         </tr>
         <tr>
           <td class="text-name">대여 시 유의사항</td>
           <td>
             <input type="text" placeholder="대여 시 유의사항을 입력해주세요." th:field="*{precaution}"/>
           </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td th:errors="*{precaution}"></td>
         </tr>
         <tr th:unless="*{#lists.isEmpty(item.imageUrlList)}">
           <td class="text-name">물품 사진</td>
