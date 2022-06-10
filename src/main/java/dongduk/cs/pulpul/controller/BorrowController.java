@@ -149,7 +149,14 @@ public class BorrowController {
 		}
 		
 		result.reject("fullBooked", new Object[] {borrow.getShareThing().getItem().getName()}, null);
-		return "lookup/sharedThingDetail";
+		ShareThing shareThing = itemService.getShareThing(borrow.getShareThing().getItem().getId());
+		Borrow currBorrow = borrowService.getCurrBorrowByItem(borrow.getShareThing().getItem().getId());
+		if (currBorrow == null) {
+			currBorrow = new Borrow();
+		}
+		currBorrow.setShareThing(shareThing);
+		model.addAttribute("borrow", currBorrow);
+		return "lookup/shareThingDetail";
 		
 	}
 
