@@ -65,16 +65,19 @@ td {
   background-color: white;
   font-size: 14px;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .updateBtn {
+	margin-right: 20px;
   width: 80px;
   height: 40px;
-  border: 1px solid #c09693;
-  color: white;
-  background-color: #c09693;
+  border: 1px solid #C0BB93;
+  background-color: white;
+  color: #C0BB93;
   font-size: 14px;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .item-img {
@@ -112,9 +115,9 @@ td {
 #purchaseStatusBtn {
   width: 140px;
   height: 40px;
-  border: 1px solid black;
+  border: 1px solid AAAAAA;
   background-color: white;
-  color: black;
+  color: AAAAAA;
   cursor: pointer;
 }
 
