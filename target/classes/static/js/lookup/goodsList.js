@@ -33,7 +33,8 @@ jQuery(function($){ $('.filterText').keyup(function(event) {
 		
 		//식물 이름으로 검색
 		if($(".item-name:contains('"+val+"')")){
-			$(".item-name:contains('"+val+"')").parent('.item').show();
+			console.log(val);
+			$(".item-name:contains('"+val+"')").parents('.item').show();
 		}
 		
  	  }
