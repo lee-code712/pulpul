@@ -22,6 +22,9 @@
 			console.log('borrow 확인');
 		  var borrow = [[${borrow}]];
 		  console.log(borrow);
+		  console.log('sessID 확인');
+		  var sess = [[${session.id}]];
+		  console.log(sess);
 	  </script>
 	  
 	  <form action="/borrow/borrow" method="post" th:object="${borrow}">
