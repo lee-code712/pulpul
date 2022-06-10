@@ -1,8 +1,6 @@
 package dongduk.cs.pulpul.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +16,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dongduk.cs.pulpul.domain.Borrow;
-import dongduk.cs.pulpul.domain.Market;
 import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.Order;
 import dongduk.cs.pulpul.service.BorrowService;
@@ -290,19 +286,13 @@ public class MemberController {
 	@ResponseBody
 	public PagedListHolder<Order> myOrderList(@RequestParam("page") String page,
 			HttpServletRequest req, HttpServletResponse response) throws IOException {
-		//마이 페이지
+
 		HttpSession session = req.getSession();
 		String id = (String) session.getAttribute("id");
-		
-		/*
-		 * // 로그인한 상태 확인 if (id == null) { mav.addObject("isNotLogined", true);
-		 * mav.setViewName("redirect:/home"); return mav; }
-		 */
 		
 		PagedListHolder<Order> orderList = new PagedListHolder<Order>(orderService.getOrderListByMember(id, "buyer"));
 		orderList.setPageSize(5);
 		
-		System.out.println(page);
 		if ("next".equals(page)) {
 			orderList.nextPage();
 		}
@@ -318,25 +308,38 @@ public class MemberController {
 	 */
 	@GetMapping("/mypage/borrowList")
 	@ResponseBody
-	public List<Borrow> myBorrowList(HttpServletRequest req, HttpServletResponse response) throws IOException {
+	public PagedListHolder<Borrow> myBorrowList(@RequestParam("page") String page,
+			HttpServletRequest req, HttpServletResponse response) throws IOException {
+		
 		HttpSession session = req.getSession();
 		String id = (String) session.getAttribute("id");
 		
-		List<Borrow> borrowList = borrowService.getBorrowByMember(id, "borrower");
-
-		if (borrowList == null) {
-			// response.sendError(HttpServletResponse.SC_NOT_FOUND);
-		}
+		List<Borrow> borrows = borrowService.getBorrowByMember(id, "borrower");		
+		List<Borrow> reservations = borrowService.getBorrowReservationByMember(id);
 		
-		List<Borrow> reservationList = borrowService.getBorrowReservationByMember(id);
+		PagedListHolder<Borrow> borrowList = null;
 		
-		if (reservationList == null) {
-			// response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		if (borrows == null) {
+			if(reservations != null) {
+				borrowList = new PagedListHolder<Borrow>(reservations);
+			}
 		}
 		else {
-			for (Borrow r : reservationList) {
-				borrowList.add(r);
+			if(reservations != null) {
+				for (Borrow r : reservations) {
+					borrows.add(r);
+				}
 			}
+			borrowList = new PagedListHolder<Borrow>(borrows);
+		}
+		
+		borrowList.setPageSize(5);
+			
+		if ("next".equals(page)) {
+			borrowList.nextPage();
+		}
+		else if ("previous".equals(page)) {
+			borrowList.previousPage();
 		}
 		
 		return borrowList;
