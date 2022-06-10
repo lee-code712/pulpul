@@ -101,8 +101,8 @@ public class GoodsController implements ApplicationContextAware {
 	}
 	
 	@PostMapping("/update")
-	public String update(@Valid @ModelAttribute("goods") Goods goods, String[] deleteImages,
-			BindingResult result, FileCommand updateFiles, Model model) {
+	public String update(@Valid @ModelAttribute("goods") Goods goods,BindingResult result, String[] deleteImages
+			, FileCommand updateFiles, Model model) {
 
 		if (result.hasErrors())
 			return "market/goodsForm";

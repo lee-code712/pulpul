@@ -28,37 +28,31 @@
       <table>
         <tr>
           <td class="text-name">상품명</td>
-          <td><input type="text" placeholder="상품명을 입력하세요." th:field="*{item.name}" /></td>
-        </tr>
-         <tr>
-          <td></td>
-          <td th:errors="*{item.name}"></td>
+          <td>
+           <input type="text" placeholder="상품명을 입력하세요." th:field="*{item.name}" />
+           <div class="invalid-feedback" th:errors="*{item.name}"></div>
+          </td>
         </tr>
         <tr>
           <td class="text-name">상품 설명</td>
           <td>
             <textarea placeholder="상품 설명을 작성해주세요."  th:field="*{item.description}" ></textarea>
+            <div class="invalid-feedback" th:errors="*{item.description}"></div>
           </td>
-        </tr>
-         <tr>
-          <td></td>
-          <td th:errors="*{item.description}"></td>
         </tr>
         <tr>
           <td class="text-name">식물 크기</td>
-          <td><input type="text" placeholder="예) 10, 20 (가로, 세로)" th:field="*{size}" /></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td th:errors="*{size}"></td>
+          <td>
+            <input type="text" placeholder="예) 10, 20 (가로, 세로)" th:field="*{size}" />
+            <div class="invalid-feedback" th:errors="*{size}"></div>
+          </td>
         </tr>
         <tr>
           <td class="text-name">연관태그</td>
-          <td><input type="text" placeholder="예) 다육이, 식물" th:field="*{tags}"/></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td th:errors="*{tags}"></td>
+          <td>
+            <input type="text" placeholder="예) 다육이, 식물" th:field="*{tags}"/>
+            <div class="invalid-feedback" th:errors="*{tags}"></div>
+          </td>
         </tr>
         <tr th:if="*{#strings.isEmpty(item.id)}">
           <td class="text-name">총 판매 수량</td>
@@ -78,16 +72,8 @@
           <td><input type="text" placeholder="예) 8000" th:field="*{price}"/></td>
         </tr>
         <tr>
-          <td></td>
-          <td th:errors="*{price}"></td>
-        </tr>
-        <tr>
           <td class="text-name">배송비</td>
           <td><input type="text" placeholder="예) 2000" th:field="*{shippingFee}" /></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td th:errors="*{shippingFee}"></td>
         </tr>
         <tr th:unless="*{#lists.isEmpty(item.imageUrlList)}">
           <td class="text-name">식물 사진</td>

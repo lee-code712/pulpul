@@ -164,3 +164,9 @@ input[type="radio"]:checked + span:before {
 	font-size: 14px;
 	margin-right: 5px;
 }
+
+.invalid-feedback {
+	margin-top: 3px;
+	color: #DF5375;
+	font-size: 12px;
+}
