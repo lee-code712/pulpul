@@ -1,7 +1,7 @@
 //goodsForm.js
 $("#saveBtn").click(function(event){
 	event.preventDefault();
-	 if($(".putFilenameDiv").text() == "" || $("#putItemImg").children().length == 0){
+	 if($("#putItemImg").children().length == 0){
 		 Swal.fire({
 				   text: '상품 이미지를 등록해주세요!',
 				   confirmButtonColor: '#93c0b5',

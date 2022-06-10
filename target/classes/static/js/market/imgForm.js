@@ -7,7 +7,7 @@ let addFileArray;
 var check = 0;
 
 //사용자가 이미지 추가할 때마다 이미지 이름도 보여주기
-function inputFilename(){
+/*function inputFilename(){
 	
 	 const div = document.querySelector(".putFilenameDiv");
 
@@ -30,7 +30,7 @@ function inputFilename(){
 		
 	 }  
 }
-
+*/
   function previewFiles() {
 
   var files = document.querySelector('input[type=file]').files;
@@ -41,7 +41,6 @@ function inputFilename(){
 		 var files = document.querySelector('input[type=file]').files; 
 		 fileArray = Array.from(files); //변수에 할당된 파일을 배열로 변환(FileList -> Array) -> filsList는 js에서 보안상(?) 수정할 수 없음. 
 		
-		 inputFilename();
 		 check = 1;
 	}
 	
@@ -55,7 +54,11 @@ function inputFilename(){
 		for(var i = 0; i < fileArray.length; i++){
 			for(var j = 0; j < addFileArray.length; j++){
 				if(fileArray[i].name == addFileArray[j].name){
-					alert("같은 이름의 이미지가 있습니다.");
+					Swal.fire({
+				   text: '같은 이름의 이미지가 존재합니다.',
+				   confirmButtonColor: '#93c0b5',
+				   confirmButtonText: '확인',
+				 });
 					return false;
 				}
 		 }
@@ -66,7 +69,6 @@ function inputFilename(){
 			fileArray.push(addFileArray[i]);
 		}
 		console.log(fileArray);
-		inputFilename();
 	}
 	
 	//선택한 이미지 보여주기
@@ -115,9 +117,7 @@ function inputFilename(){
  function updateImg(event){
 	
 	event.preventDefault();
-	var deleteFile = document.querySelectorAll('.updateImage');
 	var selectdeleteBtn = event.target.id;//선택한 button의 아이디
-	console.log(deleteFile);
 	
 	console.log(selectdeleteBtn);
 	var fileDiv = document.querySelector('.putFilenameDiv');
@@ -130,13 +130,9 @@ function inputFilename(){
 	
 	fileDiv.appendChild(deleteFilename);
 	
-	
-	for(var i = 0; i < deleteFile.length; i++){
-		if(selectdeleteBtn == deleteFile[i].innerHTML){
-			deleteFile[i].parentNode.removeChild(deleteFile[0]);
-			event.target.parentElement.remove();
-		}
-	}
+
+	event.target.parentElement.remove();
+
 }
  function deleteImg(event){
 	     event.preventDefault();
@@ -158,13 +154,10 @@ function inputFilename(){
 		    </span>
 		  */
 		  event.target.parentElement.remove(); 
-		  inputFilename();
 		 
 		 //남은 배열을 dataTransfer로 처리(Array -> FileList) 
 	     const dataTransfer = new DataTransfer();
          fileArray.forEach(file => { dataTransfer.items.add(file); });
          
          document.querySelector('input[type=file]').files = dataTransfer.files;
-         docum
- 
   		}

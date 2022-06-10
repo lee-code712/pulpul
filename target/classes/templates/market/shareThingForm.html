@@ -55,16 +55,12 @@
           <td class="text-name">물품 사진</td>
           <td class="putFilename">
             <div class="putFilenameDiv">
-              <span class="updateImage" th:each="image : *{item.imageUrlList}" th:text="${image}">
-              </span>
             </div>
           </td>
         </tr>
         <tr th:if="*{#lists.isEmpty(item.imageUrlList)}">
           <td class="text-name">물품 사진</td>
-          <td class="putFilename">
-            <div class="putFilenameDiv"></div>
-          </td>
+          <td></td>
         </tr>
         <tr>
           <td></td>
