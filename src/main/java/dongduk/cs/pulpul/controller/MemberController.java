@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -286,7 +288,8 @@ public class MemberController {
 	 */
 	@GetMapping("/mypage/orderList")
 	@ResponseBody
-	public List<Order> myOrderList(HttpServletRequest req, HttpServletResponse response) throws IOException {
+	public PagedListHolder<Order> myOrderList(@RequestParam("page") String page,
+			HttpServletRequest req, HttpServletResponse response) throws IOException {
 		//마이 페이지
 		HttpSession session = req.getSession();
 		String id = (String) session.getAttribute("id");
@@ -296,9 +299,15 @@ public class MemberController {
 		 * mav.setViewName("redirect:/home"); return mav; }
 		 */
 		
-		List<Order> orderList = orderService.getOrderListByMember(id, "buyer");
-		if (orderList == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		PagedListHolder<Order> orderList = new PagedListHolder<Order>(orderService.getOrderListByMember(id, "buyer"));
+		orderList.setPageSize(5);
+		
+		System.out.println(page);
+		if ("next".equals(page)) {
+			orderList.nextPage();
+		}
+		else if ("previous".equals(page)) {
+			orderList.previousPage();
 		}
 		
 		return orderList;

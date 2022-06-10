@@ -143,11 +143,7 @@ public class LookupController {
 	public List<Goods> marketGoodsList(@PathVariable("marketId") int marketId,
 			HttpServletResponse response) throws IOException {
 		
-		List<Goods> goodsList = itemSvc.getGoodsListByMarket(marketId);
-		if (goodsList == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
-		}
-		
+		List<Goods> goodsList = itemSvc.getGoodsListByMarket(marketId);	
 		return goodsList;
 	}
 	
@@ -160,10 +156,6 @@ public class LookupController {
 			HttpServletResponse response) throws IOException {
 		
 		List<ShareThing> shareThingList = itemSvc.getShareThingListByMarket(marketId);
-		if (shareThingList == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
-		}
-		
 		return shareThingList;
 	}
 	

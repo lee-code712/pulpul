@@ -1,6 +1,6 @@
 /* 마이페이지 처음 접근할 때, 구매 목록 가져옴 */
 document.addEventListener("DOMContentLoaded", function() {    
-	orderListJson();
+	orderListJson('load');
 });
 
 /* uri */
@@ -22,11 +22,14 @@ function moveToShareThingList(){
 }
  
 /* 구매 목록 */
-function orderListJson() {
+function orderListJson(btnType) {
+	var message = {page:btnType};
+
 	$.ajax({
 		url : "/member/mypage/orderList",
 		type : "get",
 		datatype : "json",
+		data: message,
 		success : function(data) {
 			console.log(data);
 			$("#orderList").addClass('list-on');
@@ -87,7 +90,7 @@ function orderListJson() {
 					
 			thead.appendChild(th_row);
 					
-			$.each(data, function(index, order) {	
+			$.each(data.pageList, function(index, order) {	
 				const tb_row = document.createElement("tr");
 				
 				const td_01 = document.createElement("td");
@@ -143,6 +146,26 @@ function orderListJson() {
 				
 				tbody.appendChild(tb_row);
 			});
+			
+			const previousBtn = document.createElement("button");
+			previousBtn.setAttribute("id", "previousBtn");
+			previousBtn.innerHTML = "이전";
+			
+			$(previousBtn).click(function(){
+				orderListJson('previous');
+			})
+			
+			content.appendChild(previousBtn);
+			
+			const nextBtn = document.createElement("button");
+			nextBtn.setAttribute("id", "nextBtn");
+			nextBtn.innerHTML = "다음";
+			
+			$(nextBtn).click(function(){
+				orderListJson('next');
+			})
+			
+			content.appendChild(nextBtn);
 				
 			const cartBtn = document.createElement("button");
 			cartBtn.setAttribute("id", "shoppingBtn");
