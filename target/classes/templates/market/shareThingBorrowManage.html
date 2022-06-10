@@ -35,22 +35,12 @@
 		    <div><a href="/market/shareThing/list" class="list-on">공유 물품 관리</a></div>
 		  </div>
 
-      <div id="searchWrap">
-        <img src="/images/searchWayBill.svg" />
-        <input
-          type="text"
-          placeholder="운송장 번호를 검색해주세요."
-          id="wayBill"
-        />
-      </div>
-
       <table>
         <tr>
           <th class="sharething-img"></th>
           <th class="sharething-name">공유 물품명</th>
           <th class="sharething-lender">대여자</th>
           <th class="rental-period">대여 기간</th>
-          <th class="order-waybill">운송장 번호</th>
           <th class="sharething-return"></th>
         </tr>
 
@@ -59,19 +49,6 @@
           <td th:text=${borrow.shareThing.item.name}></td>
           <td th:text=${borrow.borrower.name}></td>
           <td><th:block th:text=${borrow.borrowDate}></th:block> ~ <th:block th:text=${borrow.returnDate}></th:block></td>
-          <td>
-            <div id="wayBillBox">
-            	<th:block th:if=${#strings.isEmpty(borrow.trackingNumber)}>
-            		<input type="text" id="perWayBill" />
-            	</th:block>
-            	<th:block th:unless=${borrow.trackingNumber}>
-            		<th:block th:text=${borrow.trackingNumber}></th:block>
-            	</th:block>
-              <button id="wayBillBtn">
-                <img src="/images/checkBtn.svg"/>
-              </button>
-            </div>
-          </td>
           <td>
           	<button class="rental-btn" th:onclick="returnShareThing([[${borrow.id}]])" th:if="${borrow.shareThing.isBorrowed} == 1">반납</button>
           	<button class="not-rental-btn" th:onclick="returnShareThing([[${borrow.id}]])" th:unless="${borrow.shareThing.isBorrowed} == 1">반납</button>
