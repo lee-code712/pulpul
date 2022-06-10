@@ -46,7 +46,7 @@
 		      <td class="text-name">마켓명</td>
 		      <td>
 		      	<input type="text" placeholder="마켓명을 입력하세요." th:field="*{name}" />
-		      	<th:block th:errors="*{name}" class="invalid"></th:block>
+		      	<div class="invalid-feedback" th:errors="*{name}"></div>
 		      </td>
 		    </tr>
 		 
@@ -54,7 +54,7 @@
 		      <td class="text-name">마켓 소개</td>
 		      <td>
 		      	<textarea placeholder="마켓 소개를 작성해주세요." th:field="*{intro}"></textarea>
-		      	<th:block th:errors="*{intro}"></th:block>
+		      	<div class="invalid-feedback" th:errors="*{intro}"></div>
 		      </td>
 		    </tr>
 		    <tr id="isMarketImage">
@@ -63,8 +63,8 @@
 					 <div id="imgBox">
 			          <input class="upload" type="file" id="fileWrap" accept=".jpg" multiple="multiple" name="file" style="display:none;">
 				       <div class="upload-img-icon-box"><i class="fas fa-camera fa-2x"></i></div>
-				       <div class="upload-img" th:unless="${#strings.isEmpty(market.imageUrl)}">
-				       	<img class="market-upload-image" th:src="${market.imageUrl}">
+				       <div class="upload-img" th:if="${not #strings.isEmpty(market.imageUrl)}">
+				       	<img class="market-upload-image" th:src="*{imageUrl}">
 				       	<button class="deleteBtn" type="button" onclick="deleteImg(event)">X</button>
 				       </div>
            			 </div>
@@ -75,21 +75,21 @@
 		      <td class="text-name">연락 가능 시간</td>
 		      <td>
 		      	<input type="text" placeholder="예) 오후 1:00 ~ 오후 3:00" th:field="*{contactableTime}"  />
-		      	<th:block th:errors="*{contactableTime}"></th:block>
+		      	<div class="invalid-feedback" th:errors="*{contactableTime}"></div>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">교환/반품/환불 정책</td>
 		      <td>
 		        <input type="text" placeholder="교환/반품/환불 정책을 입력해주세요." th:field="*{policy}" />
-		        <th:block th:errors="*{policy}"></th:block>
+		        <div class="invalid-feedback" th:errors="*{policy}"></div>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">구매 전 유의사항</td>
 		      <td>
 		        <input type="text" placeholder="구매 전 유의사항을 입력해주세요." th:field="*{precaution}" />
-		        <th:block th:erros="*{precaution}"></th:block>
+		        <div class="invalid-feedback" th:erros="*{precaution}"></div>
 		      </td>
 		    </tr>
 		    <tr>
