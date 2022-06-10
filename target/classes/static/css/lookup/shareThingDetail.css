@@ -116,6 +116,15 @@ td {
   cursor: pointer;
 }
 
+#notRentalBtn {
+	width: 240px;
+  height: 50px;
+  background-color: #c4c4c4;
+  color: white;
+  border: 1px solid #c4c4c4;
+  cursor: pointer;
+}
+
 #cancelBtn {
   width: 240px;
   height: 50px;

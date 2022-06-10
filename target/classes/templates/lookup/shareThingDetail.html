@@ -127,31 +127,34 @@
 	          <div id="itemInfo" th:text=${borrow.shareThing.item.description}></div>
 	          
 	          <table>
-	          	<tr>
-	              <td>대여 상태</td>
-	              <td><div id="rentalNotOk">대여 불가</div></td>
-	            </tr>
-	            
-	            <tr>
-	              <td>대여 시 유의사항</td>
-	              <td class="precaution-wrap"><th:block th:text="${borrow.shareThing.precaution}"></th:block></td>
-	            </tr>
-	          </table>
-	          
-	          <input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
-	          
-	          <div class="invalid-feedback" th:errors="*"> </div>
-	          
-	          <div id="btnWrap">
-	          		<button id="rentalBtn" type="button" th:if="${session.id} == ${borrow.borrower.id} and ${borrow.shareThing.isBorrowed} == 1" onclick="location.href='/member/mypage'">연장하기</button>
-	            	<button id="rezBtn" type="submit" th:unless="${session.id} == ${borrow.borrower.id}" onclick="location.href='/mypage/shareThingList'">예약하기</button>	            
+	          		<tr>
+	              	<td>대여 상태</td>
+	              	<td><div id="rentalNotOk">대여 불가</div></td>
+	            	</tr>
+	            	
+	            	<tr>
+	              	<td>대여 시 유의사항</td>
+	              	<td class="precaution-wrap"><th:block th:text="${borrow.shareThing.precaution}"></th:block></td>
+	            	</tr>
+	          	</table>
+	          	
+	          	<input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
+	          	
+	          	<div class="invalid-feedback" th:errors="*"> </div>
+	          	
+	          	<div id="btnWrap">
+	          	 <!-- 
+	          		<button id="notRentalBtn" type="button" th:if="${session.id} == ${borrow.borrower.id}">대여 불가</button>
+	          		 -->
+	          		<button id="rentalBtn" type="button" th:if="${session.id} == ${borrow.shareThing.item.market.member.id}" th:onclick="updateShareThing([[${borrow.shareThing.item.id}]])">수정하기</button> 		
+	          		<button id="rentalBtn" type="submit" th:unless="${session.id} == ${borrow.shareThing.item.market.member.id}" onclick="location.href='/mypage/shareThingList'">예약하기</button>
 	            	<button id="cancelBtn" type="button" onclick="location.href='/lookup/shareThingList'">목록으로 이동</button>
-	          </div>
-	          
-	          <a th:href="@{/lookup/market(marketId=${borrow.shareThing.item.market.id})}" id="marketLink">
-            	<img src="/images/smallShopIcon.svg" />
-            	<span th:text="|${borrow.shareThing.item.market.name} 마켓으로 이동하기|"></span>
-	          </a>
+	          	</div>
+	          	
+	          	<a th:href="@{/lookup/market(marketId=${borrow.shareThing.item.market.id})}" id="marketLink">
+            		<img src="/images/smallShopIcon.svg" />
+            		<span th:text="|${borrow.shareThing.item.market.name} 마켓으로 이동하기|"></span>
+	          	</a>
 			    </div>
 	  		</div>
 	  	</th:block>

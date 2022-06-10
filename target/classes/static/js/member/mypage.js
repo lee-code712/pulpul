@@ -20,13 +20,7 @@ function moveToShareThingList(){
 	const uri = '/lookup/shareThingList'
 	encodeUri(uri);
 }
-
-/* 대여신청 클릭 시, 해당 상품의 상세정보 페이지로 이동 */
-function moveToShareThingDetail(id){
-	const uri = '/lookup/shareThingDetail?itemId=' + id;
-	encodeUri(uri);
-}
-
+ 
 /* 구매 목록 */
 function orderListJson() {
 	$.ajax({
@@ -280,23 +274,30 @@ function shareThingListJson() {
 					
 				const td_06 = document.createElement("td");
 				td_06.setAttribute("class", "sharething-btn");
-				if (borrow.shareThing.isBorrowed == 1 && borrow.borrowStatus == null) {
-					td_06.innerHTML += "<button class='not-extension-btn' disabled>대여 신청</button>";
+				
+				/* 반납 상태 */
+				if (borrow.shareThing.isBorrowed == 1 && borrow.borrowStatus == 0) {
+					td_06.innerHTML += "반납";
 				}
 				
+				/* 연장하기 */
 				if (borrow.shareThing.isBorrowed == 1 && borrow.borrowStatus == 1 && borrow.isExtended == 0) {
 					td_06.innerHTML += "<button class='extension-btn' onclick=\"location.href='/borrow/extend?id=" + borrow.id + "'\">연장하기</button>";	
 				}
 				
+				/* 연장하기 버튼 비활성화 */
 				if (borrow.shareThing.isBorrowed == 1 && borrow.borrowStatus == 1 && borrow.isExtended == 1) {
 					td_06.innerHTML += "<button class='not-extension-btn' disabled>연장하기</button>";	
 				}
 				
-				if (borrow.shareThing.isBorrowed == 0) {
-					td_06.innerHTML += "<button class='extension-btn'>대여 신청</button>";	
-					$(td_06).click(function(){
-							moveToShareThingDetail(borrow.shareThing.item.id);
-					})
+				/* 대여신청 */
+				if (!borrow.borrowStatus && borrow.isFirstBooker == 1) {
+						td_06.innerHTML += "<button class='extension-btn' onclick=\"location.href='/lookup/shareThingDetail?itemId=" + borrow.shareThing.item.id + "'\">대여 신청</button>";	
+				}
+				
+				/* 대여신청 버튼 비활성화 */
+				if (!borrow.borrowStatus && borrow.isFirstBooker == 0) {
+					td_06.innerHTML += "<button class='not-extension-btn' disabled>대여 신청</button>";	
 				}
 				
 				tb_row.appendChild(td_01);
