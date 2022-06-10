@@ -149,36 +149,30 @@ function orderListJson(btnType) {
 			
 			// 페이지를 처음 load 했을 때 5개가 안되면 이전, 다음 버튼 출력 안함
 			if (btnType == 'load' && data.pageList.length == 5 || btnType != 'load') {
+				const pagingBtnWrap = document.createElement("div");
+				pagingBtnWrap.setAttribute("id", "pagingBtnWrap");
+				
 				const previousBtn = document.createElement("button");
 				previousBtn.setAttribute("id", "previousBtn");
-				previousBtn.innerHTML = "이전";
+				previousBtn.innerHTML = "이전으로";
 				
 				$(previousBtn).click(function(){
 					orderListJson('previous');
 				})
 				
-				content.appendChild(previousBtn);
+				pagingBtnWrap.appendChild(previousBtn);
 				
 				const nextBtn = document.createElement("button");
 				nextBtn.setAttribute("id", "nextBtn");
-				nextBtn.innerHTML = "다음";
+				nextBtn.innerHTML = "다음으로";
 				
 				$(nextBtn).click(function(){
 					orderListJson('next');
 				})
 				
-				content.appendChild(nextBtn);
+				pagingBtnWrap.appendChild(nextBtn);
+				content.appendChild(pagingBtnWrap);
 			}
-				
-			const cartBtn = document.createElement("button");
-			cartBtn.setAttribute("id", "shoppingBtn");
-			cartBtn.innerHTML = "쇼핑 계속하기";
-			
-			$(cartBtn).click(function(){
-						moveToGoodsList();
-			})
-			
-			content.appendChild(cartBtn);
 		},
 		
 		error : function() {
@@ -340,28 +334,33 @@ function shareThingListJson(btnType) {
 			});
 			
 			// 페이지를 처음 load 했을 때 5개가 안되면 이전, 다음 버튼 출력 안함
+			// 페이지를 처음 load 했을 때 5개가 안되면 이전, 다음 버튼 출력 안함
 			if (btnType == 'load' && data.pageList.length == 5 || btnType != 'load') {
+				const pagingBtnWrap = document.createElement("div");
+				pagingBtnWrap.setAttribute("id", "pagingBtnWrap");
+				
 				const previousBtn = document.createElement("button");
 				previousBtn.setAttribute("id", "previousBtn");
-				previousBtn.innerHTML = "이전";
+				previousBtn.innerHTML = "이전으로";
 				
 				$(previousBtn).click(function(){
-					shareThingListJson('previous');
+					orderListJson('previous');
 				})
 				
-				content.appendChild(previousBtn);
+				pagingBtnWrap.appendChild(previousBtn);
 				
 				const nextBtn = document.createElement("button");
 				nextBtn.setAttribute("id", "nextBtn");
-				nextBtn.innerHTML = "다음";
+				nextBtn.innerHTML = "다음으로";
 				
 				$(nextBtn).click(function(){
-					shareThingListJson('next');
+					orderListJson('next');
 				})
 				
-				content.appendChild(nextBtn);
+				pagingBtnWrap.appendChild(nextBtn);
+				content.appendChild(pagingBtnWrap);
 			}
-			
+			/*
 			const cartBtn = document.createElement("button");
 			cartBtn.setAttribute("id", "shoppingBtn");
 			cartBtn.innerHTML = "쇼핑 계속하기";
@@ -371,6 +370,7 @@ function shareThingListJson(btnType) {
 			})
 			
 			content.appendChild(cartBtn);
+			*/
 		},
 			
 		error : function() {

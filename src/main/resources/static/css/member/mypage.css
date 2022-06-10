@@ -231,3 +231,22 @@ td.order-id:hover {
 .datepicker:focus {
 	outline-color: #93c0b5;
 }
+
+/* paging */
+#pagingBtnWrap {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	margin-top: 80px;
+}
+
+#previousBtn,
+#nextBtn {
+	width: 200px;
+	height: 40px;
+	border: 1px solid #c4c4c4;
+	border-radius: 2px;
+	background-color: white;
+	color: #535353;
+	cursor: pointer;
+}
