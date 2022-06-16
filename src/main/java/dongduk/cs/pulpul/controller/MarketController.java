@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.WebApplicationContext;
 
 import dongduk.cs.pulpul.domain.Borrow;
@@ -30,6 +32,7 @@ import dongduk.cs.pulpul.service.OrderService;
 
 @Controller
 @RequestMapping("/market")
+@SessionAttributes({"orderList", "borrowList"})
 public class MarketController implements ApplicationContextAware {
 	
 	private WebApplicationContext context;	
@@ -114,15 +117,30 @@ public class MarketController implements ApplicationContextAware {
 	 * 판매 현황 조회
 	 */
 	@GetMapping("/orderListManage")
-	public String orderListManage(HttpSession session, Model model) {
+	public String orderListManageView(HttpSession session, Model model) {
 		
 		String memberId = (String) session.getAttribute("id");
 		
-		List<Order> orderList = orderSvc.getOrderListByMember(memberId, "seller");
-		if (orderList != null) {
-			model.addAttribute("orderList", orderList);
-		}
+		PagedListHolder<Order> orderList = new PagedListHolder<Order>(orderSvc.getOrderListByMember(memberId, "seller"));
+		orderList.setPageSize(5);
+		model.addAttribute("orderList", orderList);
 
+		return "market/orderListManage";
+	}
+	
+	@GetMapping("/orderListManage2")
+	public String orderListManageView2(@RequestParam("pageType") String page, 
+			@ModelAttribute("orderList") PagedListHolder<Order> orderList, Model model) {
+		
+		if ("next".equals(page)) {
+			orderList.nextPage();
+		}
+		else if ("previous".equals(page)) {
+			orderList.previousPage();
+		}
+		
+		model.addAttribute("orderList", orderList);
+		
 		return "market/orderListManage";
 	}
 	
@@ -142,10 +160,28 @@ public class MarketController implements ApplicationContextAware {
      * 특정 공유 물품 대여 현황 조회
 	 */
 	@GetMapping("/shareThingBorrowManage")
-	public String shareThingBorrowManage(@RequestParam("itemId") String itemId, Model model) {
+	public String shareThingBorrowManageView(@RequestParam("itemId") String itemId, Model model) {
 		//공유물품 대여 상세 정보 페이지
-		List<Borrow> borrowList = borrowSvc.getBorrowByItem(itemId);
+		PagedListHolder<Borrow> borrowList = new PagedListHolder<Borrow>(borrowSvc.getBorrowByItem(itemId));
+		borrowList.setPageSize(5);
 		model.addAttribute("borrowList", borrowList);
+		
+		return "market/shareThingBorrowManage";
+	}
+	
+	@GetMapping("/shareThingBorrowManage2")
+	public String shareThingBorrowManageView2(@RequestParam("pageType") String page, 
+			@ModelAttribute("borrowList") PagedListHolder<Borrow> borrowList, Model model) {
+		
+		if ("next".equals(page)) {
+			borrowList.nextPage();
+		}
+		else if ("previous".equals(page)) {
+			borrowList.previousPage();
+		}
+
+		model.addAttribute("borrowList", borrowList);
+		
 		return "market/shareThingBorrowManage";
 	}
 

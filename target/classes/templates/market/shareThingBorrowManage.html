@@ -44,7 +44,7 @@
           <th class="sharething-return"></th>
         </tr>
 
-       <tr th:each="borrow : ${borrowList}">
+       <tr th:each="borrow : ${borrowList.pageList}">
           <td><img th:src=${borrow.shareThing.item.thumbnailUrl} class="img-size" /></td>
           <td th:text=${borrow.shareThing.item.name}></td>
           <td th:text=${borrow.borrower.name}></td>
@@ -56,6 +56,12 @@
         </tr>
       </table>
       
+      <div th:if="${!borrowList.firstPage}">
+      	<button id="returnBtn" th:onclick="'location.href=\''+ @{/market/borrowListManage2(pageType=previous)} + '\''">이전으로</button>
+      </div>
+      <div th:if="${!borrowList.lastPage}">
+      	<button id="returnBtn" th:onclick="'location.href=\''+ @{/market/borrowListManage2(pageType=next)} + '\''">다음으로</button>
+      </div>
       <button id="returnBtn" onclick="location.href='/market/shareThing/list'">뒤로 가기</button>
     </div>
 	</div>
