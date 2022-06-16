@@ -115,10 +115,11 @@ td {
 #purchaseStatusBtn {
   width: 140px;
   height: 40px;
-  border: 1px solid AAAAAA;
+  border: 1px solid #434343;
   background-color: white;
-  color: AAAAAA;
+  color: #434343;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .thumbnail-item {

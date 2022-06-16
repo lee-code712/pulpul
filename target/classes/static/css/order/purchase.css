@@ -24,9 +24,9 @@
 }
 
 table {
+	display: block;
   width: 816px;
   border-collapse: collapse;
-  border-top: 1px solid #93c0b5;
 }
 
 th {

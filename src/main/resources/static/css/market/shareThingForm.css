@@ -17,7 +17,7 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  border-top: 1px solid #463B37;
+  border-top: 1px solid #eaeaea;
 }
 
 td {
@@ -94,33 +94,36 @@ input[type="radio"]:checked + span:before {
 }
 
 #btnWrap {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 60px;
-  height: 34px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	margin-top: 60px;
+	gap: 20px;
+	width: 100%;
 }
 
 #cancelBtn {
-  margin-right: 40px;
-  width: 100px;
-  height: 34px;
-  border: 1px solid #8f8f8f;
-  color: #8f8f8f;
-  background-color: white;
-  cursor: pointer;
+	margin-right: -2px;
+	width: 100px;
+	height: 34px;
+	border-radius: 5px;
+	border: 1px solid #AAAAAA;
+	color: #AAAAAA;
+	cursor: pointer;
+	background-color: white;
 }
 
 #saveBtn {
-  width: 100px;
-  height: 34px;
-  border: 1px solid #93c0b5;
-  color: white;
-  background-color: #93c0b5;
-  cursor: pointer;
+	width: 100px;
+	height: 34px;
+	border-radius: 5px;
+	background-color: #AAAAAA;
+	border: 1px solid #AAAAAA;
+	color: white;
+	cursor: pointer;
 }
 
-/*ÀÌ¹ÌÁö °¡·Î·Î Á¤·Ä*/
+/*ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î·ï¿½ ï¿½ï¿½ï¿½ï¿½*/
 #putItemImg{
 	display:flex;
 }
@@ -130,7 +133,7 @@ input[type="radio"]:checked + span:before {
 	position:relative;
 }
 
-/*ÀÌ¹ÌÁö »èÁ¦ ¹öÆ° css*/
+/*ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° css*/
 .deleteBtn{
 	background-color: #93c0b5;
 	border-radius:20%;
@@ -143,7 +146,7 @@ input[type="radio"]:checked + span:before {
 	right: -10px;
 }
 
-/* shareThingForm µî·Ï, ¼öÁ¤ ¹öÆ° À§Ä¡ Á¤·Ä*/
+/* shareThingForm ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½*/
 .shareThingFormBtn button {
 	margin-right: 5px;
 }
@@ -153,12 +156,12 @@ input[type="radio"]:checked + span:before {
 	justify-content: flex-end;
 }
 
-/*form radio Å¸ÀÔ À§Ä¡ Á¤·Ä*/
+/*form radio Å¸ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½*/
 .radio {
 	display:flex;
 }
 
-/* ÆÄÀÏ ÀÌ¸§ Á¤·Ä */
+/* ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 .putFilenameSpan, .updateImage{
 	font-size: 14px;
 	margin-right: 5px;

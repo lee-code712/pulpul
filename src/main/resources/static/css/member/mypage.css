@@ -250,3 +250,9 @@ td.order-id:hover {
 	color: #535353;
 	cursor: pointer;
 }
+
+.invalid-feedback {
+	margin-top: 14px;
+	font-size: 14px;
+	color: #DF5375;
+}
