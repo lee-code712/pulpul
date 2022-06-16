@@ -31,12 +31,15 @@
 		  <div id="pageTit">마켓 관리</div>
 		  <div id="pageSubTit">마켓 정보</div>
 		  
-		  <div id="menu">
-		    <div><a href="/market/view" class="list-on">마켓 정보</a></div> 
+		  <div id="menu" th:if=${market.id}>
+		    <div><a href="/market/view" class="list-on">마켓 정보</a></div>
 		    <div>|</div>
 		    <div><a href="/market/goods/list" class="list">상품 관리</a></div>
 		    <div>|</div>
 		    <div><a href="/market/shareThing/list" class="list">공유 물품 관리</a></div>
+		  </div>
+		  <div id="menu" th:unless=${market.id}>
+		    <div><a href="/market/view" class="list-on">마켓 등록</a></div>
 		  </div>
 		  
 		  <form th:object="${market}" method="post" enctype="multipart/form-data"> 

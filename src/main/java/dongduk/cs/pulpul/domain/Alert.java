@@ -1,10 +1,13 @@
 package dongduk.cs.pulpul.domain;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 
+@SuppressWarnings("serial")
 @Getter @Setter
-public class Alert {
+public class Alert implements Serializable {
 
 	private String memberId; /*회원 아이디*/ 
 	private String shareThingId; /*예약한 공유물품 식별번호*/

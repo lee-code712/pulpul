@@ -26,9 +26,9 @@
       <div id="memberName" th:text="${member.name}">회원 이름</div>
       <div id="point" th:text="'p ' + ${member.point}">p 1000</div>
       <div id="menu">
-	        <div id="orderList" th:onclick="orderListJson('load')">구매 목록</div>
+	        <div id="orderList" th:onclick="orderListJson('')">구매 목록</div>
 	        |
-	        <div id="shareThingList" th:onclick="shareThingListJson('load')">대여 목록</div>
+	        <div id="shareThingList" th:onclick="shareThingListJson('')">대여 목록</div>
 	      </div>
 	      
 	      <div id="content"></div>

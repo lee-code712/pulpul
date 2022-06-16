@@ -1,15 +1,11 @@
 package dongduk.cs.pulpul.controller;
 
-import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,14 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import dongduk.cs.pulpul.domain.Borrow;
 import dongduk.cs.pulpul.domain.Member;
-import dongduk.cs.pulpul.domain.Order;
 import dongduk.cs.pulpul.service.BorrowService;
 import dongduk.cs.pulpul.service.MemberService;
 import dongduk.cs.pulpul.service.OrderService;
@@ -259,91 +251,5 @@ public class MemberController {
 		 return "redirect:/member/mypage/orderList";
 		 */
 	}
-	
-	@GetMapping("/mypage")
-	public String mypage(HttpServletRequest req, Model model) {
-		//마이 페이지
-		HttpSession session = req.getSession();
-		String id = (String) session.getAttribute("id");
-		
-		// 로그인한 상태인지 확인
-		if (id == null) {
-			model.addAttribute("isNotLogined", true);
-			return "redirect:/home";
-		}
-		
-		// 내정보 반환
-		Member member = memberService.getMember(id);
-		model.addAttribute(member);
-		
-		return "member/mypage";
-	}
-	
-	/*
-	 * 마이 페이지 접근 - 구매 목록 조회
-	 */
-	@GetMapping("/mypage/orderList")
-	@ResponseBody
-	public PagedListHolder<Order> myOrderList(@RequestParam("page") String page,
-			HttpServletRequest req, HttpServletResponse response) throws IOException {
-
-		HttpSession session = req.getSession();
-		String id = (String) session.getAttribute("id");
-		
-		PagedListHolder<Order> orderList = new PagedListHolder<Order>(orderService.getOrderListByMember(id, "buyer"));
-		orderList.setPageSize(5);
-		
-		if ("next".equals(page)) {
-			orderList.nextPage();
-		}
-		else if ("previous".equals(page)) {
-			orderList.previousPage();
-		}
-		
-		return orderList;
-	}
-	
-	/*
-	 * 마이 페이지 접근 - 대여, 예약 목록 조회
-	 */
-	@GetMapping("/mypage/borrowList")
-	@ResponseBody
-	public PagedListHolder<Borrow> myBorrowList(@RequestParam("page") String page,
-			HttpServletRequest req, HttpServletResponse response) throws IOException {
-		
-		HttpSession session = req.getSession();
-		String id = (String) session.getAttribute("id");
-		
-		List<Borrow> borrows = borrowService.getBorrowByMember(id, "borrower");		
-		List<Borrow> reservations = borrowService.getBorrowReservationByMember(id);
-		
-		PagedListHolder<Borrow> borrowList = null;
-		
-		if (borrows == null) {
-			if(reservations != null) {
-				borrowList = new PagedListHolder<Borrow>(reservations);
-			}
-		}
-		else {
-			if(reservations != null) {
-				for (Borrow r : reservations) {
-					borrows.add(r);
-				}
-			}
-			borrowList = new PagedListHolder<Borrow>(borrows);
-		}
-		
-		borrowList.setPageSize(5);
-			
-		if ("next".equals(page)) {
-			borrowList.nextPage();
-		}
-		else if ("previous".equals(page)) {
-			borrowList.previousPage();
-		}
-		
-		return borrowList;
-	}
-
 
 }

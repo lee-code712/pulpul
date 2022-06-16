@@ -1,12 +1,19 @@
 package dongduk.cs.pulpul.domain;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.Min;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@SuppressWarnings("serial")
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter @Setter
-public class CartItem {
+public class CartItem implements Serializable {
 	
 	private String goodsId;
 	private Goods goods; /*상품 정보*/

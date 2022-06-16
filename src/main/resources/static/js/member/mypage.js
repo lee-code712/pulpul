@@ -1,6 +1,6 @@
 /* 마이페이지 처음 접근할 때, 구매 목록 가져옴 */
 document.addEventListener("DOMContentLoaded", function() {    
-	orderListJson('load');
+	orderListJson('');
 });
 
 /* uri */
@@ -23,13 +23,16 @@ function moveToShareThingList(){
  
 /* 구매 목록 */
 function orderListJson(btnType) {
-	var message = {page:btnType};
-
+	var url;
+	if (btnType == '')
+		url = "/member/mypage/orderList";
+	else
+		url = "/member/mypage/orderList/" + btnType;
+	
 	$.ajax({
-		url : "/member/mypage/orderList",
+		url : url,
 		type : "get",
-		datatype : "json",
-		data: message,
+		dataType : "json",
 		success : function(data) {
 			console.log(data);
 			$("#orderList").addClass('list-on');
@@ -147,11 +150,10 @@ function orderListJson(btnType) {
 				tbody.appendChild(tb_row);
 			});
 			
-			// 페이지를 처음 load 했을 때 5개가 안되면 이전, 다음 버튼 출력 안함
-			if (btnType == 'load' && data.pageList.length == 5 || btnType != 'load') {
-				const pagingBtnWrap = document.createElement("div");
-				pagingBtnWrap.setAttribute("id", "pagingBtnWrap");
-				
+			const pagingBtnWrap = document.createElement("div");
+			pagingBtnWrap.setAttribute("id", "pagingBtnWrap");
+			
+			if (!data.firstPage) {
 				const previousBtn = document.createElement("button");
 				previousBtn.setAttribute("id", "previousBtn");
 				previousBtn.innerHTML = "이전으로";
@@ -161,7 +163,9 @@ function orderListJson(btnType) {
 				})
 				
 				pagingBtnWrap.appendChild(previousBtn);
-				
+			}
+			
+			if (!data.lastPage) {
 				const nextBtn = document.createElement("button");
 				nextBtn.setAttribute("id", "nextBtn");
 				nextBtn.innerHTML = "다음으로";
@@ -171,8 +175,8 @@ function orderListJson(btnType) {
 				})
 				
 				pagingBtnWrap.appendChild(nextBtn);
-				content.appendChild(pagingBtnWrap);
 			}
+				content.appendChild(pagingBtnWrap);
 		},
 		
 		error : function() {
@@ -183,13 +187,16 @@ function orderListJson(btnType) {
 
 /* 대여 목록 */
 function shareThingListJson(btnType) {
-	var message = {page:btnType};
+	var url;
+	if (btnType == '')
+		url = "/member/mypage/borrowList";
+	else
+		url = "/member/mypage/borrowList/" + btnType;
 	
 	$.ajax({
-		url : "/member/mypage/borrowList",
+		url : url,
 		type : "get",
 		datatype : "json",
-		data: message,
 		success : function(data) {
 			console.log(data);
 			$("#shareThingList").addClass('list-on');
@@ -333,12 +340,10 @@ function shareThingListJson(btnType) {
 				tbody.appendChild(tb_row);
 			});
 			
-			// 페이지를 처음 load 했을 때 5개가 안되면 이전, 다음 버튼 출력 안함
-			// 페이지를 처음 load 했을 때 5개가 안되면 이전, 다음 버튼 출력 안함
-			if (btnType == 'load' && data.pageList.length == 5 || btnType != 'load') {
-				const pagingBtnWrap = document.createElement("div");
-				pagingBtnWrap.setAttribute("id", "pagingBtnWrap");
-				
+			const pagingBtnWrap = document.createElement("div");
+			pagingBtnWrap.setAttribute("id", "pagingBtnWrap");
+			
+			if (!data.firstPage) {
 				const previousBtn = document.createElement("button");
 				previousBtn.setAttribute("id", "previousBtn");
 				previousBtn.innerHTML = "이전으로";
@@ -348,7 +353,9 @@ function shareThingListJson(btnType) {
 				})
 				
 				pagingBtnWrap.appendChild(previousBtn);
-				
+			}
+			
+			if (!data.lastPage) {		
 				const nextBtn = document.createElement("button");
 				nextBtn.setAttribute("id", "nextBtn");
 				nextBtn.innerHTML = "다음으로";
@@ -358,8 +365,9 @@ function shareThingListJson(btnType) {
 				})
 				
 				pagingBtnWrap.appendChild(nextBtn);
-				content.appendChild(pagingBtnWrap);
 			}
+			content.appendChild(pagingBtnWrap);
+
 			/*
 			const cartBtn = document.createElement("button");
 			cartBtn.setAttribute("id", "shoppingBtn");

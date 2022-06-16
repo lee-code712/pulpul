@@ -1,10 +1,13 @@
 package dongduk.cs.pulpul.domain;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 
+@SuppressWarnings("serial")
 @Getter @Setter
-public class Borrow {
+public class Borrow implements Serializable {
 
 	private int id; /*대여 식별 번호*/
 	private ShareThing shareThing; /*물품 정보*/
