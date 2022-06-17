@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dongduk.cs.pulpul.dao.BorrowDao;
 import dongduk.cs.pulpul.domain.Alert;
@@ -28,44 +29,30 @@ public class BorrowServiceImpl implements BorrowService {
 	@Autowired		// SchedulerConfig에 설정된 TaskScheduler 빈을 주입 받음
 	private TaskScheduler scheduler;
 	
+	@Transactional
 	public void reservationCancelScheduler(Date closingTime) {
 		Runnable updateTableRunner = new Runnable() { // anonymous class 정의
 			@Override
 			public void run() {   // 스케쥴러에 의해 미래의 특정 시점에 실행될 작업을 정의			
 				Date date = new Date(); // 현재 시각
 				// 전체 알림을 가져와서(알림에는 대출 가능 알림만 존재), date + 3, 해당 일자를 지난 값을 갖는 event의 상태를 변경 
-				List<Alert> alertList = borrowDao.findAllAlert();
+				List<Alert> alertList = borrowDao.findAlertByAlertDate();
 				for (Alert a : alertList) {
-					// 해당 알림의 취소 예정일 계산
-					String alertDateStr = a.getAlertDate();
-					SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd");
-					Calendar cancelCal =  Calendar.getInstance();
-					Date alertDate = new Date();
-					try {
-						alertDate = transFormat.parse(alertDateStr);
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
-					cancelCal.setTime(alertDate);
-					cancelCal.add(Calendar.DATE, 3);
-					Date cancelDate = cancelCal.getTime(); 
-					
-					// cancelDate가 지났다면
-					if(!cancelDate.before(date)) {
-						// 예약 취소
-						List<Borrow> borrowList = getBorrowReservationByMember(a.getMemberId());
-						Borrow borrow = null;
-						for (Borrow b : borrowList) {
-							if (b.getIsFirstBooker() == 1) {
-								borrow = b;
-							}
-						}
-						if (borrow != null) {
-							cancelBorrowReservation(borrow);
-						}
+					System.out.println(a.toString());
+					// 예약 취소
+					Borrow borrow = getBorrowReservationByAlert(a);
+					if (borrow != null) {
+						cancelBorrowReservation(borrow);
+						
 						// 다음 예약자가 있다면 is_first_booker를 1로 만든 뒤 알림 생성
 						if (checkNumberBorrowReservation(borrow.getShareThing().getItem().getId()) != 0) {
 							changeIsFirstBooker(borrow);
+							
+							Alert alert = new Alert();
+							Borrow firstReservation = borrowDao.findFirstBookersBorrowReservation(borrow);
+							alert.setMemberId(firstReservation.getBorrower().getId());
+							alert.setShareThingId(borrow.getShareThing().getItem().getId());
+							borrowDao.createAlert(alert);
 						}
 						else { // 다음 예약자가 없다면 shareThing is_borrowed를 0으로
 							ShareThing shareThing = borrow.getShareThing();
@@ -80,6 +67,11 @@ public class BorrowServiceImpl implements BorrowService {
 		};
 
 		// 스케줄 생성: closingTime에 updateTableRunner.run() 메소드 실행
+		Calendar cal =  Calendar.getInstance();
+		cal.setTime(closingTime);
+		cal.add(Calendar.DATE, 3);
+		cal.add(Calendar.SECOND, 1);
+		closingTime = cal.getTime(); 
 		scheduler.schedule(updateTableRunner, closingTime);		
 		System.out.println("updateTableRunner has been scheduled to execute at " + closingTime);
 	}
@@ -87,6 +79,11 @@ public class BorrowServiceImpl implements BorrowService {
 	// 회원 아이디로 예약 목록 조회
 	public List<Borrow> getBorrowReservationByMember(String memberId) {
 		return borrowDao.findBorrowReservationByMember(memberId);
+	}
+	
+	// 알림으로 예약 목록 조회
+	public Borrow getBorrowReservationByAlert(Alert alert) {
+		return borrowDao.findBorrowReservationByAlert(alert);
 	}
 	
 	// 첫 번째 예약자의 예약 정보 조회

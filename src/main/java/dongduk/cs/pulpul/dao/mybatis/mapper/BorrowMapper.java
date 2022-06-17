@@ -20,7 +20,7 @@ public interface BorrowMapper {
 	
 	int selectReservationNumber(String itemId);
 	
-	int updateFirstBooker(Borrow borrow);
+	int updateIsFirstBooker(Borrow borrow);
 	
 	List<Alert> selectAlertByAlertDate();
 	
@@ -55,4 +55,6 @@ public interface BorrowMapper {
 	List<Alert> selectAllAlert();
 
 	Borrow selectFirstBookersBorrowReservation(Borrow borrow);
+
+	Borrow selectBorrowReservationByAlert(Alert a);
 }

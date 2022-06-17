@@ -2,6 +2,7 @@ package dongduk.cs.pulpul.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -120,6 +121,9 @@ public class BorrowController {
 		// borrower에게 포인트 지급
 		Member borrower = memberService.getMember(borrow.getBorrower().getId());
 		memberService.changePoint(borrower, 1, 1000);
+		
+		// 스케줄러 실행
+		borrowService.reservationCancelScheduler(new Date());
 		
 		return "redirect:/market/shareThingBorrowManage?itemId=" + borrow.getShareThing().getItem().getId();
 	}

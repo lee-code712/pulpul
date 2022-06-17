@@ -44,7 +44,7 @@ public class MybatisBorrowDao implements BorrowDao {
 
 	@Override
 	public boolean changeIsFirstBooker(Borrow borrow) {
-		int ck = borrowMapper.updateFirstBooker(borrow);
+		int ck = borrowMapper.updateIsFirstBooker(borrow);
 		if (ck < 0) return false;
 		return true;
 	}
@@ -52,7 +52,7 @@ public class MybatisBorrowDao implements BorrowDao {
 	@Override
 	public List<Alert> findAlertByAlertDate() {
 		// TODO Auto-generated method stub
-		return null;
+		return borrowMapper.selectAlertByAlertDate();
 	}
 
 	@Override
@@ -155,6 +155,12 @@ public class MybatisBorrowDao implements BorrowDao {
 	@Override
 	public Borrow findFirstBookersBorrowReservation(Borrow borrow) {
 		return borrowMapper.selectFirstBookersBorrowReservation(borrow);
+	}
+
+	@Override
+	public Borrow findBorrowReservationByAlert(Alert a) {
+		// TODO Auto-generated method stub
+		return borrowMapper.selectBorrowReservationByAlert(a);
 	}
 
 	

@@ -115,9 +115,6 @@ public class MemberController {
 		 return "member/loginForm";
 		 */
 		
-		// 스케줄러 실행
-		borrowService.reservationCancelScheduler(new Date());
-		
 		model.addAttribute("member", member);
 		loginValidator.validate(member, result);
 		if(result.hasErrors()) {

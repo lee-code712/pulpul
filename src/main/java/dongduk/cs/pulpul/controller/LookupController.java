@@ -115,6 +115,7 @@ public class LookupController {
 		Borrow borrow = borrowSvc.getCurrBorrowByItem(itemId);
 		if (borrow == null) {
 			borrow = new Borrow();
+			// 예약 레코드가 있으면 그거 넣어서 셋해줘야 함 
 		}
 		borrow.setShareThing(shareThing);
 		model.addAttribute("borrow", borrow);

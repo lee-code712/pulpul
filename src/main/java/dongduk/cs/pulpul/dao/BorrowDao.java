@@ -11,6 +11,9 @@ public interface BorrowDao {
 	// 회원 id로 대여 예약 조회
 	List<Borrow> findBorrowReservationByMember(String memberId);
 	
+	// 알림으로 대여 예약 조회
+	Borrow findBorrowReservationByAlert(Alert a);
+	
 	// 대여 예약 생성
 	boolean createBorrowReservation(Borrow borrow);
 	
@@ -69,5 +72,4 @@ public interface BorrowDao {
 	List<Alert> findAllAlert();
 
 	Borrow findFirstBookersBorrowReservation(Borrow borrow);
-	
 }

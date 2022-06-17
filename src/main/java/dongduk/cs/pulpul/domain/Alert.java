@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Getter @Setter
+@ToString
 public class Alert implements Serializable {
 
 	private String memberId; /*회원 아이디*/ 
