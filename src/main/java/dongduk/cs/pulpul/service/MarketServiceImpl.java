@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dongduk.cs.pulpul.controller.FileCommand;
-import dongduk.cs.pulpul.dao.MarketDao;
 import dongduk.cs.pulpul.domain.Image;
 import dongduk.cs.pulpul.domain.Market;
 import dongduk.cs.pulpul.repository.ImageRepository;
@@ -19,33 +18,35 @@ import dongduk.cs.pulpul.repository.MarketRepository;
 public class MarketServiceImpl implements MarketService {
 	
 	@Autowired
-	private MarketRepository marketRepository;
+	private MarketRepository marketRepo;
 	@Autowired
-	private ImageRepository imageRepository;
-
-	@Autowired
-	private MarketDao marketDao;
+	private ImageRepository imageRepo;
 
 	@Override
 	public Market getMarket(int marketId) {
-		Optional<Market> result = marketRepository.findById(marketId);
+		Optional<Market> result = marketRepo.findById(marketId);
 		Market market = null;
 		if(result.isPresent()) market = result.get();
 		if (market != null) {
 			String[] marketAddress = market.getMember().getAddress().split(" ");
 			market.getMember().setAddress(marketAddress[0] + " " + marketAddress[1]);
 			
-			Image image = imageRepository.findByMemberIdAndCategoryId(market.getMember().getId(), "MIMG");
-			market.setImageUrl(image.getImageUrl());
+			Image image = imageRepo.findByMemberIdAndCategoryId(market.getMember().getId(), "MIMG");
+			if (image != null) {
+				market.setImageUrl(image.getImageSrc());
+			}
 		}
 		return market;
 	}
 
 	@Override
 	public Market getMarketByMember(String memberId) {
-		Market market = marketDao.findMarketByMember(memberId);
+		Market market = marketRepo.findByMemberId(memberId);
 		if (market != null) {
-//			market.setImageUrl(marketDao.findMarketImage(memberId));
+			Image image = imageRepo.findByMemberIdAndCategoryId(market.getMember().getId(), "MIMG");
+			if (image != null) {
+				market.setImageUrl(image.getImageSrc());
+			}
 		}
 		return market;
 	}
@@ -54,12 +55,12 @@ public class MarketServiceImpl implements MarketService {
 	@Transactional
 	public void makeMarket(Market market, FileCommand uploadFile) throws DataAccessException {
 		
-		marketDao.createMarket(market);	// 마켓 레코드 생성
+		marketRepo.save(market);	// 마켓 레코드 생성
 		
 		if (!uploadFile.getFile().isEmpty()) {
 			String filename = uploadFile(uploadFile, market.getId());	// 마켓 이미지 저장
-//			market.setImageUrl("/upload/" + filename);
-			marketDao.createMarketImage(market);	// 마켓 이미지 레코드 생성
+			Image image = new Image(market.getMember().getId(), "MIMG", "/upload/" + filename);
+			imageRepo.save(image);	// 마켓 이미지 레코드 생성
 		}
 	}
 
@@ -67,17 +68,18 @@ public class MarketServiceImpl implements MarketService {
 	@Transactional
 	public void changeMarketInfo(Market market, FileCommand updateFile) throws DataAccessException {
 		
-		marketDao.changeMarketInfo(market);	// 마켓 레코드 수정
+		marketRepo.updateMarket(market.getName(), market.getIntro(), market.getContactableTime(),
+				market.getPolicy(), market.getPrecaution(), market.getOpenStatus(), market.getId());	// 마켓 레코드 수정
 
 		if (!updateFile.getFile().isEmpty()) {
-			String imageSrc = marketDao.findMarketImage(market.getMember().getId());
-			if (imageSrc != null) {
+			Image image = imageRepo.findByMemberIdAndCategoryId(market.getMember().getId(), "MIMG");
+			if (image != null) {
 				updateFile(updateFile, market.getId());	// 마켓 이미지 레코드가 존재하면 마켓 이미지 변경
 			}
 			else {
 				String filename = uploadFile(updateFile, market.getId());
-//				market.setImageUrl("/upload/" + filename);
-				marketDao.createMarketImage(market);	// 마켓 이미지 레코드가 존재하지 않으면 마켓 이미지 레코드 생성
+				Image newImage = new Image(market.getMember().getId(), "MIMG", "/upload/" + filename);
+				imageRepo.save(newImage);	// 마켓 이미지 레코드 생성
 			}
 		}
 	}

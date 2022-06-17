@@ -12,6 +12,6 @@ public class ImagePK implements Serializable {
 	
 	private String memberId;
 	private String categoryId;
-	private String imageUrl;
+	private String imageSrc;
 	
 }

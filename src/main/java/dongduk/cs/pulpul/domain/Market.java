@@ -4,13 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
@@ -28,6 +27,10 @@ import lombok.ToString;
 public class Market implements Serializable {
 
 	@Id
+	@SequenceGenerator(name="market_seq",
+		sequenceName="MARKET_SEQ", initialValue=1, allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,
+		generator="market_seq")
 	@Column(name="market_id")
 	private int id; /*마켓 식별 번호*/
 	

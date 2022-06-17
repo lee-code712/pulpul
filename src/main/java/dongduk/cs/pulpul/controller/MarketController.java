@@ -1,7 +1,5 @@
 package dongduk.cs.pulpul.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
