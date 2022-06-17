@@ -56,8 +56,8 @@ public class MybatisOrderDao implements OrderDao {
 	}
 
 	@Override
-	public List<Order> findOrderByMember(String memberId, String identity) {
-		return orderMapper.selectOrderByMemberId(memberId, identity);
+	public List<Order> findOrderByMember(String memberId, String keyword) {
+		return orderMapper.selectOrderByMemberId(memberId, keyword);
 	}
 
 	@Override

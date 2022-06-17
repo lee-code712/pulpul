@@ -78,8 +78,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getOrderListByMember(String memberId, String identity) {
-		return orderDao.findOrderByMember(memberId, identity);
+	public List<Order> getOrderListByMember(String memberId, String keyword) {
+		return orderDao.findOrderByMember(memberId, keyword);
 	}
 
 	@Override

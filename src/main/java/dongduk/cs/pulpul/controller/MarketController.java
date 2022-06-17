@@ -117,11 +117,16 @@ public class MarketController implements ApplicationContextAware {
 	 * 판매 현황 조회
 	 */
 	@GetMapping("/orderListManage")
-	public String orderListManageView(HttpSession session, Model model) {
+	public String orderListManageView(@RequestParam(required=false) String trackingNumber,
+			HttpSession session, Model model) {
 		
 		String memberId = (String) session.getAttribute("id");
 		
-		PagedListHolder<Order> orderList = new PagedListHolder<Order>(orderSvc.getOrderListByMember(memberId, "seller"));
+		String keyword = "seller";
+		if (trackingNumber != null) {
+			keyword = trackingNumber;
+		}
+		PagedListHolder<Order> orderList = new PagedListHolder<Order>(orderSvc.getOrderListByMember(memberId, keyword));
 		orderList.setPageSize(5);
 		model.addAttribute("orderList", orderList);
 

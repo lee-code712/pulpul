@@ -31,7 +31,7 @@ public interface OrderDao {
 	Order findOrder(int orderId);
 	
 	// 회원 id로 주문 목록 조회
-	List<Order> findOrderByMember(String memberId, String identity);
+	List<Order> findOrderByMember(String memberId, String keyword);
 	
 	// 주문 생성
 	void createOrder(Order order);
