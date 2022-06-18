@@ -123,7 +123,7 @@ input[type="radio"]:checked + span:before {
 	cursor: pointer;
 }
 
-/*�̹��� ���η� ����*/
+/*占싱뱄옙占쏙옙 占쏙옙占싸뤄옙 占쏙옙占쏙옙*/
 #putItemImg{
 	display:flex;
 }
@@ -133,20 +133,24 @@ input[type="radio"]:checked + span:before {
 	position:relative;
 }
 
-/*�̹��� ���� ��ư css*/
+/*img deleteBtn css*/
 .deleteBtn{
-	background-color: #93c0b5;
+
 	border-radius:20%;
-	color: white;
+	color: red;
 	border: 0;
 	outline: 0;
 	width: 15px;
 	height: 15px;
 	position: absolute;
-	right: -10px;
+	right: -0.5px;
+	top: -2px;
+	font-size: 18px;
+	background-color: transparent;
+	cursor: pointer;
 }
 
-/* shareThingForm ���, ���� ��ư ��ġ ����*/
+/* shareThingForm */
 .shareThingFormBtn button {
 	margin-right: 5px;
 }
@@ -156,12 +160,12 @@ input[type="radio"]:checked + span:before {
 	justify-content: flex-end;
 }
 
-/*form radio Ÿ�� ��ġ ����*/
+/* form radio */
 .radio {
 	display:flex;
 }
 
-/* ���� �̸� ���� */
+/* input file put img */
 .putFilenameSpan, .updateImage{
 	font-size: 14px;
 	margin-right: 5px;
