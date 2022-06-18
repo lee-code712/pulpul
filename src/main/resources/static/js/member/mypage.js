@@ -280,27 +280,23 @@ function shareThingListJson(btnType) {
 				const td_05 = document.createElement("td");
 				td_05.setAttribute("class", "sharething-date");
 				
-				const borrow_date = document.createElement("input");
-				borrow_date.type="text";
-				borrow_date.setAttribute("class", "datepicker");
-				borrow_date.value=borrow.borrowDate;
+				const date_wrap = document.createElement("div");
+				date_wrap.setAttribute("class", "date_wrap");
 				
-				const return_date = document.createElement("input");
-				return_date.type="text";
-				return_date.setAttribute("class", "datepicker");
-				return_date.value=borrow.returnDate;
+				const borrow_date = document.createElement("div");
+				borrow_date.innerHTML = borrow.borrowDate;
 				
-				$(function(){
-				  $('.datepicker').datepicker();
-				})
+				const return_date = document.createElement("div");
+				return_date.innerHTML = borrow.returnDate;
 				
 				if (borrow.id) {
-					td_05.appendChild(borrow_date);
-					td_05.append(" ~ ");
-					td_05.appendChild(return_date);
+					td_05.appendChild(date_wrap);
+					date_wrap.appendChild(borrow_date);
+					date_wrap.append(" ~ ");
+					date_wrap.appendChild(return_date);
 				}
 				else 
-					td_05.innerHTML = "X";
+					td_05.innerHTML = "-";
 					
 				const td_06 = document.createElement("td");
 				td_06.setAttribute("class", "sharething-btn");

@@ -220,16 +220,9 @@ td.order-id:hover {
 	object-fit: contain;
 }
 
-/* datepicker ui */
-
-.datepicker {
-	width: 100px;
-	cursor: pointer;
-	text-align: center;
-}
-
-.datepicker:focus {
-	outline-color: #93c0b5;
+.date_wrap {
+	display: flex;
+	align-items: center;
 }
 
 /* paging */
