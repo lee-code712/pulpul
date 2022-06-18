@@ -144,7 +144,7 @@ input[type="radio"]:checked + span:before {
   cursor: pointer;
 }
 
-/*input file img ũ�� ����, ��ư ��ġ ����*/
+/*input file img */
 .marketBtn {
 	width: 100%;
 	justify-content: flex-end;
@@ -207,9 +207,11 @@ input[type="radio"]:checked + span:before {
 	width: 15px;
 	height: 15px;
 	position:absolute;
-	top: -3px;
-	right: -3px;
+	top: -0.5px;
+	right: -0.5px;
 	cursor: pointer;
+	background-color:transparent;
+	font-size: 18px;
 }
 
 .invalid-feedback {

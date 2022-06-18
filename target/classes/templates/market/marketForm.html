@@ -70,6 +70,8 @@
 				       	<img class="market-upload-image" th:src="*{imageUrl}">
 				       	<button class="deleteBtn" type="button" onclick="deleteImg(event)">X</button>
 				       </div>
+				        <div class="upload-img" th:if="${#strings.isEmpty(market.imageUrl)}">
+				        </div>
            			 </div>
 					</td>
 		  	</tr>

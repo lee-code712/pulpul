@@ -9,7 +9,7 @@ uploadBox.addEventListener('click', () => upload.click());
 upload.addEventListener('change', getImageFiles);
 
 function getImageFiles() {
-  var imgs = document.querySelectorAll(".market-upload-image");
+  let imgs = document.querySelectorAll(".market-upload-image");
   
   if(imgs.length > 0){
 	 Swal.fire({
@@ -31,11 +31,11 @@ function getImageFiles() {
   if(preview.childNodes.length > 2){
 	$(".upload-img").children().remove();
   }
-  var file  = document.querySelector('input[type=file]').files[0];
-  var reader  = new FileReader();
+  let file  = document.querySelector('input[type=file]').files[0];
+  let reader  = new FileReader();
 
   reader.onloadend = function () {
-	var img = document.createElement("img");
+	let img = document.createElement("img");
 	img.classList.add("market-upload-image");
     img.src = reader.result;
     preview.appendChild(img);
@@ -71,15 +71,3 @@ function deleteImg(event){
 		  $("#saveBtn").disabled = true;
   }
   
-  $("#saveBtn").click(function(event){
-	event.preventDefault();
-	 if($(".market-upload-image").length == 0){
-		 Swal.fire({
-				   text: '마켓 이미지를 등록해주세요!',
-				   confirmButtonColor: '#93c0b5',
-				   confirmButtonText: '확인',
-				});
-	}else{
-		$('form').submit();
-	}
-})
