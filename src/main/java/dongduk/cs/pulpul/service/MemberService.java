@@ -15,12 +15,12 @@ public interface MemberService {
 	Member getMember(String memberId);
 	
 	// 회원 정보 수정
-	boolean changeMemberInfo(Member member);
+	void changeMemberInfo(Member member);
 	
 	// 회원탈퇴
-	boolean resign(Member member);
+	void resign(Member member);
 	
 	// 포인트 수정
-	boolean changePoint(Member member, int status, int point);
+	void changePoint(Member member, int status, int point);
 	
 }

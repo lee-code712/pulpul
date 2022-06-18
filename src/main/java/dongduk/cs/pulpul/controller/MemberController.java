@@ -213,13 +213,8 @@ public class MemberController {
 				return "member/myInfoForm";
 			}
 			else {
-				boolean success = memberService.changeMemberInfo(member);
-				if (!success) {
-					return "member/myInfoForm";
-				}
-				else {
-					return "redirect:/member/view";
-				}
+				memberService.changeMemberInfo(member);
+				return "redirect:/member/view";
 			}
 		}
 		return "member/myInfoForm";
