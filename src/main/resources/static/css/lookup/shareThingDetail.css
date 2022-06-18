@@ -13,7 +13,7 @@
 #itemImg {
   width: 596px;
   height: 398px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 #info {
@@ -160,10 +160,15 @@ td {
 .swiper-slide img {
   display: block;
  	width: 596px;
-  object-fit: cover;
+ 	height: 398px;
+  object-fit: contain;
 }
 
 .invalid-feedback {
 	margin-top: 40px;
 	color: #DBAFAE;
+}
+
+.item-img {
+	object-fit: contain;
 }

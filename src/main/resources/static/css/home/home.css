@@ -96,7 +96,7 @@
   width: 340px;
   height: 340px;
   background-color: #f8f8fa;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .item-name {

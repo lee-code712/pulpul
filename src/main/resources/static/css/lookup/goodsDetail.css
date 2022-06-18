@@ -13,7 +13,7 @@
 #itemImg {
   width: 596px;
   height: 398px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 #info {
@@ -36,6 +36,10 @@
 	display: flex;
 }
 
+.item-img {
+	object-fit: contain;
+}
+
 .remain-div {
 	text-align: center;
 	display: flex;
@@ -55,7 +59,7 @@
 .soldout-img {
 	width: 100%;
 	height: 100%;
-	object-fit: cover;	
+	object-fit: contain;	
 	background-color: #535353;
  	opacity: 0.3;
 }
@@ -229,7 +233,8 @@
 .swiper-slide img {
   display: block;
  	width: 596px;
-  object-fit: cover;
+ 	height: 398px;
+  object-fit: contain;
 }
 
 /* review content */
@@ -274,7 +279,7 @@ select {
 .reviewImage {
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	object-fit: contain;
 }
 
 .upload-img {
@@ -298,7 +303,7 @@ select {
 .upload-img-box {
 	width: 100%;
 	height: 100%;
-	object-fit: cover;	
+	object-fit: contain;	
 }
 
 /*�̹��� ���� ��ư css*/
@@ -353,5 +358,5 @@ select {
 #reviewImg {
 	width: 100px;
 	height: 100px;
-	object-fit: cover;
+	object-fit: contain;
 }
