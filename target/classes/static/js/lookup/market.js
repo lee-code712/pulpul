@@ -51,12 +51,24 @@ function goodsJson(marketId) {
 				    itemImg.classList.add("item-img-size");
 				    var img = document.createElement("img");
 				    img.src = goods.item.thumbnailUrl;
-				    img.classList.add("item-img");
+				    
+				    if (goods.remainQuantity == 0) {
+							img.classList.add("soldout-img");
+						}
+						else {
+							img.classList.add("item-img");
+						}
+						
 				    itemImg.appendChild(img);
+				    
 				    
 				    var itemName = document.createElement("div");
 				    itemName.classList.add("plant-name");
-				    itemName.innerHTML = goods.item.name;
+				    itemName.innerHTML += goods.item.name;
+				    
+				    if (goods.remainQuantity == 0) {
+							itemName.innerHTML += '<span class="soldout">품절</span>';
+						}
 				    
 				    var itemPrice = document.createElement("div");
 				    itemPrice.classList.add("plant-price");
@@ -131,7 +143,7 @@ function shareThingJson(marketId) {
 				    itemName.innerHTML = shareThing.item.name;
 				    
 				    var waitingWrap = document.createElement("div");
-				    waitingWrap.classList.add("watingWrap");
+				    waitingWrap.classList.add("waitingWrap");
 				    var waitingImg = document.createElement("img");
 				    waitingImg.src = "/images/waiting.svg";
 				    var waiting = document.createElement("div");
