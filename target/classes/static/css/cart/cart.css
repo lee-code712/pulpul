@@ -137,6 +137,23 @@ td {
 }
 
 .noCartItemTit {
-	color: #6f6f6f;
 	margin-bottom: 8px;
+	color: #535353;
+	font-size: 18px;
+}
+
+.noCartItemSubTit {
+	color: #c4c4c4;
+	font-size: 14px;
+}
+
+.goto-shopping {
+	margin-top: 40px;
+	width: 200px;
+  height: 40px;
+  background-color: #eaeaea;
+  color: #535353;
+  border: 1px solid #eaeaea;
+  cursor: pointer;
+  border-radius: 5px;
 }

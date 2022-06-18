@@ -18,13 +18,17 @@
   		console.log(cart);
     </script>
 	 <div id="pageWrap">
-      <div id="pageTit">장바구니</div>
-      <div id="pageSubTit">Shopping bag</div>
+	 		<th:block th:unless="${cart == null}">
+      	<div id="pageTit">장바구니</div>
+      	<div id="pageSubTit">Shopping bag</div>
+      </th:block>
+      
       <div class="noCartItem" th:if="${cart == null}">
-      <div class="noCartItemTit">장바구니에 상품을 추가해주세요!</div>
-       <div class="bottom-btn-wrap">
-      	<button class="continue-shopping" onclick="location.href='/lookup/goodsList'">쇼핑 하러가기</button>
-       </div>
+      	<div class="noCartItemTit">장바구니가 비어있어요</div>
+      	<div class="noCartItemSubTit">새로운 상품을 담아주세요</div>
+       	<div class="bottom-btn-wrap">
+      		<button class="goto-shopping" onclick="location.href='/lookup/goodsList'">쇼핑 하러가기</button>
+       	</div>
       </div>
       
       <form method="get" action="/order/purchase">

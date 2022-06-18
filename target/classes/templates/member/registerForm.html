@@ -31,14 +31,14 @@
 		    <tr>
 		      <td class="text-name">비밀번호<span>*</span></td>
 		      <td class="inputWrap">
-		      	<input type="text" placeholder="비밀번호" name="password" th:value="${member.password}" />
+		      	<input type="password" placeholder="비밀번호" name="password" th:value="${member.password}" />
 		      	<div class="invalid-feedback" th:errors="*{password}"></div>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td class="text-name">비밀번호 확인<span>*</span></td>
 		      <td class="inputWrap">
-		      	<input type="text" placeholder="비밀번호 확인" name="passwordCheck" th:value="${member.passwordCheck}" />
+		      	<input type="password" placeholder="비밀번호 확인" name="passwordCheck" th:value="${member.passwordCheck}" />
 		      	<div class="invalid-feedback" th:errors="*{passwordCheck}"></div>
 		      </td>
 		    </tr>
@@ -82,8 +82,10 @@
 		          	<input type="text" placeholder="주소" name="address" th:value="${member.address}"/>
 		          	<div class="invalid-feedback" th:errors="*{address}"></div>
 		          </div>
-		          <input type="text" placeholder="상세주소" name="addressDetail" th:value="${member.addressDetail}" />
-		          <div class="invalid-feedback" th:errors="*{addressDetail}"></div>
+		          <div class="inputWrap">
+		          	<input type="text" placeholder="상세주소" name="addressDetail" th:value="${member.addressDetail}" />
+		          	<div class="invalid-feedback" th:errors="*{addressDetail}"></div>
+		          </div>
 		        </div>
 		      </td>
 		    </tr>
