@@ -44,19 +44,21 @@
 		      <th class="item-num">남은 수량</th>
 		      <th class="item-shipping">배송비</th>
 		      <th class="item-price">판매가격</th>
+		      <th class="item-open">공개 여부</th>
 		      <th class="item-delete"></th>
 		    </tr>
 		
-		    <tr th:each="goods : ${goodsList}" th:style="${goods.item.openStatus == 0 ? 'background-color: #f3f3f4;' : ''}">
+		    <tr th:each="goods : ${goodsList}">
 		      <td>
 		       <div class="thumbnail-item">
-		         <img class="thumbnail-item-img" th:src="${goods.item.thumbnailUrl}"/>
+		         <img class="thumbnail-item-img" th:src="${goods.item.thumbnailUrl}" th:onclick="moveToGoodsDetail([[${goods.item.id}]])"/>
 		       </div>
 		      </td>
 		      <td th:text="${goods.item.name}"></td>
 		      <td th:text="|${goods.remainQuantity}/${goods.salesQuantity}|"></td>
 		      <td th:text="${#numbers.formatInteger(goods.shippingFee, 0, 'COMMA')}"></td>
 		      <td th:text="${#numbers.formatInteger(goods.price, 0, 'COMMA')}"></td>
+		      <td th:text="${goods.item.openStatus == 0 ? '비공개' : '공개'}"></td>
 		      <td><!-- goodsId -> itemId -->
 		        <button class="updateBtn" th:onclick="updateGoods([[${goods.item.id}]])">수정</button>
 		        <button class="deleteBtn" th:onclick="deleteGoods([[${goods.item.id}]])">삭제</button>

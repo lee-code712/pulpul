@@ -14,3 +14,8 @@ function deleteGoods(id){
 	const uri = '/market/goods/delete?itemId=' + id;
 	encodeUri(uri);
 }
+
+function moveToGoodsDetail(id){
+	const uri = '/lookup/goodsDetail?itemId=' + id;
+	encodeUri(uri);
+}
