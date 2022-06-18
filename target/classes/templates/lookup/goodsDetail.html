@@ -138,6 +138,7 @@
           </div>
            <div id="btnWrap" th:if="${goods.remainQuantity == 0}">
             <button id="soldoutBtn" type="button">품절</button>
+            <button id="cancelBtn" type="button" onclick="location.href='/lookup/goodsList'">목록 이동</button>
           </div>
 		</form>
           <a th:href="@{/lookup/market(marketId=${goods.item.market.id})}" id="marketLink">
