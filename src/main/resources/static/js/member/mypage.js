@@ -232,8 +232,8 @@ function shareThingListJson(btnType) {
 			th_03.innerHTML = "대여 상태";
 			
 			const th_04 = document.createElement("th");
-			th_04.setAttribute("class", "sharething-waybill");
-			th_04.innerHTML = "운송장 번호";
+			th_04.setAttribute("class", "phone");
+			th_04.innerHTML = "연락처";
 			
 			const th_05 = document.createElement("th");
 			th_05.setAttribute("class", "sharething-date");
@@ -274,8 +274,8 @@ function shareThingListJson(btnType) {
 					td_03.innerHTML = "예약";
 					
 				const td_04 = document.createElement("td");
-				td_04.setAttribute("class", "sharething-waybill");
-				td_04.innerHTML = borrow.trackingNumber;
+				td_04.setAttribute("class", "phone");
+				td_04.innerHTML = borrow.borrower.phone;
 				
 				const td_05 = document.createElement("td");
 				td_05.setAttribute("class", "sharething-date");

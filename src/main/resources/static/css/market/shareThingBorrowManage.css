@@ -109,7 +109,11 @@ td {
 }
 
 .sharething-name {
-  width: 460px;
+  width: 260px;
+}
+
+.phone {
+	width: 200px;
 }
 
 .sharething-lender {
@@ -124,7 +128,7 @@ td {
   width: 140px;
 }
 
-#returnBtn {
+#not-rental-btn {
 	display: block;
 	margin: 60px auto 80px auto;
 	width: 140px;
@@ -132,5 +136,16 @@ td {
   border: 1px solid black;
   background-color: white;
   color: black;
+  cursor: pointer;
+}
+
+#returnBtn {
+	display: block;
+	margin: 60px auto 80px auto;
+	width: 140px;
+  height: 40px;
+  border: 1px solid #93c0b5;
+  background-color: white;
+  color: #93c0b5;
   cursor: pointer;
 }
