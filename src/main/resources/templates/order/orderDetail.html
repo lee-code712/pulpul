@@ -17,11 +17,11 @@
 	  </th:block>
 
 	<div layout:fragment="content">
-	<script th:inline="javascript">
+	<!--  <script th:inline="javascript">
   		console.log('데이터 확인');
   		var order = [[${order}]];
   		console.log(order);
-   </script>
+   </script>-->
 	<div id="pageWrap">
       <div id="pageTit">결제 상세 정보</div>
       <div id="pageSubTit">Payment info</div>
@@ -39,7 +39,7 @@
 
         <tr th:each="goodsList : ${order.goodsList}">
           <td class="item-img-wrap">
-            <img th:src="${goodsList.goods.item.thumbnailUrl}" class="item-img" />
+            <img th:src="${goodsList.goods.item.thumbnailUrl}" th:onclick="moveToGoodsDetail([[${goodsList.goods.item.id}]])" class="item-img" />
           </td>
           <td class="item-info">
             <div class="info">
@@ -127,5 +127,6 @@
           </div>
       	</div>
     	</div>
+	</div>
 	</div>
 </html>
