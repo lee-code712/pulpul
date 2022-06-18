@@ -25,6 +25,7 @@
       <form method="post" enctype="multipart/form-data" th:object="${goods}">
       <input type="hidden" th:field="*{item.id}" />
       <input type="hidden" th:name="item.market.member.id" th:value="${session.id}" />
+      <input type="hidden" th:field="*{item.imageUrlList}" />
       <table>
         <tr>
           <td class="text-name">상품명</td>
@@ -58,13 +59,16 @@
           <td class="text-name">총 판매 수량</td>
           <td>
             <input type="text" placeholder="예) 2" th:field="*{salesQuantity}" />
-            <div class="invalid-feedback" th:if="*{#strings.isEmpty(item.id)}" th:errors="*{tags}"></div>
+            <div class="invalid-feedback" th:errors="*{salesQuantity}"></div>
           </td>
         </tr>
         <tr th:unless="*{#strings.isEmpty(item.id)}">
         	<td class="text-name">남은 수량</td>
-          <td><input type="text" th:field="*{remainQuantity}" />
-          		<input type="hidden" th:field="*{salesQuantity}" /></td>
+          <td>
+          		<input type="text" th:field="*{remainQuantity}" />
+          		<input type="hidden" th:field="*{salesQuantity}" />
+          		<div class="invalid-feedback" th:errors="*{remainQuantity}"></div>
+          </td>
         </tr>
         <tr>
           <td class="text-name">판매가격</td>

@@ -30,6 +30,7 @@
      <form method="post" enctype="multipart/form-data" th:object="${shareThing}">
      <input type="hidden" th:field="*{item.id}" />
      <input type="hidden" th:name="item.market.member.id" th:value="${session.id}" />
+     <input type="hidden" th:field="*{item.imageUrlList}" />
       <table>
         <tr>
           <td class="text-name">공유 물품명</td>
