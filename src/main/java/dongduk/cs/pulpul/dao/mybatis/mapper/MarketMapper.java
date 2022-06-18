@@ -19,4 +19,6 @@ public interface MarketMapper {
 	
 	void updateMarket(Market market);
 	
+	void deleteMarketImage(String memberId);
+	
 }

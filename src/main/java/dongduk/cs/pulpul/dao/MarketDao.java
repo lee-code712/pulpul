@@ -21,5 +21,8 @@ public interface MarketDao {
 	
 	// 마켓 정보 수정
 	void changeMarketInfo(Market market);
+	
+	// 마켓 이미지 삭제
+	void deleteMarketImage(String memberId);
 
 }

@@ -64,4 +64,10 @@
     WHERE market_id = #{id}
 	</update>
 	
+	<!-- 마켓 이미지 삭제 -->
+	<delete id="deleteMarketImage" parameterType="string">
+		DELETE FROM image
+		WHERE member_id = #{memberId} AND category_id = 'MIMG'
+	</delete>
+	
 </mapper>

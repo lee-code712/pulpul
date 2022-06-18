@@ -34,6 +34,9 @@ public class Market implements Serializable {
 	@Column(name="market_id")
 	private int id; /*마켓 식별 번호*/
 	
+	@Column(name="member_id")
+	private String memberId;
+	
 	@NotBlank
 	private String name; /*마켓 이름*/
 	@NotBlank

@@ -42,5 +42,11 @@ public class MybatisMarketDao implements MarketDao {
 	public void changeMarketInfo(Market market) {
 		marketMapper.updateMarket(market);
 	}
+
+	@Override
+	public void deleteMarketImage(String memberId) {
+		marketMapper.deleteMarketImage(memberId);
+		
+	}
 	
 }

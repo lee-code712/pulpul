@@ -20,13 +20,11 @@
   </th:block>
 
 	<div layout:fragment="content">
-		<!-- <script th:inline="javascript">
+		<script th:inline="javascript">
   		console.log('데이터 확인');
   		var market = [[${market}]];
   		console.log(market);
-  		if ([[${updateFailed}]])
-  			console.log('업데이트 실패');
-  	</script> -->
+  	</script>
 		<div id="pageWrap">
 		  <div id="pageTit">마켓 관리</div>
 		  <div id="pageSubTit">마켓 정보</div>
@@ -65,6 +63,7 @@
 					<td>
 					 <div id="imgBox">
 			          <input class="upload" type="file" id="fileWrap" accept=".jpg" multiple="multiple" name="file" style="display:none;">
+			          <input type="hidden" th:field="*{imageUrl}" />
 				       <div class="upload-img-icon-box"><i class="fas fa-camera fa-2x"></i></div>
 				       <div class="upload-img" th:if="${not #strings.isEmpty(market.imageUrl)}">
 				       	<img class="market-upload-image" th:src="*{imageUrl}">

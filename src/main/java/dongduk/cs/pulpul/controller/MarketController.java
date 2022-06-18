@@ -22,7 +22,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import dongduk.cs.pulpul.domain.Borrow;
 import dongduk.cs.pulpul.domain.Market;
-import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.Order;
 import dongduk.cs.pulpul.service.BorrowService;
 import dongduk.cs.pulpul.service.MarketService;
@@ -55,10 +54,8 @@ public class MarketController implements ApplicationContextAware {
 	
 	@ModelAttribute("market")
 	public Market formBacking(HttpSession session) {
-		Member member = new Member();
-		member.setId((String) session.getAttribute("id"));	// memberId 저장
 		Market market = new Market();
-		market.setMember(member);
+		market.setMemberId((String) session.getAttribute("id"));
 		market.setOpenStatus("0"); //openStatus를 0으로 초기화
 		return market;
 	}
@@ -69,7 +66,7 @@ public class MarketController implements ApplicationContextAware {
 	@GetMapping("/view")
 	public String view(@ModelAttribute("market") Market market) {
 		
-		String memberId = market.getMember().getId();
+		String memberId = market.getMemberId();
 
 		Market findMarket = marketSvc.getMarketByMember(memberId);
 		if (findMarket != null)

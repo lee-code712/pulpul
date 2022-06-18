@@ -31,7 +31,7 @@ public class MarketServiceImpl implements MarketService {
 			String[] marketAddress = market.getMember().getAddress().split(" ");
 			market.getMember().setAddress(marketAddress[0] + " " + marketAddress[1]);
 			
-			Image image = imageRepo.findByMemberIdAndCategoryId(market.getMember().getId(), "MIMG");
+			Image image = imageRepo.findByMemberIdAndCategoryId(market.getMemberId(), "MIMG");
 			if (image != null) {
 				market.setImageUrl(image.getImageSrc());
 			}
@@ -43,7 +43,7 @@ public class MarketServiceImpl implements MarketService {
 	public Market getMarketByMember(String memberId) {
 		Market market = marketRepo.findByMemberId(memberId);
 		if (market != null) {
-			Image image = imageRepo.findByMemberIdAndCategoryId(market.getMember().getId(), "MIMG");
+			Image image = imageRepo.findByMemberIdAndCategoryId(market.getMemberId(), "MIMG");
 			if (image != null) {
 				market.setImageUrl(image.getImageSrc());
 			}
@@ -59,7 +59,7 @@ public class MarketServiceImpl implements MarketService {
 		
 		if (!uploadFile.getFile().isEmpty()) {
 			String filename = uploadFile(uploadFile, market.getId());	// 마켓 이미지 저장
-			Image image = new Image(market.getMember().getId(), "MIMG", "/upload/" + filename);
+			Image image = new Image(market.getMemberId(), "MIMG", "/upload/" + filename);
 			imageRepo.save(image);	// 마켓 이미지 레코드 생성
 		}
 	}
@@ -71,16 +71,22 @@ public class MarketServiceImpl implements MarketService {
 		marketRepo.updateMarket(market.getName(), market.getIntro(), market.getContactableTime(),
 				market.getPolicy(), market.getPrecaution(), market.getOpenStatus(), market.getId());	// 마켓 레코드 수정
 
+		Image image = imageRepo.findByMemberIdAndCategoryId(market.getMemberId(), "MIMG");
+		
 		if (!updateFile.getFile().isEmpty()) {
-			Image image = imageRepo.findByMemberIdAndCategoryId(market.getMember().getId(), "MIMG");
 			if (image != null) {
 				updateFile(updateFile, market.getId());	// 마켓 이미지 레코드가 존재하면 마켓 이미지 변경
 			}
 			else {
 				String filename = uploadFile(updateFile, market.getId());
-				Image newImage = new Image(market.getMember().getId(), "MIMG", "/upload/" + filename);
+				Image newImage = new Image(market.getMemberId(), "MIMG", "/upload/" + filename);
 				imageRepo.save(newImage);	// 마켓 이미지 레코드 생성
 			}
+		}
+		
+		if (updateFile.getFile().isEmpty() && image != null) {
+			deleteFile(updateFile.getPath(), market.getId());
+			imageRepo.deleteByMemberIdAndCategoryId(market.getMemberId(), "MIMG");
 		}
 	}
 	
@@ -113,6 +119,18 @@ public class MarketServiceImpl implements MarketService {
         }catch(Exception e) {            
             e.printStackTrace();
         }
+	}
+	
+	// 이미지 파일 삭제 메소드
+	public void deleteFile(String uploadDir, int marketId) {	
+		try {       
+				String filename = "MIMG" + marketId + ".jpg"; 
+				File file = new File(uploadDir, filename);
+				if (file.exists())
+					file.delete();
+		}catch(Exception e) {            
+			e.printStackTrace();
+		}
 	}	
 	
 }
