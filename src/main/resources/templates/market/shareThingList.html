@@ -19,11 +19,11 @@
   
 
 	<div layout:fragment="content">
-		<script th:inline="javascript">
+		<!--  <script th:inline="javascript">
   		console.log('데이터 확인');
   		var shareThingList = [[${shareThingList}]];
   		console.log(shareThingList);
-  	</script>
+  	</script>-->
 		<div id="pageWrap">
       <div id="pageTit">공유 물품 관리</div>
       <div id="pageSubTit">공유 물품 목록</div>
@@ -42,20 +42,22 @@
           <th class="item-info">상품 정보</th>
           <th class="item-rental">대여 상태</th>
           <th class="item-waiting">대기자</th>
+          <th class="item-open">공개 여부</th>
           <th class="item-btn"></th>
         </tr>
 
-        <tr th:each="shareThing : ${shareThingList}" th:style="${shareThing.item.openStatus == 0 ? 'background-color: #f3f3f4;' : ''}">
+        <tr th:each="shareThing : ${shareThingList}">
           <td>
            <div class="thumbnail-item">
-            <img class="thumbnail-item-img" th:src="${shareThing.item.thumbnailUrl}"/>
+            <img class="thumbnail-item-img" th:src="${shareThing.item.thumbnailUrl}" th:onclick="moveToShareThingDetail([[${shareThing.item.id}]])"/>
            </div>
            </td>
           <td th:text="${shareThing.item.name}"></td>
           <td>
-            <div class="rental-status-on" th:style="${shareThing.isBorrowed == 0 ? 'color: #c4c4c4;' : ''}" th:text="${shareThing.isBorrowed == 0 ? '대여 가능' : '대여 불가'}"></div>
+            <div class="rental-status-on" th:style="${shareThing.isBorrowed == 1 ? 'color: #c4c4c4;' : ''}" th:text="${shareThing.isBorrowed == 0 ? '대여 가능' : '대여 불가'}"></div>
           </td>
-          <td th:text="${shareThing.reservationNumber}">대기자</td>
+          <td th:text="${shareThing.reservationNumber}"></td>
+           <td th:text="${shareThing.item.openStatus == 1 ? '공개' : '비공개'}"></td>
           <td>
             <div class="buttonWrap">
               <button class="rentalStatusBtn" th:onclick="findBorrowShareThing([[${shareThing.item.id}]])">대여 현황</button>

@@ -20,3 +20,8 @@ function deleteShareThing(id){
 	const uri = '/market/shareThing/delete?itemId=' + id;
 	encodeUri(uri);
 }
+
+function moveToShareThingDetail(id){
+	const uri = '/lookup/shareThingDetail?itemId=' + id;
+	encodeUri(uri);
+}
