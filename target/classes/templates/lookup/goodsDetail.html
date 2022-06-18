@@ -67,7 +67,7 @@
           <div id="itemNumWrap">
             <div id="itemNumTit">수량</div>
             <input type="number" th:if="${goods.remainQuantity} == 0" min="0" max="0" placeholder="0" id="itemNumInput" name="quantity" value="0" />
-            <input type="number" th:unless="${goods.remainQuantity} == 0" min="1" th:max="|${goods.remainQuantity}|" placeholder="0" id="itemNumInput" th:field="*{quantity}" th:onclick="totalPrice()" />
+            <input type="number" th:unless="${goods.remainQuantity} == 0" min="1" th:max="|${goods.remainQuantity}|" placeholder="1" value="1" id="itemNumInput" th:field="*{quantity}" th:onclick="totalPrice()" th:onkeyup="totalPrice()" />
             <div th:errors="*{quantity}"></div>
           </div>
           <div id="itemSizeWrap">
@@ -119,19 +119,6 @@
 							  }
 						  	});
                   }
-		    	  var failed = [[${addFailed}]];
-				  		if(failed == true){
-				  			Swal.fire({
-				  			  text: [[${exception}]],
-				  			  icon: "error",
-				  			  confirmButtonColor: '#93c0b5',
-				  			  confirmButtonText: '확인',
-				  			}).then((result) => {
-							  if (result.isConfirmed) { 
-								location.href="/lookup/goodsList";
-							  }
-						  	});
-				  		}
 				  </script>
 			<button id="cartBtn" th:if="${session.id} == ${goods.item.market.member.id}" type="button" th:onclick="updateGoods([[${goods.item.id}]])">상품 수정</button>
             <button id="cancelBtn" type="button" onclick="location.href='/lookup/goodsList'">목록 이동</button>

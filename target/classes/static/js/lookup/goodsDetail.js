@@ -40,35 +40,69 @@ function cancel(itemId){
 	encodeUri(uri);
 }
 
+function moveToGoodsDetail(id){
+	const uri = '/lookup/goodsDetail?itemId=' + id;
+	encodeUri(uri);
+}
+
+function addToCart(id){
+	if(document.querySelector("#itemNumInput").value == "") {
+		Swal.fire({
+				  text: "1개 이상 구매하셔야 합니다.",
+    			  confirmButtonColor: '#93c0b5',
+				  confirmButtonText: '확인',
+				  }).then((result) => {
+				  if (result.isConfirmed) { 
+						moveToGoodsDetail(id);
+				  }
+			  	});
+	}else{
+		location.href="/cart/addItem";
+		$('#addCartForm').action='/cart/addItem'
+	}
+}
 /* 버튼 클릭 시 이동 막음 */
 $("#soldoutBtn").click(function(event){
 	event.preventDefault();
 })
 
+/* input type number 키보드 한글 입력 안되게 */
+$("#itemNumInput").on("keyup", function(e) {
+    if(!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8 || e.keyCode == 9)) {
+        return false;
+    }
+});
+
 /*Total Price*/
 function totalPrice(){
-	var quantity = document.querySelector("#itemNumInput").value;
-	var shippingFee = document.querySelector("#shipping").innerHTML.split("원")[0];
-	var price = document.querySelector("#itemPrice").innerHTML.split("원")[0];
+	let quantity = document.querySelector("#itemNumInput").value;
+	let shippingFee = document.querySelector("#shipping").innerHTML.split("원")[0];
+	let price = document.querySelector("#itemPrice").innerHTML.split("원")[0];
 	
-	document.querySelector("#itemQuantity").innerHTML = quantity;
+	if(quantity == '0' || quantity == ""){
+	    document.querySelector("#itemQuantity").innerHTML = '0';
+	}
+  	else{
+		document.querySelector("#itemQuantity").innerHTML = quantity;
+	}
+  	  
 	
-	var itemPrice = Number(price.replace(',',"")) * Number(quantity);
-	var total = itemPrice + Number(shippingFee.replace(',',""));
+	let itemPrice = Number(price.replace(',',"")) * Number(quantity);
+	let total = itemPrice + Number(shippingFee.replace(',',""));
 	$("#inputTotal").val(itemPrice); // cartItem price에는 단가 * 수량이 저장됨
 	document.querySelector("#totalPrice").innerHTML = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
 }
 
 /* ratingTotal */
-var ratings = document.querySelectorAll("#rating");
-var ratingTotal = document.querySelector("#ratingTotal");
+let ratings = document.querySelectorAll("#rating");
+let ratingTotal = document.querySelector("#ratingTotal");
 
 if(ratings == null || ratings.length == 0){
 	ratingTotal.innerHTML = "0.0";
 }else{
 	
-	var sum = 0;
-	var cnt = 0;
+	let sum = 0;
+	let cnt = 0;
 	for(var i = 0; i < ratings.length; i++){
 		sum += Number(ratings[i].innerHTML);
 		cnt++;	
