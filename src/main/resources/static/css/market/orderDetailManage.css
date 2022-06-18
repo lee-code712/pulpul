@@ -67,6 +67,7 @@ td {
   height: 60px;
   object-fit: contain;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .plant-info {
