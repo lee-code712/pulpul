@@ -18,11 +18,11 @@
   </th:block>
 
 	<div layout:fragment="content">
-		<script th:inline="javascript">
+		<!--  <script th:inline="javascript">
   		console.log('데이터 확인');
   		var orderList = [[${orderList}]];
   		console.log(orderList);
-  	</script>
+  	</script>-->
 		<div id="pageWrap">
       <div id="pageTit">상품 관리</div>
       <div id="pageSubTit">전체 구매 현황</div>
@@ -36,7 +36,7 @@
 		  </div>
 
       <div id="searchWrap">
-        <img src="/images/searchWayBill.svg" />
+        <img src="/images/searchWayBill.svg" class="search-img" th:onclick="searchTrackingNumber()"/>
         <input
           type="text"
           placeholder="운송장 번호를 검색해주세요."
@@ -53,10 +53,10 @@
           <th class="order-waybill">운송장 번호</th>
         </tr>
 
-        <tr class="order" th:each="order : ${orderList.pageList}" th:classappend="${order.orderStatus} == 3 ? 'table-disabled'">
+        <tr class="order" th:each="order : ${orderList.pageList}">
           <td class="orderNum"><a th:href="@{/market/orderDetailManage(orderId=${order.id})}" class="order-num-hover" th:text="${order.id}"></a></td>
-          <td th:text="${order.orderDate}">2022-03-31</td>
-          <td th:text="|${#numbers.formatInteger(order.totalPrice, 0, 'COMMA')}원|">8000원</td>
+          <td th:text="${#strings.arraySplit(order.orderDate, ' ')[0]}"></td>
+          <td th:text="|${#numbers.formatInteger(order.totalPrice, 0, 'COMMA')}원|"></td>
           <td th:if="${order.orderStatus == 0}">주문취소</td>
           <td th:if="${order.orderStatus == 1}">결제완료</td>
           <td th:if="${order.orderStatus == 2}">배송시작</td>
@@ -87,7 +87,7 @@
               </form>
             </div>
           </td>
-            <td th:unless ="${order.trackingNumber == null}">
+            <td th:unless="${order.trackingNumber == null}">
             <div id="wayBillBox" class="trackingNumber">
               <span th:text="${order.trackingNumber}"></span>
             </div>

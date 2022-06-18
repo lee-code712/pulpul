@@ -50,6 +50,10 @@
 	border-bottom: 1px solid #93c0b5;
 }
 
+.search-img {
+	cursor: pointer;
+}
+
 #wayBill {
   width: 1004px;
   font-size: 18px;
@@ -126,10 +130,11 @@ td {
 #wayBillBox {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 #perWayBill {
-  width: 240px;
+  width: 220px;
   height: 24px;
   border: 1px solid #c4c4c4;
   background-color: white;
@@ -141,11 +146,6 @@ td {
   border: 1px solid #93c0b5;
   background-color: white;
   cursor: pointer;
-}
-
-.table-disabled {
-  background-color: #f3f3f4;
-  color: #c4c4c4;
 }
 
 .order-num-hover:hover {
