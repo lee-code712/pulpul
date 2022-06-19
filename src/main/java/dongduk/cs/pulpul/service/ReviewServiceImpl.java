@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +22,6 @@ public class ReviewServiceImpl implements ReviewService {
 	public List<Review> getReviewByItem(String itemId) {
 		List<Review> reviewList = reviewDao.findReviewByListItem(itemId);
 		for (Review review : reviewList) {
-			System.out.println(review.getId());
 			review.setImageUrl(reviewDao.findReviewImage(review.getId()));
 		}
 		return reviewList;
@@ -34,14 +32,13 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.findOrderIdByNotReview(itemId, memberId);
 	}
 
-	@Override
 	@Transactional
-	public void addReview(Review review, FileCommand uploadFile, String memberId) throws DataAccessException {
-		
+	@Override
+	public void addReview(Review review, FileCommand uploadFile, String memberId) {
 		reviewDao.createReview(review);	// 리뷰 레코드 생성
 		
 		if (!uploadFile.getFile().isEmpty()) {
-			String filename = uploadFile(uploadFile, review.getId());	// 리뷰 이미지 저장
+			String filename = uploadFile(uploadFile, review.getId());	// 리뷰 이미지 파일 저장
 			review.setImageUrl("/upload/" + filename);
 			review.getOrder().setBuyer(new Member());
 			review.getOrder().getBuyer().setId(memberId);
@@ -63,7 +60,6 @@ public class ReviewServiceImpl implements ReviewService {
         }catch(Exception e) {            
             e.printStackTrace();
         }
-		
 		return newFilename;
 	}
 

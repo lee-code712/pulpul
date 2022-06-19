@@ -10,6 +10,10 @@ import dongduk.cs.pulpul.service.exception.CancelOrderException;
 
 public interface OrderService {
 	
+	/*
+	 * 장바구니 관련 service method
+	 */
+	
 	// 장바구니 조회
 	Cart getCart(String memberId);
 	
@@ -24,6 +28,11 @@ public interface OrderService {
 	
 	// 장바구니에서 특정 마켓의 상품 목록 삭제
 	int deleteCartItemByMarket(String memberId, int marketId);
+	
+	
+	/*
+	 * 주문 관련 service method
+	 */
 	
 	// 회원 id로 주문 목록 조회
 	List<Order> getOrderListByMember(String memberId, String identity);

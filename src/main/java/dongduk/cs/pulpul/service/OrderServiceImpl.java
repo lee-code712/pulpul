@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,11 +41,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.findNumberOfCartItemByMember(memberId);
 	}
 
-	@Override
 	@Transactional
-	public void addCartItem(String memberId, CartItem cartItem) 
-			throws DataAccessException, AddCartException {
-		
+	@Override
+	public void addCartItem(String memberId, CartItem cartItem) throws AddCartException {
 		String goodsId = cartItem.getGoods().getItem().getId();
 
 		int remainQuantity = itemDao.findRemainQuantityByGoods(goodsId);
@@ -84,20 +81,18 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Order getOrder(int orderId) {
-		
 		Order order = orderDao.findOrder(orderId);
 		if (order != null) {
-			for (CartItem cartItem : order.getGoodsList()) {	// 주문 상품별 리뷰 존재 여부 확인해서 저장
+			for (CartItem cartItem : order.getGoodsList()) {	// 주문 상품별 리뷰 작성 여부 조회
 				cartItem.getGoods().setExistReview(reviewDao.isExistReview(cartItem.getGoodsId(), orderId));
 			}
 		}
 		return order;
 	}
 
-	@Override
 	@Transactional
-	public int order(Order order) throws DataAccessException {
-		
+	@Override
+	public int order(Order order) {
 		orderDao.createOrder(order);	// 주문 레코드 생성
 		
 		int orderId = order.getId();
@@ -115,36 +110,34 @@ public class OrderServiceImpl implements OrderService {
 		}
 		
 		for (CartItem cartItem : order.getGoodsList()) {
-			itemDao.changeRemainQuantityByOrderStatus(cartItem.getGoodsId(), 1, cartItem.getQuantity());	// 주문 상품별 남은 수량 컬럼 수정
+			itemDao.changeRemainQuantityByOrderStatus(cartItem.getGoodsId(), 1, cartItem.getQuantity());	// 주문 상품별 남은 수량 수정
 			deleteCartItem(order.getBuyer().getId(), cartItem.getGoodsId());	// 상품에 대한 장바구니 레코드 삭제
 		}
 		
 		return orderId;
 	}
 
-	@Override
 	@Transactional
-	public void changeTrackingNumber(Order order) throws DataAccessException {
-		
-		orderDao.changeTrackingNumber(order.getId(), order.getTrackingNumber());	// 운송장번호 컬럼 수정
-		orderDao.changeOrderStatus(order.getId(), 2);	// 주문상태 컬럼을 2(배송시작)으로 변경
+	@Override
+	public void changeTrackingNumber(Order order) {
+		orderDao.changeTrackingNumber(order.getId(), order.getTrackingNumber());	// 운송장 번호 수정
+		orderDao.changeOrderStatus(order.getId(), 2);	// 주문상태를 2(배송시작)으로 변경
 	}
 
-	@Override
 	@Transactional
-	public void cancelOrder(int orderId) throws DataAccessException, CancelOrderException {
-		
-		Order order = getOrder(orderId);	// 주문 조회 메소드 호출
+	@Override
+	public void cancelOrder(int orderId) throws CancelOrderException {	
+		Order order = getOrder(orderId);
 		if (order != null) {
 			if (order.getTrackingNumber() != null) {	// 운송장 번호가 존재하면 에러 메시지 전달
 				System.out.println("배송 시작됨");
 				throw new CancelOrderException("배송이 시작되어 취소할 수 없습니다. 마켓에 문의하시기 바랍니다.");
 			}
 			
-			orderDao.changeOrderStatus(orderId, 0);	// 주문상태 컬럼을 0(주문취소)으로 변경
+			orderDao.changeOrderStatus(orderId, 0);	// 주문상태를 0(주문취소)으로 변경
 			
 			for (CartItem item : order.getGoodsList()) {
-				itemDao.changeRemainQuantityByOrderStatus(item.getGoodsId(), 0, item.getQuantity());	// 주문 상품별 남은 수량 컬럼 수정
+				itemDao.changeRemainQuantityByOrderStatus(item.getGoodsId(), 0, item.getQuantity());	// 주문 상품별 남은 수량 수정
 			}
 			
 			if (order.getUsedPoint() > 0) {
@@ -155,8 +148,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void finalizeOrder(int orderId) {
-		orderDao.changeOrderStatus(orderId, 3);
+		orderDao.changeOrderStatus(orderId, 3);	// 주문상태를 3(주문확정)으로 변경
 	}
 	
-
 }

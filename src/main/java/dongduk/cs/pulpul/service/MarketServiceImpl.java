@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +23,10 @@ public class MarketServiceImpl implements MarketService {
 
 	@Override
 	public Market getMarket(int marketId) {
-		Optional<Market> result = marketRepo.findById(marketId);
 		Market market = null;
+		Optional<Market> result = marketRepo.findById(marketId);
 		if(result.isPresent()) market = result.get();
+		
 		if (market != null) {
 			String[] marketAddress = market.getMember().getAddress().split(" ");
 			market.getMember().setAddress(marketAddress[0] + " " + marketAddress[1]);
@@ -51,41 +51,40 @@ public class MarketServiceImpl implements MarketService {
 		return market;
 	}
 
-	@Override
 	@Transactional
-	public void makeMarket(Market market, FileCommand uploadFile) throws DataAccessException {
-		
+	@Override
+	public void makeMarket(Market market, FileCommand uploadFile) {
 		marketRepo.save(market);	// 마켓 레코드 생성
 		
 		if (!uploadFile.getFile().isEmpty()) {
-			String filename = uploadFile(uploadFile, market.getId());	// 마켓 이미지 저장
+			String filename = uploadFile(uploadFile, market.getId());	// 마켓 이미지 파일 저장
 			Image image = new Image(market.getMemberId(), "MIMG", "/upload/" + filename);
 			imageRepo.save(image);	// 마켓 이미지 레코드 생성
 		}
 	}
 
-	@Override
 	@Transactional
-	public void changeMarketInfo(Market market, FileCommand updateFile) throws DataAccessException {
-		
+	@Override
+	public void changeMarketInfo(Market market, FileCommand updateFile) {
 		marketRepo.save(market);	// 마켓 레코드 수정
 
 		Image image = imageRepo.findByMemberIdAndCategoryId(market.getMemberId(), "MIMG");
 		
 		if (!updateFile.getFile().isEmpty()) {
 			if (image != null) {
-				updateFile(updateFile, market.getId());	// 마켓 이미지 레코드가 존재하면 마켓 이미지 변경
+				updateFile(updateFile, market.getId());	// 마켓 이미지 레코드가 존재하면 마켓 이미지 파일 변경
 			}
 			else {
 				String filename = uploadFile(updateFile, market.getId());
 				Image newImage = new Image(market.getMemberId(), "MIMG", "/upload/" + filename);
-				imageRepo.save(newImage);	// 마켓 이미지 레코드 생성
+				imageRepo.save(newImage);	// 레코드가 존재하지 않으면 마켓 이미지 레코드 생성
 			}
 		}
 
-		if (updateFile.getFile().isEmpty() && market.getImageUrl().length() == 0 && image != null) {
-			deleteFile(updateFile.getPath(), market.getId());
-			imageRepo.deleteByMemberIdAndCategoryId(market.getMemberId(), "MIMG");
+		// 마켓 이미지 레코드가 존재하지만 새로 전달된 파일이 없고 imgeUrl이 비어있으면
+		if (image != null && updateFile.getFile().isEmpty() && market.getImageUrl().length() == 0) {
+			deleteFile(updateFile.getPath(), market.getId());	// 마켓 이미지 파일 삭제
+			imageRepo.deleteByMemberIdAndCategoryId(market.getMemberId(), "MIMG");	// 마켓 이미지 레코드 삭제
 		}
 	}
 	
@@ -103,7 +102,6 @@ public class MarketServiceImpl implements MarketService {
         }catch(Exception e) {            
             e.printStackTrace();
         }
-		
 		return newFilename;
 	}
 	
