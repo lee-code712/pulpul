@@ -45,6 +45,14 @@ function totalPrice(){
 	document.querySelector("#totalPrice").innerHTML = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
 }
 
+/* itemNumInput에 입력된 값이 itemQuantity에 그대로 출력 */
+$(document).ready(function(){
+	$("#itemNumInput").keyup(function(){
+		$("#itemQuantity").text($("#itemNumInput").val());
+	});
+});
+
+
 /* ratingTotal */
 let ratings = document.querySelectorAll("#rating");
 let ratingTotal = document.querySelector("#ratingTotal");
