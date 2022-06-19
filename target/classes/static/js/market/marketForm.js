@@ -12,11 +12,7 @@ function getImageFiles() {
   let imgs = document.querySelectorAll(".market-upload-image");
   
   if(imgs.length > 0){
-	 Swal.fire({
-				   text: '이미지는 1개까지 업로드가 가능합니다.',
-				   confirmButtonColor: '#93c0b5',
-				   confirmButtonText: '확인',
-				});
+	  numberOfImageFileAlert();
       return;
  }else{
 	previewFile();
@@ -31,13 +27,22 @@ function getImageFiles() {
   if(preview.childNodes.length > 2){
 	$(".upload-img").children().remove();
   }
+  
+  //이미지 여러개 선택 시 개수 오류 alert창
+  if(document.querySelector('input[type=file]').files.length > 2){
+	  numberOfImageFileAlert();
+      return;
+  }
+  
   let file  = document.querySelector('input[type=file]').files[0];
   let reader  = new FileReader();
 
   reader.onloadend = function () {
 	let img = document.createElement("img");
+
 	img.classList.add("market-upload-image");
     img.src = reader.result;
+    
     preview.appendChild(img);
     
       //삭제 버튼 <button></button>
@@ -68,9 +73,15 @@ function deleteImg(event){
 		    </span>
 		  */
 		  $(".upload-img").children().remove();
-		  $("#saveBtn").disabled = true;
 		  
 		  var ImgElement = document.getElementById("imageUrl");
 		  ImgElement.value = "";
   }
   
+ function numberOfImageFileAlert(){
+	Swal.fire({
+				   text: '이미지는 1개까지 업로드 가능합니다.',
+				   confirmButtonColor: '#93c0b5',
+				   confirmButtonText: '확인',
+		});
+}
