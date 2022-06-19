@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dongduk.cs.pulpul.controller.FileCommand;
+import dongduk.cs.pulpul.dao.MemberDao;
 import dongduk.cs.pulpul.dao.ReviewDao;
 import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.Review;
@@ -17,6 +18,8 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	@Autowired
 	private ReviewDao reviewDao;
+	@Autowired
+	private MemberDao memberDao;
 
 	@Override
 	public List<Review> getReviewByItem(String itemId) {
@@ -44,6 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
 			review.getOrder().getBuyer().setId(memberId);
 			reviewDao.createReviewImage(review);	// 리뷰 이미지 레코드 생성
 		}
+		memberDao.changePoint(memberId, 1, 500);	// 포인트 +50
 	}
 	
 	// 이미지 파일 업로드 메소드

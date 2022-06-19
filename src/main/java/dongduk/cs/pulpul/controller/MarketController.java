@@ -109,54 +109,6 @@ public class MarketController implements ApplicationContextAware {
 	}
 	
 	/*
-	 * 판매 현황 조회
-	 */
-	@GetMapping("/orderListManage")
-	public String orderListManageView(@RequestParam(required=false) String trackingNumber,
-			HttpSession session, Model model) {
-		
-		String memberId = (String) session.getAttribute("id");
-		
-		String keyword = "seller";
-		if (trackingNumber != null) {
-			keyword = trackingNumber;
-		}
-		PagedListHolder<Order> orderList = new PagedListHolder<Order>(orderSvc.getOrderListByMember(memberId, keyword));
-		orderList.setPageSize(5);
-		model.addAttribute("orderList", orderList);
-
-		return "market/orderListManage";
-	}
-	
-	@GetMapping("/orderListManage2")
-	public String orderListManageView2(@RequestParam("pageType") String page, 
-			@ModelAttribute("orderList") PagedListHolder<Order> orderList, Model model) {
-		
-		if ("next".equals(page)) {
-			orderList.nextPage();
-		}
-		else if ("previous".equals(page)) {
-			orderList.previousPage();
-		}
-		
-		model.addAttribute("orderList", orderList);
-		
-		return "market/orderListManage";
-	}
-	
-	/*
-     * 판매 상세 내역 조회
-	 */
-	@GetMapping("/orderDetailManage")
-	public String orderDetailManage(@RequestParam("orderId") int orderId, Model model) {
-		
-		Order order = orderSvc.getOrder(orderId);
-		model.addAttribute("order", order);
-		
-		return "market/orderDetailManage";
-	}
-
-	/*
      * 특정 공유 물품 대여 현황 조회
 	 */
 	@GetMapping("/shareThingBorrowManage")

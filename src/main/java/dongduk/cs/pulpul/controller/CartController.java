@@ -31,44 +31,11 @@ public class CartController {
 	}
 	
 	/*
-	 * 장바구니 상품 추가
-	 * 조회 - 상세정보 장바구니 
-	 */
-	@PostMapping("/addItem")
-	public String addCartItem(@Valid @ModelAttribute("cartItem") CartItem cartItem, BindingResult result,
-			HttpSession session, RedirectAttributes rttr) {
-
-		String memberId = (String) session.getAttribute("id");	
-		
-		if (result.hasErrors()) {
-			rttr.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX +  "cartItem", result);
-			rttr.addFlashAttribute("cartItem", cartItem);
-			return "redirect:/lookup/goodsDetail?itemId=" + cartItem.getGoods().getItem().getId();
-		}
-		
-		try {
-			orderSvc.addCartItem(memberId, cartItem);
-
-			int newCartItemCnt = (int) session.getAttribute("cartItemCnt") + 1;	// 장바구니 상품 수 +1
-			session.setAttribute("cartItemCnt", newCartItemCnt);
-
-		} catch(AddCartException e) {
-			rttr.addFlashAttribute("addFailed", true);
-			rttr.addFlashAttribute("exception", e.getMessage());
-		}
-		
-		return "redirect:/lookup/goodsDetail?itemId=" + cartItem.getGoods().getItem().getId();
-	}
-	
-	/*
 	 * 장바구니 목록 조회
 	 */
 	@GetMapping("/cartList")
 	public String cartList(HttpSession session, Model model) {
-		
-		String memberId = (String) session.getAttribute("id");
-		
-		Cart cart = orderSvc.getCart(memberId);
+		Cart cart = orderSvc.getCart((String) session.getAttribute("id"));	// 장바구니 목록 조회
 		if (cart != null) {
 			model.addAttribute(cart);
 			session.setAttribute("cart", cart);	// cart 객체를 세션에 저장
@@ -78,34 +45,53 @@ public class CartController {
 	}
 	
 	/*
-	 * 특정 상품 장바구니에서 삭제
+	 * 장바구니 상품 추가
+	 */
+	@PostMapping("/addItem")
+	public String addCartItem(@Valid @ModelAttribute("cartItem") CartItem cartItem, BindingResult result,
+			HttpSession session, RedirectAttributes rttr) {
+		if (result.hasErrors()) {	// form 입력 값 검증
+			rttr.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX +  "cartItem", result);
+			rttr.addFlashAttribute("cartItem", cartItem);
+			return "redirect:/lookup/goodsDetail?itemId=" + cartItem.getGoods().getItem().getId();
+		}
+		
+		try {
+			orderSvc.addCartItem((String) session.getAttribute("id"), cartItem);	// 장바구니에 상품 추가
+			
+			int newCartItemCnt = (int) session.getAttribute("cartItemCnt") + 1;	// 세션에 저장한 장바구니 상품 수 + 1
+			session.setAttribute("cartItemCnt", newCartItemCnt);
+			rttr.addFlashAttribute("addFailed", false);
+			
+		} catch(AddCartException e) {
+			rttr.addFlashAttribute("addFailed", true);
+			rttr.addFlashAttribute("exception", e.getMessage());
+		}
+
+		return "redirect:/lookup/goodsDetail?itemId=" + cartItem.getGoods().getItem().getId();
+	}
+	
+	/*
+	 * 장바구니에서 특정 상품 삭제
 	 */
 	@GetMapping("/deleteItem")
-	public String deleteCartItem(@RequestParam("itemId") String itemId, HttpSession session,
-			RedirectAttributes rttr) {
-		
-		String memberId = (String) session.getAttribute("id");
+	public String deleteCartItem(@RequestParam("itemId") String itemId, HttpSession session) {
+		orderSvc.deleteCartItem((String) session.getAttribute("id"), itemId);	// 장바구니에서 상품 삭제
 
-		orderSvc.deleteCartItem(memberId, itemId);
-
-		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - 1;	// 장바구니 상품 수 -1
+		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - 1;	// 세션에 저장한 장바구니 상품 수 - 1
 		session.setAttribute("cartItemCnt", newCartItemCnt);
 		
 		return "redirect:/cart/cartList";
 	}
 
 	/*
-	 * 특정 마켓의 상품 장바구니에서 삭제
+	 * 장바구니에서 특정 마켓의 상품 삭제
 	 */
 	@GetMapping("/deleteItemByMarket")
-	public String deleteCartItemByMarket(@RequestParam("marketId") int marketId, HttpSession session,
-			RedirectAttributes rttr) {
+	public String deleteCartItemByMarket(@RequestParam("marketId") int marketId, HttpSession session) {
+		int deleteCnt = orderSvc.deleteCartItemByMarket((String) session.getAttribute("id"), marketId);	// 장바구니에서 특정 마켓의 상품 삭제
 		
-		String memberId = (String) session.getAttribute("id");
-
-		int deleteCnt = orderSvc.deleteCartItemByMarket(memberId, marketId);
-		
-		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - deleteCnt;	// 장바구니 상품 수 -deleteCnt
+		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - deleteCnt;	// 세션에 저장한 장바구니 상품 수 - 삭제 개수
 		session.setAttribute("cartItemCnt", newCartItemCnt);
 		
 		return "redirect:/cart/cartList";
