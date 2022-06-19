@@ -20,31 +20,6 @@ document.addEventListener("DOMContentLoaded", function() {
   },
 });
 
-/* 경로 - 파라미터에 string이 들어갈 경우*/
- function encodeUri(uri){
-	const encoded = encodeURI(uri);
-	location.href = encoded;
-}
- function uploadReview(orderId, itemId){
-	const uri = '/review?orderId=' + orderId + '&itemId=' + itemId;
-	encodeUri(uri);
-}
-
-function cancel(itemId){
-	const uri = '/lookup/goodsDetail?itemId=' + itemId;
-	encodeUri(uri);
-}
-
- function updateGoods(id){
-	const uri = '/market/goods/update?itemId=' + id;
-	encodeUri(uri);
-}
-
-function moveToGoodsDetail(id){
-	const uri = '/lookup/goodsDetail?itemId=' + id;
-	encodeUri(uri);
-}
-
 /* 품절 버튼 클릭 시 이동 막음 */
 $("#soldoutBtn").click(function(event){
 	event.preventDefault();
@@ -159,7 +134,7 @@ function deleteImg(event){
 		 
   }
 
-/* 리뷰 글자 수 제한 */
+/* 리뷰 글자 수 제한 (20 ~ 300자)*/
 const btn = document.querySelector("#writeReviewBtn");
 if($('#writeReview').val() == ''){
 	btn.disabled = true;

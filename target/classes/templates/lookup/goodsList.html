@@ -14,14 +14,15 @@
   <th:block layout:fragment="script">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" defer></script>
   	<script th:src="@{/js/lookup/goodsList.js}" defer></script>
+  	<script th:src="@{/js/encodeUri/uri.js}" defer></script>
   </th:block>
   	
 	<div layout:fragment="content">
-		<script th:inline="javascript">
+	<!-- 	<script th:inline="javascript">
   		console.log('데이터 확인');
   		var goodsList = [[${goodsList}]];
   		console.log(goodsList);
-  	</script>
+  	</script> -->
   	
   	<div id="pageWrap">
       <div id="pageTit">반려 식물</div>

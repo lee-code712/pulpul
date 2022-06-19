@@ -1,14 +1,6 @@
 /**
  * 
  */
- function encodeUri(uri){
-	const encoded = encodeURI(uri);
-	location.href = encoded;
-}
- function moveToGoodsDetail(id){
-	const uri = '/lookup/goodsDetail?itemId=' + id;
-	encodeUri(uri);
-}
 
 //태그로 검색
 function searchTag(value){
@@ -43,8 +35,8 @@ jQuery(function($){ $('.filterText').keyup(function(event) {
 
 //태그 클릭 시 이벤트 처리
 function onClickTag(event){
-	var tag = event.target.innerHTML;
-	var val = $('input[id=itemSearch]').val(tag);
+	let tag = event.target.innerHTML;
+	let val = $('input[id=itemSearch]').val(tag);
 	
 	if (tag == "") {
 	     $('.item').show();

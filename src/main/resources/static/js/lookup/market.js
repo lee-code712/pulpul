@@ -2,20 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	goodsJson(marketId); // 마켓 페이지로 처음 이동했을 때 goodsList json 정보를 가져옴
 });
 
-function encodeUri(uri){
-	const encoded = encodeURI(uri);
-	location.href = encoded;
-}
- function moveToGoodsDetail(id){
-	const uri = '/lookup/goodsDetail?itemId=' + id;
-	encodeUri(uri);
-}
-
-function moveToShareThingDetail(id){
-	const uri = '/lookup/shareThingDetail?itemId=' + id;
-	encodeUri(uri);
-}
-
 // goodsList의 json 정보를 비동기적으로 가져오는 함수
 function goodsJson(marketId) {
 	$("#goods-menu").addClass(' list-on');
