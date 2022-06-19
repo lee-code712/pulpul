@@ -3,7 +3,6 @@ package dongduk.cs.pulpul.controller;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import dongduk.cs.pulpul.domain.Borrow;
@@ -37,31 +37,29 @@ public class MyPageController {
 		this.borrowSvc = borrowSvc;
 	}
 	
-	@GetMapping("")
-	public String mypage(HttpServletRequest req, Model model) {
-		//마이 페이지
-		HttpSession session = req.getSession();
-		String id = (String) session.getAttribute("id");
-		
-		// 내정보 반환
-		Member member = memberSvc.getMember(id);
-		model.addAttribute(member);
+	@GetMapping()
+	public String mypage(HttpSession session, Model model) {
+		Member member = memberSvc.getMember((String) session.getAttribute("id"));
+		if (member != null) {
+			model.addAttribute(member);
+		}
 		
 		return "member/mypage";
 	}
 	
 	/*
-	 * 마이 페이지 접근 - 구매 목록 조회
+	 * 구매목록 json으로 반환
 	 */
 	@GetMapping("/orderList")
 	@ResponseBody
 	public PagedListHolder<Order> myOrderList(HttpSession session) throws IOException {
-
-		String id = (String) session.getAttribute("id");
+		String memberId = (String) session.getAttribute("id");
 		
-		PagedListHolder<Order> orderList = new PagedListHolder<Order>(orderSvc.getOrderListByMember(id, "buyer"));
-		orderList.setPageSize(5);
-		session.setAttribute("orderList", orderList);
+		PagedListHolder<Order> orderList = new PagedListHolder<Order>(orderSvc.getOrderListByMember(memberId, "buyer"));
+		if(orderList != null) {
+			orderList.setPageSize(5);
+			session.setAttribute("orderList", orderList);	// orderList 객체 세션에 저장
+		}
 		
 		return orderList;
 	}
@@ -70,7 +68,6 @@ public class MyPageController {
 	@ResponseBody
 	public PagedListHolder<Order> myOrderList2(@PathVariable("page") String page,
 			HttpSession session) throws IOException {
-
 		@SuppressWarnings("unchecked")
 		PagedListHolder<Order> orderList = (PagedListHolder<Order>) session.getAttribute("orderList");
 		
@@ -85,26 +82,35 @@ public class MyPageController {
 	}
 	
 	/*
-	 * 마이 페이지 접근 - 대여, 예약 목록 조회
+	 * 구매 상세내역 조회
+	 */
+	@GetMapping("/orderDetail")
+	public String orderDetail(@RequestParam("orderId") int orderId, Model model) {
+		Order order = orderSvc.getOrder(orderId);
+		model.addAttribute(order);
+
+		return "order/orderDetail";
+	}
+	
+	/*
+	 * 대여, 예약목록 json으로 반환
 	 */
 	@GetMapping("/borrowList")
 	@ResponseBody
 	public PagedListHolder<Borrow> myBorrowList(HttpSession session) throws IOException {
+		String memberId = (String) session.getAttribute("id");
 		
-		String id = (String) session.getAttribute("id");
-		
-		List<Borrow> borrows = borrowSvc.getBorrowByMember(id, "borrower");		
-		List<Borrow> reservations = borrowSvc.getBorrowReservationByMember(id);
+		List<Borrow> borrows = borrowSvc.getBorrowByMember(memberId, "borrower");		
+		List<Borrow> reservations = borrowSvc.getBorrowReservationByMember(memberId);
 		
 		PagedListHolder<Borrow> borrowList = null;
-		
 		if (borrows == null) {
-			if(reservations != null) {
+			if(reservations != null) {	// 대여내역은 없고 예약내역만 존재하는 경우
 				borrowList = new PagedListHolder<Borrow>(reservations);
 			}
 		}
 		else {
-			if(reservations != null) {
+			if(reservations != null) {	// 대여내역도 있고 예약내역도 존재하는 경우
 				for (Borrow r : reservations) {
 					borrows.add(r);
 				}
@@ -112,8 +118,10 @@ public class MyPageController {
 			borrowList = new PagedListHolder<Borrow>(borrows);
 		}
 		
-		borrowList.setPageSize(5);
-		session.setAttribute("borrowList", borrowList);
+		if(borrowList != null) {
+			borrowList.setPageSize(5);
+			session.setAttribute("borrowList", borrowList);
+		}
 		
 		return borrowList;
 	}
@@ -122,7 +130,6 @@ public class MyPageController {
 	@ResponseBody
 	public PagedListHolder<Borrow> myBorrowList2(@PathVariable("page") String page,
 			HttpSession session) throws IOException {
-		
 		@SuppressWarnings("unchecked")
 		PagedListHolder<Borrow> borrowList = (PagedListHolder<Borrow>) session.getAttribute("borrowList");
 			

@@ -7,8 +7,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +17,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuppressWarnings("serial")
-@JsonTypeInfo(
-	    use = JsonTypeInfo.Id.NAME,
-	    include = JsonTypeInfo.As.PROPERTY,
-	    property = "sort")
 public class Order implements Serializable {
 
 	private int id; /*주문 식별번호*/

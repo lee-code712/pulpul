@@ -55,7 +55,7 @@
         </tr>
 
         <tr class="order" th:each="order : ${orderList.pageList}">
-          <td class="orderNum"><a th:href="@{/market/goods/orderDetail(orderId=${order.id})}" class="order-num-hover" th:text="${order.id}"></a></td>
+          <td class="orderNum"><a th:href="@{/market/orderDetail(orderId=${order.id})}" class="order-num-hover" th:text="${order.id}"></a></td>
           <td th:text="${#strings.arraySplit(order.orderDate, ' ')[0]}"></td>
           <td th:text="|${#numbers.formatInteger(order.totalPrice, 0, 'COMMA')}원|"></td>
           <td th:if="${order.orderStatus == 0}">주문취소</td>
@@ -103,14 +103,14 @@
         </div>
       </div>
       <div th:if="${!orderList.firstPage}">
-      	<button id="previousBtn" th:onclick="'location.href=\''+ @{/market/goods/orderList2(pageType=previous)} + '\''">이전으로</button>
+      	<button id="previousBtn" th:onclick="'location.href=\''+ @{/market/orderList/{pageType}(pageType=previous)} + '\''">이전으로</button>
       </div>
       <div th:if="${!orderList.lastPage}">
-      	<button id="nextBtn" th:onclick="'location.href=\''+ @{/market/goods/orderList2(pageType=next)} + '\''">다음으로</button>
+      	<button id="nextBtn" th:onclick="'location.href=\''+ @{/market/orderList/{pageType}(pageType=next)} + '\''">다음으로</button>
       </div>
       <div id="btnWrap">
 		    <button id="returnBtn" onclick="location.href='/market/goods/list'">상품 목록</button>
-		    <button id="purchaseStatusBtn" onclick="location.href='/market/goods/orderList'">전체 구매현황</button>
+		    <button id="purchaseStatusBtn" onclick="location.href='/market/orderList'">전체 구매현황</button>
 	 </div>
     </div>
 	</div>

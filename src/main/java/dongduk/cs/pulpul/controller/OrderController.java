@@ -8,7 +8,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -57,10 +56,7 @@ public class OrderController {
 	@GetMapping("/purchase")
 	public String purchaseForm(@RequestParam("orderGoods") List<String> orderGoods,
 			@ModelAttribute("order") Order order, HttpSession session) {
-		
-		String memberId = (String) session.getAttribute("id");
-
-		Cart cart = (Cart) session.getAttribute("cart");
+		Cart cart = (Cart) session.getAttribute("cart");	// 세션에서 Cart 객체 조회
 		if (cart == null) {
 			return "redirect:/cart/cartList";
 		}
@@ -69,13 +65,13 @@ public class OrderController {
 		for (CartItem cartItem : cart.getCartItemList()) {
 			for (String goodsId : orderGoods) {
 				if (goodsId.equals(cartItem.getGoodsId())) {
-					goodsList.add(cartItem);
+					goodsList.add(cartItem);	// 장바구니에서 선택한 상품리스트 생성 후 반환
 				}
 			}
 		}
 		order.setGoodsList(goodsList);
 		
-		Member member = memberSvc.getMember(memberId);
+		Member member = memberSvc.getMember((String) session.getAttribute("id"));
 		order.setBuyer(member);
 		
 		return "order/purchase";
@@ -83,36 +79,23 @@ public class OrderController {
 	
 	@PostMapping("/purchase")
 	public String purchase(@Valid @ModelAttribute("order") Order order, BindingResult result,
-			Model model, HttpSession session) {
-		
-		if (result.hasErrors())
+			HttpSession session, SessionStatus status) {
+		if (result.hasErrors()) {
 			return "order/purchase";
+		}
 		
 		int orderId = orderSvc.order(order);
-		
 		if (orderId > 0) {
-			int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - order.getGoodsList().size();	// 장바구니 상품 수 -주문 상품 수
+			int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - order.getGoodsList().size();	// 장바구니 상품 수 - 주문 상품 수
 			session.setAttribute("cartItemCnt", newCartItemCnt);
 		}
-		session.removeAttribute("cart"); // cart객체를 세션에서 삭제
-		
-		return "redirect:/order/orderDetail?orderId=" + orderId;
-	}
-
-	/*
-	 * 구매 상세내역 조회
-	 */
-	@GetMapping("/orderDetail")
-	public String orderDetail(@RequestParam("orderId") int orderId, Model model, SessionStatus status) {
-		
-		Order order = orderSvc.getOrder(orderId);
-		model.addAttribute(order);
 		
 		if (!status.isComplete()) {
 			status.setComplete(); // order 객체 참조 삭제
 		}
-
-		return "order/orderDetail";
+		session.removeAttribute("cart"); // cart 객체를 세션에서 삭제
+		
+		return "redirect:/member/mypage/orderDetail?orderId=" + orderId;
 	}
 	
 	/*
@@ -120,7 +103,6 @@ public class OrderController {
 	 */
 	@GetMapping("/cancel")
 	public String cancel(@RequestParam("orderId") int orderId, RedirectAttributes rttr) {
-		
 		try {
 			orderSvc.cancelOrder(orderId);
 
@@ -136,23 +118,20 @@ public class OrderController {
 	 * 구매 확정
 	 */
 	@GetMapping("/finalize")
-	public String finalize(@RequestParam("orderId") int orderId, RedirectAttributes rttr) {
-		
+	public String finalize(@RequestParam("orderId") int orderId) {
 		orderSvc.finalizeOrder(orderId);
 			
 		return "redirect:/member/mypage";
 	}
 
-
 	/*
-	 * 특정 상품 주문 내역에 운송장 번호 입력
+	 * 특정 주문 내역 운송장 번호 입력
 	 */
 	@PostMapping("/startDeliver")
-	public String startDeliver(Order order, RedirectAttributes rttr) {
-		
+	public String startDeliver(Order order) {
 		orderSvc.changeTrackingNumber(order);
 		
-		return "redirect:/market/orderListManage";
+		return "redirect:/market/orderList";
 	}
 
 }

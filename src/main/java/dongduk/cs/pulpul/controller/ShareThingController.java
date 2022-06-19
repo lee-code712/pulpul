@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -139,7 +140,7 @@ public class ShareThingController implements ApplicationContextAware {
 	}
 	
 	/*
-     * 특정 공유물품 대여 목록 조회
+     * 특정 공유물품의 대여 목록 조회
 	 */
 	@GetMapping("/borrowList")
 	public String borrowList(@RequestParam("itemId") String itemId, Model model) {
@@ -152,8 +153,8 @@ public class ShareThingController implements ApplicationContextAware {
 		return "market/shareThingBorrowList";
 	}
 	
-	@GetMapping("/borrowList2")
-	public String borrowList2(@RequestParam("pageType") String page, 
+	@GetMapping("/borrowList/{pageType}")
+	public String borrowList2(@PathVariable("pageType") String page, 
 			@ModelAttribute("borrowList") PagedListHolder<Borrow> borrowList, Model model) {
 		if ("next".equals(page)) {
 			borrowList.nextPage();

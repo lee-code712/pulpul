@@ -98,7 +98,7 @@ function orderListJson(btnType) {
 				
 				const td_01 = document.createElement("td");
 				td_01.setAttribute("class", "order-id");
-				td_01.innerHTML = "<a href='/order/orderDetail?orderId=" + order.id + "'>" + order.id + "</a>";
+				td_01.innerHTML = "<a href='/member/mypage/orderDetail?orderId=" + order.id + "'>" + order.id + "</a>";
 				
 				const td_02 = document.createElement("td");
 				td_02.setAttribute("class", "order-date");

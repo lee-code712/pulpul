@@ -50,56 +50,53 @@ public class LookupController {
 	 */
 	@GetMapping("/goodsList")
 	public String goodsList(Model model) {
-		
 		List<Goods> goodsList = itemSvc.getGoodsList();
-		model.addAttribute("goodsList", goodsList);
-
+		if (goodsList != null) {
+			model.addAttribute("goodsList", goodsList);
+		}
+		
 		return "lookup/goodsList";
 	}
 
 	/*
-	 * 식물 상세 정보 조회
+	 * 식물 상세정보 조회
 	 */
 	@GetMapping("/goodsDetail")
-	public String goodsDetail(@RequestParam("itemId") String itemId, 
-			HttpSession session, Model model) {
-		
-		// 상품 상세정보 반환
+	public String goodsDetail(@RequestParam("itemId") String itemId, HttpSession session, Model model) {
 		Goods goods = itemSvc.getGoods(itemId);
-		model.addAttribute("goods", goods);
-		
-		// 상품에 대한 리뷰 목록 반환
-		List<Review> reviewList = reviewSvc.getReviewByItem(itemId);
-		if (reviewList != null) {
-			model.addAttribute("reviewList", reviewList);
-		}
-		
-		// 로그인 한 경우, 리뷰할 건이 있는 주문 id 반환
-		String memberId = (String) session.getAttribute("id");
-		if (memberId != null) {
-			int orderId = reviewSvc.getOrderIdByNotReview(itemId, memberId);
-			if (orderId > 0) {
-				model.addAttribute("orderId", orderId);
+		if(goods != null) {
+			model.addAttribute("goods", goods);
+			
+			List<Review> reviewList = reviewSvc.getReviewByItem(itemId);	// 상품에 대한 리뷰 목록 반환
+			if (reviewList != null) {
+				model.addAttribute("reviewList", reviewList);
 			}
+			
+			String memberId = (String) session.getAttribute("id");
+			if (memberId != null) {
+				int orderId = reviewSvc.getOrderIdByNotReview(itemId, memberId); // 로그인 한 경우, 리뷰할 건이 있는 주문 id 반환
+				if (orderId > 0) {
+					model.addAttribute("orderId", orderId);
+				}
+			}
+			
+			CartItem cartItem = new CartItem();	// 장바구니 추가에 필요한 cartItem 객체 반환
+			cartItem.setQuantity(1);
+			model.addAttribute("cartItem", cartItem);
 		}
-		
-		// cartItem 내용을 담을 객체 생성 후 반환
-		CartItem cartItem = new CartItem();
-		cartItem.setQuantity(1);
-		model.addAttribute("cartItem", cartItem);
 		
 		return "lookup/goodsDetail";
 	}
 	
 	/*
-	 * 모든 공유물품 목록 조회- 공유물품 전체 목록 조회
+	 * 공유물품 전체 목록 조회
 	 */
 	@GetMapping("/shareThingList")
 	public String shareThing(Model model) {
-		//공유물품 전체 목록 조회 페이지
-		
 		List<ShareThing> shareThingList = itemSvc.getShareThingList();
-		model.addAttribute("shareThingList", shareThingList);
+		if(shareThingList != null) {
+			model.addAttribute("shareThingList", shareThingList);
+		}
 		
 		return "lookup/shareThingList";
 	}
@@ -109,8 +106,6 @@ public class LookupController {
 	 */
 	@GetMapping("/shareThingDetail")
 	public String shareThingDetail(@RequestParam("itemId") String itemId, Model model) {
-		//공유물품 상세 정보 조회 페이지
-		
 		ShareThing shareThing = itemSvc.getShareThing(itemId);
 		Borrow borrow = borrowSvc.getCurrBorrowByItem(itemId);
 		if (borrow == null) {
@@ -128,35 +123,35 @@ public class LookupController {
 	 */
 	@GetMapping("/market")
 	public String market(@RequestParam("marketId") int marketId, Model model) {
-		
 		Market market = marketSvc.getMarket(marketId);
 		if (market != null) {
 			model.addAttribute(market);
 		}
+		
 		return "lookup/market";
 	}
 
 	/*
-	 * 상품 클릭 시 상품목록 json으로 반환
+	 * 상품목록 json으로 반환
 	 */
 	@GetMapping("/market/goodsList/{marketId}")
 	@ResponseBody
 	public List<Goods> marketGoodsList(@PathVariable("marketId") int marketId,
 			HttpServletResponse response) throws IOException {
-		
 		List<Goods> goodsList = itemSvc.getGoodsListByMarket(marketId);	
+		
 		return goodsList;
 	}
 	
 	/*
-	 * 공유물품 클릭 시 공유물품 목록 json으로 반환
+	 * 공유물품 목록 json으로 반환
 	 */
 	@GetMapping("/market/shareThingList/{marketId}")
 	@ResponseBody
 	public List<ShareThing> marketShareThingList(@PathVariable("marketId") int marketId,
 			HttpServletResponse response) throws IOException {
-		
 		List<ShareThing> shareThingList = itemSvc.getShareThingListByMarket(marketId);
+		
 		return shareThingList;
 	}
 	
@@ -164,12 +159,13 @@ public class LookupController {
 	 * 알림 조회
 	 */
 	@GetMapping("/alertList")
-	public String alertList(HttpSession session, Model model){
+	public String alertList(HttpSession session, Model model) {
 		String memberId = (String) session.getAttribute("id");
 		if (memberId != null) {
 			List<Alert> alertList = borrowSvc.getAlertByMember(memberId);
 			model.addAttribute("alertList", alertList);
 		}
+		
 		return "lookup/alert";
 	}
 
