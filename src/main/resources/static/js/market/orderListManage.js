@@ -21,6 +21,17 @@ function encodeUri(uri){
 
  function searchTrackingNumber(){
 	let trackingNumber = $('.filterText').val();
+	if(trackingNumber == ''){ //입력 안하고 검색했을 때
+		Swal.fire({
+				  text: "운송장 번호를 입력해주세요.",
+    			  confirmButtonColor: '#93c0b5',
+				  confirmButtonText: '확인',
+				  }).then((result) => {
+				  if (result.isConfirmed) { 
+				  }
+			  	});
+			  	return;
+	}
 	const uri = '/market/orderListManage?trackingNumber=' + trackingNumber;
 	encodeUri(uri);
 }

@@ -102,12 +102,15 @@
         </div>
       </div>
       <div th:if="${!orderList.firstPage}">
-      	<button id="returnBtn" th:onclick="'location.href=\''+ @{/market/orderListManage2(pageType=previous)} + '\''">이전으로</button>
+      	<button id="previousBtn" th:onclick="'location.href=\''+ @{/market/orderListManage2(pageType=previous)} + '\''">이전으로</button>
       </div>
       <div th:if="${!orderList.lastPage}">
-      	<button id="returnBtn" th:onclick="'location.href=\''+ @{/market/orderListManage2(pageType=next)} + '\''">다음으로</button>
+      	<button id="nextBtn" th:onclick="'location.href=\''+ @{/market/orderListManage2(pageType=next)} + '\''">다음으로</button>
       </div>
-      <button id="returnBtn" onclick="location.href='/market/goods/list'">뒤로 가기</button>
+      <div id="btnWrap">
+		    <button id="returnBtn" onclick="location.href='/market/goods/list'">상품 목록</button>
+		    <button id="purchaseStatusBtn" onclick="location.href='/market/orderListManage'">전체 구매현황</button>
+	 </div>
     </div>
 	</div>
 </html>
