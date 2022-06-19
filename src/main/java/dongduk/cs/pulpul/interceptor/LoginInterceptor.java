@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
@@ -33,12 +32,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 			response.sendRedirect("/member/login");
 			return false;
 		}
-	}
-
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, 
-			ModelAndView modelAndView) throws Exception {
-
 	}
 
 }

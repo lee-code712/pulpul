@@ -9,23 +9,32 @@ import dongduk.cs.pulpul.domain.Order;
 
 public interface OrderDao {
 	
-	// 회원 카트 조회
+	/*
+	 * 장바구니 관련 dao method
+	 */
+	
+	// 회원 장바구니 조회
 	Cart findCartByMember(String memberId);
 	
-	// 회원 카트 상품 수 조회
+	// 회원 장바구니 상품 수 조회
 	int findNumberOfCartItemByMember(String memberId);
 	
 	// 회원 장바구니에 특정 상품이 있는지 확인
 	boolean isExistItem(String memberId, String goodsId);
 	
-	// 카트 상품 생성
+	// 장바구니 상품 생성
 	void createCartItem(String memberId, CartItem cartItem);
 	
-	// 품목 id로 카트 상품 삭제
+	// 상품 id로 장바구니 상품 삭제
 	void deleteOneCartItem(String memberId, String itemId);
 	
-	// 마켓 id로 카트 상품 목록 삭제
+	// 마켓 id로 장바구니 상품 목록 삭제
 	int deleteCartItemByMarket(String memberId, int marketId);
+	
+	
+	/*
+	 * 주문 관련 dao method
+	 */
 	
 	// 주문 id로 주문 조회
 	Order findOrder(int orderId);

@@ -20,6 +20,29 @@ public class MybatisItemDao implements ItemDao {
     private ItemMapper itemMapper;
 	
 	@Override
+	public void createItemImages(List<String> imageUrlList, String memberId) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("memberId", memberId);
+		param.put("imageUrlList", imageUrlList);
+		itemMapper.insertItemImages(param);
+	}
+
+	@Override
+	public int deleteItemImages(String itemId, String memberId) {
+		return itemMapper.deleteItemImages(memberId, itemId);
+	}
+
+	@Override
+	public void changeItemInfo(Item item) {
+		itemMapper.updateItem(item);
+	}
+
+	@Override
+	public void deleteItem(String itemId) {
+		itemMapper.deleteItem(itemId);
+	}
+	
+	@Override
 	public List<Goods> findAllGoods() {
 		return itemMapper.selectAllGoods();
 	}
@@ -105,7 +128,7 @@ public class MybatisItemDao implements ItemDao {
 	}
 
 	@Override
-	public boolean changeIsBorrowed(ShareThing shareThing) {
+	public boolean changeIsBorrowed(ShareThing shareThing) { // borrow service 수정 시 void로 변경해야 함
 		int ck = itemMapper.updateIsBorrowed(shareThing);
 		if (ck > 0) return true;
 		return false;
@@ -116,29 +139,6 @@ public class MybatisItemDao implements ItemDao {
 		int ck = itemMapper.selectBorrowCountByItemId(itemId);
 		if (ck > 0) return true;
 		return false;
-	}
-	
-	@Override
-	public void changeItemInfo(Item item) {
-		itemMapper.updateItem(item);
-	}
-
-	@Override
-	public void deleteItem(String itemId) {
-		itemMapper.deleteItem(itemId);
-	}
-
-	@Override
-	public void createItemImages(List<String> imageUrlList, String memberId) {
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("memberId", memberId);
-		param.put("imageUrlList", imageUrlList);
-		itemMapper.insertItemImages(param);
-	}
-
-	@Override
-	public int deleteItemImages(String itemId, String memberId) {
-		return itemMapper.deleteItemImages(memberId, itemId);
 	}
 
 }

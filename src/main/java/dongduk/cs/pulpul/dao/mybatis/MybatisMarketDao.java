@@ -46,7 +46,6 @@ public class MybatisMarketDao implements MarketDao {
 	@Override
 	public void deleteMarketImage(String memberId) {
 		marketMapper.deleteMarketImage(memberId);
-		
 	}
 	
 }

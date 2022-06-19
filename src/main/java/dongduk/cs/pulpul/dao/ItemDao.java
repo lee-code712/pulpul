@@ -8,6 +8,27 @@ import dongduk.cs.pulpul.domain.ShareThing;
 
 public interface ItemDao {
 	
+	/*
+	 * 품목 관련 dao method
+	 */
+	
+	// 품목 이미지 목록 생성
+	void createItemImages(List<String> imageUrlList, String memberId);
+	
+	// 품목 이미지 목록 삭제(삭제 개수 반환)
+	int deleteItemImages(String itemId, String memberId);
+	
+	// 품목 정보 수정
+	void changeItemInfo(Item item);
+	
+	// 품목 삭제
+	void deleteItem(String itemId);
+	
+	
+	/*
+	 * 상품 관련 dao method
+	 */
+	
 	// 전체 상품 목록 조회
 	List<Goods> findAllGoods();
 	
@@ -20,7 +41,7 @@ public interface ItemDao {
 	// 새 상품 목록 조회
 	List<Goods> findNewGoods();
 	
-	// 품목 id로 상품 목록 조회
+	// 상품 id로 상품 상세 조회
 	Goods findGoodsByItem(String itemId);
 	
 	// 상품 id로 남은 수량 조회
@@ -38,40 +59,33 @@ public interface ItemDao {
 	// 상품에 대한 주문 내역 존재여부 확인
 	boolean isExistOrder(String itemId);
 	
+	
+	/*
+	 * 공유물품 관련 dao method
+	 */
+	
 	// 전체 공유물품 목록 조회
 	List<ShareThing> findAllShareThing();
 	
-	// 회원 id로 공유 물품 목록 조회
+	// 회원 id로 공유물품 목록 조회
 	List<ShareThing> findShareThingByMember(String memberId);
 	
-	// 마켓 id로 공유 물품 목록 조회
+	// 마켓 id로 공유물품 목록 조회
 	List<ShareThing> findShareThingByMarket(int marketId);
 	
-	// 품목 id로 공유 물품 목록 조회
+	// 공유물품 id로 공유물품 상세 조회
 	ShareThing findShareThingByItem(String itemId);
 	
-	// 공유 물품 생성
+	// 공유물품 생성
 	void createShareThing(ShareThing shareThing);
 	
-	// 공유 물품 정보 수정
+	// 공유물품 정보 수정
 	void changeShareThingInfo(ShareThing shareThing);
 	
-	// 공유 물품의 대여 여부 변경
-	boolean changeIsBorrowed(ShareThing shareThing);
+	// 공유물품의 대여 여부 변경
+	boolean changeIsBorrowed(ShareThing shareThing);  // borrow service 수정 시 void로 변경해야 함
 	
-	// 공유 물품에 대한 대여 내역 존재여부 확인
+	// 공유물품에 대한 대여 내역 존재여부 확인
 	boolean isExistBorrow(String itemId);
-	
-	// 품목 정보 수정
-	void changeItemInfo(Item item);
-	
-	// 품목 삭제
-	void deleteItem(String itemId);
-	
-	// 품목 이미지 목록 생성
-	void createItemImages(List<String> imageUrlList, String memberId);
-	
-	// 품목 이미지 목록 삭제(삭제 개수 반환)
-	int deleteItemImages(String itemId, String memberId);
 	
 }
