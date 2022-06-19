@@ -18,11 +18,11 @@
   </th:block>
 
 	<div layout:fragment="content">
-		<!--  <script th:inline="javascript">
+		 <script th:inline="javascript">
   		console.log('데이터 확인');
   		var orderList = [[${orderList}]];
   		console.log(orderList);
-  	</script>-->
+  	</script>
 		<div id="pageWrap">
       <div id="pageTit">상품 관리</div>
       <div id="pageSubTit">전체 구매 현황</div>
@@ -98,7 +98,7 @@
       <div id="totalPriceWrap">
         <div id="totalPriceInner">
           <span id="totalPriceTit">판매 총 금액</span>
-          <span id="totalPrice" th:text="${#numbers.formatInteger(#aggregates.sum(orderList.pageList.![totalPrice]), 0, 'COMMA')} + '원'"></span>
+          <span id="totalPrice" th:text="${#numbers.formatInteger(#aggregates.sum(orderList.source.![totalPrice]), 0, 'COMMA')} + '원'"></span>
         </div>
       </div>
       <div th:if="${!orderList.firstPage}">
