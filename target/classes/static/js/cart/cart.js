@@ -20,7 +20,18 @@ function cartCheck(){
 })
 	
 }
-
+function moveToGoods(id, itemOpen, marketOpen){
+	if(itemOpen == 0 || marketOpen == true){
+		Swal.fire({
+			      text: '판매중인 상품이 아닙니다.',
+			      confirmButtonColor: '#93c0b5',
+			      confirmButtonText: '확인',
+			    })
+		return;
+	}else{
+		moveToGoodsDetail(id);
+	}
+}
 /*
  같은 마켓의 상품만 주문 가능
  <button class="check-item-order">선택 상품 주문</button>
