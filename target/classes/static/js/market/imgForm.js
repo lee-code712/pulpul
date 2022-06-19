@@ -1,44 +1,19 @@
  /*
-* input file에서 이미지 선택 시 선택한 이미지와 이미지명을 보여줌.
+* input file에서 이미지 선택 시 선택한 이미지를 보여줌.
   goodsForm, shareThingForm
 */
 let fileArray; //fileLits 담을 변수
 let addFileArray;
-var check = 0;
+let check = 0;
 
-//사용자가 이미지 추가할 때마다 이미지 이름도 보여주기
-/*function inputFilename(){
-	
-	 const div = document.querySelector(".putFilenameDiv");
-
-	 var spanList = document.querySelectorAll(".putFilenameSpan");
-	 if(spanList.length > 0){
-		for(var i = 0; i < spanList.length; i++){
-			var initSpan = spanList[i];
-			initSpan.innerHTML = '';
-			initSpan.remove();
-		}
-	}
-	
-	 for (var i = 0; i < fileArray.length; i++) {
-		
-		const span = document.createElement("span");
-		span.classList.add("putFilenameSpan");
-		span.innerHTML = fileArray[i].name;
-		
-		div.appendChild(span);
-		
-	 }  
-}
-*/
   function previewFiles() {
 
-  var files = document.querySelector('input[type=file]').files;
+  let files = document.querySelector('input[type=file]').files;
   if(files.length == 0) return false;
   	
 	//처음 이미지 삽입할 때
 	if(check == 0){
-		 var files = document.querySelector('input[type=file]').files; 
+		 files = document.querySelector('input[type=file]').files; 
 		 fileArray = Array.from(files); //변수에 할당된 파일을 배열로 변환(FileList -> Array) -> filsList는 js에서 보안상(?) 수정할 수 없음. 
 		
 		 check = 1;
@@ -83,7 +58,7 @@ var check = 0;
 		span.classList.add("putItemImgSpan");
 		
 		//<img></img>
-        var image = new Image();
+        let image = new Image();
         image.height = 100;
         image.width = 100;
         image.title = file.name;
@@ -117,11 +92,11 @@ var check = 0;
  function updateImg(event){
 	
 	event.preventDefault();
-	var selectdeleteBtn = event.target.id;//선택한 button의 아이디
+	let selectdeleteBtn = event.target.id;//선택한 button의 아이디
 	
 	console.log(selectdeleteBtn);
-	var fileDiv = document.querySelector('.putFilenameDiv');
-	var deleteFilename = document.createElement('input');
+	let fileDiv = document.querySelector('.putFilenameDiv');
+	let deleteFilename = document.createElement('input');
 	
 	//input type=hidden으로 기존에 있는데 삭제된 파일 controller에 보내기
 	deleteFilename.setAttribute("type", "hidden");
@@ -137,7 +112,7 @@ var check = 0;
  function deleteImg(event){
 	     event.preventDefault();
 	       
-	       var deleteFile = event.target.id;//선택한 button의 아이디
+	       let deleteFile = event.target.id;//선택한 button의 아이디
 	       
 	       for(var i = 0; i < fileArray.length; i++){
 				if(deleteFile == fileArray[i].name){
