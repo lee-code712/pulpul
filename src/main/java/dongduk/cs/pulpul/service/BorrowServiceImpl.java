@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dongduk.cs.pulpul.dao.BorrowDao;
+import dongduk.cs.pulpul.dao.ItemDao;
 import dongduk.cs.pulpul.domain.Alert;
 import dongduk.cs.pulpul.domain.Borrow;
 import dongduk.cs.pulpul.domain.ShareThing;
@@ -20,10 +21,12 @@ import dongduk.cs.pulpul.domain.ShareThing;
 @Service
 public class BorrowServiceImpl implements BorrowService {
 	private final BorrowDao borrowDao;
+	private final ItemDao itemDao;
 
 	@Autowired
-	public BorrowServiceImpl(BorrowDao borrowDao) {
+	public BorrowServiceImpl(BorrowDao borrowDao, ItemDao itemDao) {
 		this.borrowDao = borrowDao;
+		this.itemDao = itemDao;
 	}
 	
 	@Autowired		// SchedulerConfig에 설정된 TaskScheduler 빈을 주입 받음
@@ -165,7 +168,7 @@ public class BorrowServiceImpl implements BorrowService {
 				}
 				
 			}
-			return borrowDao.changeIsBorrowed(borrow.getShareThing());
+			return itemDao.changeIsBorrowed(borrow.getShareThing());
 		}
 		return false;
 	}
@@ -186,8 +189,7 @@ public class BorrowServiceImpl implements BorrowService {
 		else {
 			shareThing.setIsBorrowed(1);
 		}
-		return borrowDao.changeIsBorrowed(shareThing);
-		// return false;
+		return itemDao.changeIsBorrowed(shareThing);
 	}
 	
 	// 연장하기 borrow_status가 대여 상태면, 연장 하기 버튼
@@ -222,7 +224,7 @@ public class BorrowServiceImpl implements BorrowService {
 		if (checkNumberBorrowReservation(borrow.getShareThing().getItem().getId()) == 0) {
 			ShareThing shareThing = borrow.getShareThing();
 			shareThing.setIsBorrowed(0);
-			borrowDao.changeIsBorrowed(shareThing);
+			itemDao.changeIsBorrowed(shareThing);
 		}
 		else {
 			// 첫 번째 예약자에게 알림 생성

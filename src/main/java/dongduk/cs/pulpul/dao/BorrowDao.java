@@ -55,8 +55,8 @@ public interface BorrowDao {
 	// 대여 생성
 	boolean createBorrow(Borrow borrow);
 	
-	// 공유물품 대여 상태 변경
-	boolean changeIsBorrowed(ShareThing shareThing);
+//	// 공유물품 대여 상태 변경
+//	boolean changeIsBorrowed(ShareThing shareThing);
 	
 	// 대여 운송장 번호 입력
 	boolean changeTrackingNumber(Borrow borrow);

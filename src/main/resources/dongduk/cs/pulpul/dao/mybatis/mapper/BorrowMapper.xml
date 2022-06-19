@@ -226,13 +226,6 @@
     	VALUES (borrow_seq.NEXTVAL, TO_DATE(#{borrowDate}, 'YYYYMMDD'), TO_DATE(#{returnDate}, 'YYYYMMDD'), #{lender.id}, #{borrower.id}, #{shareThing.item.id})	
 	</insert>
 	
-	<!-- 공유 물품 대여 여부 변경 -->
-	<update id="updateIsBorrowed" parameterType="ShareThing">
-		UPDATE share_thing
-		SET is_borrowed = #{isBorrowed}
-		WHERE item_id = #{item.id}
-	</update>
-	
 	<!-- 공유 물품 반납 -->
 	<update id="updateBorrowStatus" parameterType="Borrow">
 		UPDATE borrow

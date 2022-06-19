@@ -44,15 +44,6 @@
     	AND (order_id, goods_id) NOT IN (SELECT order_id, item_id AS goods_id FROM review) AND ROWNUM <![CDATA[<=]]> 1
 	</select>
 	
-	<!-- 리뷰할 주문id 1개 반환 -->
-	<select id="selectCountOfReview" parameterType="string" resultType="string">
-    SELECT order_id
-		FROM orders
-    	JOIN order_goods USING (order_id)
-		WHERE goods_id = #{itemId} AND buyer_id = #{memberId}
-    	AND (order_id, goods_id) NOT IN (SELECT order_id, item_id AS goods_id FROM review) AND ROWNUM <![CDATA[<=]]> 1
-	</select>
-	
 	<!-- 주문id와 상품 id에 대한 리뷰 수 반환 -->
 	<select id="selectReviewCountByItemId" resultType="int">
     SELECT COUNT(*)

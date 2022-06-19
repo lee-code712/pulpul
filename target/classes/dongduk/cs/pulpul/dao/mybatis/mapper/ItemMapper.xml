@@ -3,6 +3,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dongduk.cs.pulpul.dao.mybatis.mapper.ItemMapper">
 
+	<!--  ====================================================================  -->
+	<!--  물품 관련 질의문  -->
+	<!--  ====================================================================  -->
+
 	<!-- 물품 이미지(들) 저장 -->
 	<insert id="insertItemImages" parameterType="java.util.Map">
     	<foreach collection="imageUrlList" item="imageUrl" index="index"  open="INSERT ALL " separator=" " close="SELECT * FROM DUAL" >
@@ -178,28 +182,6 @@
 	<!--  공유물품 관련 질의문  -->
 	<!--  ====================================================================  -->
 	
-	<resultMap id="ShareThingInfoMap" type="ShareThing">
-		<result column="precaution" jdbcType="VARCHAR" property="precaution" javaType="string" />
-		<result column="is_borrowed" jdbcType="INTEGER" property="isBorrowed" javaType="int" />
-		<association property="item" column="item_id" javaType="Item">
-			<id column="item_id" jdbcType="VARCHAR" property="id" javaType="string" />
-			<result column="item_name" jdbcType="VARCHAR" property="name" javaType="string" />
-			<result column="upload_date" jdbcType="DATE" property="uploadDate" javaType="string" />
-			<result column="description" jdbcType="VARCHAR" property="description" javaType="string" />
-			<result column="open_status" jdbcType="INTEGER" property="openStatus" javaType="int" />
-			<association property="market" column="market_id" javaType="Market">
-				<id column="market_id" jdbcType="INTEGER" property="id" javaType="int" />
-				<result column="market_name" jdbcType="VARCHAR" property="name" javaType="string" />
-				<association property="member" column="member_id" javaType="Member">
-					<id column="member_id" jdbcType="VARCHAR" property="id" javaType="string" />
-				</association>
-			</association>
-			<collection property="imageUrlList" ofType="string" javaType="java.util.List">
-        <result column="image_src" />
-    	</collection>
-		</association>
-	</resultMap>
-	
 	<!-- 모든 공유물품목록 조회 -->
 	<select id="selectAllShareThing" resultType="ShareThing">
 		SELECT item_id AS "item.id", it.name AS "item.name", it.open_status AS "item.openStatus", 
@@ -241,6 +223,28 @@
 	</select>
 	
 	<!-- 공유물품 상세정보 조회 -->
+	<resultMap id="ShareThingInfoMap" type="ShareThing">
+		<result column="precaution" jdbcType="VARCHAR" property="precaution" javaType="string" />
+		<result column="is_borrowed" jdbcType="INTEGER" property="isBorrowed" javaType="int" />
+		<association property="item" column="item_id" javaType="Item">
+			<id column="item_id" jdbcType="VARCHAR" property="id" javaType="string" />
+			<result column="item_name" jdbcType="VARCHAR" property="name" javaType="string" />
+			<result column="upload_date" jdbcType="DATE" property="uploadDate" javaType="string" />
+			<result column="description" jdbcType="VARCHAR" property="description" javaType="string" />
+			<result column="open_status" jdbcType="INTEGER" property="openStatus" javaType="int" />
+			<association property="market" column="market_id" javaType="Market">
+				<id column="market_id" jdbcType="INTEGER" property="id" javaType="int" />
+				<result column="market_name" jdbcType="VARCHAR" property="name" javaType="string" />
+				<association property="member" column="member_id" javaType="Member">
+					<id column="member_id" jdbcType="VARCHAR" property="id" javaType="string" />
+				</association>
+			</association>
+			<collection property="imageUrlList" ofType="string" javaType="java.util.List">
+        <result column="image_src" />
+    	</collection>
+		</association>
+	</resultMap>
+	
 	<select id="selectShareThingByItem" parameterType="string" resultMap="ShareThingInfoMap">
 		SELECT item_id, it.name AS item_name, it.upload_date, it.description, it.open_status, 
 			market_id, m.name AS market_name,
@@ -269,6 +273,13 @@
 	<update id="updateShareThing" parameterType="ShareThing">
 		UPDATE share_thing
 		SET precaution = #{precaution}
+	</update>
+	
+	<!-- 공유 물품 대여 여부 변경 -->
+	<update id="updateIsBorrowed" parameterType="ShareThing">
+		UPDATE share_thing
+		SET is_borrowed = #{isBorrowed}
+		WHERE item_id = #{item.id}
 	</update>
 	
 	<!-- 공유물품에 대해 대여내역이 있는지 확인 -->

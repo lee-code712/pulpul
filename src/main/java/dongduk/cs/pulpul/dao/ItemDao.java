@@ -57,7 +57,7 @@ public interface ItemDao {
 	void changeShareThingInfo(ShareThing shareThing);
 	
 	// 공유 물품의 대여 여부 변경
-	void changeIsBorrowed(ShareThing shareThing);
+	boolean changeIsBorrowed(ShareThing shareThing);
 	
 	// 공유 물품에 대한 대여 내역 존재여부 확인
 	boolean isExistBorrow(String itemId);

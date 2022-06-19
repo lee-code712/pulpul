@@ -105,8 +105,10 @@ public class MybatisItemDao implements ItemDao {
 	}
 
 	@Override
-	public void changeIsBorrowed(ShareThing shareThing) {
-		itemMapper.updateIsBorrowed(shareThing);
+	public boolean changeIsBorrowed(ShareThing shareThing) {
+		int ck = itemMapper.updateIsBorrowed(shareThing);
+		if (ck > 0) return true;
+		return false;
 	}
 
 	@Override

@@ -13,6 +13,15 @@ import dongduk.cs.pulpul.domain.ShareThing;
 @Mapper
 public interface ItemMapper {
 	
+	void insertItemImages(Map<String, Object> itemImages);
+	
+	int deleteItemImages(@Param("memberId") String memberId, 
+			@Param("itemId") String itemId);
+	
+	void updateItem(Item item);
+	
+	void deleteItem(String itemId);
+	
 	List<Goods> selectAllGoods();
 	
 	List<Goods> selectGoodsByMemberId(String memberId);
@@ -47,17 +56,10 @@ public interface ItemMapper {
 	
 	void updateShareThing(ShareThing shareThing);
 	
-	void updateIsBorrowed(ShareThing shareThing);
+	int updateIsBorrowed(ShareThing shareThing);
 	
 	int selectBorrowCountByItemId(String itemId);
 	
-	void updateItem(Item item);
 	
-	void deleteItem(String itemId);
-	
-	void insertItemImages(Map<String, Object> itemImages);
-	
-	int deleteItemImages(@Param("memberId") String memberId, 
-			@Param("itemId") String itemId);
 	
 }

@@ -128,12 +128,12 @@ public class MybatisBorrowDao implements BorrowDao {
 		return true;
 	}
 
-	@Override
-	public boolean changeIsBorrowed(ShareThing shareThing) {
-		int ck = borrowMapper.updateIsBorrowed(shareThing);
-		if (ck < 0) return false;
-		return true;
-	}
+//	@Override
+//	public boolean changeIsBorrowed(ShareThing shareThing) {
+//		int ck = borrowMapper.updateIsBorrowed(shareThing);
+//		if (ck < 0) return false;
+//		return true;
+//	}
 
 	@Override
 	public Borrow findBorrowById(int borrowId) {

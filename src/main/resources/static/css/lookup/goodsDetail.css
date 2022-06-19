@@ -230,6 +230,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
 }
 
 .swiper-slide img {
@@ -237,6 +238,11 @@
  	width: 596px;
  	height: 398px;
   object-fit: contain;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+	display: none;
 }
 
 /* review content */
