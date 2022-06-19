@@ -9,7 +9,7 @@
 				  confirmButtonText: '확인',
 				  }).then((result) => {
 				  if (result.isConfirmed) { 
-						location.href="/market/orderListManage";
+						location.href="/market/goods/orderList";
 				  }
 			  	});
 }
@@ -32,7 +32,7 @@ function encodeUri(uri){
 			  	});
 			  	return;
 	}
-	const uri = '/market/orderListManage?trackingNumber=' + trackingNumber;
+	const uri = '/market/goods/orderList?trackingNumber=' + trackingNumber;
 	encodeUri(uri);
 }
 

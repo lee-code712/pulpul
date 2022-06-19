@@ -8,12 +8,12 @@
   <th:block layout:fragment="css">
     <link th:href="@{/css/fragments/header.css}" rel="stylesheet" />
 	  <link th:href="@{/css/fragments/footer.css}" rel="stylesheet" />
-  	<link rel="stylesheet" th:href="@{/css/market/shareThingBorrowManage.css}" >
+  	<link rel="stylesheet" th:href="@{/css/market/shareThingBorrowList.css}" >
   </th:block>
   
    <th:block layout:fragment="script">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  	<script th:src="@{/js/market/shareThingBorrowManage.js}"></script>
+  	<script th:src="@{/js/market/shareThingBorrowList.js}"></script>
   	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   </th:block>
 
@@ -59,10 +59,10 @@
       </table>
       
       <div th:if="${!borrowList.firstPage}">
-      	<button id="returnBtn" th:onclick="'location.href=\''+ @{/market/borrowListManage2(pageType=previous)} + '\''">이전으로</button>
+      	<button id="returnBtn" th:onclick="'location.href=\''+ @{/market/shareThing/borrowList2(pageType=previous)} + '\''">이전으로</button>
       </div>
       <div th:if="${!borrowList.lastPage}">
-      	<button id="returnBtn" th:onclick="'location.href=\''+ @{/market/borrowListManage2(pageType=next)} + '\''">다음으로</button>
+      	<button id="returnBtn" th:onclick="'location.href=\''+ @{/market/shareThing/borrowList2(pageType=next)} + '\''">다음으로</button>
       </div>
       <button id="returnBtn" onclick="location.href='/market/shareThing/list'">뒤로 가기</button>
     </div>

@@ -7,7 +7,7 @@
 	location.href = encoded;
 }
  function findBorrowShareThing(id){
-	const uri = '/market/shareThingBorrowManage?itemId=' + id;
+	const uri = '/market/shareThing/borrowList?itemId=' + id;
 	encodeUri(uri);
 }
 

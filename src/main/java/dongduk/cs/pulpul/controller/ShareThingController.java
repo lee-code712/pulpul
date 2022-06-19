@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
@@ -18,24 +19,31 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import dongduk.cs.pulpul.domain.Borrow;
 import dongduk.cs.pulpul.domain.ShareThing;
+import dongduk.cs.pulpul.service.BorrowService;
 import dongduk.cs.pulpul.service.ItemService;
 import dongduk.cs.pulpul.service.exception.DeleteItemException;
 
 @Controller
 @RequestMapping("/market/shareThing")
+@SessionAttributes("borrowList")
 public class ShareThingController implements ApplicationContextAware {
 	
+	private final ItemService itemSvc;
+	private final BorrowService borrowSvc;
 	private WebApplicationContext context;	
 	private String uploadDir;
-	private final ItemService itemSvc;
+	
 	
 	@Autowired
-	public ShareThingController(ItemService itemSvc) {
+	public ShareThingController(ItemService itemSvc, BorrowService borrowSvc) {
 		this.itemSvc = itemSvc;
+		this.borrowSvc = borrowSvc;
 	}
 	
 	@Override
@@ -55,11 +63,12 @@ public class ShareThingController implements ApplicationContextAware {
 	 */
 	@GetMapping("/list")
 	public String shareThingList(HttpSession session, Model model) {
-		
 		String memberId = (String) session.getAttribute("id");
 		
 		ArrayList<ShareThing> shareThingList = (ArrayList<ShareThing>) itemSvc.getShareThingListByMember(memberId);
-		model.addAttribute("shareThingList", shareThingList);
+		if(shareThingList != null) {
+			model.addAttribute("shareThingList", shareThingList);
+		}
 
 		return "market/shareThingList";
 	}
@@ -75,10 +84,10 @@ public class ShareThingController implements ApplicationContextAware {
 	@PostMapping("/upload")
 	public String upload(@Valid @ModelAttribute("shareThing") ShareThing shareThing, 
 			BindingResult result, FileCommand uploadFiles) {
-		
-		if (result.hasErrors())
+		if (result.hasErrors()) {
 			return "market/shareThingForm";
-		System.out.println(shareThing.toString());
+		}
+
 		uploadFiles.setPath(uploadDir);
 		itemSvc.uploadShareThing(shareThing, uploadFiles);
 
@@ -91,7 +100,6 @@ public class ShareThingController implements ApplicationContextAware {
 	@GetMapping("/update")
 	public String updateForm(@ModelAttribute("shareThing") ShareThing shareThing,
 			@RequestParam("itemId") String id) {
-		
 		ShareThing findShareThing = itemSvc.getShareThing(id);
 		if (findShareThing != null) {
 			BeanUtils.copyProperties(findShareThing, shareThing);
@@ -101,11 +109,11 @@ public class ShareThingController implements ApplicationContextAware {
 	}
 	
 	@PostMapping("/update")
-	public String update(@Valid @ModelAttribute("shareThing") ShareThing shareThing, BindingResult result, String[] deleteImages,
-			FileCommand updateFiles, Model model) {
-		
-		if (result.hasErrors())
+	public String update(@Valid @ModelAttribute("shareThing") ShareThing shareThing, BindingResult result, 
+			String[] deleteImages, FileCommand updateFiles) {
+		if (result.hasErrors()) {
 			return "market/shareThingForm";
+		}
 		
 		updateFiles.setPath(uploadDir);
 		itemSvc.changeShareThingInfo(shareThing, updateFiles, deleteImages);
@@ -119,7 +127,6 @@ public class ShareThingController implements ApplicationContextAware {
 	@GetMapping("/delete")
 	public String delete(@RequestParam("itemId") String id, HttpSession session, 
 			RedirectAttributes rttr) {
-		
 		try {
 			itemSvc.deleteItem(id, (String)session.getAttribute("id"), uploadDir);
 			
@@ -129,6 +136,35 @@ public class ShareThingController implements ApplicationContextAware {
 		}
 		
 		return "redirect:/market/shareThing/list";
+	}
+	
+	/*
+     * 특정 공유물품 대여 목록 조회
+	 */
+	@GetMapping("/borrowList")
+	public String borrowList(@RequestParam("itemId") String itemId, Model model) {
+		PagedListHolder<Borrow> borrowList = new PagedListHolder<Borrow>(borrowSvc.getBorrowByItem(itemId));
+		if (borrowList != null) {
+			borrowList.setPageSize(5);
+			model.addAttribute("borrowList", borrowList);
+		}
+		
+		return "market/shareThingBorrowList";
+	}
+	
+	@GetMapping("/borrowList2")
+	public String borrowList2(@RequestParam("pageType") String page, 
+			@ModelAttribute("borrowList") PagedListHolder<Borrow> borrowList, Model model) {
+		if ("next".equals(page)) {
+			borrowList.nextPage();
+		}
+		else if ("previous".equals(page)) {
+			borrowList.previousPage();
+		}
+
+		model.addAttribute("borrowList", borrowList);
+		
+		return "market/shareThingBorrowList";
 	}
 
 }

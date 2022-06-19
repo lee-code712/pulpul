@@ -31,7 +31,7 @@ import dongduk.cs.pulpul.service.exception.DeleteItemException;
 
 @Controller
 @RequestMapping("/market/goods")
-@SessionAttributes({"orderList"})
+@SessionAttributes("orderList")
 public class GoodsController implements ApplicationContextAware {
 	
 	private final ItemService itemSvc;
@@ -62,8 +62,9 @@ public class GoodsController implements ApplicationContextAware {
 	 */
 	@GetMapping("/list")
 	public String goodsList(HttpSession session, Model model) {		
-		// 판매 상품목록 조회
-		ArrayList<Goods> goodsList = (ArrayList<Goods>) itemSvc.getGoodsListByMember((String) session.getAttribute("id"));
+		String memberId = (String) session.getAttribute("id");
+		
+		ArrayList<Goods> goodsList = (ArrayList<Goods>) itemSvc.getGoodsListByMember(memberId);
 		if(goodsList != null) {
 			model.addAttribute("goodsList", goodsList);
 		}
@@ -80,7 +81,8 @@ public class GoodsController implements ApplicationContextAware {
 	}
 
 	@PostMapping("/upload")
-	public String upload(@Valid @ModelAttribute("goods") Goods goods, BindingResult result, FileCommand uploadFiles) {
+	public String upload(@Valid @ModelAttribute("goods") Goods goods, BindingResult result, 
+			FileCommand uploadFiles) {
 		if (result.hasErrors()) {	// form 입력 값 검증
 			return "market/goodsForm";
 		}
@@ -135,10 +137,11 @@ public class GoodsController implements ApplicationContextAware {
 	}
 	
 	/*
-	 * 식물 판매 목록 조회
+	 * 식물 판매목록 조회
 	 */
 	@GetMapping("/orderList")
-	public String orderList(@RequestParam(required=false) String trackingNumber, HttpSession session, Model model) {
+	public String orderList(@RequestParam(required=false) String trackingNumber, 
+			HttpSession session, Model model) {
 		String memberId = (String) session.getAttribute("id");	
 		String keyword = "seller";
 		if (trackingNumber != null) {	// 운송장 번호로 검색 시 keyword 변수에 저장
@@ -151,7 +154,7 @@ public class GoodsController implements ApplicationContextAware {
 			model.addAttribute("orderList", orderList);
 		}
 		
-		return "market/orderListManage";
+		return "market/orderList";
 	}
 	
 	@GetMapping("/orderList2")
@@ -166,7 +169,7 @@ public class GoodsController implements ApplicationContextAware {
 		
 		model.addAttribute("orderList", orderList);
 		
-		return "market/orderListManage";
+		return "market/orderList";
 	}
 	
 	/*
@@ -177,7 +180,7 @@ public class GoodsController implements ApplicationContextAware {
 		Order order = orderSvc.getOrder(orderId);
 		model.addAttribute("order", order);
 		
-		return "market/orderDetailManage";
+		return "market/orderDetail";
 	}
 
 }

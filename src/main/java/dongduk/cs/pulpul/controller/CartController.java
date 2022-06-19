@@ -35,7 +35,7 @@ public class CartController {
 	 */
 	@GetMapping("/cartList")
 	public String cartList(HttpSession session, Model model) {
-		Cart cart = orderSvc.getCart((String) session.getAttribute("id"));	// 장바구니 목록 조회
+		Cart cart = orderSvc.getCart((String) session.getAttribute("id"));
 		if (cart != null) {
 			model.addAttribute(cart);
 			session.setAttribute("cart", cart);	// cart 객체를 세션에 저장
@@ -57,7 +57,7 @@ public class CartController {
 		}
 		
 		try {
-			orderSvc.addCartItem((String) session.getAttribute("id"), cartItem);	// 장바구니에 상품 추가
+			orderSvc.addCartItem((String) session.getAttribute("id"), cartItem);
 			
 			int newCartItemCnt = (int) session.getAttribute("cartItemCnt") + 1;	// 세션에 저장한 장바구니 상품 수 + 1
 			session.setAttribute("cartItemCnt", newCartItemCnt);
@@ -76,7 +76,7 @@ public class CartController {
 	 */
 	@GetMapping("/deleteItem")
 	public String deleteCartItem(@RequestParam("itemId") String itemId, HttpSession session) {
-		orderSvc.deleteCartItem((String) session.getAttribute("id"), itemId);	// 장바구니에서 상품 삭제
+		orderSvc.deleteCartItem((String) session.getAttribute("id"), itemId);
 
 		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - 1;	// 세션에 저장한 장바구니 상품 수 - 1
 		session.setAttribute("cartItemCnt", newCartItemCnt);
@@ -89,9 +89,9 @@ public class CartController {
 	 */
 	@GetMapping("/deleteItemByMarket")
 	public String deleteCartItemByMarket(@RequestParam("marketId") int marketId, HttpSession session) {
-		int deleteCnt = orderSvc.deleteCartItemByMarket((String) session.getAttribute("id"), marketId);	// 장바구니에서 특정 마켓의 상품 삭제
+		int deleteCnt = orderSvc.deleteCartItemByMarket((String) session.getAttribute("id"), marketId);
 		
-		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - deleteCnt;	// 세션에 저장한 장바구니 상품 수 - 삭제 개수
+		int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - deleteCnt;	// 세션에 저장한 장바구니 상품 수 - 삭제한 장바구니 상품 수
 		session.setAttribute("cartItemCnt", newCartItemCnt);
 		
 		return "redirect:/cart/cartList";
