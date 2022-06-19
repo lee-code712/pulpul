@@ -125,18 +125,20 @@ function orderListJson(btnType) {
 				
 				const td_06 = document.createElement("td");
 				td_06.setAttribute("class", "traking-number");
-				td_06.innerHTML = order.trackingNumber;
+				if (order.trackingNumber == null) {
+					td_06.innerHTML = "-";
+				} else {
+					td_06.innerHTML = order.trackingNumber;
+				}
 				
 				const td_07 = document.createElement("td");
 				if (order.trackingNumber == null && order.orderStatus == 1) {
 					td_07.setAttribute("class", "cancel-btn");
 					td_07.innerHTML += "<button class='cancelBtn-noton' onclick=\"location.href='/order/cancel?orderId=" + order.id + "'\">주문 취소</button>";
-					
 				}
 				if (order.orderStatus == 2) {
 					td_07.setAttribute("class", "cancel-btn");
 					td_07.innerHTML += "<button class='cancelBtn-on' onclick=\"location.href='/order/finalize?orderId=" + order.id + "'\">주문 확정</button>";
-					
 				}
 				
 				tb_row.appendChild(td_01);
