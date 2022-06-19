@@ -69,5 +69,8 @@ function deleteImg(event){
 		  */
 		  $(".upload-img").children().remove();
 		  $("#saveBtn").disabled = true;
+		  
+		  var ImgElement = document.getElementById("imageUrl");
+		  ImgElement.value = "";
   }
   

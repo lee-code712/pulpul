@@ -289,4 +289,5 @@
 			JOIN borrow b ON it.item_id = b.share_thing_id 
 		WHERE it.item_id = #{item_id}
 	</select>
+	
 </mapper>

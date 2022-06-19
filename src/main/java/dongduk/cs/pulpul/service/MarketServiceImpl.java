@@ -68,8 +68,7 @@ public class MarketServiceImpl implements MarketService {
 	@Transactional
 	public void changeMarketInfo(Market market, FileCommand updateFile) throws DataAccessException {
 		
-		marketRepo.updateMarket(market.getName(), market.getIntro(), market.getContactableTime(),
-				market.getPolicy(), market.getPrecaution(), market.getOpenStatus(), market.getId());	// 마켓 레코드 수정
+		marketRepo.save(market);	// 마켓 레코드 수정
 
 		Image image = imageRepo.findByMemberIdAndCategoryId(market.getMemberId(), "MIMG");
 		
@@ -83,8 +82,8 @@ public class MarketServiceImpl implements MarketService {
 				imageRepo.save(newImage);	// 마켓 이미지 레코드 생성
 			}
 		}
-		
-		if (updateFile.getFile().isEmpty() && image != null) {
+
+		if (updateFile.getFile().isEmpty() && market.getImageUrl().length() == 0 && image != null) {
 			deleteFile(updateFile.getPath(), market.getId());
 			imageRepo.deleteByMemberIdAndCategoryId(market.getMemberId(), "MIMG");
 		}
