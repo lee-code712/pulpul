@@ -45,7 +45,7 @@
 	width: 270px;
 	height: 270px;
 	background-color: #F1F1F1;	
-	object-fit: contain;
+	object-fit: cover;
   border-radius: 5px;
 }
 

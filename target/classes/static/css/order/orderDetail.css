@@ -78,7 +78,7 @@ td {
 .info-image {
   width: 60px;
   border-radius: 5px;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .info {
