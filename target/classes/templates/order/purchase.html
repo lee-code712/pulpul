@@ -17,11 +17,11 @@
   </th:block>
   
 	<div layout:fragment="content">
-	<script th:inline="javascript">
+	<!-- <script th:inline="javascript">
   		console.log('데이터 확인');
   		var order = [[${order}]];
   		console.log(order);
-   </script>
+   </script> -->
    <form method="post" action="/order/purchase" th:object="${order}">
 		<div id="pageWrap">
       <div id="pageTit">결제화면</div>
@@ -82,7 +82,7 @@
 
           <div id="paymentBtnWrap">
             <button id="paymentBtn" type="submit">결제하기</button>
-            <button id="cancelBtn"  onclick="location.href='/cart/cartList'">취소하기</button>
+            <button id="cancelBtn" onclick="location.href='/cart/cartList'">취소하기</button>
           </div>
         </div>
       </div>

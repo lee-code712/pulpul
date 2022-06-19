@@ -1,34 +1,35 @@
 /**
  * 
  */
- //배송비 상품들 중 배송비 가장 큰 값
- var shippings = document.querySelectorAll(".shippingFee");
- var shippingArr = [];
+ //배송비 상품들 중 배송비 가장 큰 값 선택
+ let shippings = document.querySelectorAll(".shippingFee");
+ let shippingArr = [];
  for(var i = 0; i < shippings.length; i++){
 	shippingArr.push(shippings[i].innerHTML);
 }
-var maxShipping = Math.max.apply(null, shippingArr);
+let maxShipping = Math.max.apply(null, shippingArr);
 
 $("#total-shipping").text(maxShipping.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원");
  
  //총 결제 금액 계산
- var totalItem = Number($("#total-item").text().replace(",", "").split("원")[0]); //결제 상품 금액
- var point = Number($("#point").text());
+ let totalItem = Number($("#total-item").text().replace(",", "").split("원")[0]); //결제 상품 금액
+ let point = Number($("#point").text());
  
 if(point > 0) {
 	$("#total-price").text((totalItem + maxShipping - point).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원");
 }else{
 	$("#total-price").text((totalItem + maxShipping).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원");
 }
-$("#total-input").attr("value", $("#total-price").text()); //total-price input hidden
+
+let totalPrice = $("#total-price").text().replace(",", "").split("원")[0]; //총 결제 금액
+$("#total-input").attr("value", totalPrice); //total-price input hidden
  
  //잔여 포인트
- var leftover = $("#leftover").text().replace(",", "").replace("잔여 포인트", "").split("원")[0];
- var totalPrice = $("#total-price").text().replace(",", "").split("원")[0];
+ let leftover = $("#leftover").text().replace(",", "").replace("잔여 포인트", "").split("원")[0];
  $("#point").keyup(function(){
 	
-	var point = Number($(this).val());
-	var total;
+	let point = Number($(this).val());
+	let total;
 	if(point > Number(leftover)){ //잔여 포인트보다 큰 값 입력시
 		$(this).val("");
 		total = totalPrice;
@@ -44,7 +45,7 @@ $("#total-input").attr("value", $("#total-price").text()); //total-price input h
 
  
  /* 카드 번호 형식 */
- var cardNumber = document.getElementById('cardNum');
+ let cardNumber = document.getElementById('cardNum');
 cardNumber.onkeyup = function(event){
     event = event || window.event;
     var _val = this.value.trim();
@@ -53,7 +54,7 @@ cardNumber.onkeyup = function(event){
 
 function autoHypenCard(str){
     str = str.replace(/[^0-9]/g, '');
-    var tmp = '';
+    let tmp = '';
     if( str.length < 4){
         return str;
     }
@@ -83,7 +84,7 @@ function autoHypenCard(str){
     return str;
 }
 
-/* 카드 유효기간 */
+/* 카드 유효기간 형식 */
  $("#validDate").keyup(function(){
 	
 	if($(this).val().length == 2){
