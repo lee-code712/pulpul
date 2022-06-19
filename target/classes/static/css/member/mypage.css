@@ -249,3 +249,17 @@ td.order-id:hover {
 	font-size: 14px;
 	color: #DF5375;
 }
+
+.btn-wrap {
+	display: flex;
+	gap: 20px;
+}
+
+.rez-cancel-btn {
+	 width: 80px;
+  height: 40px;
+  border: 1px solid #C09393;
+  background-color: white;
+  color: #C09393;
+  cursor: pointer;
+}

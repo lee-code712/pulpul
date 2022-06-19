@@ -318,7 +318,11 @@ function shareThingListJson(btnType) {
 				
 				/* 대여신청 */
 				if (!borrow.borrowStatus && borrow.isFirstBooker == 1) {
-						td_06.innerHTML += "<button class='extension-btn' onclick=\"location.href='/lookup/shareThingDetail?itemId=" + borrow.shareThing.item.id + "'\">대여 신청</button>";	
+						const btnWrap = document.createElement("div");
+						btnWrap.setAttribute("class", "btn-wrap");
+						btnWrap.innerHTML += "<button class='extension-btn' onclick=\"location.href='/lookup/shareThingDetail?itemId=" + borrow.shareThing.item.id + "'\">대여 신청</button>";	
+						btnWrap.innerHTML += "<button class='rez-cancel-btn'>예약 취소</button>";
+						td_06.appendChild(btnWrap);
 				}
 				
 				/* 대여신청 버튼 비활성화 */
