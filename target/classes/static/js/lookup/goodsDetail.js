@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
   },
 });
 
-/* 경로 */
+/* 경로 - 파라미터에 string이 들어갈 경우*/
  function encodeUri(uri){
 	const encoded = encodeURI(uri);
 	location.href = encoded;
@@ -45,33 +45,10 @@ function moveToGoodsDetail(id){
 	encodeUri(uri);
 }
 
-function addToCart(id){
-	if(document.querySelector("#itemNumInput").value == "") {
-		Swal.fire({
-				  text: "1개 이상 구매하셔야 합니다.",
-    			  confirmButtonColor: '#93c0b5',
-				  confirmButtonText: '확인',
-				  }).then((result) => {
-				  if (result.isConfirmed) { 
-						moveToGoodsDetail(id);
-				  }
-			  	});
-	}else{
-		location.href="/cart/addItem";
-		$('#addCartForm').action='/cart/addItem'
-	}
-}
-/* 버튼 클릭 시 이동 막음 */
+/* 품절 버튼 클릭 시 이동 막음 */
 $("#soldoutBtn").click(function(event){
 	event.preventDefault();
 })
-
-/* input type number 키보드 한글 입력 안되게 */
-$("#itemNumInput").on("keyup", function(e) {
-    if(!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8 || e.keyCode == 9)) {
-        return false;
-    }
-});
 
 /*Total Price*/
 function totalPrice(){
@@ -137,15 +114,15 @@ function getImageFiles() {
 * input file에서 이미지 선택 시 선택한 이미지 보여줌.
 */
  function previewFile() {
-  var preview = document.querySelector('.upload-img');
-  var file    = document.querySelector('input[type=file]').files[0];
-  var reader  = new FileReader();
+  let preview = document.querySelector('.upload-img');
+  let file    = document.querySelector('input[type=file]').files[0];
+  let reader  = new FileReader();
 
   reader.onloadend = function () {
-	var img = document.createElement("img");
+	let img = document.createElement("img");
 	img.classList.add("reviewImage");
     img.src = reader.result;
-    var div = document.createElement("div");
+    let div = document.createElement("div");
     div.classList.add("upload-img-box");
     div.appendChild(img);
 
