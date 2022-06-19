@@ -177,13 +177,32 @@ td {
   color: #93c0b5;
 }
 
-#returnBtn {
-	display: block;
-	margin: 60px auto 80px auto;
-	width: 140px;
-  height: 40px;
-  border: 1px solid black;
-  background-color: white;
-  color: black;
-  cursor: pointer;
+#btnWrap {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
 }
+
+#returnBtn,
+#purchaseStatusBtn {
+  width: 140px;
+  height: 40px;
+  border: 1px solid #434343;
+  background-color: white;
+  color: #434343;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+#previousBtn, #nextBtn {
+  display: block;
+  margin: 40px auto 40px auto;
+  width: 140px;
+  height: 40px;
+  border: 1px solid #434343;
+  background-color: white;
+  color: #434343;
+  cursor: pointer;
+  border-radius: 10px;
+} 
