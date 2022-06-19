@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +26,7 @@ import dongduk.cs.pulpul.domain.Order;
 import dongduk.cs.pulpul.service.MemberService;
 import dongduk.cs.pulpul.service.OrderService;
 import dongduk.cs.pulpul.service.exception.CancelOrderException;
+import dongduk.cs.pulpul.service.exception.OrderException;
 
 @Controller
 @SessionAttributes("order")
@@ -79,23 +81,32 @@ public class OrderController {
 	
 	@PostMapping("/purchase")
 	public String purchase(@Valid @ModelAttribute("order") Order order, BindingResult result,
-			HttpSession session, SessionStatus status) {
+			HttpSession session, SessionStatus status, Model model) {
 		if (result.hasErrors()) {
 			return "order/purchase";
 		}
 		
-		int orderId = orderSvc.order(order);
-		if (orderId > 0) {
-			int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - order.getGoodsList().size();	// 장바구니 상품 수 - 주문 상품 수
-			session.setAttribute("cartItemCnt", newCartItemCnt);
+		int orderId;
+		try {
+			orderId = orderSvc.order(order);
+			if (orderId > 0) {
+				int newCartItemCnt = (int) session.getAttribute("cartItemCnt") - order.getGoodsList().size();	// 장바구니 상품 수 - 주문 상품 수
+				session.setAttribute("cartItemCnt", newCartItemCnt);
+			}
+			
+			if (!status.isComplete()) {
+				status.setComplete(); // order 객체 참조 삭제
+			}
+			session.removeAttribute("cart"); // cart 객체를 세션에서 삭제
+			
+			return "redirect:/member/mypage/orderDetail?orderId=" + orderId;
+			
+		} catch (OrderException e) {
+			model.addAttribute("orderFailed", true);
+			model.addAttribute("exception", e.getMessage());
+			return "order/purchase";
 		}
 		
-		if (!status.isComplete()) {
-			status.setComplete(); // order 객체 참조 삭제
-		}
-		session.removeAttribute("cart"); // cart 객체를 세션에서 삭제
-		
-		return "redirect:/member/mypage/orderDetail?orderId=" + orderId;
 	}
 	
 	/*

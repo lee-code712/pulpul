@@ -7,6 +7,7 @@ import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Order;
 import dongduk.cs.pulpul.service.exception.AddCartException;
 import dongduk.cs.pulpul.service.exception.CancelOrderException;
+import dongduk.cs.pulpul.service.exception.OrderException;
 
 public interface OrderService {
 	
@@ -41,7 +42,7 @@ public interface OrderService {
 	Order getOrder(int orderId);
 	
 	// 주문
-	int order(Order order);
+	int order(Order order) throws OrderException;
 	
 	// 주문에 대한 운송장번호 입력
 	void changeTrackingNumber(Order order);

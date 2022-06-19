@@ -18,6 +18,7 @@ import dongduk.cs.pulpul.domain.CartItem;
 import dongduk.cs.pulpul.domain.Order;
 import dongduk.cs.pulpul.service.exception.AddCartException;
 import dongduk.cs.pulpul.service.exception.CancelOrderException;
+import dongduk.cs.pulpul.service.exception.OrderException;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -48,15 +49,15 @@ public class OrderServiceImpl implements OrderService {
 
 		int remainQuantity = itemDao.findRemainQuantityByGoods(goodsId);
 		if (remainQuantity == 0) {	// 남은 수량이 없으면 에러 메시지 전달
-			System.out.println("남은 수량 없음");
+//			System.out.println("남은 수량 없음");
 			throw new AddCartException("남은 상품이 모두 팔렸습니다.");
 		}
 		else if (cartItem.getQuantity() > remainQuantity) {	// 선택한 수량보다 남은 수량을 초과하면 에러 메시지 전달
-			System.out.println("남은 수량 초과");
+//			System.out.println("남은 수량 초과");
 			throw new AddCartException("남은 상품보다 많은 수량을 선택했습니다. 수량을 다시 선택해주세요.");
 		}
 		else if (orderDao.isExistItem(memberId, goodsId)) {	// 이미 장바구니에 해당 상품이 존재하면 에러 메시지 전달
-			System.out.println("장바구니에 존재하는 항목");
+//			System.out.println("장바구니에 존재하는 항목");
 			throw new AddCartException("이미 장바구니에 존재하는 상품입니다.");
 		}
 		
@@ -92,7 +93,20 @@ public class OrderServiceImpl implements OrderService {
 
 	@Transactional
 	@Override
-	public int order(Order order) {
+	public int order(Order order) throws OrderException {
+		for (CartItem cartItem : order.getGoodsList()) {
+			int remainQuantity = itemDao.findRemainQuantityByGoods(cartItem.getGoodsId());
+			if (remainQuantity == 0) {	// 남은 수량이 없으면 에러 메시지 전달
+//				System.out.println("남은 수량 없음");
+				throw new OrderException("선택하신 상품 중 " + cartItem.getGoods().getItem().getName() 
+						+ " 상품이 모두 팔렸습니다. 이 상품을 제외하고 다시 결제 바랍니다.");
+			}
+			else if (cartItem.getQuantity() > cartItem.getQuantity()) {	// 선택한 수량보다 남은 수량을 초과하면 에러 메시지 전달
+//				System.out.println("남은 수량 초과");
+				throw new OrderException("선택하신 상품 중 " + cartItem.getGoods().getItem().getName() 
+						+ " 상품의 구매 수량이 남은 수량을 초과합니다. 상품을 삭제하고 장바구니에 다시 추가하시기 바랍니다.");
+			}
+		}
 		orderDao.createOrder(order);	// 주문 레코드 생성
 		
 		int orderId = order.getId();
