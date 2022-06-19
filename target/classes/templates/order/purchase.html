@@ -14,6 +14,7 @@
  <th:block layout:fragment="script">
   	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   	<script th:src="@{/js/order/purchase.js}" defer></script>
+  	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   </th:block>
   
 	<div layout:fragment="content">
@@ -79,9 +80,24 @@
             <div class="price-info" id="total-price" th:text="${#numbers.formatInteger(#aggregates.sum(order.goodsList.![price]) 
             	+ #aggregates.sum(order.goodsList.![goods?.shippingFee]), 0 , 'COMMA')} + '원'"></div>
           </div>
-
           <div id="paymentBtnWrap">
             <button id="paymentBtn" type="submit">결제하기</button>
+            <script th:inline="javascript">
+                  var soldout = [[${orderFailed}]];
+                  console.log(soldout);
+                  if(soldout){
+				  			Swal.fire({
+				  			  text: [[${exception}]],
+				  			  icon: "error",
+				  			  confirmButtonColor: '#93c0b5',
+				  			  confirmButtonText: '확인',
+				  			}).then((result) => {
+							  if (result.isConfirmed) { 
+								 location.href="/cart/cartList";
+							  }
+						  	});
+                  }
+				 </script>
             <button id="cancelBtn" onclick="location.href='/cart/cartList'">취소하기</button>
           </div>
         </div>
