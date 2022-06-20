@@ -127,6 +127,7 @@
 			FULL OUTER JOIN market m USING (market_id)
 			FULL OUTER JOIN image i USING (member_id)
 		WHERE item_id = #{item_id} AND INSTR(i.image_src, item_id) <![CDATA[>]]> 0
+		ORDER BY image_src ASC
 	</select>
 	
 	<!-- 상품 id로 남은 수량 조회 -->

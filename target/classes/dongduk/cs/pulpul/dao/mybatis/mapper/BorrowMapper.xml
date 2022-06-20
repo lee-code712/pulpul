@@ -87,6 +87,7 @@
 				<result column="name" jdbcType="VARCHAR" property="name" javaType="string" />
 				<result column="upload_date" jdbcType="DATE" property="uploadDate" javaType="string" />
 				<result column="description" jdbcType="VARCHAR" property="description" javaType="string" />
+				<result column="image_src" jdbcType="VARCHAR" property="thumbnailUrl" javaType="String" />
 				<association property="market" column="market_id" javaType="Market">
 					<id column="market_id" jdbcType="INTEGER" property="id" javaType="int" />
 				</association>
@@ -163,6 +164,7 @@
 		<if test='identity eq "lender"'>
 			WHERE lender_id = #{memberId} AND INSTR(i.image_src, it.item_id || '-1') <![CDATA[>]]> 0
 		</if>
+		ORDER BY image_src ASC
 	</select>
 	
 	<select id="selectCurrBorrowByItem" parameterType="String" resultMap="BorrowInfoMap">
@@ -182,7 +184,6 @@
 			FULL OUTER JOIN share_thing st ON b.share_thing_id = st.item_id
             FULL OUTER JOIN market m ON it.market_id = m.market_id
 			FULL OUTER JOIN image i ON lm.member_id = i.member_id
-		
 		WHERE b.share_thing_id = #{itemId} AND b.borrow_status = 1
 	</select>
 	
@@ -219,6 +220,7 @@
             JOIN market m ON it.market_id = m.market_id
 			JOIN image i ON m.member_id = i.member_id
 		WHERE br.member_id = #{memberId} AND INSTR(i.image_src, it.item_id || '-1') <![CDATA[>]]> 0
+		ORDER BY image_src ASC
 	</select>
 	
 	<!-- 특정 알림의 대여 예약 -->
@@ -252,34 +254,6 @@
 	<update id="updateReturnDate" parameterType="Borrow">
 		UPDATE borrow
 		SET is_extended = 1, return_date = TO_DATE(#{returnDate}, 'YYYYMMDD')
-		WHERE borrow_id = #{id}
-	</update>
-	
-	<!-- 운송장 번호로 대여 조회 -->
-	<select id="selectBorrowByTrackingNumber" parameterType="String" resultMap="BorrowInfoMap">
-		SELECT b.borrow_id, b.borrow_date, b.return_date, b.tracking_number, b.borrow_status, b.is_extended, b.lender_id, b.borrower_id, b.share_thing_id,
-				br.is_first_booker,
-				lm.member_id AS lender_id, lm.name AS lender_name, lm.address AS lender_address, lm.phone AS lender_phone,
-				bm.member_id AS borrower_id, bm.name AS borrower_name, bm.address AS borrower_address, 
-				bm.address_detail AS borrower_address_detail, bm.zip AS borrower_zip, bm.phone AS borrower_phone
-				it.item_id, i.name, i.upload_date, i.description, i.market_id,
-				st.precaution, st.is_borrowed,
-				i.img_src,
-				(SELECT COUNT(*) FROM borrow_reservation WHERE it.item_id) AS reservation_number
-		FROM borrow b
-			JOIN borrow_reservation br b.share_thing_id = br.share_thing_id AND b.borrower_id = br.member_id
-			JOIN member lm b.lender_id = lm.member_id
-			JOIN member bm b.borrower_id = bm.member_id
-			JOIN item it b.share_thing_id = it.item_id
-			JOIN share_thing st b.share_thing_id = st.item_id
-			JOIN image i b.borrower_id = i.member_id
-		WHERE tracking_number = #{trackingNumber} AND INSTR(i.image_src, it.item_id) <![CDATA[>]]> 0
-	</select>
-	
-	<!-- 대여 내역에 운송장 번호 입력 -->
-	<update id="updateTrackingNumber" parameterType="Borrow">
-		UPDATE borrow
-		SET tracking_number = ${trackingNumber}
 		WHERE borrow_id = #{id}
 	</update>
 	
