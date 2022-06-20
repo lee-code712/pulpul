@@ -198,11 +198,11 @@ td {
 #previousBtn, #nextBtn {
   display: block;
   margin: 40px auto 40px auto;
-  width: 140px;
-  height: 40px;
-  border: 1px solid #434343;
+  	width: 200px;
+	height: 40px;
+  border: 1px solid #c4c4c4;
   background-color: white;
-  color: #434343;
+  color: #535353;
   cursor: pointer;
   border-radius: 10px;
 } 
