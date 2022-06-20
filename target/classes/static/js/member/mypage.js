@@ -2,24 +2,6 @@
 document.addEventListener("DOMContentLoaded", function() {    
 	orderListJson('');
 });
-
-/* uri */
-function encodeUri(uri){
-	const encoded = encodeURI(uri);
-	location.href = encoded;
-}
-
-/* 식물 목록으로 이동 */
-function moveToGoodsList(){
-	const uri = '/lookup/goodsList';
-	encodeUri(uri);
-}
-
-/* 공유 물품 목록으로 이동 */
-function moveToShareThingList(){
-	const uri = '/lookup/shareThingList'
-	encodeUri(uri);
-}
  
 /* 구매 목록 */
 function orderListJson(btnType) {

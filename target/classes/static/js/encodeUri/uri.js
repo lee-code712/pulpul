@@ -62,6 +62,14 @@ function moveToShareThingDetail(id){
 }
 
 /********************************************************************************************
+/market/shareThingBorrowList.html 
+********************************************************************************************/
+function returnShareThing(id){
+	const uri = '/borrow/return?borrowId=' + id;
+	encodeUri(uri);
+}
+
+/********************************************************************************************
 /lookup/goodsDetail.html 
 ********************************************************************************************/
 function uploadReview(orderId, itemId){
