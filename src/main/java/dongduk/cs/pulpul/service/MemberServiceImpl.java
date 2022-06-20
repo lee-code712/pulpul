@@ -83,22 +83,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	@Transactional
 	public void changePoint(Member member, int status, int point) {
-		Optional<Member> result = memberRepo.findById(member.getId());
+		int updatedPoint = member.getPoint();
 		
-		Member findMember = null;
-		if(result.isPresent()) findMember = result.get();
-		
-		if (findMember != null) {
-			int updatedPoint = findMember.getPoint();
-			if (status == 1) {
-				updatedPoint += point;
-			}
-			else {
-				updatedPoint -= point;
-			}
-			
-			memberRepo.updatePoint(updatedPoint, member.getId());
+		if (status == 1) {
+			updatedPoint += point;
 		}
+		else {
+			updatedPoint -= point;
+		}
+		
+		memberRepo.updatePoint(updatedPoint, member.getId());
 	}
 }
 
