@@ -120,7 +120,8 @@ public class LookupController {
 				}
 			}
 		}
-		else if (borrow == null) {
+
+		if (borrow == null) {
 			borrow = new Borrow();
 		}
 		
