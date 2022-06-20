@@ -35,6 +35,7 @@ public class ChangeMemberInfoValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phone", "required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zip", "required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address", "required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "addressDetail", "required");
 
 		Matcher matcher = pattern.matcher(member.getEmail());
 		if (!matcher.matches()) {

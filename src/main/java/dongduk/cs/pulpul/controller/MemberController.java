@@ -1,7 +1,5 @@
 package dongduk.cs.pulpul.controller;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -71,22 +69,18 @@ public class MemberController {
 	}
 
 	/* 
-	 * 회원 가입
+	 * 회원 가입 폼 이동
 	 */
 	@GetMapping("/register")
 	public String registerForm() {
-		//회원 가입 폼
 		return "member/registerForm";
 	}
 	
+	/* 
+	 * 회원 가입
+	 */
 	@PostMapping("/register")
 	public String register(@ModelAttribute("member") Member member, Errors result, Model model, HttpServletRequest req) {
-		/*
-		 //성공
-		 return "member/login";
-		 //실패
-		 return "member/registerForm";
-		 */
 		model.addAttribute("member", member);
 		registerValidator.validate(member, result);
 		if(result.hasErrors()) {
@@ -99,22 +93,18 @@ public class MemberController {
 	}
 
 	/*
-	 * 로그인
+	 * 로그인 폼 이동
 	 */
 	@GetMapping("/login")
 	public String loginForm() {
 		return "/member/loginForm";
 	}
 	
+	/*
+	 * 로그인
+	 */
 	@PostMapping("/login")
 	public String login(@ModelAttribute("member") Member member, Errors result, Model model, HttpServletRequest req, RedirectAttributes rttr) {
-		/*
-		 //성공
-		 return "redirect:/home";
-		 //실패 - 로그인 폼
-		 return "member/loginForm";
-		 */
-		
 		model.addAttribute("member", member);
 		loginValidator.validate(member, result);
 		if(result.hasErrors()) {
@@ -127,8 +117,8 @@ public class MemberController {
 			HttpSession session = req.getSession();
 			session.setAttribute("id", member.getId());
 			
-			// 장바구니 상품 수 세션에 저장
 			if (member.getId() != null) {
+				// 장바구니 상품 수 세션에 저장
 				int numberOfCartItem = orderService.getNumberOfCartItemByMember(member.getId());
 				session.setAttribute("cartItemCnt", numberOfCartItem);
 				System.out.println(numberOfCartItem);
@@ -152,28 +142,26 @@ public class MemberController {
 	}
 	
 	/*
-	 * 회원 정보 수정
+	 * 회원 정보 수정 폼 이동
 	 */
 	@GetMapping("/passwordCheck")
 	public String passwordCheck(HttpServletRequest req, ModelAndView mav) {
-		// 패스워드 확인 
+		// 패스워드 확인 폼 이동
 		return "member/passwordCheck";
 	}
 	
+	/*
+	 * 회원정보 수정 시 패스워드 확인
+	 */
 	@PostMapping("/passwordCheck")
 	public String passwordCheck(@ModelAttribute("member") Member member, Errors result, Model model, HttpServletRequest req) {
-		/*
-		 //성공
-		 return "member/view";
-		 //실패
-		 return "member/passwordCheck";
-		 */
 		HttpSession session = req.getSession();
 		String id = (String) session.getAttribute("id");
 		Member memberInfo = memberService.getMember(id);
 		if (memberInfo != null) {
 			member.setPassword(memberInfo.getPassword());
 			model.addAttribute("member", member);
+			
 			passwordCheckValidator.validate(member, result);
 			if(result.hasErrors()) {
 				return "member/passwordCheck";
@@ -182,16 +170,20 @@ public class MemberController {
 				return "redirect:/member/view";
 			}
 		}
+		
 		return "member/passwordCheck";
 	}
 	
+	/*
+	 * 회원 정보 수정 폼 이동
+	 */
 	@GetMapping("/view")
 	public ModelAndView view(HttpServletRequest req, ModelAndView mav) {
-		//회원 정보 수정 폼
 		HttpSession session = req.getSession();
 		String id = (String) session.getAttribute("id");
 		Member member = memberService.getMember(id);
 		if (member != null) {
+			// 생년월일 형식 변경
 			String birth = member.getBirth().split(" ")[0];
 			member.setBirth(birth.replaceAll("-", ""));
 			mav.addObject("member", member);
@@ -200,19 +192,17 @@ public class MemberController {
 		return mav;
 	}
 	
+	/*
+	 * 회원 정보 수정
+	 */
 	@PostMapping("/update")
 	public String update(@ModelAttribute("member") Member member, Errors result, Model model, HttpServletRequest req) {
-		/*
-		 //성공
-		 return "redirect:/member/update";
-		 //실패 - 회원 정보 수정 폼
-		 return "member/myInfoForm";
-		 */
 		HttpSession session = req.getSession();
 		String id = (String) session.getAttribute("id");
 		if (member != null) {
 			member.setId(id);
 			model.addAttribute("member", member);
+			
 			changeMemberInfoValidator.validate(member, result);
 			if(result.hasErrors()) {
 				return "member/myInfoForm";

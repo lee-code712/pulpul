@@ -12,6 +12,20 @@ import dongduk.cs.pulpul.domain.ShareThing;
 @Mapper
 public interface BorrowMapper {
 
+	List<Alert> selectAlertByAlertDate();
+	
+	List<Alert> selectAlertByMemberId(String memberId);
+	
+	int selectAlertCountByIsRead(String memberId); 
+	
+	int insertAlert(Alert alert);
+	
+	int deleteAlert(Alert alert);
+	
+	int updateIsRead(Alert alert); 
+
+	List<Alert> selectAllAlert();
+	
 	List<Borrow> selectBorrowReservationByMemberId(String memberId);
 	
 	List<Borrow> selectBorrowReservationByItemId(String itemId);
@@ -22,19 +36,11 @@ public interface BorrowMapper {
 	
 	int selectReservationNumber(String itemId);
 	
+	Borrow selectFirstBookersBorrowReservation(Borrow borrow);
+
+	Borrow selectBorrowReservationByAlert(Alert a);
+	
 	int updateIsFirstBooker(Borrow borrow);
-	
-	List<Alert> selectAlertByAlertDate();
-	
-	List<Alert> selectAlertByMemberId(String memberId);
-	
-	int selectAlertCountByIsRead(String memberId); // 추가
-	
-	int insertAlert(Alert alert);
-	
-	int deleteAlert(Alert alert);
-	
-	int updateIsRead(Alert alert); // 추가
 	
 	List<Borrow> selectBorrowByMemberId(String memberId, String identity);
 	
@@ -42,21 +48,11 @@ public interface BorrowMapper {
 	
 	int insertBorrow(Borrow borrow);
 	
-	int updateTrackingNumber(Borrow borrow);
-	
 	int updateBorrowStatus(Borrow borrow);
 	
 	int updateReturnDate(Borrow borrow);
-
-//	int updateIsBorrowed(ShareThing shareThing);
-
+	
 	Borrow selectBorrowById(int borrowId);
 
 	Borrow selectCurrBorrowByItem(String itemId);
-
-	List<Alert> selectAllAlert();
-
-	Borrow selectFirstBookersBorrowReservation(Borrow borrow);
-
-	Borrow selectBorrowReservationByAlert(Alert a);
 }

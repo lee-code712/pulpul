@@ -57,13 +57,6 @@ public class BorrowController {
 	 */	
 	@PostMapping("borrow")
 	public String borrow(@ModelAttribute("borrow") Borrow borrow, Errors result, Model model, HttpServletRequest req){
-		/*
-		//성공
-		return "redirect:/member/mypage/borrowList";
-		
-		//오류 - 공유물품 상세정보 페이지
-		return "lookup/sharedThingDetail";
-		*/
 		ShareThing shareThing = itemService.getShareThing(borrow.getShareThing().getItem().getId());
 		borrowValidator.validate(borrow, result);
 		if(result.hasErrors()) {
@@ -119,25 +112,19 @@ public class BorrowController {
 	 */
 	@PostMapping("/reservation")
 	public String makeReservation(@ModelAttribute("borrow") Borrow borrow, Model model, Errors result, HttpServletRequest req){
-		/*
-		//성공
-		return "redirect:/member/mypage";
-		//오류
-		return "lookup/sharedThingDetail";
-		*/
-
 		HttpSession session = req.getSession();
 		String id = (String) session.getAttribute("id");
 		Member member = new Member();
 		member.setId(id);
 		borrow.setBorrower(member);
-		boolean success = borrowService.makeBorrowReservation(borrow);
 		
+		// 예약
+		boolean success = borrowService.makeBorrowReservation(borrow);
 		if (success) {
-			
 			return "redirect:/member/mypage";
 		}
 		
+		// 실패 시 reject
 		result.reject("fullBooked", new Object[] {borrow.getShareThing().getItem().getName()}, null);
 		ShareThing shareThing = itemService.getShareThing(borrow.getShareThing().getItem().getId());
 		Borrow currBorrow = borrowService.getCurrBorrowByItem(borrow.getShareThing().getItem().getId());
@@ -155,6 +142,7 @@ public class BorrowController {
 	 */
 	@GetMapping("/reservation/cancel")
 	public String cancel(@RequestParam("shareThingId") String shareThingId, @RequestParam("memberId") String memberId) {
+		// shareThingId, borrowerId로 borrow 객체 생성
 		Borrow borrow = new Borrow();
 		ShareThing shareThing = new ShareThing();
 		Item item = new Item();
@@ -164,6 +152,8 @@ public class BorrowController {
 		Member borrower = new Member();
 		borrower.setId(memberId);
 		borrow.setBorrower(borrower);
+		
+		// 예약 취소
 		borrowService.cancelBorrowReservation(borrow);
 		return "redirect:/member/mypage";
 	}
@@ -176,24 +166,13 @@ public class BorrowController {
 		Borrow borrowInfo = borrowService.getBorrowById(borrow.getId());
 		
 		if (borrowInfo.getIsExtended() == 1) {
+			// 연장 기록이 있을 시 reject
 			result.reject("alreadyExtended", new Object[] {borrowInfo.getShareThing().getItem().getName()}, null);
-			System.out.println("연장 실패");
 		}
 		else {
 			borrowService.extendBorrow(borrowInfo);
-			System.out.println("연장 성공");
 		}
 		
 		return "redirect:/member/mypage";
 	}	
-
-	/*
-	 * 마켓에서
-	 * 특정 공유물품 대여 내역에 운송장 번호 입력 시
-	 */
-	@PostMapping("/startDeliver")
-	public String startDeliver(){
-		return "redirect:/market/shareThingManage";
-	}
-
 }

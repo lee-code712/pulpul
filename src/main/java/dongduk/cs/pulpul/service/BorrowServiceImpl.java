@@ -82,6 +82,37 @@ public class BorrowServiceImpl implements BorrowService {
 		System.out.println("updateTableRunner has been scheduled to execute at " + closingTime);
 	}
 	
+	// 알림 삭제 - 첫번째 대기자인데 예약 취소한 경우, 대여신청을 한 경우, 예약취소를 한 경우
+	public boolean removeAlert(Alert alert) {
+		return borrowDao.deleteAlert(alert);
+	}
+	
+	// 알림 목록 조회
+	public List<Alert> getAlertByMember(String memberId) {
+		return borrowDao.findAlertByMember(memberId);
+	}
+	
+	// 알림 읽음 변경
+	public boolean changeIsRead(Alert alert) {
+		return borrowDao.changeIsRead(alert);
+	}
+	
+	// 회원의 읽지 않은 알림 수
+	public int getAlertCountByIsRead(String memberId) {
+		return borrowDao.findAlertCountByIsRead(memberId);
+	}
+
+	// 알림 생성 - is_first_booker가 1인 경우
+	boolean addAlert(Alert alert) {
+		return borrowDao.createAlert(alert);
+	}
+	
+	// 전체 알림 조회
+	@Override
+	public List<Alert> getAllAlert() {
+		return borrowDao.findAllAlert();
+	}
+	
 	// 회원 아이디로 예약 목록 조회
 	public List<Borrow> getBorrowReservationByMember(String memberId) {
 		return borrowDao.findBorrowReservationByMember(memberId);
@@ -129,26 +160,6 @@ public class BorrowServiceImpl implements BorrowService {
 		return borrowDao.deleteBorrowReservation(borrow);
 	}
 	
-	// 알림 삭제 - 첫번째 대기자인데 예약 취소한 경우, 대여신청을 한 경우, 예약취소를 한 경우
-	public boolean removeAlert(Alert alert) {
-		return borrowDao.deleteAlert(alert);
-	}
-	
-	// 알림 목록 조회
-	public List<Alert> getAlertByMember(String memberId) {
-		return borrowDao.findAlertByMember(memberId);
-	}
-	
-	// 알림 읽음 변경
-	public boolean changeIsRead(Alert alert) {
-		return borrowDao.changeIsRead(alert);
-	}
-	
-	// 회원의 읽지 않은 알림 수
-	public int getAlertCountByIsRead(String memberId) {
-		return borrowDao.findAlertCountByIsRead(memberId);
-	}
-
 	// 회원 아이디로 대여 목록 조회
 	public List<Borrow> getBorrowByMember(String memberId, String identity) {
 		return borrowDao.findBorrowByMember(memberId, identity);
@@ -167,6 +178,7 @@ public class BorrowServiceImpl implements BorrowService {
 	// 대여 생성
 	@Transactional
 	public boolean borrow(Borrow borrow) {
+		// 반납일 계산
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd");
 		Calendar borrowCal = Calendar.getInstance();
 		String borrowDate = transFormat.format(borrowCal.getTime());
@@ -177,12 +189,13 @@ public class BorrowServiceImpl implements BorrowService {
 		borrow.setBorrowDate(borrowDate);
 		borrow.setReturnDate(returnDate);
 		
+		// 공유물품 대여 상태 변경
 		ShareThing tempShareThing = borrow.getShareThing();
 		tempShareThing.setIsBorrowed(1);
 		borrow.setShareThing(tempShareThing);
 		
+		// 대여
 		boolean success = borrowDao.createBorrow(borrow);
-		
 		if (success) {
 			// 예약자가 대여 시 isFirstBooker 수정
 			if (borrow.getIsFirstBooker() == 1) {
@@ -205,17 +218,12 @@ public class BorrowServiceImpl implements BorrowService {
 		}
 		return false;
 	}
-	
-	// 특정 대여내역에 운송장번호 입력
-	public boolean changeTrackingNumber(Borrow borrow) {
-		return borrowDao.changeTrackingNumber(borrow);
-	}
 
-	// 공유 물품 대여여부 변경 - 사용자가 반납버튼 눌렀을 때 예약자 수 확인
-	// 없으면 대여 가능 상태(0)로, 대여하기 클릭 시 대여 중 상태(1)로 변경
-	// is_borrowed = 1:대여 불가 0: 대여 하기
+	// 공유 물품 대여 여부 변경 - 사용자가 반납 버튼 눌렀을 때 예약자 수 확인
+	// 예약자가 없으면 대여 가능 상태(0)로, 대여하기 클릭 시 대여 중 상태(1)로 변경
+	// is_borrowed = 1:대여 불가 0: 대여 가능
 	@Transactional
-	boolean changeIsBorrowed(ShareThing shareThing) { // service에서 예약자 수 확인 후 0, 1 넣어서 전달
+	boolean changeIsBorrowed(ShareThing shareThing) {
 		int reservationNumber = borrowDao.checkNumberBorrowReservation(shareThing.getItem().getId());
 		if (reservationNumber == 0) {
 			shareThing.setIsBorrowed(0);
@@ -226,10 +234,10 @@ public class BorrowServiceImpl implements BorrowService {
 		return itemDao.changeIsBorrowed(shareThing);
 	}
 	
-	// 연장하기 borrow_status가 대여 상태면, 연장 하기 버튼
+	// 연장 - borrow_status가 대여 상태면, 1회 연장 가능
 	// is_extended = 1로 변경하고, 연장 기간 계산해서 returnDate 변경
 	@Transactional
-	public boolean extendBorrow(Borrow borrow) { // -> extendBorrow로 함수명 변경
+	public boolean extendBorrow(Borrow borrow) {
 		borrow.setIsExtended(1);
 		
 		String returnDate = borrow.getReturnDate();
@@ -253,9 +261,9 @@ public class BorrowServiceImpl implements BorrowService {
 	}
 
 	// 공유 물품 대여 상태 변경 - 반납이 되면 대여한 물품 대여 상태 변경
-	// *borrow_status = 1:대여 0:반납
+	// borrow_status = 1:대여 중 0:반납
 	@Transactional
-	public boolean returnShareThing(Borrow borrow) { // -> 반납 시 사용하므로 returnShareThings 으로 함수명 변경
+	public boolean returnShareThing(Borrow borrow) {
 		// 예약자가 없는 경우에는 공유 물품 대여 가능 상태 변경
 		if (checkNumberBorrowReservation(borrow.getShareThing().getItem().getId()) == 0) {
 			ShareThing shareThing = borrow.getShareThing();
@@ -274,30 +282,22 @@ public class BorrowServiceImpl implements BorrowService {
 		return borrowDao.changeBorrowStatus(borrow);
 	}
 
-	// 공유물품 대기자 수 확인 -> 대기자가 꽉 차면 예약 못하니까 대기자가 없거나 한 명만 있으면 예약 가능 -> 예약 시 확인
+	// 공유물품 대기자 수 확인 -
+	// 대기자가 없거나 한 명만 있으면 예약 가능 -> 예약 시 확인
 	int checkNumberBorrowReservation(String itemId) {
 		return borrowDao.checkNumberBorrowReservation(itemId);
 	}
 	
-	// is_first_booker 상태 변경, 두번째->첫번째 예약자가 된 경우 -> 필요한 함수에서 사용하는걸로
+	// is_first_booker 상태 변경
+	// 두번째->첫번째 예약자가 된 경우
 	boolean changeIsFirstBooker(Borrow borrow) {
 		borrow.setIsFirstBooker(1);
 		return borrowDao.changeIsFirstBooker(borrow);
 	}
 
-	// 알림 생성 - is_first_booker가 1인 경우
-	boolean addAlert(Alert alert) {
-		return borrowDao.createAlert(alert);
-	}
-
+	// 대여 id로 대여 조회
 	@Override
 	public Borrow getBorrowById(int borrowId) {
 		return borrowDao.findBorrowById(borrowId);
 	}
-
-	@Override
-	public List<Alert> getAllAlert() {
-		return borrowDao.findAllAlert();
-	}
-
 }

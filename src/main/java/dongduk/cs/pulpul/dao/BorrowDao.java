@@ -8,6 +8,33 @@ import dongduk.cs.pulpul.domain.ShareThing;
 
 public interface BorrowDao {
 	
+	/*
+	 * 대여 - 알림 관리
+	 */
+	// 알림일로부터 3일이 지난 알림 목록 조회
+	List<Alert> findAlertByAlertDate();
+	
+	// 회원 id로 알림 목록 조회
+	List<Alert> findAlertByMember(String memberId);
+	
+	// 읽지 않은 알림 개수 조회 - 추가
+	int findAlertCountByIsRead(String memberId);
+	
+	// 알림 생성
+	boolean createAlert(Alert alert);
+	
+	// 알림 삭제
+	boolean deleteAlert(Alert alert);
+	
+	// 알림 읽음여부 변경 - 추가
+	boolean changeIsRead(Alert alert);
+	
+	// 전체 알림 조회
+	List<Alert> findAllAlert();
+	
+	/*
+	 * 대여 - 예약 관리
+	 */
 	// 회원 id로 대여 예약 조회
 	List<Borrow> findBorrowReservationByMember(String memberId);
 	
@@ -29,40 +56,23 @@ public interface BorrowDao {
 	// 두번째 예약자를 첫번째 예약자로 변경
 	boolean changeIsFirstBooker(Borrow borrow);
 	
-	// 알림일로부터 3일이 지난 알림 목록 조회
-	List<Alert> findAlertByAlertDate();
+	// 첫 번째 예약자의 예약 정보 확인
+	Borrow findFirstBookersBorrowReservation(Borrow borrow);
 	
-	// 회원 id로 알림 목록 조회
-	List<Alert> findAlertByMember(String memberId);
-	
-	// 읽지 않은 알림 개수 조회 - 추가
-	int findAlertCountByIsRead(String memberId);
-	
-	// 알림 생성
-	boolean createAlert(Alert alert);
-	
-	// 알림 삭제
-	boolean deleteAlert(Alert alert);
-	
-	// 알림 읽음여부 변경 - 추가
-	boolean changeIsRead(Alert alert);
-	
+	/*
+	 * 대여 - 대여 관리
+	 */
 	// 회원 id로 대여 목록 조회
 	List<Borrow> findBorrowByMember(String memberId, String identity);
 	
 	// 품목 id로 대여 목록 조회
 	List<Borrow> findBorrowByItem(String itemId);
 	
+	// 대여 id로 대여 조회
 	Borrow findBorrowById(int borrowId);
 	
 	// 대여 생성
 	boolean createBorrow(Borrow borrow);
-	
-//	// 공유물품 대여 상태 변경
-//	boolean changeIsBorrowed(ShareThing shareThing);
-	
-	// 대여 운송장 번호 입력
-	boolean changeTrackingNumber(Borrow borrow);
 	
 	// 대여 상태 변경
 	boolean changeBorrowStatus(Borrow borrow);
@@ -70,9 +80,7 @@ public interface BorrowDao {
 	// 대여 반납일, 연장 여부 변경
 	boolean changeReturnDate(Borrow borrow);
 
+	// 공유물품 id의 현재 대여 현황 조회
 	Borrow findCurrBorrowByItem(String itemId);
-
-	List<Alert> findAllAlert();
-
-	Borrow findFirstBookersBorrowReservation(Borrow borrow);
+	
 }

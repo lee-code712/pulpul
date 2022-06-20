@@ -19,6 +19,7 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberRepository memberRepo;
 	
+	// 로그인
 	@Override
 	public Member login(Member member) throws LoginException {
 
@@ -40,6 +41,7 @@ public class MemberServiceImpl implements MemberService {
 		return findMember;
 	}
 	
+	// 회원가입
 	@Override
 	public boolean register(Member member) {
 		Member result = memberRepo.save(member);
@@ -49,6 +51,7 @@ public class MemberServiceImpl implements MemberService {
 		return false;
 	}
 	
+	// 회원정보 수정
 	@Override
 	public void changeMemberInfo(Member member) {
 		Member findMember = getMember(member.getId());
@@ -59,6 +62,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 	
+	// 회원 id로 회원 찾기
 	@Override
 	public Member getMember(String memberId) {
 		Optional<Member> result = memberRepo.findById(memberId);
@@ -69,14 +73,16 @@ public class MemberServiceImpl implements MemberService {
 		return findMember;
 	}
 	
+	// 회원 탈퇴
 	@Override
 	public void resign(Member member) {
 		memberRepo.delete(member);
 	}
 	
+	// 포인트 변경
 	@Override
 	@Transactional
-	public void changePoint(Member member, int status, int point) { // -> 필요한 함수에 넣어서 사용
+	public void changePoint(Member member, int status, int point) {
 		Optional<Member> result = memberRepo.findById(member.getId());
 		
 		Member findMember = null;
@@ -90,7 +96,6 @@ public class MemberServiceImpl implements MemberService {
 			else {
 				updatedPoint -= point;
 			}
-			
 			
 			memberRepo.updatePoint(updatedPoint, member.getId());
 		}

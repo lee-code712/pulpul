@@ -84,7 +84,6 @@ public class MybatisBorrowDao implements BorrowDao {
 
 	@Override
 	public boolean changeIsRead(Alert alert) {
-		// TODO Auto-generated method stub
 		int ck = borrowMapper.updateIsRead(alert);
 		if (ck == 0) return false;
 		return true;
@@ -92,33 +91,23 @@ public class MybatisBorrowDao implements BorrowDao {
 
 	@Override
 	public List<Borrow> findBorrowByMember(String memberId, String identity) {
-		// TODO Auto-generated method stub
 		return borrowMapper.selectBorrowByMemberId(memberId, identity);
 	}
 
 	@Override
 	public List<Borrow> findBorrowByItem(String itemId) {
-		// TODO Auto-generated method stub
 		return borrowMapper.selectBorrowByItemId(itemId);
 	}
 
 	@Override
 	public boolean createBorrow(Borrow borrow) {
-		// TODO Auto-generated method stub
 		int ck = borrowMapper.insertBorrow(borrow);
 		if (ck < 0) return false;
 		return true;
 	}
-
-	@Override
-	public boolean changeTrackingNumber(Borrow borrow) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 	@Override
 	public boolean changeBorrowStatus(Borrow borrow) {
-		// TODO Auto-generated method stub
 		int ck = borrowMapper.updateBorrowStatus(borrow);
 		if (ck < 0) return false;
 		return true;
@@ -131,13 +120,6 @@ public class MybatisBorrowDao implements BorrowDao {
 		return true;
 	}
 
-//	@Override
-//	public boolean changeIsBorrowed(ShareThing shareThing) {
-//		int ck = borrowMapper.updateIsBorrowed(shareThing);
-//		if (ck < 0) return false;
-//		return true;
-//	}
-
 	@Override
 	public Borrow findBorrowById(int borrowId) {
 		return borrowMapper.selectBorrowById(borrowId);
@@ -145,13 +127,11 @@ public class MybatisBorrowDao implements BorrowDao {
 
 	@Override
 	public Borrow findCurrBorrowByItem(String itemId) {
-		// TODO Auto-generated method stub
 		return borrowMapper.selectCurrBorrowByItem(itemId);
 	}
 
 	@Override
 	public List<Alert> findAllAlert() {
-		// TODO Auto-generated method stub
 		return borrowMapper.selectAllAlert();
 	}
 
@@ -162,9 +142,6 @@ public class MybatisBorrowDao implements BorrowDao {
 
 	@Override
 	public Borrow findBorrowReservationByAlert(Alert a) {
-		// TODO Auto-generated method stub
 		return borrowMapper.selectBorrowReservationByAlert(a);
 	}
-
-	
 }

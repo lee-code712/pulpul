@@ -40,7 +40,6 @@ public class MybatisMemberDao implements MemberDao {
 
 	@Override
 	public boolean deleteMember(Member member) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

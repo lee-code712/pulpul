@@ -110,6 +110,7 @@ public class LookupController {
 		ShareThing shareThing = itemSvc.getShareThing(itemId);
 		Borrow borrow = borrowSvc.getCurrBorrowByItem(itemId);
 		String memberId = (String) session.getAttribute("id");
+		
 		if (borrow == null && memberId != null) {
 			// 현재 대여 중인 회원이 없고 로그인 중이라면, 예약 정보 가져오기
 			List<Borrow> borrowList = borrowSvc.getBorrowReservationByItem(itemId);
@@ -118,8 +119,8 @@ public class LookupController {
 					borrow = b;
 				}
 			}
-			
 		}
+		
 		borrow.setShareThing(shareThing);
 		model.addAttribute("borrow", borrow);
 		
@@ -173,6 +174,7 @@ public class LookupController {
 			List<Alert> alertList = borrowSvc.getAlertByMember(memberId);
 			List<Alert> updatedAlertList = new ArrayList<Alert>();
 			
+			// 알림 읽음 여부 수정, 내용 추가
 			for (Alert a : alertList) {
 				borrowSvc.changeIsRead(a);
 				a.setIsRead(1);
