@@ -55,4 +55,6 @@ public interface BorrowMapper {
 	Borrow selectBorrowById(int borrowId);
 
 	Borrow selectCurrBorrowByItem(String itemId);
+
+	int selectBorrowReservationNumber(Borrow borrow);
 }

@@ -128,6 +128,12 @@ public class BorrowServiceImpl implements BorrowService {
 		return borrowDao.findBorrowReservationByAlert(alert);
 	}
 	
+	// 회원 id와 공유물품 id로 예약 목록 조회
+	@Override
+	public int getBorrowReservationCount(Borrow borrow) {
+		return borrowDao.findBorrowReservationCount(borrow);
+	}
+	
 	// 첫 번째 예약자의 예약 정보 조회
 	public Borrow getFirstBookersBorrowReservation(Borrow borrow) {
 		return borrowDao.findFirstBookersBorrowReservation(borrow);

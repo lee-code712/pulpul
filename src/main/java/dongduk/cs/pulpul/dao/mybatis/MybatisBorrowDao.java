@@ -26,6 +26,11 @@ public class MybatisBorrowDao implements BorrowDao {
 	public List<Borrow> findBorrowReservationByItem(String itemId) {
 		return borrowMapper.selectBorrowReservationByItemId(itemId);
 	}
+	
+	@Override
+	public int findBorrowReservationCount(Borrow borrow) {
+		return borrowMapper.selectBorrowReservationNumber(borrow);
+	}
 
 	@Override
 	public boolean createBorrowReservation(Borrow borrow) {

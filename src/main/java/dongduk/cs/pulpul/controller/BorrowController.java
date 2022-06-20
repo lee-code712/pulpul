@@ -118,14 +118,18 @@ public class BorrowController {
 		member.setId(id);
 		borrow.setBorrower(member);
 		
-		// 예약
-		boolean success = borrowService.makeBorrowReservation(borrow);
-		if (success) {
-			return "redirect:/member/mypage";
+		// 중복 예약 확인
+		int reservationCount = borrowService.getBorrowReservationCount(borrow);
+		if (reservationCount != 0) { // 중복 예약일 시 reject
+			result.reject("dupReservation", new Object[] {borrow.getShareThing().getItem().getName()}, null);
 		}
-		
-		// 실패 시 reject
-		result.reject("fullBooked", new Object[] {borrow.getShareThing().getItem().getName()}, null);
+		else {
+			// 예약
+			boolean success = borrowService.makeBorrowReservation(borrow);
+			if (success) {
+				return "redirect:/member/mypage";
+			}
+		}
 		ShareThing shareThing = itemService.getShareThing(borrow.getShareThing().getItem().getId());
 		Borrow currBorrow = borrowService.getCurrBorrowByItem(borrow.getShareThing().getItem().getId());
 		if (currBorrow == null) {

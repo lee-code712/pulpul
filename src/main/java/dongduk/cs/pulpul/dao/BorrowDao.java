@@ -44,6 +44,9 @@ public interface BorrowDao {
 	// 알림으로 대여 예약 조회
 	Borrow findBorrowReservationByAlert(Alert a);
 	
+	// 회원 id와 공유물품 id로 예약 개수 조회
+	int findBorrowReservationCount(Borrow borrow);
+	
 	// 대여 예약 생성
 	boolean createBorrowReservation(Borrow borrow);
 	

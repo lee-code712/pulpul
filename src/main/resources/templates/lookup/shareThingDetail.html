@@ -144,14 +144,19 @@
 	          	
 	          	<input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
 	          	
-	          	<div class="invalid-feedback" th:errors="*"> </div>
-	          	
 	          	<div id="btnWrap">
-	          		<button id="rentalBtn" type="button" th:if="${session.id} == ${borrow.borrower.id} and ${borrow.isExtended} != 1" onclick="location.href='/member/myPage'">연장하기</button> 	 
+	          		<th:block th:if="${borrow.borrower} == null">
+	          			<button id="rezBtn" type="submit" th:if="${borrow.shareThing.isBorrowed} == 1 and ${session.id} != ${borrow.shareThing.item.market.member.id}" onclick=clickRezBtn(); >예약하기</button>
+	          		</th:block>
+	          		<th:block th:unless="${borrow.borrower} == null">
+	          			<button id="rentalBtn" type="button" th:if="${borrow.borrowStatus} != null and ${session.id} == ${borrow.borrower.id} and ${borrow.isExtended} != 1" onclick="location.href='/member/myPage'">연장하기</button> 	 
+	          			<button id="rezBtn" type="submit" th:if="${borrow.shareThing.isBorrowed} == 1 and ${session.id} != ${borrow.borrower.id} and ${session.id} != ${borrow.shareThing.item.market.member.id}" onclick=clickRezBtn(); >예약하기</button>
+	          		</th:block>
 	          		<button id="rentalBtn" type="button" th:if="${session.id} == ${borrow.shareThing.item.market.member.id}" th:onclick="updateShareThing([[${borrow.shareThing.item.id}]])">수정하기</button> 		
-	          		<button id="rezBtn" type="submit" th:if="${borrow.shareThing.isBorrowed} == 1 and ${session.id} != ${borrow.borrower.id} and ${session.id} != ${borrow.shareThing.item.market.member.id}" onclick=clickRezBtn(); >예약하기</button>
 	            	<button id="cancelBtn" type="button" onclick="location.href='/lookup/shareThingList'">목록으로 이동</button>
 	          	</div>
+	          	
+	          	<div class="invalid-feedback" th:errors="*"> </div>
 	          	
 	          	<a th:href="@{/lookup/market(marketId=${borrow.shareThing.item.market.id})}" id="marketLink">
             		<img src="/images/smallShopIcon.svg" />

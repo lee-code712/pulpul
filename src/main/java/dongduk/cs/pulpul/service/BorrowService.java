@@ -38,6 +38,9 @@ public interface BorrowService {
 	// 공유물품 id로 예약 목록 조회
 	List<Borrow> getBorrowReservationByItem(String itemId);
 	
+	// 회원 id와 공유물품 id로 예약 개수 조회
+	public int getBorrowReservationCount(Borrow borrow);
+	
 	// 대여 예약 생성
 	boolean makeBorrowReservation(Borrow borrow);
 	
@@ -67,5 +70,4 @@ public interface BorrowService {
 	
 	// 반납 (returnItem에서 메소드명 변경)
 	boolean returnShareThing(Borrow borrow);
-	
 }
