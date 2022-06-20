@@ -31,14 +31,12 @@ body {
 #alertBox {
   margin-bottom: 4px;
   padding: 10px 20px;
-  height: 80px;
   background-color: white;
 }
 
 #newAlertBox {
 	margin-bottom: 4px;
   padding: 10px 20px;
-  height: 80px;
   background-color: #FFFBF1;
 }
 
