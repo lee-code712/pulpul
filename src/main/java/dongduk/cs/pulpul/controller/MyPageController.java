@@ -89,7 +89,7 @@ public class MyPageController {
 		Order order = orderSvc.getOrder(orderId);
 		model.addAttribute(order);
 
-		return "order/orderDetail";
+		return "member/orderDetail";
 	}
 	
 	/*

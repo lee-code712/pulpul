@@ -17,7 +17,7 @@ public class MybatisReviewDao implements ReviewDao {
 	private ReviewMapper reviewMapper;
 	
 	@Override
-	public List<Review> findReviewByListItem(String itemId) throws DataAccessException {
+	public List<Review> findReviewByItem(String itemId) throws DataAccessException {
 		return reviewMapper.selectReviewByItem(itemId);
 	}
 	

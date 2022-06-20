@@ -9,7 +9,7 @@ import dongduk.cs.pulpul.domain.Review;
 public interface ReviewDao {
 	
 	// 품목 id로 리뷰 목록 조회
-	List<Review> findReviewByListItem(String itemId) throws DataAccessException;
+	List<Review> findReviewByItem(String itemId) throws DataAccessException;
 	
 	// 리뷰 이미지 조회
 	String findReviewImage(int reviewId) throws DataAccessException;

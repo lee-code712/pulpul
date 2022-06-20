@@ -23,7 +23,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public List<Review> getReviewByItem(String itemId) {
-		List<Review> reviewList = reviewDao.findReviewByListItem(itemId);
+		List<Review> reviewList = reviewDao.findReviewByItem(itemId);
 		for (Review review : reviewList) {
 			review.setImageUrl(reviewDao.findReviewImage(review.getId()));
 		}
@@ -47,7 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
 			review.getOrder().getBuyer().setId(memberId);
 			reviewDao.createReviewImage(review);	// 리뷰 이미지 레코드 생성
 		}
-		memberDao.changePoint(memberId, 1, 500);	// 포인트 +50
+		memberDao.changePoint(memberId, 1, 50);	// 포인트 +50
 	}
 	
 	// 이미지 파일 업로드 메소드
