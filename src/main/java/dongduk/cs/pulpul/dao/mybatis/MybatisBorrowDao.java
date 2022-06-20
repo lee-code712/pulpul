@@ -19,8 +19,12 @@ public class MybatisBorrowDao implements BorrowDao {
 	
 	@Override
 	public List<Borrow> findBorrowReservationByMember(String memberId) {
-		// TODO Auto-generated method stub
 		return borrowMapper.selectBorrowReservationByMemberId(memberId);
+	}
+	
+	@Override
+	public List<Borrow> findBorrowReservationByItem(String itemId) {
+		return borrowMapper.selectBorrowReservationByItemId(itemId);
 	}
 
 	@Override
@@ -51,13 +55,11 @@ public class MybatisBorrowDao implements BorrowDao {
 
 	@Override
 	public List<Alert> findAlertByAlertDate() {
-		// TODO Auto-generated method stub
 		return borrowMapper.selectAlertByAlertDate();
 	}
 
 	@Override
 	public List<Alert> findAlertByMember(String memberId) {
-		// TODO Auto-generated method stub
 		return borrowMapper.selectAlertByMemberId(memberId);
 	}
 
@@ -68,7 +70,6 @@ public class MybatisBorrowDao implements BorrowDao {
 
 	@Override
 	public boolean createAlert(Alert alert) {
-		// TODO Auto-generated method stub
 		int ck = borrowMapper.insertAlert(alert);
 		if (ck < 0) return false;
 		return true;
@@ -76,8 +77,9 @@ public class MybatisBorrowDao implements BorrowDao {
 
 	@Override
 	public boolean deleteAlert(Alert alert) {
-		// TODO Auto-generated method stub
-		return false;
+		int ck = borrowMapper.deleteAlert(alert);
+		if (ck < 0) return false;
+		return true;
 	}
 
 	@Override

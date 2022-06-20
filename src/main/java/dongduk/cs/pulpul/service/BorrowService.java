@@ -14,6 +14,9 @@ public interface BorrowService {
 	// 회원 id로 대여 예약 목록 조회
 	List<Borrow> getBorrowReservationByMember(String memberId);
 	
+	// 공유물품 id로 예약 목록 조회
+	List<Borrow> getBorrowReservationByItem(String itemId);
+	
 	// 대여 예약 생성
 	boolean makeBorrowReservation(Borrow borrow);
 	

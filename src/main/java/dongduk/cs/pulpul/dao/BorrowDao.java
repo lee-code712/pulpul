@@ -11,6 +11,9 @@ public interface BorrowDao {
 	// 회원 id로 대여 예약 조회
 	List<Borrow> findBorrowReservationByMember(String memberId);
 	
+	// 공유물품 id로 대여 예약 조회
+	List<Borrow> findBorrowReservationByItem(String itemId);
+	
 	// 알림으로 대여 예약 조회
 	Borrow findBorrowReservationByAlert(Alert a);
 	

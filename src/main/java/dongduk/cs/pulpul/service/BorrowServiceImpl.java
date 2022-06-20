@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import dongduk.cs.pulpul.dao.BorrowDao;
 import dongduk.cs.pulpul.dao.ItemDao;
 import dongduk.cs.pulpul.domain.Alert;
 import dongduk.cs.pulpul.domain.Borrow;
+import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.ShareThing;
 
 @Service
@@ -84,6 +87,11 @@ public class BorrowServiceImpl implements BorrowService {
 		return borrowDao.findBorrowReservationByMember(memberId);
 	}
 	
+	// 공유물품 id로 예약 목록 조회
+	public List<Borrow> getBorrowReservationByItem(String itemId) {
+		return borrowDao.findBorrowReservationByItem(itemId);
+	}
+	
 	// 알림으로 예약 목록 조회
 	public Borrow getBorrowReservationByAlert(Alert alert) {
 		return borrowDao.findBorrowReservationByAlert(alert);
@@ -95,6 +103,7 @@ public class BorrowServiceImpl implements BorrowService {
 	}
 	
 	// 예약 생성
+	@Transactional
 	public boolean makeBorrowReservation(Borrow borrow) {
 		int borrowReservationNum = borrowDao.checkNumberBorrowReservation(borrow.getShareThing().getItem().getId());
 		if (borrowReservationNum == 0) {
@@ -110,13 +119,18 @@ public class BorrowServiceImpl implements BorrowService {
 	}
 	
 	// 예약 취소 - 예약 취소 또는 대여 시작할 때 예약 삭제
+	@Transactional
 	public boolean cancelBorrowReservation(Borrow borrow) {
-		boolean result = borrowDao.deleteBorrowReservation(borrow);
-		return result;
+		// 대여 예약 알림 삭제
+		Alert alert = new Alert();
+		alert.setShareThingId(borrow.getShareThing().getItem().getId());
+		alert.setMemberId(borrow.getBorrower().getId());
+		removeAlert(alert);
+		return borrowDao.deleteBorrowReservation(borrow);
 	}
 	
-	// 알림 삭제 - 첫번째 대기자인데 예약 취소한 경우, 대여신청을 한 경우
-	boolean removeAlert(Alert alert) {
+	// 알림 삭제 - 첫번째 대기자인데 예약 취소한 경우, 대여신청을 한 경우, 예약취소를 한 경우
+	public boolean removeAlert(Alert alert) {
 		return borrowDao.deleteAlert(alert);
 	}
 	
@@ -151,7 +165,22 @@ public class BorrowServiceImpl implements BorrowService {
 	}
 
 	// 대여 생성
+	@Transactional
 	public boolean borrow(Borrow borrow) {
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd");
+		Calendar borrowCal = Calendar.getInstance();
+		String borrowDate = transFormat.format(borrowCal.getTime());
+		Calendar returnCal = Calendar.getInstance();
+		returnCal.add(Calendar.DATE, Integer.parseInt(borrow.getDate()));
+		String returnDate = transFormat.format(returnCal.getTime());
+
+		borrow.setBorrowDate(borrowDate);
+		borrow.setReturnDate(returnDate);
+		
+		ShareThing tempShareThing = borrow.getShareThing();
+		tempShareThing.setIsBorrowed(1);
+		borrow.setShareThing(tempShareThing);
+		
 		boolean success = borrowDao.createBorrow(borrow);
 		
 		if (success) {
@@ -161,8 +190,17 @@ public class BorrowServiceImpl implements BorrowService {
 				if (checkNumberBorrowReservation(borrow.getShareThing().getItem().getId()) != 0) {
 					changeIsFirstBooker(borrow);
 				}
-				
 			}
+			
+			// 대여 예약 내역 삭제
+			cancelBorrowReservation(borrow);
+			
+			// 대여 예약 알림 삭제
+			Alert alert = new Alert();
+			alert.setShareThingId(borrow.getShareThing().getItem().getId());
+			alert.setMemberId(borrow.getBorrower().getId());
+			removeAlert(alert);
+			
 			return itemDao.changeIsBorrowed(borrow.getShareThing());
 		}
 		return false;
@@ -176,6 +214,7 @@ public class BorrowServiceImpl implements BorrowService {
 	// 공유 물품 대여여부 변경 - 사용자가 반납버튼 눌렀을 때 예약자 수 확인
 	// 없으면 대여 가능 상태(0)로, 대여하기 클릭 시 대여 중 상태(1)로 변경
 	// is_borrowed = 1:대여 불가 0: 대여 하기
+	@Transactional
 	boolean changeIsBorrowed(ShareThing shareThing) { // service에서 예약자 수 확인 후 0, 1 넣어서 전달
 		int reservationNumber = borrowDao.checkNumberBorrowReservation(shareThing.getItem().getId());
 		if (reservationNumber == 0) {
@@ -189,6 +228,7 @@ public class BorrowServiceImpl implements BorrowService {
 	
 	// 연장하기 borrow_status가 대여 상태면, 연장 하기 버튼
 	// is_extended = 1로 변경하고, 연장 기간 계산해서 returnDate 변경
+	@Transactional
 	public boolean extendBorrow(Borrow borrow) { // -> extendBorrow로 함수명 변경
 		borrow.setIsExtended(1);
 		
@@ -214,6 +254,7 @@ public class BorrowServiceImpl implements BorrowService {
 
 	// 공유 물품 대여 상태 변경 - 반납이 되면 대여한 물품 대여 상태 변경
 	// *borrow_status = 1:대여 0:반납
+	@Transactional
 	public boolean returnShareThing(Borrow borrow) { // -> 반납 시 사용하므로 returnShareThings 으로 함수명 변경
 		// 예약자가 없는 경우에는 공유 물품 대여 가능 상태 변경
 		if (checkNumberBorrowReservation(borrow.getShareThing().getItem().getId()) == 0) {
@@ -247,24 +288,6 @@ public class BorrowServiceImpl implements BorrowService {
 	// 알림 생성 - is_first_booker가 1인 경우
 	boolean addAlert(Alert alert) {
 		return borrowDao.createAlert(alert);
-	}
-
-	
-	// d-day 계산
-	private int getDDay(String year, String month, String day) {
-		try {
-			Calendar today = Calendar.getInstance();
-			Calendar dday = Calendar.getInstance();
-			dday.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
-				
-			long lToday = today.getTimeInMillis() / (24*60*60*1000);
-			long lDday = dday.getTimeInMillis() / (24*60*60*1000);
-				
-			long substract = lDday - lToday;
-			return (int)substract;
-		} catch (Exception e) {
-			return -1;
-		}
 	}
 
 	@Override

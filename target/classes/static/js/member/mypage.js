@@ -323,7 +323,7 @@ function shareThingListJson(btnType) {
 						const btnWrap = document.createElement("div");
 						btnWrap.setAttribute("class", "btn-wrap");
 						btnWrap.innerHTML += "<button class='extension-btn' onclick=\"location.href='/lookup/shareThingDetail?itemId=" + borrow.shareThing.item.id + "'\">대여 신청</button>";	
-						btnWrap.innerHTML += "<button class='rez-cancel-btn'>예약 취소</button>";
+						btnWrap.innerHTML += "<button class='rez-cancel-btn' onclick=\"location.href='/borrow/reservation/cancel?shareThingId=" + borrow.shareThing.item.id + "&memberId=" + borrow.borrower.id + "'\">예약 취소</button>";
 						td_06.appendChild(btnWrap);
 				}
 				

@@ -14,6 +14,8 @@ public interface BorrowMapper {
 
 	List<Borrow> selectBorrowReservationByMemberId(String memberId);
 	
+	List<Borrow> selectBorrowReservationByItemId(String itemId);
+	
 	int insertBorrowReservation(Borrow borrow);
 	
 	int deleteBorrowReservation(Borrow borrow);

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dongduk.cs.pulpul.domain.Borrow;
+import dongduk.cs.pulpul.domain.Item;
 import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.ShareThing;
 import dongduk.cs.pulpul.service.BorrowService;
@@ -71,26 +72,11 @@ public class BorrowController {
 			return "lookup/shareThingDetail";
 		}
 		
-		SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd");
-		Calendar borrowCal = Calendar.getInstance();
-		String borrowDate = transFormat.format(borrowCal.getTime());
-		Calendar returnCal = Calendar.getInstance();
-		returnCal.add(Calendar.DATE, Integer.parseInt(borrow.getDate()));
-		String returnDate = transFormat.format(returnCal.getTime());
-
-		borrow.setBorrowDate(borrowDate);
-		borrow.setReturnDate(returnDate);
-		
 		HttpSession session = req.getSession();
-		String id = (String) session.getAttribute("id");
+		String borrowerId = (String) session.getAttribute("id");
 		Member borrower = new Member();
-		borrower.setId(id);
-		
+		borrower.setId(borrowerId);
 		borrow.setBorrower(borrower);
-		
-		ShareThing tempShareThing = borrow.getShareThing();
-		tempShareThing.setIsBorrowed(1);
-		borrow.setShareThing(tempShareThing);
 		
 		boolean success = borrowService.borrow(borrow);
 		
@@ -125,7 +111,7 @@ public class BorrowController {
 		// 스케줄러 실행
 		borrowService.reservationCancelScheduler(new Date());
 		
-		return "redirect:/market/shareThingBorrowManage?itemId=" + borrow.getShareThing().getItem().getId();
+		return "redirect:/market/shareThing/borrowList?itemId=" + borrow.getShareThing().getItem().getId();
 	}
 
 	/*
@@ -168,8 +154,16 @@ public class BorrowController {
 	 * 공유물품 예약 취소
 	 */
 	@GetMapping("/reservation/cancel")
-	public String cancel(@RequestParam("borrowId") int borrowId, Model model) {
-		Borrow borrow = borrowService.getBorrowById(borrowId);
+	public String cancel(@RequestParam("shareThingId") String shareThingId, @RequestParam("memberId") String memberId) {
+		Borrow borrow = new Borrow();
+		ShareThing shareThing = new ShareThing();
+		Item item = new Item();
+		item.setId(shareThingId);
+		shareThing.setItem(item);
+		borrow.setShareThing(shareThing);
+		Member borrower = new Member();
+		borrower.setId(memberId);
+		borrow.setBorrower(borrower);
 		borrowService.cancelBorrowReservation(borrow);
 		return "redirect:/member/mypage";
 	}

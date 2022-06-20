@@ -106,12 +106,19 @@ public class LookupController {
 	 * 공유물품 상세정보 조회
 	 */
 	@GetMapping("/shareThingDetail")
-	public String shareThingDetail(@RequestParam("itemId") String itemId, Model model) {
+	public String shareThingDetail(@RequestParam("itemId") String itemId, Model model, HttpSession session) {
 		ShareThing shareThing = itemSvc.getShareThing(itemId);
 		Borrow borrow = borrowSvc.getCurrBorrowByItem(itemId);
-		if (borrow == null) {
-			borrow = new Borrow();
-			// 예약 레코드가 있으면 그거 넣어서 셋해줘야 함 
+		String memberId = (String) session.getAttribute("id");
+		if (borrow == null && memberId != null) {
+			// 현재 대여 중인 회원이 없고 로그인 중이라면, 예약 정보 가져오기
+			List<Borrow> borrowList = borrowSvc.getBorrowReservationByItem(itemId);
+			for (Borrow b : borrowList) {
+				if (b.getBorrower().getId().equals(memberId)) {
+					borrow = b;
+				}
+			}
+			
 		}
 		borrow.setShareThing(shareThing);
 		model.addAttribute("borrow", borrow);
