@@ -102,6 +102,11 @@ public class GoodsController implements ApplicationContextAware {
 	@PostMapping("/update")
 	public String update(@Valid @ModelAttribute("goods") Goods goods, BindingResult result, 
 			FileCommand updateFiles, String[] deleteImages) {
+		
+		if (goods.getRemainQuantity() > goods.getSalesQuantity()) {
+			result.rejectValue("remainQuantity", "invalidQuantity", "⚠ 남은 수량은 총 판매 수량인 " + goods.getSalesQuantity() + "개를 넘을 수 없습니다.");
+		}
+		
 		if (result.hasErrors()) {	// form 입력 값 검증
 			return "market/goodsForm";
 		}
