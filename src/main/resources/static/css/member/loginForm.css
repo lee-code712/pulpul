@@ -55,21 +55,8 @@
 }
 
 .invalid-feedback {
-	position:relative;
-	margin-top: 30px;
-	padding: 10px 20px;
-	background:#FEEAED;
-	border-radius: 8px;
+	margin: -10px 0px 10px 0px;
+	width: 400px;
+  font-size: 14px;
 	color: #DF5375;
-}
-
-.invalid-feedback:after {
-	border-top:0px solid transparent;
-	border-left: 10px solid transparent;
-	border-right: 10px solid transparent;
-	border-bottom: 10px solid #FEEAED;
-	content:"";
-	position:absolute;
-	top: -10px;
-	left: 20px;
 }
