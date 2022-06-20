@@ -32,11 +32,26 @@
 		FROM alert
 	</select>
 	
+	<!-- 대여 가능일이 지난 예약에 해당하는 알림 조회 -->
 	<select id="selectAlertByAlertDate" resultType="Alert">
     	SELECT share_thing_id AS shareThingId, member_id AS memberId, alert_date AS alertDate, is_read AS isRead
    		FROM alert
     	WHERE alert_date <![CDATA[<]]> SYSDATE - 3
 	</select>
+	
+	<!-- 회원의 읽지 않은 알림 조회 -->
+	<select id="selectAlertCountByIsRead" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+   		FROM alert
+    	WHERE member_id = #{memberId} AND is_read = 0
+	</select>
+	
+	<!-- 알림 읽음 여부 변경 -->
+	<update id="updateIsRead" parameterType="Alert">
+		UPDATE alert
+		SET is_read = 1
+		WHERE share_thing_id = #{shareThingId} AND member_id = #{memberId}
+	</update>
 	
 	<!--  ====================================================================  -->
 	<!--  예약 관련 질의문  -->

@@ -20,14 +20,17 @@ public interface BorrowService {
 	// 대여 예약 취소
 	boolean cancelBorrowReservation(Borrow borrow);
 	
-	// 알림이 생성되고 3일이 지난 대여 예약 삭제
-	boolean removeReservationByNotBorrowed();
-	
 	// 전체 알림 목록 조회
 	List<Alert> getAllAlert();
 	
 	// 회원 id로 알림 목록 조회
 	List<Alert> getAlertByMember(String memberId);
+	
+	// 회원의 읽지 않은 알림 개수
+	int getAlertCountByIsRead(String memberId);
+	
+	// 알림 읽음 처리
+	boolean changeIsRead(Alert alert);
 	
 	// 회원 id로 대여 목록 조회
 	List<Borrow> getBorrowByMember(String memberId, String identity);

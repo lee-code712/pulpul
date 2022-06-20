@@ -42,7 +42,7 @@ public interface BorrowDao {
 	boolean deleteAlert(Alert alert);
 	
 	// 알림 읽음여부 변경 - 추가
-	 boolean changeIsRead(String memberId);
+	boolean changeIsRead(Alert alert);
 	
 	// 회원 id로 대여 목록 조회
 	List<Borrow> findBorrowByMember(String memberId, String identity);

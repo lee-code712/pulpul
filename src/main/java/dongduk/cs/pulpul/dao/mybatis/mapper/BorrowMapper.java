@@ -32,7 +32,7 @@ public interface BorrowMapper {
 	
 	int deleteAlert(Alert alert);
 	
-	int updateIsRead(String memberId); // 추가
+	int updateIsRead(Alert alert); // 추가
 	
 	List<Borrow> selectBorrowByMemberId(String memberId, String identity);
 	

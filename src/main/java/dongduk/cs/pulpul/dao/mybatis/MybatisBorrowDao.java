@@ -63,8 +63,7 @@ public class MybatisBorrowDao implements BorrowDao {
 
 	@Override
 	public int findAlertCountByIsRead(String memberId) {
-		// TODO Auto-generated method stub
-		return 0;
+		return borrowMapper.selectAlertCountByIsRead(memberId);
 	}
 
 	@Override
@@ -82,9 +81,11 @@ public class MybatisBorrowDao implements BorrowDao {
 	}
 
 	@Override
-	public boolean changeIsRead(String memberId) {
+	public boolean changeIsRead(Alert alert) {
 		// TODO Auto-generated method stub
-		return false;
+		int ck = borrowMapper.updateIsRead(alert);
+		if (ck == 0) return false;
+		return true;
 	}
 
 	@Override

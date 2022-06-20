@@ -132,6 +132,11 @@ public class MemberController {
 				int numberOfCartItem = orderService.getNumberOfCartItemByMember(member.getId());
 				session.setAttribute("cartItemCnt", numberOfCartItem);
 				System.out.println(numberOfCartItem);
+				
+				// 읽지 않은 알림 수 세션에 저장
+				int alertCount = borrowService.getAlertCountByIsRead(member.getId());
+				session.setAttribute("alertCnt", alertCount);
+				System.out.println(alertCount);
 			}
 			
 			return "redirect:/home";

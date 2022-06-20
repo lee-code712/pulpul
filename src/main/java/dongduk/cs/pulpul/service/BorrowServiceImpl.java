@@ -119,25 +119,20 @@ public class BorrowServiceImpl implements BorrowService {
 	boolean removeAlert(Alert alert) {
 		return borrowDao.deleteAlert(alert);
 	}
-		
-	// 알림 삭제 - 첫번째 예약자인데 3일 동안 대여신청을 안 한 경우
-	// 알림 삭제만 할 게 아니라 3일 지났을 때 예약 취소를 실시간으로 확인해야 함
-	public boolean removeReservationByNotBorrowed() { // -> 예약삭제도 같이 하기 위해 함수명을 removeReservationByNotBorrowed로 변경
-		boolean result = false;
-		
-		/*String startDate = alert.getAlertDate().substring(0, 10);
-		String[] dateArr = startDate.split("-");
-		int dday = getDDay(dateArr[0], dateArr[1], dateArr[2]);
-		if (dday >= 3) {
-			result =  removeAlert(alert);
-		}*/
-		
-		return result;
-	}
 	
 	// 알림 목록 조회
 	public List<Alert> getAlertByMember(String memberId) {
 		return borrowDao.findAlertByMember(memberId);
+	}
+	
+	// 알림 읽음 변경
+	public boolean changeIsRead(Alert alert) {
+		return borrowDao.changeIsRead(alert);
+	}
+	
+	// 회원의 읽지 않은 알림 수
+	public int getAlertCountByIsRead(String memberId) {
+		return borrowDao.findAlertCountByIsRead(memberId);
 	}
 
 	// 회원 아이디로 대여 목록 조회

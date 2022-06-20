@@ -29,7 +29,9 @@
 	      <li>
 	        <div id="alertIconWrap"  onclick="window.open('/lookup/alertList', 'alert', 'width=460; height=260; left=Math.ceil(( window.screen.width - _width )/2); top=Math.ceil(( window.screen.height - _height )/2); resizable = no;')">
 	          <img th:src="@{/images/alertIcon.svg}" />
-	          <div id="alertCnt">3</div>
+	        	<th:block th:if="${session.alertCnt != null}">
+	        		<div id="alertCnt" th:text="${session.alertCnt}"></div>
+	            </th:block>
 	        </div>
 	      </li>
 	      

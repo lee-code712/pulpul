@@ -1,6 +1,7 @@
 package dongduk.cs.pulpul.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -163,7 +164,18 @@ public class LookupController {
 		String memberId = (String) session.getAttribute("id");
 		if (memberId != null) {
 			List<Alert> alertList = borrowSvc.getAlertByMember(memberId);
-			model.addAttribute("alertList", alertList);
+			List<Alert> updatedAlertList = new ArrayList<Alert>();
+			
+			for (Alert a : alertList) {
+				borrowSvc.changeIsRead(a);
+				a.setIsRead(1);
+				ShareThing st = itemSvc.getShareThing(a.getShareThingId());
+				a.setContent("대여를 예약하신 공유물품 " + st.getItem().getName() + "이(가) 대여 가능합니다. <\br> 3일 내로 대여 신청하시지 않으면 자동으로 대여 예약이 취소됩니다.");
+				a.setPageUrl("shareThingDetail?itemId=" + st.getItem().getId());
+				updatedAlertList.add(a);
+			}
+
+			model.addAttribute("alertList", updatedAlertList);
 		}
 		
 		return "lookup/alert";
