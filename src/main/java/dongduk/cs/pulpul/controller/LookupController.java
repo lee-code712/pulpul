@@ -120,6 +120,9 @@ public class LookupController {
 				}
 			}
 		}
+		else if (borrow == null) {
+			borrow = new Borrow();
+		}
 		
 		borrow.setShareThing(shareThing);
 		model.addAttribute("borrow", borrow);
