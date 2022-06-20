@@ -29,7 +29,21 @@
 			<div id="alertBox" th:if=${alert.isRead}>
 				<div id="alertBtnWrap">
 		        <div id="alertType">공유물품 대여 가능 알림</div>
-		        <div class="link" th:onclick="'location.href=\''+ @{${alert.pageUrl}} + '\''">바로가기</div>
+		        <script th:inline="javascript"> 
+		        	var pageUrl = [[${alert.pageUrl}]];
+		        	console.log(pageUrl);
+		        	
+		        	flag = 1; 
+		        	function newwin() { 
+		        		if (flag == 1) { 
+		        			open(pageUrl, "_blank"); 
+		        			self.close(); 
+		        			parent.close();
+		        		} 
+		        	} 
+		        </script>
+
+		        <div class="link" onclick="newwin()">바로가기</div>
 		      </div>
 		      <div id="alertContent">예약하신 공유물품이 대여 가능 상태가 되었습니다.<br/> 3일 내로 대여 신청하시지 않으면 자동으로 대여 예약이 취소됩니다.</div>
 		      <div id="alertDate"  th:text=${alert.alertDate}></div>
