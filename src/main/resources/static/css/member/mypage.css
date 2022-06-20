@@ -263,3 +263,11 @@ td.order-id:hover {
   color: #C09393;
   cursor: pointer;
 }
+
+.return-box {
+	width: 80px;
+  height: 40px;
+  border: 1px solid #AAAAAA;
+  background-color: white;
+  color: #AAAAAA;
+}

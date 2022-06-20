@@ -305,7 +305,10 @@ function shareThingListJson(btnType) {
 				
 				/* 반납 상태 */
 				if (borrow.shareThing.isBorrowed == 1 && borrow.borrowStatus == 0) {
-					td_06.innerHTML += "반납";
+					const returnBox = document.createElement("button");
+					returnBox.setAttribute("class", "return-box");
+					returnBox.innerHTML = "반납 완료";
+					td_06.appendChild(returnBox);
 				}
 				
 				/* 연장하기 */
