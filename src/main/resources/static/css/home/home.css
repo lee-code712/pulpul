@@ -96,7 +96,8 @@
   width: 340px;
   height: 340px;
   background-color: #f8f8fa;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
 .item-name {
