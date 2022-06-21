@@ -342,6 +342,10 @@ select {
 	margin-right: 20px;
 }
 
+#reviewBox {
+	margin-bottom: 40px;
+}
+
 #ratingWrap,
 #reviewerWrap {
 	display: flex;
@@ -360,7 +364,7 @@ select {
 }
 
 #review {
-	margin: 40px 0px;
+	margin: 20px 0px;
 }
 
 #reviewImg {
