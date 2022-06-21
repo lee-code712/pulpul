@@ -48,12 +48,12 @@
         <tr class="cartItem-wrap" 
           th:style="${cartItem.goods.remainQuantity == 0}
              or ${cartItem.goods.item.openStatus == 0} 
-             or ${cartItem.goods.item.market.openStatus == 0} ? 'color:#c4c4c4': ''">
+             or ${cartItem.goods.item.market.openStatus == '0'} ? 'color:#c4c4c4': ''">
           <td class="check-box">
             <input type="checkbox" name="orderGoods" th:value="${cartItem.goods.item.id}" 
                th:disabled="${cartItem.goods.remainQuantity == 0} 
                 or ${cartItem.goods.item.openStatus == 0} 
-                or ${cartItem.goods.item.market.openStatus == 0} ? 'true': 'false'"
+                or ${cartItem.goods.item.market.openStatus == '0'} ? 'true': 'false'"
              />
           </td>
           <td>
@@ -61,7 +61,7 @@
 	           <img 
 	           th:class="${(cartItem.goods.remainQuantity == 0 ? 'soldout' : 'thumbnail-item-img') + 
 	           (cartItem.goods.item.openStatus == 0 ? ' close' : '') + 
-	           (cartItem.goods.item.market.openStatus == 0 ? ' close' : '')}"
+	           (cartItem.goods.item.market.openStatus == '0' ? ' close' : '')}"
 	             th:src="${cartItem.goods.item.thumbnailUrl}"
 	             th:onclick="moveToGoods([[${cartItem.goods.item.id}]],
 	              [[${cartItem.goods.item.openStatus}]],
