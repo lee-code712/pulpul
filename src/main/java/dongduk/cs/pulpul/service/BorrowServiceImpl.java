@@ -4,10 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
@@ -18,7 +15,6 @@ import dongduk.cs.pulpul.dao.BorrowDao;
 import dongduk.cs.pulpul.dao.ItemDao;
 import dongduk.cs.pulpul.domain.Alert;
 import dongduk.cs.pulpul.domain.Borrow;
-import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.domain.ShareThing;
 
 @Service

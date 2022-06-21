@@ -9,7 +9,6 @@ import dongduk.cs.pulpul.dao.BorrowDao;
 import dongduk.cs.pulpul.dao.mybatis.mapper.BorrowMapper;
 import dongduk.cs.pulpul.domain.Alert;
 import dongduk.cs.pulpul.domain.Borrow;
-import dongduk.cs.pulpul.domain.ShareThing;
 
 @Repository
 public class MybatisBorrowDao implements BorrowDao {

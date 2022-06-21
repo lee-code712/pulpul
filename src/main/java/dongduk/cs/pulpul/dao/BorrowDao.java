@@ -4,7 +4,6 @@ import java.util.List;
 
 import dongduk.cs.pulpul.domain.Alert;
 import dongduk.cs.pulpul.domain.Borrow;
-import dongduk.cs.pulpul.domain.ShareThing;
 
 public interface BorrowDao {
 	

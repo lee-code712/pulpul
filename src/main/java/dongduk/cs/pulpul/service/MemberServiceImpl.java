@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import dongduk.cs.pulpul.dao.MemberDao;
-import dongduk.cs.pulpul.domain.Market;
 import dongduk.cs.pulpul.domain.Member;
 import dongduk.cs.pulpul.repository.MemberRepository;
-import dongduk.cs.pulpul.service.exception.ChangePwdException;
 import dongduk.cs.pulpul.service.exception.LoginException;
 
 @Service
