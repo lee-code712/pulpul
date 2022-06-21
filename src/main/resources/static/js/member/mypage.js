@@ -254,13 +254,16 @@ function shareThingListJson(btnType) {
 				td_03.setAttribute("class", "sharething-status");
 				if (borrow.id)
 					td_03.innerHTML = "대여";
-				else 
+				else if (borrow.id == 0)
 					td_03.innerHTML = "예약";
 					
 				const td_04 = document.createElement("td");
 				td_04.setAttribute("class", "phone");
 				const str = borrow.borrower.phone;
-				td_04.innerHTML = str.substring(0, 3) + '-' + str.substring(3, 7) + '-' + str.substring(7);
+				if (borrow.id)
+					td_04.innerHTML = str.substring(0, 3) + '-' + str.substring(3, 7) + '-' + str.substring(7);
+				else if (borrow.id == 0)
+					td_04.innerHTML = "-";
 				
 				const td_05 = document.createElement("td");
 				td_05.setAttribute("class", "sharething-date");
