@@ -46,26 +46,9 @@ input {
   border: 1px solid #eaeaea;
 }
 
-#btnWrap {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 40px;
-	margin-top: 80px;
-}
-
-#secessionBtn {
-	display: block;
-  width: 140px;
-  height: 40px;
-  border: 1px solid #ff6f6f;
-  background-color: white;
-  color: #ff6f6f;
-  cursor: pointer;
-}
-
 #saveBtn {
   display: block;
+  margin: 60px auto;
   width: 140px;
   height: 40px;
   border: 1px solid black;
