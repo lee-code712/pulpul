@@ -70,12 +70,6 @@ public class MemberServiceImpl implements MemberService {
 		return findMember;
 	}
 	
-	// 회원 탈퇴
-	@Override
-	public void resign(Member member) {
-		memberRepo.delete(member);
-	}
-	
 	// 포인트 변경
 	@Override
 	@Transactional

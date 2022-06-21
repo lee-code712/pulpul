@@ -13,9 +13,6 @@ public interface MemberDao {
 	// 회원 정보 수정
 	boolean changeMemberInfo(Member member);
 	
-	// 회원 정보 삭제
-	boolean deleteMember(Member member);
-	
 	// 회원 포인트 값 변경
 	boolean changePoint(String memberId, int status, int point);
 	

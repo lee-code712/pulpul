@@ -14,8 +14,6 @@ public interface MemberMapper {
 	
 	int updateMember(Member member);
 	
-	int deleteMember(Member member);
-	
 	int updatePoint(@Param("id") String memberId, 
 			@Param("status") int status, 
 			@Param("point") int point);

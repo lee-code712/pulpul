@@ -225,18 +225,4 @@ public class MemberController {
 		
 		return "redirect:/home";
 	}
-
-	/*
-	회원 탈퇴
-	*/
-	@PostMapping("/resign")
-	public void resign() {
-		/*
-		 //성공
-		 return "redirect:/home";
-		 //실패
-		 return "redirect:/member/mypage/orderList";
-		 */
-	}
-
 }

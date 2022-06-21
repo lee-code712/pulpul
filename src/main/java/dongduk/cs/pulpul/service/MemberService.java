@@ -17,9 +17,6 @@ public interface MemberService {
 	// 회원 정보 수정
 	void changeMemberInfo(Member member);
 	
-	// 회원탈퇴
-	void resign(Member member);
-	
 	// 포인트 수정
 	void changePoint(Member member, int status, int point);
 	

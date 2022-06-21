@@ -39,11 +39,6 @@ public class MybatisMemberDao implements MemberDao {
 	}
 
 	@Override
-	public boolean deleteMember(Member member) {
-		return false;
-	}
-
-	@Override
 	public boolean changePoint(String memberId, int status, int point) {
 		int ck = memberMapper.updatePoint(memberId, status, point);
 		if (ck > 0) return true;
