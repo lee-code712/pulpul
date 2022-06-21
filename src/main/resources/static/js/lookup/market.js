@@ -143,10 +143,13 @@ function shareThingJson(marketId) {
 				   itemWaitingWrap.appendChild(waitingWrap);
 				   
 				   var rental = document.createElement("div");
-				   rental.classList.add("rental-ok");
-				   if(shareThing.isBorrowed == 1){
-					rental.innerHTML = "대여 불가";
-					} else {rental.innerHTML = "대여 가능";}
+				   if(shareThing.isBorrowed == 1) {
+						rental.classList.add("rental-notok");
+						rental.innerHTML = "대여 불가";
+						} else {
+							rental.classList.add("rental-ok");
+							rental.innerHTML = "대여 가능";
+						}
 					
 				   divItem.appendChild(itemImg);
 				   divItem.appendChild(itemWaitingWrap);
