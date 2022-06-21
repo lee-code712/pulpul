@@ -170,7 +170,7 @@ function orderListJson(btnType) {
 };
 
 /* 대여 목록 */
-function shareThingListJson(btnType) {
+function borrowListJson(btnType) {
 	var url;
 	if (btnType == '')
 		url = "/member/mypage/borrowList";
@@ -340,7 +340,7 @@ function shareThingListJson(btnType) {
 				previousBtn.innerHTML = "이전으로";
 				
 				$(previousBtn).click(function(){
-					orderListJson('previous');
+					borrowListJson('previous');
 				})
 				
 				pagingBtnWrap.appendChild(previousBtn);
@@ -352,7 +352,7 @@ function shareThingListJson(btnType) {
 				nextBtn.innerHTML = "다음으로";
 				
 				$(nextBtn).click(function(){
-					orderListJson('next');
+					borrowListJson('next');
 				})
 				
 				pagingBtnWrap.appendChild(nextBtn);
