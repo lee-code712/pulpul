@@ -151,7 +151,14 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public List<ShareThing> getShareThingListByMarket(int marketId) {
-		return itemDao.findShareThingByMarket(marketId);
+		List<ShareThing> shareThingList = itemDao.findShareThingByMarket(marketId);
+		if (shareThingList != null) {
+			for (ShareThing shareThing : shareThingList) {
+				String itemId = shareThing.getItem().getId();
+				shareThing.setReservationNumber(borrowDao.checkNumberBorrowReservation(itemId));
+			}
+		}
+		return shareThingList;
 	}
 
 	@Override
