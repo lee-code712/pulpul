@@ -49,7 +49,8 @@
           <td><img th:src=${borrow.shareThing.item.thumbnailUrl} class="img-size" /></td>
           <td th:text=${borrow.shareThing.item.name}></td>
           <td th:text=${borrow.borrower.name}></td>
-          <td th:text="${borrow.borrower.phone}"></td>
+          <td th:text="${#strings.substring(borrow.borrower.phone, 0, 3) + '-' + 
+          #strings.substring(borrow.borrower.phone, 3, 7) + '-' + #strings.substring(borrow.borrower.phone, 7)}"></td>
           <td><th:block th:text=${borrow.borrowDate}></th:block> ~ <th:block th:text=${borrow.returnDate}></th:block></td>
           <td>
           	<button class="rental-btn" th:onclick="returnShareThing([[${borrow.id}]])" th:if="${borrow.borrowStatus} == 1">반납</button>

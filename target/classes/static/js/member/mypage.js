@@ -259,7 +259,8 @@ function shareThingListJson(btnType) {
 					
 				const td_04 = document.createElement("td");
 				td_04.setAttribute("class", "phone");
-				td_04.innerHTML = borrow.borrower.phone;
+				const str = borrow.borrower.phone;
+				td_04.innerHTML = str.substring(0, 3) + '-' + str.substring(3, 7) + '-' + str.substring(7);
 				
 				const td_05 = document.createElement("td");
 				td_05.setAttribute("class", "sharething-date");
