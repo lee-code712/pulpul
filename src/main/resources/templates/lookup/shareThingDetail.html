@@ -80,6 +80,7 @@
 	            	</tr>
 	          	</table>
 	          	
+	          	<input type="hidden" name="isFirstBooker" th:value="${borrow.isFirstBooker}" />
 	          	<input type="hidden" name="lender.id" th:value="${borrow.shareThing.item.market.member.id}" />
 	          	
 	          	<div class="invalid-feedback" th:errors="*"> </div>
