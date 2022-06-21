@@ -84,6 +84,7 @@ CREATE TABLE IMAGE_CATEGORY
 CONSTRAINT  XPKIMAGE_CATEGORY PRIMARY KEY (category_id)
 );
 
+
 CREATE TABLE IMAGE
 (
 	member_id            VARCHAR2(20) NOT NULL ,
@@ -108,6 +109,7 @@ CONSTRAINT  XPKMARKET PRIMARY KEY (market_id),
 CONSTRAINT manage1 FOREIGN KEY (member_id) REFERENCES MEMBER (member_id) ON DELETE CASCADE
 );
 
+
 CREATE TABLE ITEM
 (
 	item_id              VARCHAR2(50) NOT NULL ,
@@ -129,12 +131,12 @@ CONSTRAINT  XPKSHARE_THING PRIMARY KEY (item_id),
 CONSTRAINT include2 FOREIGN KEY (item_id) REFERENCES ITEM (item_id) ON DELETE CASCADE
 );
 
+
 CREATE TABLE ALERT
 (
 	share_thing_id      VARCHAR2(50) NOT NULL ,
 	member_id            VARCHAR2(20) NOT NULL ,
 	alert_date           DATE NOT NULL ,
-	content              VARCHAR(200) NOT NULL ,
 	is_read		CHAR(1) DEFAULT  '0'  NOT NULL  CONSTRAINT  alert_is_read_ck CHECK (is_read = '0' OR is_read = '1'),
 CONSTRAINT  XPKALERT PRIMARY KEY (share_thing_id,member_id),
 CONSTRAINT include7 FOREIGN KEY (share_thing_id) REFERENCES SHARE_THING (item_id),
@@ -150,7 +152,7 @@ CREATE TABLE ORDERS
 	card_number          VARCHAR2(50) NOT NULL ,
 	expiry_date          DATE NOT NULL ,
 	tracking_number      VARCHAR2(50) NULL ,
-	order_status         NUMBER DEFAULT  1  NOT NULL  CONSTRAINT  order_status_ck CHECK (order_status BETWEEN 0 AND 2), /* 0 취소 1 결제완료 2 배송중 */
+	order_status         NUMBER DEFAULT  1  NOT NULL  CONSTRAINT  order_status_ck CHECK (order_status BETWEEN 0 AND 2), 
 	seller_id            VARCHAR2(20) NULL ,
 	buyer_id             VARCHAR2(20) NULL ,
 	used_point           NUMBER DEFAULT  0  NOT NULL ,
@@ -188,6 +190,7 @@ CONSTRAINT include4 FOREIGN KEY (lender_id) REFERENCES MEMBER (member_id) ON DEL
 CONSTRAINT do FOREIGN KEY (borrower_id) REFERENCES MEMBER (member_id) ON DELETE SET NULL,
 CONSTRAINT include11 FOREIGN KEY (share_thing_id) REFERENCES SHARE_THING (item_id)
 );
+
 
 CREATE TABLE BORROW_RESERVATION
 (
@@ -233,3 +236,4 @@ CONSTRAINT  XPKCART PRIMARY KEY (member_id,goods_id),
 CONSTRAINT manage2 FOREIGN KEY (member_id) REFERENCES MEMBER (member_id) ON DELETE CASCADE,
 CONSTRAINT include8 FOREIGN KEY (goods_id) REFERENCES GOODS (item_id)
 );
+
