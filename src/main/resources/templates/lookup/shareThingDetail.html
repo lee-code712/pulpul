@@ -16,6 +16,7 @@
   	<script th:src="@{/js/swiper-bundle.min.js}" defer></script>
   	<script th:src="@{/js/lookup/shareThingDetail.js}" defer></script>
   	<script th:src="@{/js/encodeUri/uri.js}" defer></script>
+  	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   </th:block>
 
 	<div layout:fragment="content">
@@ -156,7 +157,18 @@
 	            	<button id="cancelBtn" type="button" onclick="location.href='/lookup/shareThingList'">목록으로 이동</button>
 	          	</div>
 	          	
-	          	<div class="invalid-feedback" th:errors="*"> </div>
+	          	<script th:inline="javascript">
+		    	  var failed = [[${reservationFailed}]];
+				  		if(failed == true){
+				  			Swal.fire({
+				  			  title: "예약 불가!",
+				  			  text: "이미 대여 예약한 공유물품입니다.",
+				  			  icon: "error",
+				  			  confirmButtonColor: '#93c0b5',
+				  			  confirmButtonText: '확인',
+				  			});
+				  		}  	
+				  </script>
 	          	
 	          	<a th:href="@{/lookup/market(marketId=${borrow.shareThing.item.market.id})}" id="marketLink">
             		<img src="/images/smallShopIcon.svg" />

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dongduk.cs.pulpul.domain.Borrow;
 import dongduk.cs.pulpul.domain.Item;
@@ -109,7 +110,7 @@ public class BorrowController {
 	 * 공유물품 예약
 	 */
 	@PostMapping("/reservation")
-	public String makeReservation(@ModelAttribute("borrow") Borrow borrow, Model model, Errors result, HttpServletRequest req){
+	public String makeReservation(@ModelAttribute("borrow") Borrow borrow, Model model, Errors result, HttpServletRequest req, RedirectAttributes rttr){
 		HttpSession session = req.getSession();
 		String id = (String) session.getAttribute("id");
 		Member member = new Member();
@@ -119,7 +120,7 @@ public class BorrowController {
 		// 중복 예약 확인
 		int reservationCount = borrowService.getBorrowReservationCount(borrow);
 		if (reservationCount != 0) { // 중복 예약일 시 reject
-			result.reject("dupReservation", new Object[] {borrow.getShareThing().getItem().getName()}, null);
+			model.addAttribute("reservationFailed", true);
 		}
 		else {
 			// 예약
