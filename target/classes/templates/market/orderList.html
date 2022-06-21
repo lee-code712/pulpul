@@ -37,7 +37,7 @@
 		  </div>
 
       <div id="searchWrap">
-        <img src="/images/searchWayBill.svg" class="search-img" th:onclick="searchTrackingNumber()"/>
+        <img src="/images/searchWayBill.svg" class="search-img" onclick="searchTrackingNumber()"/>
         <input
           type="text"
           placeholder="운송장 번호를 검색해주세요."
@@ -99,6 +99,7 @@
       <div id="totalPriceWrap">
         <div id="totalPriceInner">
           <span id="totalPriceTit">판매 총 금액</span>
+          <!--  th:text="${#numbers.formatInteger(#aggregates.sum(orderList.source.?[orderStatus != 0].![totalPrice]), 0, 'COMMA')} + '원'" -->
           <span id="totalPrice" th:text="${#numbers.formatInteger(#aggregates.sum(orderList.source.?[orderStatus != 0].![totalPrice]), 0, 'COMMA')} + '원'"></span>
         </div>
       </div>
