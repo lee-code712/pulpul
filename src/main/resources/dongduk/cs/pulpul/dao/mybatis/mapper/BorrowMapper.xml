@@ -61,7 +61,6 @@
 		<id column="borrow_id" jdbcType="INTEGER" property="id" javaType="int" />
 		<result column="borrow_date" jdbcType="DATE" property="borrowDate" javaType="string" />
 		<result column="return_date" jdbcType="DATE" property="returnDate" javaType="string" />
-		<result column="tracking_number" jdbcType="VARCHAR" property="trackingNumber" javaType="string" />
 		<result column="borrow_status" jdbcType="CHAR" property="borrowStatus" javaType="string" />
 		<result column="is_extended" jdbcType="INTEGER" property="isExtended" javaType="int" />
 		<result column="is_first_booker" jdbcType="INTEGER" property="isFirstBooker" javaType="int" />
@@ -142,7 +141,7 @@
 	
 	<!-- 특정 회원의 대여 목록 -->
 	<select id="selectBorrowByMemberId" parameterType="String" resultMap="BorrowInfoMap">
-		SELECT b.borrow_id, b.borrow_date, b.return_date, b.tracking_number, b.borrow_status, b.is_extended, b.lender_id, b.borrower_id, b.share_thing_id,
+		SELECT b.borrow_id, b.borrow_date, b.return_date, b.borrow_status, b.is_extended, b.lender_id, b.borrower_id, b.share_thing_id,
 				br.is_first_booker,
 				lm.member_id AS lender_id, lm.name AS lender_name, lm.address AS lender_address, lm.phone AS lender_phone,
 				bm.member_id AS borrower_id, bm.name AS borrower_name, bm.address AS borrower_address, 
@@ -168,7 +167,7 @@
 	</select>
 	
 	<select id="selectCurrBorrowByItem" parameterType="String" resultMap="BorrowInfoMap">
-		SELECT b.borrow_id, b.borrow_date, b.return_date, b.tracking_number, b.borrow_status, b.is_extended, b.lender_id, b.borrower_id, b.share_thing_id,
+		SELECT b.borrow_id, b.borrow_date, b.return_date, b.borrow_status, b.is_extended, b.lender_id, b.borrower_id, b.share_thing_id,
 				br.is_first_booker,
 				lm.member_id AS lender_id, lm.name AS lender_name, lm.address AS lender_address, lm.phone AS lender_phone,
 				bm.member_id AS borrower_id, bm.name AS borrower_name, bm.address AS borrower_address, 
@@ -188,7 +187,7 @@
 	</select>
 	
 	<select id="selectBorrowById" parameterType="Integer" resultMap="BorrowInfoMap">
-		SELECT b.borrow_id, b.borrow_date, b.return_date, b.tracking_number, b.borrow_status, b.is_extended, b.lender_id, b.borrower_id, b.share_thing_id,
+		SELECT b.borrow_id, b.borrow_date, b.return_date, b.borrow_status, b.is_extended, b.lender_id, b.borrower_id, b.share_thing_id,
 				br.is_first_booker,
 				lm.member_id AS lender_id, lm.name AS lender_name, lm.address AS lender_address, lm.phone AS lender_phone,
 				bm.member_id AS borrower_id, bm.name AS borrower_name, bm.address AS borrower_address, 
@@ -266,7 +265,7 @@
 	
 	<!-- 품목 아이디로 대여 내역 조회 -->
 	<select id="selectBorrowByItemId" parameterType="String" resultMap="BorrowInfoMap">
-		SELECT b.borrow_id, b.borrow_date, b.return_date, b.tracking_number, b.borrow_status, b.is_extended, b.lender_id, b.borrower_id, b.share_thing_id,
+		SELECT b.borrow_id, b.borrow_date, b.return_date, b.borrow_status, b.is_extended, b.lender_id, b.borrower_id, b.share_thing_id,
 				br.is_first_booker,
 				lm.member_id AS lender_id, lm.name AS lender_name, lm.address AS lender_address, lm.phone AS lender_phone,
 				bm.member_id AS borrower_id, bm.name AS borrower_name, bm.address AS borrower_address, 
