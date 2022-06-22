@@ -179,7 +179,6 @@ CREATE TABLE BORROW
 	borrow_id            NUMBER NOT NULL ,
 	borrow_date          DATE NOT NULL ,
 	return_date          DATE NOT NULL ,
-	tracking_number      VARCHAR2(50) NULL ,
 	borrow_status        CHAR(1) DEFAULT  '1'  NOT NULL  CONSTRAINT  borrow_ck CHECK (borrow_status = '0' OR borrow_status = 1),
 	is_extended          CHAR(1) DEFAULT  '0'  NOT NULL  CONSTRAINT  borrow_extended_ck CHECK (is_extended = '0' OR is_extended = '1'),
 	lender_id            VARCHAR2(20) NULL ,
