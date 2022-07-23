@@ -1,3 +1,6 @@
+DB : Oracle / API: JPA / Framework: Spring, MyBatis / 개발언어 : Java, JavaScript / 프론트엔드 : HTML5, Thymeleaf
+서버 : Apache Tomcat
+
 필요한 사전 설정:
 프로젝트 언어 인코딩을 UTF-8로 설정해 두었습니다.
 ojdbc11.jar 파일을 Classpath에 추가해야 합니다.
