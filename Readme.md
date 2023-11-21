@@ -21,7 +21,6 @@
 - Template Engine : `Thymeleaf`
 - Database Access Technology : `MyBatis & JPA`
 - Database : Oracle Database 11g
-- WAS : Apache Tomcat 8.5
 - Version Control: Git
 </br></br>
 
