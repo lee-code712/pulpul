@@ -2,7 +2,7 @@
 식물 거래 및 식물 관리 물품 공유 서비스
 </br></br>
 
-## ✔ 프로젝트 데모
+## ✔ 프로젝트 시연 영상
 https://www.youtube.com/watch?v=7UsOZKcKio4
 </br></br>
 
